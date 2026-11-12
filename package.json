@@ -1,0 +1,14 @@
+{
+  "name": "american-adventure",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix front run dev",
+    "dev:all": "node scripts/dev-all.mjs",
+    "dev:front": "npm --prefix front run dev",
+    "dev:platform": "npm --prefix apps/platform run dev",
+    "dev:back": "docker compose up",
+    "dev:back:d": "docker compose up -d",
+    "build": "npm --prefix front run build",
+    "preview": "npm --prefix front run preview"
+  }
+}

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>American Adventure - Korisnički Put (User Journey)</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --brand-blue: #1e3a8a;
+      --brand-yellow: #f59e0b;
+      --brand-gold: #d97706;
+      --border-color: #e2e8f0;
+      
+      --faza0-bg: #f8fafc;
+      --faza0-border: #cbd5e1;
+      --faza0-accent: #475569;
+      
+      --faza1-bg: #eff6ff;
+      --faza1-border: #bfdbfe;
+      --faza1-accent: #2563eb;
+      
+      --faza2-bg: #fffbeb;
+      --faza2-border: #fde68a;
+      --faza2-accent: #d97706;
+      
+      --faza3-bg: #ecfdf5;
+      --faza3-border: #a7f3d0;
+      --faza3-accent: #059669;
+      
+      --fin-bg: #faf5ff;
+      --fin-border: #e9d5ff;
+      --fin-accent: #7c3aed;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      color: var(--text-main);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 15px;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 12px 24px;
+      border-radius: 50px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .toolbar-title {
+      color: #f8fafc;
+      font-weight: 700;
+      font-size: 14px;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f59e0b;
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 9px 18px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #fbbf24;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-secondary {
+      background: #334155;
+      color: #f8fafc;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Container for the exportable diagram */
+    #journey-canvas {
+      width: 1280px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px -15px rgba(0,0,0,0.08);
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      padding: 45px 50px;
+    }
+
+    /* Header */
+    .header {
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 30px;
+      margin-bottom: 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, #1e3a8a, #0f172a);
+      color: #f59e0b;
+      font-size: 24px;
+      font-weight: 900;
+      width: 58px;
+      height: 58px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 16px rgba(30, 58, 138, 0.25);
+    }
+
+    .header-text h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+
+    .header-text p {
+      font-size: 14px;
+      color: #64748b;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .header-badge {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    /* Phase Blocks */
+    .phase-section {
+      margin-bottom: 35px;
+      position: relative;
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .phase-pill {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: #ffffff;
+    }
+
+    .phase-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .phase-badge-tag {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: #f1f5f9;
+      color: #475569;
+      margin-left: auto;
+    }
+
+    .cards-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .step-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      transition: all 0.2s;
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .step-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .step-desc {
+      font-size: 12.5px;
+      color: #475569;
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+
+    .step-desc ul {
+      margin-left: 16px;
+      margin-top: 6px;
+    }
+
+    .step-desc li {
+      margin-bottom: 4px;
+    }
+
+    .step-tag {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      width: fit-content;
+    }
+
+    /* Color variations per phase */
+    /* Faza 0 */
+    .p0 .phase-pill { background: #475569; }
+    .p0 .step-card { border-top: 4px solid #64748b; background: #f8fafc; }
+    .p0 .step-num { background: #e2e8f0; color: #334155; }
+    .p0 .step-tag { background: #e2e8f0; color: #334155; }
+
+    /* Faza 1 */
+    .p1 .phase-pill { background: #2563eb; }
+    .p1 .step-card { border-top: 4px solid #3b82f6; background: #fafcff; }
+    .p1 .step-num { background: #dbeafe; color: #1d4ed8; }
+    .p1 .step-tag { background: #dbeafe; color: #1e40af; }
+
+    /* Faza 2 */
+    .p2 .phase-pill { background: #d97706; }
+    .p2 .step-card { border-top: 4px solid #f59e0b; background: #fffdfa; }
+    .p2 .step-num { background: #fef3c7; color: #b45309; }
+    .p2 .step-tag { background: #fef3c7; color: #92400e; }
+
+    /* Faza 3 */
+    .p3 .phase-pill { background: #059669; }
+    .p3 .step-card { border-top: 4px solid #10b981; background: #fafffc; }
+    .p3 .step-num { background: #d1fae5; color: #047857; }
+    .p3 .step-tag { background: #d1fae5; color: #065f46; }
+
+    /* Highlight card for newly added missing items */
+    .highlight-card {
+      background: #fefce8 !important;
+      border: 1.5px solid #facc15 !important;
+      border-top: 4px solid #eab308 !important;
+      position: relative;
+    }
+
+    .highlight-badge {
+      position: absolute;
+      top: -10px;
+      right: 14px;
+      background: #eab308;
+      color: #713f12;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Financial Callout Banner */
+    .financial-banner {
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      border-radius: 16px;
+      padding: 24px 28px;
+      color: #ffffff;
+      margin-top: 35px;
+      box-shadow: 0 10px 25px -5px rgba(49, 46, 129, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .fin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding-bottom: 14px;
+    }
+
+    .fin-title {
+      font-size: 17px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fcd34d;
+    }
+
+    .fin-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .fin-item {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .fin-item-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .fin-item-desc {
+      font-size: 11.5px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .footer {
+      margin-top: 35px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .footer-tags {
+      display: flex;
+      gap: 16px;
+    }
+
+    .footer-tag {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Toolbar -->
+  <div class="toolbar" id="toolbar">
+    <div class="toolbar-title">
+      <span>🗽</span> American Adventure Flowchart
+    </div>
+    <button class="btn" onclick="downloadPNG()">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      Preuzmi kao PNG (Slika)
+    </button>
+    <button class="btn btn-secondary" onclick="downloadSVG()">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+      Preuzmi kao SVG
+    </button>
+    <button class="btn btn-secondary" onclick="window.print()">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+      Štampaj / PDF
+    </button>
+  </div>
+
+  <!-- Main Journey Diagram Container -->
+  <div id="journey-canvas">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-brand">
+        <div class="logo-badge">AA</div>
+        <div class="header-text">
+          <h1>American Adventure — Kompletan Korisnički Put</h1>
+          <p>End-to-End User Journey: Od prvog kontakta do bezbednog povratka iz SAD</p>
+        </div>
+      </div>
+      <div class="header-badge">
+        Sistem v2.6 • Summer Work and Travel
+      </div>
+    </div>
+
+    <!-- FAZA 0 -->
+    <div class="phase-section p0">
+      <div class="phase-header">
+        <span class="phase-pill">Faza 0</span>
+        <span class="phase-title">Menadžment Prijava, Selekcija i Konsultacije (Pre registracije na sistem)</span>
+        <span class="phase-badge-tag">Lead Management & Readiness Gate</span>
+      </div>
+      <div class="cards-grid grid-4">
+        
+        <div class="step-card highlight-card">
+          <div class="highlight-badge">Dopunjeno</div>
+          <div class="step-num">0.1</div>
+          <div class="step-title">Inicijalna Prijava</div>
+          <div class="step-desc">
+            Kandidat popunjava online formular (ili dolazi lično u agenciju). Unosi kontakt, fakultet, godinu studija i nivo engleskog.
+          </div>
+          <div class="step-tag">📝 Web prijava / Lead</div>
+        </div>
+
+        <div class="step-card highlight-card">
+          <div class="highlight-badge">Dopunjeno</div>
+          <div class="step-num">0.2</div>
+          <div class="step-title">Trijaža & Info Poziv</div>
+          <div class="step-desc">
+            Agencija kontaktira studenta radi provere bazičnih uslova. Evidentira se ishod inicijalnog poziva u bazi prijava.
+          </div>
+          <div class="step-tag">📞 Provera uslova</div>
+        </div>
+
+        <div class="step-card highlight-card">
+          <div class="highlight-badge">Dopunjeno</div>
+          <div class="step-num">0.3</div>
+          <div class="step-title">Konsultacije & Info Sastanak</div>
+          <div class="step-desc">
+            Slanje informativnog paketa materijala i zakazivanje termina za konsultacije (uživo ili video sastanak).
+          </div>
+          <div class="step-tag">🤝 1-na-1 Savetovanje</div>
+        </div>
+
+        <div class="step-card highlight-card">
+          <div class="highlight-badge">Dopunjeno</div>
+          <div class="step-num">0.4</div>
+          <div class="step-title">Kvalifikacija i Kod za Nalog</div>
+          <div class="step-desc">
+            Nakon odobrenja kvalifikovanosti, sistem generiše <b>jedinstveni kod / aktivacioni link</b> za otvaranje naloga.
+          </div>
+          <div class="step-tag">🔑 Aktivacioni kod</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FAZA 1 -->
+    <div class="phase-section p1">
+      <div class="phase-header">
+        <span class="phase-pill">Faza 1</span>
+        <span class="phase-title">Registracija Naloga, Upload Pasoša, Ugovor i Uplata I Rate</span>
+        <span class="phase-badge-tag">Profil, Ugovaranje & Uplata I Rate</span>
+      </div>
+      <div class="cards-grid grid-4">
+
+        <div class="step-card">
+          <div class="step-num">1.1</div>
+          <div class="step-title">Registracija Naloga</div>
+          <div class="step-desc">
+            Kandidat unosi dobijeni kod iz Faze 0, definiše pristupne parametre i verifikuje nalog.
+          </div>
+          <div class="step-tag">👤 Kreiran nalog</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">1.2</div>
+          <div class="step-title">Upload Pasoša & OCR</div>
+          <div class="step-desc">
+            Upload biometrijskog pasoša uz automatsko MRZ/OCR očitavanje podataka i admin verifikaciju.
+          </div>
+          <div class="step-tag">🛂 Verifikovan pasoš</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">1.3</div>
+          <div class="step-title">Izbor Programa & Popusti</div>
+          <div class="step-desc">
+            Izbor paketa (Self / Full Placement, PKZ opcija) i primena popusta (Early bird, Grupa, Ambasador, Returnee, Spasilac).
+          </div>
+          <div class="step-tag">🏷️ Obračun cene & rata</div>
+        </div>
+
+        <div class="step-card highlight-card">
+          <div class="highlight-badge">Ključno pravilo</div>
+          <div class="step-num">1.4</div>
+          <div class="step-title">Ugovor & Uplata I Rate</div>
+          <div class="step-desc">
+            Generisanje ugovora. Preuzimanje, svojeručni potpis i upload potpisanog primerka <b>zajedno sa uplatom I rate</b> (ili celog iznosa). Uplate su blokirane bez ugovora!
+          </div>
+          <div class="step-tag">✍️ Ugovor & 💳 I Rata • KIR</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FAZA 2 -->
+    <div class="phase-section p2">
+      <div class="phase-header">
+        <span class="phase-pill">Faza 2</span>
+        <span class="phase-title">Pravljenje Profila, MUP Uverenje, Prevod, Odabir Posla i Uplata II Rate</span>
+        <span class="phase-badge-tag">Dosije, Prevod iz MUP-a & Posao</span>
+      </div>
+      <div class="cards-grid grid-3" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 16px;">
+
+        <div class="step-card highlight-card">
+          <div class="highlight-badge">2.1 Pravljenje profila</div>
+          <div class="step-num">2.1</div>
+          <div class="step-title">Pravljenje Profila & Video</div>
+          <div class="step-desc">
+            Nakon uplaćene I rate, student kreira profil: detaljan CV na engleskom, preferencije posla/lokacije i intro video predstavljanje za američke poslodavce.
+          </div>
+          <div class="step-tag">📹 CV & Video prezentacija</div>
+        </div>
+
+        <div class="step-card highlight-card">
+          <div class="highlight-badge">Dopunjeno (MUP)</div>
+          <div class="step-num">2.2</div>
+          <div class="step-title">Fakultet & MUP Uverenje</div>
+          <div class="step-desc">
+            Upload potvrde o statusu studenta, uverenja o ispitima i <b>Uverenja o nekažnjavanju iz MUP-a</b> (obavezan dokument za sponzora).
+          </div>
+          <div class="step-tag">🎓 Fakultet & 🏛️ MUP uverenje</div>
+        </div>
+
+        <div class="step-card highlight-card">
+          <div class="highlight-badge">Obavezno prevođenje</div>
+          <div class="step-num">2.3</div>
+          <div class="step-title">Prevod SVIH Dokumenata</div>
+          <div class="step-desc">
+            Sva akademska dokumenta <b>i Uverenje o nekažnjavanju iz MUP-a</b> moraju biti zvanično prevedeni na engleski jezik uz administratorski pregled i overu.
+          </div>
+          <div class="step-tag">🌐 Sertifikovan prevod (MUP + Faks)</div>
+        </div>
+
+      </div>
+
+      <div class="cards-grid grid-3" style="grid-template-columns: repeat(3, 1fr);">
+
+        <div class="step-card">
+          <div class="step-num">2.4</div>
+          <div class="step-title">Odabir Posla & Priprema</div>
+          <div class="step-desc">
+            Otključavanje baze odobrenih poslova. Student bira pozicije i prolazi pripremni intervju sa koordinatorom agencije.
+          </div>
+          <div class="step-tag">💼 Izbor radnih mesta</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">2.5</div>
+          <div class="step-title">Intervju & Ponuda Posla</div>
+          <div class="step-desc">
+            Direktan intervju sa poslodavcem/sponzorom, izdavanje zvaničnog ugovora o radu (Job Offer) i elektronsko prihvatanje.
+          </div>
+          <div class="step-tag">🤝 Posao obezbeđen (Hired)</div>
+        </div>
+
+        <div class="step-card highlight-card">
+          <div class="highlight-badge">Ključni Gate za Fazu 3</div>
+          <div class="step-num">2.6</div>
+          <div class="step-title">Uplata II Rate Programa</div>
+          <div class="step-desc">
+            Nakon potvrde posla, a pre pokretanja vize i izrade DS-2019 obrasca, vrši se <b>obavezna uplata druge rate programa</b>.
+          </div>
+          <div class="step-tag">💳 II Rata • Faktura & KIR</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FAZA 3 -->
+    <div class="phase-section p3">
+      <div class="phase-header">
+        <span class="phase-pill">Faza 3</span>
+        <span class="phase-title">Ambasada, Viziranje, Uplata III Rate / PKZ, Avio-karta i Podrška</span>
+        <span class="phase-badge-tag">J-1 Viza, III Rata / PKZ & USA Podrška</span>
+      </div>
+      <div class="cards-grid grid-4" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 16px;">
+
+        <div class="step-card">
+          <div class="step-num">3.1</div>
+          <div class="step-title">Dokumentacija za Ambasadu</div>
+          <div class="step-desc">
+            Izdavanje DS-2019, SEVIS evidencija, popunjavanje DS-160 upitnika, ovlašćenje za pasoš i priprema dosijea za vizu.
+          </div>
+          <div class="step-tag">📋 DS-2019 & DS-160</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3.2</div>
+          <div class="step-title">Uplata Takse za Viziranje</div>
+          <div class="step-desc">
+            Uplata konzularne takse za viziranje preko agencije (Nalog za uplatu sa IPS QR, faktura i KIR evidencija).
+          </div>
+          <div class="step-tag">🏛️ Taksa • Faktura & KIR</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3.3</div>
+          <div class="step-title">Termin & Podsetnik za Vizu</div>
+          <div class="step-desc">
+            Slanje zakazanog termina za Ambasadu SAD + automatski podsetnik kandidatu 3 dana pre intervjua.
+          </div>
+          <div class="step-tag">📅 Termin u Ambasadi</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3.4</div>
+          <div class="step-title">Mock Interview (Simulacija)</div>
+          <div class="step-desc">
+            Pripremni sastanak za Ambasadu: simulacija razgovora sa konzulom i provera akademskih veza.
+          </div>
+          <div class="step-tag">🎯 Priprema za Ambasadu</div>
+        </div>
+
+      </div>
+
+      <div class="cards-grid grid-4" style="grid-template-columns: repeat(4, 1fr);">
+
+        <div class="step-card highlight-card">
+          <div class="highlight-badge">Nakon Viziranja</div>
+          <div class="step-num">3.5</div>
+          <div class="step-title">Uplata III Rate / PKZ Podsetnik</div>
+          <div class="step-desc">
+            Nakon dobijanja vize: <b>Uplata III rate</b> ako se plaća na rate. Za <b>PKZ model</b> postavlja se aktivan <b>podsetnik za otplatu III rate iz zarada u SAD</b>.
+          </div>
+          <div class="step-tag">💳 III Rata / 🔔 PKZ Podsetnik</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3.6</div>
+          <div class="step-title">Avio-Karta & Smeštaj</div>
+          <div class="step-desc">
+            Slanje studentskih ponuda za letove, odabir karte i uplata (faktura & KIR) + potvrda adrese smeštaja.
+          </div>
+          <div class="step-tag">✈️ Avio-karta & Smeštaj</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3.7</div>
+          <div class="step-title">Orijentacioni Sastanak</div>
+          <div class="step-desc">
+            Obavezna pred-putna orijentacija: prava radnika, SSN procedura, osiguranje, kulturni boravak i pravila sponzora.
+          </div>
+          <div class="step-tag">🎓 Pred-putna Orijentacija</div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num">3.8</div>
+          <div class="step-title">Podrška u SAD & Povezivanje</div>
+          <div class="step-desc">
+            Peer Networking (povezivanje po poslodavcu/gradu), digitalni paket materijala i 24/7 dežurna podrška tokom boravka.
+          </div>
+          <div class="step-tag">🇺🇸 24/7 Podrška u SAD</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FINANCIAL & KIR INTEGRATION MODULE -->
+    <div class="financial-banner">
+      <div class="fin-header">
+        <div class="fin-title">
+          <span>💼</span> Transverzalni Modul: Finansije, Uplatnice, Fakture i Automatska KIR Knjiga
+        </div>
+        <div style="font-size: 12px; color: #cbd5e1; font-weight: 600;">
+          Sekcija 17 • PRILOG 1 (v2.0)
+        </div>
+      </div>
+      <div class="fin-grid">
+        
+        <div class="fin-item">
+          <div class="fin-item-title">
+            <span>📱</span> 1. Uplatnice & IPS QR
+          </div>
+          <div class="fin-item-desc">
+            Za svaku uplatu (I rata uz ugovor, II rata nakon posla, taksa za vizu, III rata nakon vize ili PKZ dospeće, avio-karta) generiše se Nalog za uplatu sa NBS IPS QR kodom za momentalno skeniranje i modelom 97.
+          </div>
+        </div>
+
+        <div class="fin-item">
+          <div class="fin-item-title">
+            <span>💱</span> 2. Kurs NBS (6 decimala)
+          </div>
+          <div class="fin-item-desc">
+            Sistem beleži zvanični srednji kurs NBS na dan uplate sa 6-decimalnom preciznošću (pravilo BR-009) radi egzaktnog obračuna u dinarima.
+          </div>
+        </div>
+
+        <div class="fin-item">
+          <div class="fin-item-title">
+            <span>📄</span> 3. Faktura (Broj & Slovima)
+          </div>
+          <div class="fin-item-desc">
+            Automatsko izdavanje PDF fakture (FAKT-YYYY-XXXX) sa iznosom u brojkama i <b>ispisanim slovima na srpskom</b> uz SHA-256 pečat.
+          </div>
+        </div>
+
+        <div class="fin-item">
+          <div class="fin-item-title">
+            <span>📘</span> 4. KIR & Excel Izvoz
+          </div>
+          <div class="fin-item-desc">
+            Automatski upis u Knjigu izdatih računa (Red. br, datum knjiženja, broj računa, kupac, JMBG, iznos). 1-klik XLSX izvoz za knjigovodstvo.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div>© 2026 American Adventure • Dokumentacija korisničkog toka</div>
+      <div class="footer-tags">
+        <div class="footer-tag">🔒 ZZPL / GDPR Zaštita</div>
+        <div class="footer-tag">⚖️ Pravna usklađenost</div>
+        <div class="footer-tag">📊 Automatizovano knjigovodstvo</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts for client-side download -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script>
+    async function downloadPNG() {
+      const btn = event.currentTarget;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = "⏳ Generišem sliku...";
+      btn.disabled = true;
+
+      try {
+        const element = document.getElementById("journey-canvas");
+        const canvas = await html2canvas(element, {
+          scale: 2, // High resolution (retina quality)
+          useCORS: true,
+          backgroundColor: "#ffffff",
+          windowWidth: 1400
+        });
+
+        const link = document.createElement("a");
+        link.download = "american_adventure_korisnicki_put.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      } catch (err) {
+        console.error("Greška pri generisanju slike:", err);
+        alert("Preuzimanje direktno iz fajla ili kliknite na dugme za štampanje.");
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    function downloadSVG() {
+      // Create SVG representation
+      const element = document.getElementById("journey-canvas");
+      const clone = element.cloneNode(true);
+      
+      const width = element.offsetWidth;
+      const height = element.offsetHeight;
+
+      const svgData = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+          <foreignObject width="100%" height="100%">
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              ${new XMLSerializer().serializeToString(clone)}
+            </div>
+          </foreignObject>
+        </svg>
+      `;
+
+      const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "american_adventure_korisnicki_put.svg";
+      link.click();
+    }
+  </script>
+</body>
+</html>

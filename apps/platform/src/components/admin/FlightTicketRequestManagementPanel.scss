@@ -1,0 +1,8 @@
+.flight-request-admin { border:1px solid var(--theme-elevation-150); border-radius:8px; margin-top:1.5rem; padding:1.25rem; }
+.flight-request-admin h3 { margin-top:0; }
+.flight-request-admin dl { display:grid; gap:.75rem; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.flight-request-admin dl div { background:var(--theme-elevation-50); border-radius:6px; padding:.75rem; }
+.flight-request-admin dt { color:var(--theme-elevation-600); font-size:.85rem; }
+.flight-request-admin dd { font-weight:600; margin:.25rem 0 0; }
+.flight-request-admin__message { color:var(--theme-error-500); }
+@media (max-width:700px) { .flight-request-admin dl { grid-template-columns:1fr; } }

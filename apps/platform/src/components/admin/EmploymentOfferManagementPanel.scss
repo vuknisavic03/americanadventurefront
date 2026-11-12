@@ -1,0 +1,29 @@
+.employment-offer-admin {
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: 6px;
+  margin-block: 2rem;
+  padding: 1.5rem;
+  h3 { margin-top: 0; }
+  &__heading { align-items: flex-start; display: flex; gap: 1rem; justify-content: space-between; }
+  &__heading p { margin-bottom: 0; max-width: 54rem; }
+  &__message, &__notice { background: var(--theme-elevation-100); border-radius: 4px; margin-block: 1rem; padding: .75rem 1rem; }
+  &__form { display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-block: 1.25rem; }
+  &__form label, &__active label { display: grid; gap: .4rem; }
+  input, select, textarea { background: var(--theme-input-bg); border: 1px solid var(--theme-elevation-150); color: var(--theme-text); padding: .7rem; width: 100%; }
+  &__wide { grid-column: 1 / -1; }
+  &__checkbox { align-items: center; display: flex !important; gap: .6rem !important; }
+  &__checkbox input { width: auto; }
+  &__active { display: grid; gap: .8rem; margin-block: 1.25rem; }
+  &__catalog { border-top: 1px solid var(--theme-elevation-150); margin-top: 1.5rem; padding-top: 1rem; }
+  &__filters { display: grid; gap: .75rem; grid-template-columns: 2fr 1fr; margin-block: 1rem; }
+  &__opening-list { display: grid; gap: .65rem; margin-bottom: 1rem; max-height: 28rem; overflow-y: auto; padding-right: .25rem; }
+  &__opening { align-items: flex-start; background: var(--theme-elevation-50); border: 1px solid var(--theme-elevation-150); border-radius: 4px; cursor: pointer; display: flex; gap: .75rem; padding: .85rem; }
+  &__opening input { margin-top: .2rem; width: auto; }
+  &__opening span { display: grid; gap: .3rem; }
+  &__opening small { color: var(--theme-elevation-600); }
+  &__history { border-top: 1px solid var(--theme-elevation-150); margin-top: 1.5rem; padding-top: 1rem; }
+  &__history article { align-items: center; border-bottom: 1px solid var(--theme-elevation-100); display: flex; flex-wrap: wrap; gap: .75rem; justify-content: space-between; padding-block: .8rem; }
+  &__history article > div { display: grid; gap: .3rem; margin-right: auto; }
+  &__history > label { display: grid; gap: .4rem; margin-top: 1rem; }
+  @media (max-width: 768px) { &__heading { display: grid; } &__filters, &__form { grid-template-columns: 1fr; } &__wide { grid-column: auto; } }
+}

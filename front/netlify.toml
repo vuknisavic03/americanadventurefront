@@ -1,0 +1,32 @@
+# Netlify configuration for American Adventure (front)
+# Documentation: https://docs.netlify.com/routing/redirects/rewrites-proxies/
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# 1. API Reverse Proxy to Railway Platform
+# MUST precede the SPA fallback rule so API requests are not rewritten to index.html.
+# Status 200 performs an HTTP reverse proxy (rewrite), passing request and response
+# headers (including Set-Cookie: payload-token) seamlessly between browser and Railway.
+[[redirects]]
+  from = "/api/*"
+  to = "https://desirable-creativity-production.up.railway.app/api/:splat"
+  status = 200
+  force = true
+
+# 2. Single Page Application (SPA) Fallback
+# All client-side routes (/profil, /admin, /prijava, etc.) serve index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security and caching headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(self), microphone=(self), geolocation=()"

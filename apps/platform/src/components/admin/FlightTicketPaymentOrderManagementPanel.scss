@@ -1,0 +1,7 @@
+.flight-payment-admin { border-top: 1px solid var(--theme-elevation-150); margin-top: 2rem; padding-top: 1.5rem; }
+.flight-payment-admin__grid { display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.flight-payment-admin__grid label { display: grid; gap: .4rem; }
+.flight-payment-admin__grid .wide { grid-column: 1 / -1; }
+.flight-payment-admin__message, .flight-payment-admin__notice, .flight-payment-admin__selection { background: var(--theme-elevation-50); border: 1px solid var(--theme-elevation-150); border-radius: 5px; display: grid; gap: .35rem; margin: 1rem 0; padding: 1rem; }
+.flight-payment-admin__check { align-items: center; display: flex !important; grid-template-columns: auto 1fr; }
+@media (max-width: 700px) { .flight-payment-admin__grid { grid-template-columns: 1fr; } .flight-payment-admin__grid .wide { grid-column: auto; } }

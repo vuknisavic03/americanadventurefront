@@ -1,0 +1,59 @@
+# Dependencies
+**/node_modules/
+
+# Build output and tool caches
+**/dist/
+**/.vite/
+**/.cache/
+**/.turbo/
+**/.next/
+**/coverage/
+**/playwright-report/
+**/test-results/
+*.tsbuildinfo
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.*.example
+.npmrc
+
+# Logs and runtime files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.pid
+
+# Generated deployment bundles
+**/dist-*.zip
+
+# Database archives, plaintext scratch dumps and archive keys
+*.aab
+*.dump
+*.backup.key
+.aa-backup-*/
+
+# IDE and operating system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# OCR models and auto-generated agent guides
+*.traineddata*
+AGENTS.md
+**/.data/
+dokumentazaswt/

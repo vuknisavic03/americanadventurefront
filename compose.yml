@@ -1,0 +1,68 @@
+name: american-adventure
+
+services:
+  database:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: american_adventure
+      POSTGRES_PASSWORD: american_adventure
+      POSTGRES_USER: american_adventure
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U american_adventure -d american_adventure"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  e2e-database:
+    profiles:
+      - testing
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: american_adventure_e2e
+      POSTGRES_PASSWORD: american_adventure
+      POSTGRES_USER: american_adventure
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U american_adventure -d american_adventure_e2e"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "5433:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+
+  platform:
+    build:
+      context: ./apps/platform
+      args:
+        DATABASE_URL: postgresql://american_adventure:american_adventure@database:5432/american_adventure
+        NEXT_PUBLIC_SERVER_URL: http://localhost:3000
+        PAYLOAD_SECRET: local-docker-build-placeholder-change-before-production
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - path: ./apps/platform/.env
+        required: false
+    environment:
+      DATABASE_URL: postgresql://american_adventure:american_adventure@database:5432/american_adventure
+      NEXT_PUBLIC_SERVER_URL: http://localhost:3000
+      PAYLOAD_SECRET: local-docker-build-placeholder-change-before-production
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 6s
+      retries: 6
+      start_period: 20s
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+

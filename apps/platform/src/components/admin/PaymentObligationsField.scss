@@ -1,0 +1,55 @@
+.payment-obligations {
+  margin-block: var(--base);
+
+  &__heading {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: calc(var(--base) / 2);
+  }
+
+  &__table-wrap {
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: var(--style-radius-m);
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    min-width: 620px;
+    width: 100%;
+  }
+
+  th,
+  td {
+    border-bottom: 1px solid var(--theme-elevation-100);
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--theme-elevation-50);
+    color: var(--theme-elevation-600);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  th:last-child,
+  td:last-child {
+    text-align: right;
+  }
+
+  &__empty {
+    background: var(--theme-elevation-50);
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: var(--style-radius-m);
+    color: var(--theme-elevation-600);
+    margin: 0;
+    padding: 14px;
+  }
+}

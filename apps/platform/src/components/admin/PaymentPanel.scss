@@ -1,0 +1,23 @@
+.payment-panel {
+  background: var(--theme-elevation-50);
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: .5rem;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+
+  h3 { margin: 0 0 .5rem; }
+  p { color: var(--theme-elevation-600); margin: 0 0 1rem; max-width: 75ch; }
+  label { display: grid; gap: .4rem; }
+  label > span { font-size: .85rem; font-weight: 650; }
+}
+
+.payment-panel--danger { border-left: .25rem solid var(--theme-error-500, #b3202a); }
+.payment-panel__form { display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.payment-panel__reversal-controls { display: grid; gap: 1rem; }
+.payment-panel__wide { grid-column: 1 / -1; }
+.payment-panel__message { margin: 1rem 0; }
+
+@media (max-width: 700px) {
+  .payment-panel__form { grid-template-columns: 1fr; }
+  .payment-panel__wide { grid-column: auto; }
+}

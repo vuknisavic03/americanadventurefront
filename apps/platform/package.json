@@ -1,0 +1,69 @@
+{
+  "name": "@american-adventure/platform",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "npm@11.17.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --webpack",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "lint": "eslint . --max-warnings=0",
+    "migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
+    "migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create",
+    "migrate:status": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:status",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "test": "vitest run",
+    "test:backup": "node --test ../../scripts/database/backup.test.mjs",
+    "test:restore": "node --experimental-strip-types ../../scripts/database/restore-drill.mjs",
+    "test:e2e": "node --env-file-if-exists=.env.e2e ./node_modules/@playwright/test/cli.js test",
+    "test:e2e:install": "playwright install --with-deps chromium",
+    "test:integration": "node --env-file-if-exists=.env.e2e ./node_modules/@playwright/test/cli.js test --project=integration",
+    "migrate:e2e": "node --env-file-if-exists=.env.e2e ./node_modules/payload/bin.js migrate",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@payloadcms/db-postgres": "3.92.1",
+    "@payloadcms/next": "3.92.1",
+    "@payloadcms/richtext-lexical": "3.92.1",
+    "@payloadcms/ui": "3.92.1",
+    "@pdf-lib/fontkit": "1.1.1",
+    "cross-env": "10.1.0",
+    "exceljs": "4.4.0",
+    "graphql": "16.14.2",
+    "mrz": "^5.0.2",
+    "next": "16.4.4",
+    "payload": "3.92.1",
+    "pdf-lib": "1.17.1",
+    "pg": "8.20.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "tesseract.js": "^7.0.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "@types/node": "22.20.5",
+    "@types/pg": "8.20.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.4.3",
+    "typescript": "5.9.3",
+    "vitest": "4.1.12"
+  },
+  "overrides": {
+    "braces": "^3.0.3",
+    "chokidar": "^4.0.3",
+    "dompurify": "^3.4.17",
+    "next": "16.4.4",
+    "sharp": "^0.35.5",
+    "source-map-js": "^1.2.2",
+    "undici": "^7.30.0"
+  }
+}

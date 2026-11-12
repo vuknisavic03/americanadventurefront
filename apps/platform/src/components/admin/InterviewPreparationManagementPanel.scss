@@ -1,0 +1,49 @@
+.interview-preparation-admin {
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: 6px;
+  margin-block: 2rem;
+  padding: 1.5rem;
+
+  h3 { margin-top: 0; }
+
+  &__message,
+  &__notice {
+    background: var(--theme-elevation-100);
+    border-radius: 4px;
+    margin-block: 1rem;
+    padding: 0.75rem 1rem;
+  }
+
+  &__form {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-block: 1.25rem;
+
+    label { display: grid; gap: 0.4rem; }
+    input,
+    select,
+    textarea {
+      background: var(--theme-input-bg);
+      border: 1px solid var(--theme-elevation-150);
+      color: var(--theme-text);
+      padding: 0.7rem;
+      width: 100%;
+    }
+  }
+
+  &__wide { grid-column: 1 / -1; }
+  &__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  &__history {
+    border-top: 1px solid var(--theme-elevation-150);
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+
+    article { display: grid; gap: 0.2rem; padding-block: 0.65rem; }
+  }
+
+  @media (max-width: 768px) {
+    &__form { grid-template-columns: 1fr; }
+    &__wide { grid-column: auto; }
+  }
+}

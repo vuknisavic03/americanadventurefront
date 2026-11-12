@@ -1,0 +1,17 @@
+.flight-offer-admin { border:1px solid var(--theme-elevation-150); border-radius:8px; margin-top:1.5rem; padding:1.25rem; }
+.flight-offer-admin h3 { margin-top:0; }
+.flight-offer-admin label { display:grid; gap:.4rem; }
+.flight-offer-admin label > span { font-weight:600; }
+.flight-offer-admin input,.flight-offer-admin select,.flight-offer-admin textarea { background:var(--theme-input-bg); border:1px solid var(--theme-elevation-250); border-radius:6px; color:var(--theme-text); font:inherit; padding:.65rem; width:100%; }
+.flight-offer-admin textarea { min-height:72px; resize:vertical; }
+.flight-offer-admin button { border:1px solid var(--theme-elevation-300); border-radius:6px; cursor:pointer; padding:.65rem 1rem; }
+.flight-offer-admin button:disabled { cursor:not-allowed; opacity:.55; }
+.flight-offer-admin__message { color:var(--theme-error-500); margin:1rem 0; }
+.flight-offer-admin__success { color:var(--theme-success-500); margin:1rem 0; }
+.flight-offer-admin__request,.flight-offer-admin__published { background:var(--theme-elevation-50); border-radius:8px; display:grid; gap:.45rem; margin:1rem 0; padding:1rem; }
+.flight-offer-admin__published header,.flight-offer-admin__summary { display:flex; flex-wrap:wrap; gap:.6rem 1rem; justify-content:space-between; }
+.flight-offer-admin__editor { border-top:1px solid var(--theme-elevation-150); display:grid; gap:1rem; margin-top:1.25rem; padding-top:1.25rem; }
+.flight-offer-admin fieldset { border:1px solid var(--theme-elevation-200); border-radius:8px; padding:1rem; }
+.flight-offer-admin__grid { display:grid; gap:.85rem; grid-template-columns:repeat(3,minmax(0,1fr)); }
+.flight-offer-admin__actions { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:flex-end; }
+@media (max-width:900px) { .flight-offer-admin__grid { grid-template-columns:1fr; } }

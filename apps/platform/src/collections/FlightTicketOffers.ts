@@ -1,0 +1,80 @@
+import type { Access, CollectionConfig } from 'payload'
+
+const administrator: Access = ({ req }) => req.user?.collection === 'users'
+const deny = () => false
+const immutable = { update: deny }
+
+export const FlightTicketOffers: CollectionConfig = {
+  slug: 'flight-ticket-offers',
+  access: { create: deny, delete: deny, read: administrator, update: deny },
+  admin: {
+    defaultColumns: ['candidateAccount', 'offerVersion', 'status', 'responseDueAt', 'notificationStatus'],
+    description: 'Verzionisane ponude avionskih karata. Objavljena komercijalna polja su nepromenljiva.',
+    group: 'Putovanje',
+    useAsTitle: 'candidateAccount',
+  },
+  fields: [
+    { name: 'flightTicketRequest', type: 'relationship', access: immutable, admin: { readOnly: true }, label: 'Zahtev kandidata', relationTo: 'flight-ticket-requests', required: true },
+    { name: 'candidateProcess', type: 'relationship', access: immutable, admin: { readOnly: true }, label: 'Proces kandidata', relationTo: 'candidate-processes', required: true },
+    { name: 'candidateAccount', type: 'relationship', access: immutable, admin: { readOnly: true }, label: 'Kandidatski nalog', relationTo: 'candidate-accounts', required: true },
+    { name: 'applicant', type: 'relationship', access: immutable, admin: { readOnly: true }, label: 'Kandidat', relationTo: 'applicants', required: true },
+    { name: 'preApplication', type: 'relationship', access: immutable, admin: { readOnly: true }, label: 'Izvorna prijava', relationTo: 'pre-applications', required: true },
+    { name: 'programCode', type: 'select', access: immutable, admin: { readOnly: true }, options: [{ label: 'Work & Travel', value: 'SWT' }], required: true },
+    { name: 'requestVersion', type: 'number', access: immutable, admin: { readOnly: true }, label: 'Verzija zahteva', min: 1, required: true },
+    { name: 'offerVersion', type: 'number', access: immutable, admin: { readOnly: true }, label: 'Verzija ponude', min: 1, required: true },
+    { name: 'statusVersion', type: 'number', admin: { hidden: true }, defaultValue: 1, min: 1, required: true },
+    { name: 'status', type: 'select', admin: { readOnly: true }, label: 'Status', options: [
+      { label: 'Objavljena - čeka odgovor', value: 'PUBLISHED' },
+      { label: 'Opcija prihvaćena', value: 'ACCEPTED' },
+      { label: 'Ponuda odbijena', value: 'REJECTED' },
+      { label: 'Ponuda povučena', value: 'WITHDRAWN' },
+    ], required: true },
+    { name: 'candidateInstructions', type: 'textarea', access: immutable, admin: { readOnly: true }, label: 'Uputstvo kandidatu', maxLength: 2_000, required: true },
+    { name: 'internalNotes', type: 'textarea', admin: { readOnly: true }, label: 'Interna napomena', maxLength: 2_000 },
+    { name: 'responseDueAt', type: 'date', access: immutable, admin: { readOnly: true }, label: 'Rok za odgovor' },
+    {
+      name: 'options',
+      type: 'array',
+      access: immutable,
+      admin: { readOnly: true },
+      labels: { plural: 'Opcije leta', singular: 'Opcija leta' },
+      maxRows: 5,
+      minRows: 1,
+      required: true,
+      fields: [
+        { name: 'optionCode', type: 'text', required: true },
+        { name: 'airlineName', type: 'text', label: 'Aviokompanija', maxLength: 160, required: true },
+        { name: 'outboundRoute', type: 'text', label: 'Odlazna ruta', maxLength: 300, required: true },
+        { name: 'outboundDepartureAt', type: 'date', label: 'Polazak', required: true },
+        { name: 'outboundArrivalAt', type: 'date', label: 'Dolazak', required: true },
+        { name: 'returnRoute', type: 'text', label: 'Povratna ruta', maxLength: 300, required: true },
+        { name: 'returnDepartureAt', type: 'date', label: 'Povratni polazak', required: true },
+        { name: 'returnArrivalAt', type: 'date', label: 'Povratni dolazak', required: true },
+        { name: 'baggageDescription', type: 'textarea', label: 'Prtljag', maxLength: 500, required: true },
+        { name: 'fareConditions', type: 'textarea', label: 'Uslovi tarife', maxLength: 1_000 },
+        { name: 'totalPriceMinor', type: 'number', label: 'Ukupna cena u najmanjoj jedinici valute', min: 1, required: true },
+        { name: 'currency', type: 'select', label: 'Valuta', options: [{ label: 'EUR', value: 'EUR' }, { label: 'RSD', value: 'RSD' }, { label: 'USD', value: 'USD' }], required: true },
+      ],
+    },
+    { name: 'snapshotChecksum', type: 'text', access: immutable, admin: { readOnly: true }, label: 'Kontrolni otisak ponude', required: true },
+    { name: 'publishedAt', type: 'date', access: immutable, admin: { readOnly: true }, label: 'Objavljena', required: true },
+    { name: 'publishedBy', type: 'relationship', access: immutable, admin: { readOnly: true }, label: 'Objavio/la', relationTo: 'users', required: true },
+    { name: 'notificationStatus', type: 'select', admin: { readOnly: true }, label: 'Email obaveštenje', options: [
+      { label: 'Čeka slanje', value: 'PENDING' },
+      { label: 'Poslato', value: 'DELIVERED' },
+      { label: 'Preskočeno jer je ponuda već obrađena', value: 'SKIPPED' },
+      { label: 'Slanje nije uspelo', value: 'FAILED' },
+    ], required: true },
+    { name: 'notificationDeliveredAt', type: 'date', admin: { readOnly: true }, label: 'Obaveštenje poslato' },
+    { name: 'messageDelivery', type: 'relationship', admin: { readOnly: true }, relationTo: 'message-deliveries' },
+    { name: 'respondedAt', type: 'date', admin: { readOnly: true }, label: 'Kandidat odgovorio' },
+    { name: 'withdrawnAt', type: 'date', admin: { readOnly: true }, label: 'Povučena' },
+    { name: 'withdrawnBy', type: 'relationship', admin: { readOnly: true }, label: 'Povukao/la', relationTo: 'users' },
+    { name: 'withdrawalReason', type: 'textarea', admin: { readOnly: true }, label: 'Razlog povlačenja', maxLength: 1_000 },
+  ],
+  indexes: [
+    { fields: ['candidateProcess', 'offerVersion'], unique: true },
+    { fields: ['candidateAccount', 'status'] },
+  ],
+  labels: { plural: 'Ponude avionskih karata', singular: 'Ponuda avionske karte' },
+}

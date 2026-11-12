@@ -1,0 +1,7 @@
+.visa-document-admin { border: 1px solid var(--theme-elevation-150); border-radius: 8px; margin: 24px 0; padding: 20px; }
+.visa-document-admin h3 { margin-top: 0; }
+.visa-document-admin ul { display: grid; gap: 10px; list-style: none; margin: 16px 0 0; padding: 0; }
+.visa-document-admin li { align-items: center; border-top: 1px solid var(--theme-elevation-100); display: flex; gap: 16px; justify-content: space-between; padding-top: 10px; }
+.visa-document-admin li span { display: grid; gap: 4px; }
+.visa-document-admin li small { color: var(--theme-elevation-600); }
+.visa-document-admin__message { background: var(--theme-elevation-100); border-radius: 4px; margin: 12px 0; padding: 10px; }

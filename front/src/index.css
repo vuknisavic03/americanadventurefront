@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/*
+  Kompatibilnost sa Tailwind v3: podrazumevana boja bordera.
+  U v4 je default `currentColor`; vraćamo na gray-200 da postojeći
+  `border` (bez eksplicitne boje) izgleda kao pre.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+/*
+  Brend tokeni — drže se na JEDNOM mestu.
+  Koriste se u komponentama preko core utility klasa sa arbitrary vrednostima:
+    bg-[var(--brand-yellow)]  text-[var(--brand-ink)]  border-[var(--brand-ink)]
+  (JS pristup istim vrednostima: src/theme/tokens.js)
+*/
+:root {
+  --brand-yellow: #fdd503; /* žuta — pozadina brenda */
+  --brand-ink: #231f20;    /* tamna / ink — logo i tekst */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Archivo", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: var(--brand-ink);
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Vidljiv focus ring radi pristupačnosti (tastatura) */
+:focus-visible {
+  outline: 2px solid var(--brand-ink);
+  outline-offset: 2px;
+}

@@ -1,0 +1,95 @@
+.private-document-review {
+  background: var(--theme-elevation-50);
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: .5rem;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+
+  h3 { margin: 0 0 .5rem; }
+  p { color: var(--theme-elevation-600); margin: 0 0 1rem; }
+  label { display: grid; gap: .45rem; margin-top: 1rem; }
+  textarea { width: 100%; }
+}
+
+.private-document-review__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-bottom: 1.25rem;
+}
+
+.private-document-ocr-card {
+  background: var(--theme-elevation-100);
+  border: 1px solid var(--theme-elevation-200);
+  border-radius: .375rem;
+  padding: 1.25rem;
+  margin: 1rem 0;
+
+  h4 {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    color: var(--theme-elevation-800);
+  }
+}
+
+.ocr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  .ocr-label {
+    display: block;
+    font-size: .75rem;
+    color: var(--theme-elevation-500);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin-bottom: .25rem;
+  }
+
+  .ocr-value {
+    display: block;
+    font-size: .95rem;
+    color: var(--theme-elevation-900);
+  }
+}
+
+.ocr-match-banner {
+  padding: .75rem 1rem;
+  border-radius: .375rem;
+  font-size: .875rem;
+  margin-top: .75rem;
+
+  &--match {
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+  }
+
+  &--mismatch {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+  }
+
+  &--partial {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+  }
+
+  &--neutral {
+    background: var(--theme-elevation-150);
+    border: 1px solid var(--theme-elevation-250);
+    color: var(--theme-elevation-800);
+  }
+
+  .ocr-notes {
+    margin: .5rem 0 0;
+    padding-left: 1.25rem;
+    font-size: .8125rem;
+  }
+}
+
+.private-document-review__actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
+.private-document-review__message { margin-top: 1rem; font-weight: 500; }

@@ -1,0 +1,248 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NPM_VERSION: 11.17.0
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detect-changes:
+    name: Detect changed areas
+    runs-on: ubuntu-latest
+    outputs:
+      platform: ${{ steps.filter.outputs.platform }}
+      front: ${{ steps.filter.outputs.front }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+      - name: Evaluate changed files
+        id: filter
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "platform=true" >> "$GITHUB_OUTPUT"
+            echo "front=true" >> "$GITHUB_OUTPUT"
+          else
+            git fetch origin ${{ github.base_ref }} --depth=1
+            DIFF=$(git diff --name-only origin/${{ github.base_ref }} HEAD || echo "")
+            if echo "$DIFF" | grep -qE '^(apps/platform/|\.github/workflows/ci\.yml|\.nvmrc|scripts/database/)'; then
+              echo "platform=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "platform=false" >> "$GITHUB_OUTPUT"
+            fi
+            if echo "$DIFF" | grep -qE '^(front/|\.github/workflows/ci\.yml|\.nvmrc)'; then
+              echo "front=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "front=false" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+  platform-quality:
+    name: Platform quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: detect-changes
+    if: needs.detect-changes.outputs.platform == 'true'
+    defaults:
+      run:
+        working-directory: apps/platform
+    env:
+      DATABASE_URL: postgresql://american_adventure:american_adventure@localhost:5432/american_adventure_test
+      NEXT_PUBLIC_SERVER_URL: http://localhost:3000
+      PAYLOAD_SECRET: ci-only-secret-that-must-never-be-used-in-production
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: american_adventure_test
+          POSTGRES_PASSWORD: american_adventure
+          POSTGRES_USER: american_adventure
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U american_adventure -d american_adventure_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: apps/platform/package-lock.json
+
+      - name: Set up the pinned npm version
+        run: npm install --global "npm@${{ env.NPM_VERSION }}"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Reject critical production dependency findings
+        run: npm audit --omit=dev --audit-level=critical
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Test
+        if: github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'run-tests')
+        run: npm test
+
+      - name: Apply database migrations
+        run: npm run migrate
+
+      - name: Build platform
+        run: npm run build
+
+  frontend-build:
+    name: Frontend prototype build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: detect-changes
+    if: needs.detect-changes.outputs.front == 'true'
+    defaults:
+      run:
+        working-directory: front
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: front/package-lock.json
+
+      - name: Set up the pinned npm version
+        run: npm install --global "npm@${{ env.NPM_VERSION }}"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Reject high-severity dependency findings
+        run: npm audit --audit-level=high
+
+      - name: Build frontend prototype
+        run: npm run build
+
+  platform-integration-e2e:
+    name: Platform integration and E2E (${{ matrix.shardIndex }}/4)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: detect-changes
+    if: (github.event_name == 'workflow_dispatch' || contains(github.event.pull_request.labels.*.name, 'run-e2e')) && needs.detect-changes.outputs.platform == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+    defaults:
+      run:
+        working-directory: apps/platform
+    env:
+      CANDIDATE_EMAIL_PROVIDER: capture
+      DATABASE_URL: postgresql://american_adventure:american_adventure@localhost:5432/american_adventure_e2e
+      E2E_BASE_URL: http://127.0.0.1:3100
+      NEXT_PUBLIC_SERVER_URL: http://127.0.0.1:3100
+      PAYLOAD_SECRET: ci-only-e2e-secret-that-must-never-be-used-outside-tests
+      TRUSTED_PROXY_HOPS: 1
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: american_adventure_e2e
+          POSTGRES_PASSWORD: american_adventure
+          POSTGRES_USER: american_adventure
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U american_adventure -d american_adventure_e2e"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: apps/platform/package-lock.json
+
+      - name: Set up the pinned npm version
+        run: npm install --global "npm@${{ env.NPM_VERSION }}"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Cache Playwright browser
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('apps/platform/package-lock.json') }}
+
+      - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npm run test:e2e:install
+
+      - name: Apply database migrations
+        run: npm run migrate:e2e
+
+      - name: Run integration and E2E tests
+        run: npm run test:e2e -- --shard=${{ matrix.shardIndex }}/4
+
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: playwright-report-shard-${{ matrix.shardIndex }}-of-4-${{ github.run_attempt }}
+          path: apps/platform/playwright-report/
+          retention-days: 14
+
+  ci-gate:
+    name: CI Quality Gate
+    runs-on: ubuntu-latest
+    needs: [detect-changes, platform-quality, frontend-build, platform-integration-e2e]
+    if: always()
+    steps:
+      - name: Verify all active checks succeeded
+        run: |
+          results="${{ needs.platform-quality.result }} ${{ needs.frontend-build.result }} ${{ needs.platform-integration-e2e.result }}"
+          echo "Job outcomes: $results"
+          if echo "$results" | grep -q 'failure'; then
+            echo "One or more required CI checks failed."
+            exit 1
+          fi
+          echo "All active CI checks passed successfully."
