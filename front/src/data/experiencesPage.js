@@ -794,22 +794,6 @@ const experiencesPage = [
     "tips": "$80"
   },
   {
-    "slug": "jovan-mirkovic-stanley-north-dakota",
-    "name": "Jovan Mirković",
-    "place": "Stanley, North Dakota",
-    "program": "Work and Travel USA",
-    "year": "2014",
-    "image": "https://workandtravel.rs/wp-content/uploads/2016/11/Stranley-ND-1.jpg",
-    "extraJobRating": "Pozitivno",
-    "job": {
-      "SR": "kitchen, Pinnacle oil company",
-      "EN": "kitchen, Pinnacle Oil Company"
-    },
-    "employerRating": "Pozitivno",
-    "wage": "$15",
-    "hours": "40"
-  },
-  {
     "slug": "milena-niciforovic-rattlesnake-island-ohio",
     "name": "Milena Nićiforović",
     "place": "Rattlesnake Island, Ohio",

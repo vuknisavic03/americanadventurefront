@@ -9,12 +9,6 @@ export default {
   ],
   "sections": [
     {
-      "title": "Uvod",
-      "blocks": [
-        "Prijavi se"
-      ]
-    },
-    {
       "title": "Program stručne prakse u Americi",
       "blocks": [
         "Program stručne prakse u Americi Internship / Training informator Informacije o programima Opcije J1 Internship / Training Prijava na program Ko može da se prijavi Često postavljana pitanja Izdvojene ponude",
@@ -26,19 +20,19 @@ export default {
       ]
     },
     {
-      "title": "INTERNSHIP PROGRAM – Stručna praksa u Americi",
+      "title": "Internship program – Stručna praksa u Americi",
       "blocks": [
         "Internship program (program stručne prakse u Americi) namenjen je studentima završnih godina ili sveže diplomiranim studentima (do jedne godine od diplomiranja). Učesnici imaju priliku da rade u američkim kompanijama, na plaćenim pripravničkim pozicijama i imaju mogućnost da steknu praktično iskustvo u oblasti studija. Polaznici će moći da poboljšaju svoje jezičke veštine interakcijom sa saradnicima, klijentima kompanije ili drugim pripravnicima. Nakon programa, učesnici imaju dodatnih 30 dana takozvanog “grejs perioda“. Tokom ovog perioda studenti ne mogu da rade tako da je to najbolje vreme za istraživanje drugih delova Sjedinjenih Američkih Država. Trajanje programa je do 12 meseci."
       ]
     },
     {
-      "title": "TRAINING PROGRAM – Stručno usavršavanje u Americi",
+      "title": "Training program – Stručno usavršavanje u Americi",
       "blocks": [
         "Kvalifikovani učesnici mogu da rade do 18 meseci bilo gde u Sjedinjenim Državama, u odobrenim kompanijama koje sprovode Training program (program stručnog usavršavanja u Americi). Ovaj program i viza koja ide uz njega (J1 viza) NIJE dugoročan posao i omogućava učesnicima da dobiju praktično iskustvo i uputstva u oblastima koje se tiču bilo njihovog programa na studijama ili sadašnje oblasti zapošljavanja."
       ]
     },
     {
-      "title": "FULL PLACEMENT PROGRAM",
+      "title": "Full placement program",
       "blocks": [
         "U ovoj opciji sponzor vam pronalazi Vaše mesto stažiranja ili treninga. Aplikant može ali i ne mora da prihvati ponudu i u tom slučaju čeka sledeću opciju za razgovor za posao. Imajte u vidu da će naš sponzor da uradi sve što je u njegovoj moći da pronađe ponudu u skladu sa Vašim željama i afinitetima ali isto tako da sponzor neće uvek biti u mogućnosti da odgovori svim Vašim željama.",
         "Kontaktiraje nas za cene programa i trenutno otvorene pozicije.",
@@ -57,30 +51,24 @@ export default {
       ]
     },
     {
-      "title": "SELF PLACEMENT PROGRAM",
+      "title": "Self placement program",
       "blocks": [
         "U ovoj opciji aplikant sam pronalazi firmu ili udruženje koje će ga prihvatiti na Internship ili Training program. Ova opcija naglašava da su svi učesnici odgovorni za svoj smeštaj. Učesnici u programu su obavezni da podnesu informacije o smeštaju svojim koordinatorima u roku od 48 sati od momenta prispeća u validnom SEVIS-u.",
         "Kontaktiraje nas za cene programa.",
-        "Šta je uključeno u cenu ove opcije:",
         "• Zdravstveno osiguranje za vreme trajanja programa (ovo osiguranje ne pokriva mesec namenjen putovanju)",
         "• Podrška 24/7 za vreme trajanja programa",
-        "• Usluga agencije",
-        "Šta NIJE uključeno u cenu programa:",
-        "• Avionska karta za SAD (kao polaznicima programa biće Vam ponuđene privilegovane cene transporta koje obezbeđujemo zahvaljujući dugogodišnjoj saradnji sa avio kompanijama)",
-        "• Troškovi intervjua u američkoj ambasadi (185$)",
-        "• Troškovi SEVIS programa (220$)",
-        "• Troškovi smeštaja i hrane tokom boravka u SAD"
+        "• Usluga agencije"
       ]
     },
     {
-      "title": "KORAK 1 – Online prijava",
+      "title": "Korak 1 – Online prijava",
       "blocks": [
         "Prijava na program se vrši direkno sa sajta American Adventure. Link možete pronaći ovde. Da bi Vaša prijava bila registrovana kao Internship/Trainee u sekciji „Podaci u vezi sa studentom“, pod „Trenutna godina studija“, odaberite Intern/Trainee.",
         "Nakon prijema prijave, kontaktiraće Vas predstavnik American Adventure koji će biti zadužen za vodjenje Vaše aplikacije sve do trenutka dobijanja vize. Aplikacioni paket sa dokumentacijom, Ugovorom i brošurom će Vam biti prosleđen na email."
       ]
     },
     {
-      "title": "KORAK 2 – Dokumentacija",
+      "title": "Korak 2 – Dokumentacija",
       "blocks": [
         "Aplikant se prijavljuje na željeni program i predaje sledeću dokumentaciju:",
         "• Uverenje iz suda da nije pod krivičnim postupkom (Srpski i Engleski),",
@@ -94,26 +82,25 @@ export default {
       ]
     },
     {
-      "title": "KORAK 3 – Screening i intervju za posao",
+      "title": "Korak 3 – Screening i intervju za posao",
       "blocks": [
         "Predstavnici sponzorskih agencija će Vam zakazati Skype interjvu i proveriti znanje Engleskog jezika. Na osnovu ovog intervjua ,sponzorska agencija će stvoriti sliku o Vama i formirati plan Vašeg predstavljanja potencijalnim poslodavcima. Isto tako, u slučaju bilo kakvih nedoumica, agent sponzorske agencije će Vam biti na raspolaganju. Nakon ovoga uslediće razgovori sa poslodavcima i proces pronalaženja zaposlenja."
       ]
     },
     {
-      "title": "KORAK 4 – Traženje posla",
+      "title": "Korak 4 – Traženje posla",
       "blocks": [
         "Kada sponzorska agencija pronađe potencijalnog poslodavca, bićete pozvani na razgovor sa njim. Obično treba oko 3 kruga razgovora da prođe dok se ne postigne konačni odgovor da li ste primljeni na određenu poziciju ili ne. Neretko se događa da se više intervjua paralelno održava. Neki poslodavci takođe zahtevaju izradu i video CV dokumenta, uz pomoć naših predstavnika."
       ]
     },
     {
-      "title": "KORAK 5 – Priprema dokumentacije za viziranje",
+      "title": "Korak 5 – Priprema dokumentacije za viziranje",
       "blocks": [
-        "Nakon pozitivnog odgovora od strane poslodavca, sponzorska kompanija kreira Vaš internship-training plan. Od ovog trenutka stvari se odvijaju prilično brzo i uskoro ste spremni za viziranje. Nakon viziranja, sve što treba da uradimo je da Vam pronadjemo odgovarajuću avio kartu i Vi ste spremni.",
-        "Powered by HTML5 Responsive FAQ"
+        "Nakon pozitivnog odgovora od strane poslodavca, sponzorska kompanija kreira Vaš internship-training plan. Od ovog trenutka stvari se odvijaju prilično brzo i uskoro ste spremni za viziranje. Nakon viziranja, sve što treba da uradimo je da Vam pronadjemo odgovarajuću avio kartu i Vi ste spremni."
       ]
     },
     {
-      "title": "Da bi se kandidat mogao razmatrati za dobijanje J-1 vize, mora da ispunjava sledeće uslove:",
+      "title": "Da bi se kandidat mogao razmatrati za dobijanje J-1 vize, mora da ispunjava sledeće uslove",
       "blocks": [
         "Internship program – Stručna praksa u Americi",
         "Pri kraju je svojih studija ili je diplomirao pre manje od godinu dana",
@@ -134,7 +121,7 @@ export default {
       ]
     },
     {
-      "title": "Culinary Internship Program / San Francisco, CALIFORNIA",
+      "title": "Culinary Internship Program / San Francisco, california",
       "blocks": [
         "Training Duration: 12 months",
         "Hours: 32-40 hours per week",
@@ -160,7 +147,7 @@ export default {
       ]
     },
     {
-      "title": "Event management Internship / Temple House / MIAMI BEACH",
+      "title": "Event management Internship / Temple House / miami beach",
       "blocks": [
         "Organization Name · Address · Suite",
         "Temple House, The · 1415 EUCLID AVE ·",
@@ -175,7 +162,7 @@ export default {
       ]
     },
     {
-      "title": "FRONT DESK & FOOD AND BEVERAGE INTERNSHIP / Washington, D.C.",
+      "title": "Front desk & food and beverage Internship / Washington, D.C.",
       "blocks": [
         "Washington Plaza Hotel, D.C. / http://www.washingtonplazahotel.com/",
         "Internship program 12 months",
@@ -188,11 +175,9 @@ export default {
     {
       "title": "Data Analytics Internship program / Chicago downtown Oak Brook offices",
       "blocks": [
-        "Internship program 12 months",
         "Training program 18 months",
         "www.wavicledata.com",
-        "Trusted consulting partner for businesses that want to get more value from growing volumes of data. We design the data strategies and architectures that enable companies to leverage machine learning, artificial intelligence, IoT, and the cloud to deliver accurate, intelligent insights.",
-        "Powered by HTML5 Responsive FAQ"
+        "Trusted consulting partner for businesses that want to get more value from growing volumes of data. We design the data strategies and architectures that enable companies to leverage machine learning, artificial intelligence, IoT, and the cloud to deliver accurate, intelligent insights."
       ]
     }
   ]

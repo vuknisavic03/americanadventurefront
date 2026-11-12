@@ -1,10 +1,8 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import About from "./components/About";
-import Stats from "./components/Stats";
-import Experiences from "./components/Experiences";
-import UsaHighlights from "./components/UsaHighlights";
+import { HomePrograms, HomeSteps, HomePricing, HomeVoices, HomeFaq } from "./components/Home";
+import CtaBand from "./components/CtaBand";
 import Footer from "./components/Footer";
 import navItems from "./data/navItems";
 import { DEMO_ADMIN } from "./config";
@@ -275,7 +273,7 @@ export default function App() {
         return <Cooperation />;
       case "/foto-story":
       case "/iskustva":
-        return <ExperiencesPage />;
+        return <ExperiencesPage onNavigate={handleNavigate} />;
       case "/novosti":
       case "/vesti":
         return <News onNavigate={handleNavigate} />;
@@ -300,10 +298,12 @@ export default function App() {
         return (
           <>
             <Hero onNavigate={handleNavigate} />
-            <About />
-            <UsaHighlights onNavigate={handleNavigate} />
-            <Stats />
-            <Experiences />
+            <HomePrograms onNavigate={handleNavigate} />
+            <HomeSteps />
+            <HomePricing onNavigate={handleNavigate} />
+            <HomeVoices onNavigate={handleNavigate} />
+            <HomeFaq onNavigate={handleNavigate} />
+            <CtaBand onNavigate={handleNavigate} />
           </>
         );
     }

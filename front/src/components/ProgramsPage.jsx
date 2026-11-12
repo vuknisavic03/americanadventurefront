@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "../i18n/LanguageContext";
 import jobItems from "../data/jobItems";
+import { SWT_FAQS } from "../data/faq";
+import CtaBand from "./CtaBand";
+import { DEMO_MODE } from "../config";
 import { Badge, Button, CheckIcon, ChevronDownIcon, Container, PageHeader, cx, inputSmCls } from "./ui";
 
 // Podaci su usklađeni sa workandtravel.rs (stanje: novembar 2026). Cene su u USD osim gde piše drugačije.
@@ -236,50 +239,47 @@ const ALL_PROGRAMS = [
   },
 ];
 
-const SWT_FAQS = [
-  {
-    q: "Ko može da se prijavi?",
-    a: "Redovni studenti od 19 do 26 godina koji su tekuću godinu upisali prvi put. Brucoši mogu ako nisu pravili pauzu posle srednje škole i ako su položili bar polovinu ispita predviđenih za taj deo godine. Minimalnog proseka nema.",
-  },
-  {
-    q: "Koliko mogu da zaradim?",
-    a: "Satnice su najčešće od 10 do 20 dolara, a svaki sat preko 40 nedeljno plaća se 50% više. Radi se obično 32 do 40 sati nedeljno. Broj sati i zaradu niko ne može da garantuje unapred.",
-  },
-  {
-    q: "Šta je radna ponuda (Job Offer)?",
-    a: "Dokument koji dobijaš pre puta. U njemu su poslodavac, posao, satnica, radno vreme i uslovi smeštaja. Potpisom prihvataš ta prava i obaveze.",
-  },
-  {
-    q: "Mogu li da radim drugi posao?",
-    a: "Možeš, ali tek kada ga sponzor odobri. Prvi posao ostaje prioritet. Rad kod poslodavca koga sponzor nije odobrio može da dovede do prekida programa.",
-  },
-  {
-    q: "Da li je smeštaj obezbeđen i koliko košta?",
-    a: "U Full paketu smeštaj je deo radne ponude. Plaća se posebno, obično od 50 do 200 dolara nedeljno, a u velikim gradovima više. U Self paketu smeštaj nalaziš sam i sponzor mora da ga odobri.",
-  },
-  {
-    q: "Koju vizu dobijam i može li da se produži?",
-    a: "J-1 vizu. Dozvoljava do četiri meseca rada i još mesec dana putovanja. Ne može da se produži.",
-  },
-  {
-    q: "Šta ako viza ne bude odobrena?",
-    a: "Ako ispunjavaš uslove programa, vraćamo ti uplaćeni novac. I avio karta kupljena preko nas vraća se u celosti.",
-  },
-  {
-    q: "Mogu li ponovo na program?",
-    a: "Možeš, ako si se prošli put vratio pre isteka vize i ako redovno polažeš ispite.",
-  },
-];
-
 // Pun tekst sa starog sajta — učitava se tek kad se program otvori (svaki fajl je poseban chunk).
 const DETAIL_LOADERS = import.meta.glob("../data/programDetails/*.js");
 const DETAIL_IDS = { "work-and-travel": ["work-and-travel", "lifeguards"] };
 
+const JOB_TYPES = ["Konobar i pomoćni konobar", "Kuhinja i pranje posuđa", "Recepcija", "Sobarica / housekeeping", "Kasa i prodaja", "Zabavni parkovi", "Spasilac na bazenu", "Održavanje"];
+const JOB_PLACES = ["Cape Cod", "Ocean City", "Myrtle Beach", "Wildwood", "Block Island", "Nantucket", "Park City", "Wisconsin Dells", "Aljaska", "Havaji"];
+
+/** Vrste poslova i mesta (izvor: workandtravel.rs) — bez pojedinačnih ponuda dok ih backend ne servira. */
+function JobTypes() {
+  const chip = "rounded-full border border-line px-3.5 py-1.5 text-sm text-ink";
+  return (
+    <section id="baza-poslova" className="mt-20 scroll-mt-36 border-t border-line pt-16">
+      <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-4">
+          <h2 className="font-display text-3xl font-bold text-ink">Poslovi i mesta</h2>
+          <p className="mt-3 text-[15px] leading-relaxed text-ink-2">
+            Poslovi su sezonski, u turističkim mestima. Konkretne ponude sa satnicom i smeštajem dobijaš posle prijave.
+          </p>
+        </div>
+        <div className="space-y-8 lg:col-span-8">
+          <div>
+            <h3 className="text-sm font-medium text-ink-3">Najčešće pozicije</h3>
+            <ul className="mt-3 flex flex-wrap gap-2">{JOB_TYPES.map((x) => <li key={x} className={chip}>{x}</li>)}</ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-ink-3">Gde naši studenti rade</h3>
+            <ul className="mt-3 flex flex-wrap gap-2">{JOB_PLACES.map((x) => <li key={x} className={chip}>{x}</li>)}</ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function ProgramDetails({ programId }) {
   const [parts, setParts] = useState([]);
+  const [showAll, setShowAll] = useState(false);
   useEffect(() => {
     let alive = true;
     setParts([]);
+    setShowAll(false);
     const ids = (DETAIL_IDS[programId] || [programId]).filter((id) => DETAIL_LOADERS[`../data/programDetails/${id}.js`]);
     Promise.all(ids.map((id) => DETAIL_LOADERS[`../data/programDetails/${id}.js`]().then((m) => m.default))).then(
       (loaded) => alive && setParts(loaded)
@@ -289,7 +289,8 @@ function ProgramDetails({ programId }) {
     };
   }, [programId]);
 
-  const sections = parts.flatMap((part) => part.sections);
+  const allSections = parts.flatMap((part) => part.sections);
+  const sections = showAll ? allSections : allSections.slice(0, 8);
   const files = [...new Set(parts.flatMap((part) => part.files || []))];
   if (sections.length === 0) return null;
 
@@ -332,6 +333,15 @@ function ProgramDetails({ programId }) {
               </div>
             </details>
           ))}
+          {allSections.length > 8 && (
+            <button
+              type="button"
+              onClick={() => setShowAll((v) => !v)}
+              className="w-full py-5 text-left text-[15px] font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:decoration-ink"
+            >
+              {showAll ? "Prikaži manje" : `Prikaži sve teme (${allSections.length})`}
+            </button>
+          )}
         </div>
       </div>
     </section>
@@ -407,7 +417,7 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
         title={tr("prog.title", "Programi i usluge")}
         lead={tr(
           "prog.subtitle",
-          "Izaberite program koji odgovara vašim akademskim ciljevima i željama za putovanjem. Svi programi su u celosti podržani od strane našeg tima."
+          "Izaberi program, pogledaj uslove i cenu, pa se prijavi. Prijava je besplatna."
         )}
       />
 
@@ -482,11 +492,15 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
         </article>
 
         {/* Baza poslova (Prilog 1B, tačka 2) */}
-        {program.hasJobs && (
+        {program.hasJobs && !DEMO_MODE && <JobTypes />}
+
+        {/* Katalog poslova je za sada demo (lokalni podaci) — javno se prikazuje samo u demo režimu. */}
+        {program.hasJobs && DEMO_MODE && (
           <section id="baza-poslova" className="mt-20 scroll-mt-36 border-t border-line pt-16">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div className="max-w-xl">
                 <h2 className="font-display text-3xl font-bold text-ink">Baza poslova u SAD</h2>
+                <p className="mt-2 inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800">Demo podaci — nisu stvarne ponude</p>
                 <p className="mt-3 text-base leading-relaxed text-ink-2">
                   Ponuda proverenih poslodavaca sa obezbeđenim smeštajem i odličnim satnicama.
                 </p>
@@ -595,6 +609,7 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
         {/* Pun tekst programa sa starog sajta */}
         <ProgramDetails programId={program.id} />
       </Container>
+      <CtaBand className="mt-20" href={applyHref} onNavigate={onNavigate} />
     </div>
   );
 }

@@ -7,25 +7,13 @@ export default {
   ],
   "sections": [
     {
-      "title": "Uvod",
-      "blocks": [
-        "Prijavi se"
-      ]
-    },
-    {
-      "title": "Lifeguards SWT",
-      "blocks": [
-        "spasioci usa swt"
-      ]
-    },
-    {
       "title": "Lifeguard SWT je program koji omogućava studentima nezaboravno iskustvo radeći na bazenima širom SAD.",
       "blocks": [
         "Dugogodišnja posvećenost i iskustvo naše kompanije će Vam omogućiti da na dobro organizovan način aplicirate i dobijete J1 SWT vizu, osigurate zaposlenje i pripremite se za fantastično leto na bazenima u USA."
       ]
     },
     {
-      "title": "POSAO SPASIOCA",
+      "title": "Posao spasioca",
       "blocks": [
         "POSAO SPASIOCA Drugi poslovi na bazenu LOKACIJE ZARADA SERTIFIKAT AMERICAN RED CROSS POLAGANJE - USLOVI SMEŠTAJ SLOBODNO VREME",
         "Dok su na dužnosti, svi spasioci moraju obavljati sledeće:",

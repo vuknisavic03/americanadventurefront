@@ -3,6 +3,7 @@ import Logo from "./Logo";
 import { useTranslation } from "../i18n/LanguageContext";
 import { discountGroups as defaultGroups, earlyReasons as defaultReasons } from "../data/discounts";
 import { Badge, Button, Container, PageHeader } from "./ui";
+import CtaBand from "./CtaBand";
 
 /**
  * Discounts — stranica „Akcije i popusti".
@@ -113,14 +114,7 @@ export default function Discounts({
       </section>
 
       {/* Poziv na prijavu */}
-      <section className="border-t border-line bg-white py-16 sm:py-20">
-        <Container className="flex flex-wrap items-center justify-between gap-6">
-          <h2 className="font-display max-w-xl text-3xl font-bold text-ink sm:text-4xl">{t("disc.ctaTitle")}</h2>
-          <Button size="lg" onClick={onRegister}>
-            {t("header.apply")}
-          </Button>
-        </Container>
-      </section>
+      <CtaBand onNavigate={onNavigate} />
     </>
   );
 }

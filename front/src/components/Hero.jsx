@@ -1,11 +1,16 @@
 // Hero.jsx
 import { useTranslation } from "../i18n/LanguageContext";
-import TimeZones from "./TimeZones";
 import { Button } from "./ui";
+
+const STATS = [
+  { value: "8.123", label: "učesnika do sada" },
+  { value: "83", label: "grada u SAD" },
+  { value: "45", label: "saveznih država" },
+];
 
 /**
  * Hero — uvodna sekcija: video Amerike preko celog ekrana, naslov i dve akcije,
- * a na dnu tabla sa tačnim vremenom u SAD (uživo).
+ * a na dnu tri brojke o agenciji.
  *
  * Video je oštar (bez blura) — tekst čita tamni preliv odozdo. Na telefonu se
  * učitava manja verzija; uz `prefers-reduced-motion` ostaje samo poster slika.
@@ -17,7 +22,7 @@ import { Button } from "./ui";
 export default function Hero({
   poster = "/videos/hero-poster.jpg",
   applyHref = "/prijava-online?program=work-and-travel",
-  programsHref = "/programi",
+  programsHref = "/programi?p=work-and-travel",
   onNavigate = () => {},
 }) {
   const { t } = useTranslation();
@@ -68,12 +73,16 @@ export default function Hero({
         </div>
       </div>
 
-      {/* Uživo: vreme u SAD */}
+      {/* Brojke — dokaz odmah ispod poziva na akciju */}
       <div className="border-t border-white/15 bg-ink/40 backdrop-blur-md">
-        <div className="mx-auto flex w-full max-w-7xl flex-col px-2 sm:px-3 lg:flex-row lg:items-center">
-          <p className="px-3 pt-4 text-[13px] text-white/70 sm:px-5 lg:w-44 lg:shrink-0 lg:pt-0">{t("tz.now")}</p>
-          <TimeZones className="min-w-0 flex-1" />
-        </div>
+        <dl className="mx-auto grid w-full max-w-7xl grid-cols-3 divide-x divide-white/15 px-5 sm:px-8">
+          {STATS.map((s) => (
+            <div key={s.label} className="py-4 pl-4 first:pl-0 sm:py-5 sm:pl-8">
+              <dd className="font-display text-2xl font-bold tabular-nums text-white sm:text-3xl">{s.value}</dd>
+              <dt className="mt-0.5 text-[13px] leading-snug text-white/70">{s.label}</dt>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

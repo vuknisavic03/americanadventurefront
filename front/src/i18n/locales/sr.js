@@ -69,8 +69,8 @@ export default {
   "lang.label": "Jezik",
 
   "hero.kicker": "Work & Travel USA",
-  "hero.title": "Tvoja avantura u Americi počinje ovde",
-  "hero.subtitle": "Programi razmene, putovanja i iskustva koja menjaju život — uz podršku na svakom koraku.",
+  "hero.title": "Leto u Americi: posao, plata i putovanje",
+  "hero.subtitle": "Work and Travel USA 2027 za studente. Nalazimo ti posao, vodimo te do vize i tu smo dok si tamo.",
   "hero.ctaPrimary": "Pogledaj programe",
   "hero.ctaSecondary": "Kontaktiraj nas",
   "hero.scroll": "Skroluj",
@@ -89,7 +89,7 @@ export default {
 
   "exp.kicker": "Iskustva",
   "exp.heading": "Iskustva studenata",
-  "exp.subtitle": "Iskustva iz prve ruke — o agenciji, mestu i poslodavcu.",
+  "exp.subtitle": "Doslovne izjave učesnika o agenciji, mestu i poslodavcu, sa ocenama koje su sami dali.",
   "exp.agency": "Agencija",
   "exp.location": "Lokacija",
   "exp.employer": "Poslodavac",
@@ -573,7 +573,7 @@ export default {
   "header.account": "Moj nalog",
   "header.apply": "Prijavi se za program",
   "hero.ctaApply": "Prijavi se besplatno",
-  "hero.ctaPrograms": "Pogledaj programe",
+  "hero.ctaPrograms": "Kako izgleda program",
   "tz.now": "Trenutno u Americi",
   "tz.title": "Vremenske zone u SAD",
   "tz.diffHint": "Razlika u odnosu na Beograd",

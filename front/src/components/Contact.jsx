@@ -8,7 +8,7 @@ const DEFAULT_CONTACT = {
   agencyName: "American Adventure DOO",
   city: "Beograd",
   address: "Gospodar Jevremova 59/4, 11000 Beograd, Srbija",
-  workingHours: "Ponedeljak – Petak: 10:00 – 18:00 h",
+  workingHours: "Ponedeljak – Petak: 09:00 – 17:00 h",
   phones: ["+381 11 4527 320", "+381 64 107 2004"],
   emails: [
     { label: "Glavna kancelarija & SWT", email: "beograd@workandtravel.rs" },

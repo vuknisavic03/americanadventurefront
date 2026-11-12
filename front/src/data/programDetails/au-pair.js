@@ -7,13 +7,7 @@ export default {
   "videos": [],
   "sections": [
     {
-      "title": "Uvod",
-      "blocks": [
-        "Prijavi se"
-      ]
-    },
-    {
-      "title": "INFORMACIJE O PROGRAMU",
+      "title": "Informacije o programu",
       "blocks": [
         "INFORMACIJE O PROGRAMU AU PAIR INFORMATOR USLOVI ZA PRIJAVU NA PROGRAM CENA KORACI PRIJAVE NA PROGRAM APLIKACIJA J1 VIZA PRE ODLASKA U SAD VI I VAŠA HOST PORODICA ZAŠTO SE PRIJAVITI NA PROGRAM?",
         "Osamdesetih godina dvadesetog veka u Americi se pojavila ideja da se mladim devojkama iz različitih zemalja pruži mogućnost legalnog čuvanja dece porodicama u Americi. Razvojem industrije i tehnologije, ljudi su postali veoma ograničeni slobodnim vremenom zbog povećanja radnih sati, i iz toga se javila potreba za zapošljavanjem osoba koje će voditi brigu o njihovoj deci. AU PAIR je jedan od programa koji daje priliku mladim devojkama iz čitavog sveta da se kroz čuvanje dece i boravak u američkim porodicama upoznaju sa američkom kulturom, načinom života, školovanjem i mnogim drugim stvarima.",
@@ -60,58 +54,57 @@ export default {
       ]
     },
     {
-      "title": "KORAK 1 – Informativni razgovor pre prijave",
+      "title": "Korak 1 – Informativni razgovor pre prijave",
       "blocks": [
         "Posle informativnog sastanka sa jednim od naših agenata, započinjemo pripreme za Vaš AU PAIR program. Potrebno je da obavimo mini intervju u vezi Vašeg iskustva, koji tip porodice bi Vam najviše odgovarao, moguće mesto stanovanja HOST porodice i tako dalje. Pre potpisivanja Ugovora potrebno je uraditi psihotest. Psihotest sadrži niz pitanja koje Vam agenti prodaje dostavljaju u pisanoj formi i koji ste u obavezi da popunite tačnim i iskrenim odgovorima. Cilj je da saznamo što više informacija u vezi Vaše ličnosti da bismo Vam obezbedili porodicu koja Vam najviše odgovara."
       ]
     },
     {
-      "title": "KORAK 2 – Prijava na program",
+      "title": "Korak 2 – Prijava na program",
       "blocks": [
         "Na našoj Internet stranici imate online prijavu koju treba da popunite ukoliko ste se odlučili za AU PAIR program. Nakon toga ćemo Vam na mail poslati svu dokumentaciju i predstojeće korake na putu do Vašeg cilja. Dokumentacija uključuje i instrukcije za plaćanje. Nakon plaćanja prvih troškova programa ćete i zvanično napraviti Vaš prvi korak ka SAD-u. Cenu programa čini prijava i avans koji se plaćaju na dan potpisivanja Ugovora a druga rata se plaća nakon pronalaženja Vaše željene porodice. Potpisuje se Ugovor o pružanju usluga sa American Adventure d.o.o gde se jasno definišu prava i obaveze Vas kao naručioca usluge i naše agencije kao davaoca usluge."
       ]
     },
     {
-      "title": "KORAK 3 – Dokumentacija",
+      "title": "Korak 3 – Dokumentacija",
       "blocks": [
         "Nakon potpisivanja Ugovora, Vaša obaveza je da dostavite neophodnu dokumentaciju u narednih 10 radnih dana. Naši saradnici će biti sa Vama tokom celog procesa, dok god bezbedno ne stignete do željene porodice. Aplikacija za porodicu biće spram Vaših želja i saveta saradnika, bićete prihvaćeni u željenu porodicu samo ukoliko obe strane pokažu odobrenje."
       ]
     },
     {
-      "title": "KORAK 4 – Aplikacija",
+      "title": "Korak 4 – Aplikacija",
       "blocks": [
         "Sledeći korak nam je popunjavanje zvanične aplikacije za traženje AU PAIR HOST porodice. Da bismo adekvatno popunili aplikaciju potrebno je da priložite minimum dve reference od porodica kojima ste čuvali decu, minimum jednu referencu od osobe kojoj ste čuvali decu u vezi sa Vašim psihološkim profilom. Morate da napravite fotokolaž sačinjen od slika Vas i dece tokom brige o njima i poželjno je da bude u JPEG formatu. Obavite lekarski pregled, izvadite uverenje da niste krivično gonjeni, kopiju vozačke dozvole, propratno pismo porodici u SAD, kopiju Vaše diplome (sa fakulteta ili srednje škole), kopiju intervju-a koji smo ranije obavili i psihometrični test. Kada smo to prikupili, popunjavate aplikaciju prilikom koje će Vam agent asisitirati. Aplikacija se šalje AU PAIR agenciji i tada traženje Vaše HOST porodice može da počne."
       ]
     },
     {
-      "title": "KORAK 5 – Traženje HOST porodice",
+      "title": "Korak 5 – Traženje HOST porodice",
       "blocks": [
         "HOST porodice primaju nekoliko aplikacija istovremeno i uvek odaberu nekoliko potencijalnih kandidata. HOST porodica će Vas kontaktirati prvo putem mail-a da biste se dogovorili za telefonski razgovor ili će Vas odmah telefonskim putem kontaktirati. Agent će Vas upozoriti da budete pri Vašem telefonu kada uđete u proces potrage za HOST porodicom da ne biste propustili priliku. Porodice najviše zanimaju informacije u vezi sa Vašim prethodnim iskustvom u čuvanju dece. Nemojte se iznenaditi ako Vam upute pitanje u vezi Vaše ličnosti. Najbitnije je da na pitanja odgovarate punim rečenicama, ne oklevajte da se udubite u konverzaciju sa njima. Nakon razgovora sa porodicom ćemo ubrzo dobiti odgovor da li ste primljeni od strane HOST porodice ili niste. Ovakvi intervjui se održavaju sve dok ne budete primljeni od strane jedne HOST porodice."
       ]
     },
     {
-      "title": "KORAK 6 – Generisanje dokumenata potrebnih za dobijanje J1 vize od strane AU PAIR agencije",
+      "title": "Korak 6 – Generisanje dokumenata potrebnih za dobijanje J1 vize od strane Au Pair agencije",
       "blocks": [
         "Nakon što se HOST porodica odlučila za Vas, AU PAIR agencija u Sjedinjenim Američkim Državama započinje generisanje potrebnih dokumenata za dobijanje Vaše J1 vize (DS 2019 obrazac). Kada su svi dokumenti prikupljeni, ugovara se intervju za dobijanje vize u ambasadi u Beogradu."
       ]
     },
     {
-      "title": "KORAK 7 – Zakazivanje intervjua u ambasadi",
+      "title": "Korak 7 – Zakazivanje intervjua u ambasadi",
       "blocks": [
         "Agencija je ta koja Vam zakazuje viziranje u skladu sa Vašim željenim datumom putovanja i naravno Vašim dogovorom sa HOST porodicom. Vaša obaveza do tada jeste da uplatite taksu od $160 američkoj ambasadi u Beogradu. Pre odlaska na intervju za vizu, agencija će Vas sprovesti kroz moguća pitanja na samom razgovoru za vizu. Nakon obavljenog razgovora sa konzulom, na licu mesta dobijate odgovor da li ste dobili vizu ili ne."
       ]
     },
     {
-      "title": "KORAK 8 – Avio karta i polazak",
+      "title": "Korak 8 – Avio karta i polazak",
       "blocks": [
         "Po pitanju avio karte, AU PAIR agencija Vam obezbeđuje istu. Vi ne snosite troškove avio prevoza. Jedina stavka koju treba da finansirate jeste doplata (taksa) za aerodrome u iznosu od $100."
       ]
     },
     {
-      "title": "KORAK 9 – Dolazak kod HOST porodice",
+      "title": "Korak 9 – Dolazak kod HOST porodice",
       "blocks": [
         "U većini slučajeva, HOST porodica će Vas pokupiti na aerodromu i obezbediti transfer do mesta stanovanja. Ukoliko to nije slučaj, moraćete sami da snosite troškove transporta od aerodroma do HOST porodice.",
-        "Powered by HTML5 Responsive FAQ",
         "Za popunjavanje aplikacije potrebna nam je određena dokumentacija. Popunjavanje aplikacije je dosta zahtevan posao i zbog toga će Vam agenti American Adventure-a biti konstantno na raspolaganju tokom tog procesa.",
         "POTREBNA DOKUMENTACIJA",
         "• fotokopija važećeg pasoša,",
@@ -147,10 +140,9 @@ export default {
       ]
     },
     {
-      "title": "SOCIAL SECURITY NUMBER",
+      "title": "Social security number",
       "blocks": [
         "SOCIAL SECURITY NUMBER SSN je socijalni broj koji je obavezan za legalan rad u SAD-u. Ovaj broj se dobija nakon apliciranja za isti u kancelarijama Social Security Administration, po dolasku u Ameriku.",
-        "Powered by HTML5 Responsive FAQ",
         "Posetite lekara! Izuzetno je bitno da posetite lekara pre nego što krenete na bilo kakav put, naročito ukoliko ostajete u stranoj zemlji duži vremenski period. Uradite opsežne analize jer iako ste zdravstveno osigurani u stranoj državi postoje mnoge stavke koje ne podležu osnovnom osiguranju pogotovo ukoliko niste oboleli u stranoj džavi.",
         "Provera dokumentacije! Mi ćemo Vam pomoći i proveriti svu dokumentaciju koja Vam je potrebna za program. Nakon dobijanja vize ćete imati mnoštvo dokumentacije i zato je neophodno da pre samog puta dobro proverite da li Vam je tu pasoš, Vaš DS obrazac, SEVIS, zdravstvena knjižica.",
         "Mesto u kom ćete boraviti! HOST porodica će Vam svakako pokazati mesto u kome ćete boraviti i odvesti Vas da ga upoznate, ali kao i svi, niko ne zna sve informacije o svom gradu. Edukujte se, pročitajte gde odlazite. Možda u tom gradu postoji nešto što Vas interesuje a što ne želite da propustite, kao i nešto što po svaku cenu želite da zaobiđete.",
@@ -162,7 +154,7 @@ export default {
       ]
     },
     {
-      "title": "OBAVEZE HOST PORODICE PREMA AU PAIR KANDIDATU",
+      "title": "Obaveze host porodice prema Au Pair kandidatu",
       "blocks": [
         "• Da obezbedi avio kartu u oba pravca za učesnika programa,",
         "• da obezbedi i finansira proizvoljni kurs na jednom od lokalnih univerziteta,",
@@ -175,7 +167,7 @@ export default {
       ]
     },
     {
-      "title": "OBAVEZE AU PAIR KANDIDATA",
+      "title": "Obaveze Au Pair kandidata",
       "blocks": [
         "• Au Pair kandidat treba da vodi računa o svom ponašanju, načinu oblačenja, treba da pokaže naklonost prema deci, pažnju i brigu, ali takođe i autoritet,",
         "• briga o deci najviše dok su roditelji na poslu, da spremite deci užinu kada je to potrebno,",
@@ -185,7 +177,6 @@ export default {
         "• da poštujete i pridržavate se svih ugovorenih obaveza,",
         "• da prisustvujete online orijentaciji u vezi sa čuvanjem dece u Americi,",
         "• da uredno pohađate kurs po svom izboru koji Vam finansira porodica u kojoj odsedate.",
-        "Powered by HTML5 Responsive FAQ",
         "Ukoliko želite da promenite sredinu u kojoj trenutno živite, da upoznate novu kulturu, da date sebi šansu za novim radnim iskustvom, AU PAIR je program za Vas. Porodica za koju se sami odlučite pružiće Vam šansu da se školujete na jednom od američkih univerziteta, da se upoznate sa njihovom svakodnevicom i načinom života, da stvorite radne navike, i pripremite se za svoju buduću porodicu. Program Vam takođe nudi i mesec dana putovanja po celoj Americi po isteku Vašeg radnog dela gde imate priliku da posetite najatraktivnije delove Amerike, kao i njene impozantne gradove.",
         "• VI U AMERICI: Ovo je jedinstvena prilika da posetite jednu od najuticajnijih i najrazvijenijih zemalja sveta. Postoji izreka “Čovek vredi onoliko koliko država poseti!” Mi od Vas želimo da živite u tom duhu, u svojoj avanturi. Ovo je pre svega sjajna prilika da upoznate ne samo jednu različitu kulturu već više njih.",
         "• VI I PORODICA: AU PAIR program je program brige o deci. Ritam života XXI veka je izuzetno dinamičan, iz tog razloga pojavila se potreba za zapošljavanjem osoba od poverenja koje su u mogućnosti brinuti o najmađim naraštajima. Ovo je prilka da vidite sebe i svoju porodicu u budućnosti, da vidite šta treba a šta ne treba da radite, da iskusite kako je to brinuti o nekome ko za to nije još uvek spreman. Upijajte svaki sekund sa decom i sa porodicom, postoji mnogo toga što možete naučiti od dece, brige o njima i životu sa drugačijom porodicom.",

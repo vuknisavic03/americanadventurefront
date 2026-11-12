@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useTranslation } from "../i18n/LanguageContext";
 import experiencesData from "../data/experiencesPage";
 import { Button, Container, PageHeader, cx } from "./ui";
+import UsaHighlights from "./UsaHighlights";
+import CtaBand from "./CtaBand";
 
 const RATING_TONE = {
   Pozitivno: "bg-emerald-100 text-emerald-800",
@@ -23,7 +25,7 @@ function Rating({ label, value }) {
  * ExperiencesPage — iskustva učesnika (ruta /foto-story).
  * Izjave su doslovne (src/data/experiencesPage.js), zajedno sa ocenama koje su učesnici sami dali.
  */
-export default function ExperiencesPage({ items = experiencesData }) {
+export default function ExperiencesPage({ items = experiencesData, onNavigate = () => {} }) {
   const { t, lang } = useTranslation();
   const tr = (field) => (typeof field === "string" ? field : field?.[lang] || field?.SR || "");
   const [shown, setShown] = useState(12);
@@ -96,6 +98,9 @@ export default function ExperiencesPage({ items = experiencesData }) {
           )}
         </Container>
       </section>
+
+      <UsaHighlights onNavigate={onNavigate} />
+      <CtaBand onNavigate={onNavigate} />
     </>
   );
 }

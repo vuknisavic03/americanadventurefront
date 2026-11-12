@@ -11,37 +11,13 @@ export default {
   ],
   "sections": [
     {
-      "title": "Uvod",
-      "blocks": [
-        "Prijavi se"
-      ]
-    },
-    {
-      "title": "American Adventure od 2007. godine organizuje programe kulturne razmene sa SAD. Učenicima i roditeljima pružamo podršku tokom prijave, pripreme, boravka u Americi i povratka kući. Naša posvećenost i iskustvo čine nas pouzdanim partnerima za ovo nezaboravno putovanje obrazovanja.",
-      "blocks": [
-        "(doček host porodice na aerodromu)"
-      ]
-    },
-    {
       "title": "✅ Mogućnost odabira škola u svim saveznim državama, regijama",
       "blocks": [
         "(na ekskurziciji sa host porodicom u Majamiju)"
       ]
     },
     {
-      "title": "Da je ovo nešto najlepše što se može desiti jednom srednjoškolcu mogu da svedoče mnogi, sad, uspešni studenti ili zreli ljudi koji su na ovom programu već učestvovali!",
-      "blocks": [
-        "(sa drugarima iz razreda i sa vaterpola)"
-      ]
-    },
-    {
-      "title": "Prijavi se na besplatne konsultacije – zajedno gradimo mostove ka obrazovanju i snovima tvog deteta!",
-      "blocks": [
-        "(na fudbalskoj utakmici)"
-      ]
-    },
-    {
-      "title": "HIGH SCHOOL USA PROGRAM",
+      "title": "High School USA program",
       "blocks": [
         "HIGH SCHOOL USA PROGRAM O ORGANIZATORU PROGRAMA USLOVI PRIJAVE NA PROGRAM ZAŠTO SE PRIJAVITI NA PROGRAM CENOVNIK DINAMIKA I KORACI PROGRAMA SREDNJE ŠKOLE U AMERICI HOST PORODICA U AMERICI LOKALNI KOORDINATOR ŠTA PROGRAM OBUHVATA? KORISNE INFORMACIJE GALERIJA INFORMATOR",
         "Program HIGH SCHOOL USA – SREDNJE ŠKOLE U AMERICI je program kulturne razmene prevashodno namenjen pohađanju I, II, III ili IV razreda srednje škole u SAD kao i učenicima VIII razreda osnovnih škola.vvvvv Boravak je obezbeđen u američkim porodicama, pažljivo odabranim od strane naših Sponzorskih agencija. Pored kvalitetnog obrazovanja, program omogućava upoznavanje sa američkom kulturom, tradicijom i načinom života. Program ima za cilj i podizanje nivoa znanja engleskog jezika. Odlazak učenika na program razmene predstavlja veliko i jedinstveno životno iskustvo, kao i pripremu za buduće životne izazove i snalaženje u novim situacijama.",
@@ -134,7 +110,6 @@ export default {
         "Vannastavne aktivnosti (sport, muzika, gluma, saradnja sa školskim novinama, hor, biznis klub i dr.) predstavljaju veoma važan segment u američkom obrazovnom sistemu. Njih organizuje škola posle nastave i veoma je važno aktivno učestvovati u njima.",
         "Važno je napomenuti da najveći broj američkih škola, na kraju uspešno završenog poslednjeg razreda, učesnicima programa izdaje svedočanstvo o završenom razredu. Izdavanje diplome o završetku srednje škole nije česta pojava.",
         "Sport je vrlo bitan za američko društvo. Nadamo se da ćete iskoristiti svaku priliku da se bavite sportom koji volite ili da se oprobate u sportovima koji nisu popularni u Evropi (američki fudbal ili bejzbol, golf). Ukoliko se bavite sportom u svojoj zemlji i želite da nastavite da trenirate u Americi to najčešće nije problem, ali se može desiti da sport koji trenirate nema u školi koja vas je upisala. Niko Vas neće sputavati da trenirate ono što želite. Pored svega gore navedenog moramo dodati da ukoliko bilo ko želi da učestvuje u sportskim aktivnostima, da igra za školu ili samo da trenira, mora da uradi i obavezni lekarski pregled koji nije uključen u medicinsko osiguranje programa i cenu tog pregleda plaćaće sam kandidat.",
-        "<span data-mce-type=\"bookmark\" style=\"display: inline-block; width: 0px; overflow: hidden; line-height: 0;\" class=\"mce_SELRES_start\">﻿</span>",
         "Za razliku od naših škola, Američki sistem podrazumeva manji broj predmeta po polugodištu, ali sličan broj predmeta tokom jedne školske godine kao i kod nas. Američke škole su po predmetima slične našim gimnazijama, ali pored opštih predmeta tu se mogu naći predmeti iz oblasti umetnosti (od pevanja u horu, sviranja instrumenta, učestvovanja u drami, mjuziklu, preko vajarstva, pa do filmske produkcije), ekonomije, prava i slično. Jedino što sigurno nećete naći u američkim srednjim školama to su predmeti iz oblasti medicine i medicinskih nauka. Pravila škole su sasvim različita u odnosu na pravila kod nas. Prvo, razredni starešina ne postoji. Brigu o svakom učeniku vodi “savetnik”, koji će Vam i pomoći pre početka škole da izaberete adekvatne predmete. Tokom svakog polugodišta, kao strani učenik možete izabrati predmete prema Vašem interesovanju. Trebalo bi da znate da Vas niko neće upozoriti da predmet koji uzimate nije adekvatan Vašem razredu, zbog toga uvek tražite da pohađate predmete koji su adekvatni i odgovaraju nivou nastave koju biste imali u Srbiji. Možete izabrati između 6-8 predmeta po polugodištu. U poslednjih 15 godina američke škole retko i sve ređe izdaju diplome stranim đacima (maturantima), tako da ako završavate poslednji razred u Americi, vodite računa da škola zadržava pravo da Vam ne izda Diplomu. Obično je razlog vrlo racionalan, Vi ste većinu svog školovanja obavili u Srbiji, pa je logično da je Vaša škola ta koja bi trebalo da Vam izda Diplomu. Ovo ne važi samo za učenike iz Srbije već i za učenike svih zemalja sveta. Ukoliko škola ne izdaje diplomu što je u 90% slučajeva, ono što je sigurno je da ćete dobiti svedočanstvo sa ocenama za tu godinu. Vrlo je važno da u tom slučaju pohađate adekvatne predmete za 12. razred (tj. predmete za IV godinu srednje škole), da Vam škola na kraju godine izda potvrdu da ona ne izdaje Diplome stranim učenicima, ali da ste vi završili 12. razred (ili ukoliko niste upisani u adekvatan razred da ste pohađali predmete iz 12. razreda što je u Americi moguće za učenike na razmeni) i da možete aplicirati na bilo koji fakultet u SAD-u, ili da umesto Diplome donesete položeni SAT ili GED test. Svaki učenik je odgovoran za biranje predmeta, a diskreciono pravo je svake škole da proceni u koji će razred upisati učenika. Svaki učenik je odgovoran da na kraju školske godine donese originalna dokumenta u zemlju radi nostrifikacije. Svi dokumenti moraju imati APOSTILLE – pečat koji se dobija u lokalnom Home Office-u. Bez ovog pečata naše Ministarstvo neće uzimati u razmatranje svedočanstva i Diplome za nostrifikaciju.",
         "USLUGE VALIDACIJE I OVERE APOSTILLE PEČATOM",
         "Sponzorska agencija može da pruži usluge đacima oko kompletiranja potrebne dokumentacije koji zahteva Ministarstvo prosvete radi nostrifikacije. Naknada za ove usluge se plaća direktno Sponzorskoj agenciji.",
@@ -147,7 +122,6 @@ export default {
         "Porodice koje primaju učenike su pune entuzijazma i žele da njihova deca ili oni sami saznaju o drugim narodima i kulturama kao i da podele svoju kulturu i način života sa novim članom, a pre svega vole decu. Zbog svega ovoga od svakog učenika se očekuje da poštuje svoju porodicu i da nastoji da se što pre prilagodi novim pravilima kuće u kojoj boravi. Vaša porodica će zauzvrat Vama pružiti otvoreno srce, kao i podršku tokom celog boravka. Od Vas će se očekivati da nakon završetka školskih obaveza slobodno vreme provodite zajedno kao i da obavljate sitne dužnosti u okviru porodice (sređivanje sobe, svojih stvari, pomoć u kući i sl.) uostalom ne više od onoga što i sami članovi obavljaju. Sigurno ćete imati priliku da pokažete šta znate, da im objasnite kako živimo, da spremite neko nacionalno jelo ili slično. Porodica će želeti da zna o vašoj zemlji i pomoći će Vam da razumete njihovu. Same porodice smeštene su širom Amerike, uglavnom se nalaze u manjim gradovima i mestima u ruralnim sredinama ali postoji mogućnost da budete smešteni i u većim gradovima. Naš savet je da se lokacija boravka ni ne bira (postoji opcija biranja određene oblasti ili čak države uz doplatu), već je mnogo važnije dobiti porodicu u koju ćete se najlakše uklopiti. Porodice su proverene, njih proverava osoblje Sponzorske agencije sa kojom sarađujemo. Svaka porodica mora imati preporuke iz zajednice u kojoj živi da bi učestvovala na programu. Porodica takođe mora imati osnovne finansijske uslove da primi dete iz druge zemlje. Kulturne razlike između dve zemlje su ogromne tako da je naš savet da kad god imate dilemu razgovarate sa svojom porodicom, jer to je najlakši način da se nesporazumi prevaziđu. Svaki kandidat je dužan da poštuje pravila porodice koja važe za drugu decu ili generalno važe za ukućane. Takođe je bitno napomenuti da je većina američkih porodica religiozna i da se od Vas očekuje da poštujete njihov red i kad je crkva u pitanju, tj. da sa njima idete u crkvu danima kada i oni idu. Naravno, odlazak u crkvu nije obavezan.",
         "PROMENA PORODICE",
         "Porodica se ne može menjati bez objektivnih razloga. Bez obzira na rasu, ekonomski status, religiju porodice, ovaj program je namenjen onima koji mogu prihvatiti sve razlike među ljudima. Shodno tome, ukoliko smatrate da ne biste mogli prihvatiti velike razlike, nemojte se ni prijavljivati na program.",
-        "<span data-mce-type=\"bookmark\" style=\"display: inline-block; width: 0px; overflow: hidden; line-height: 0;\" class=\"mce_SELRES_start\">﻿</span>",
         "Lokalni koordinator je osoba koja, tokom trajanja programa, pruža podršku kako učeniku, tako i američkoj porodici i školi, kako bi proces prilagođavanja jednih na druge, kao i učenika na novu sredinu i drugačiji način života, prošao što lakše.",
         "Lokalni koordinator je zadužen za rešavanje eventualnih problema, koji se mogu javiti u porodici ili školi tokom trajanja programa. Njegov zadatak je da najmanje jednom mesečno, a najčešće više puta mesečno, kontaktira učenika, porodicu i školu, kako bi proverio da li je sve u redu.",
         "Svaki učesnik programa ima na raspolaganju besplatan kontakt telefon, dostupan 24 sata, 7 dana u nedelji, za hitne pozive i pružanje dodatne podrške kada je to potrebno.",

@@ -7,13 +7,7 @@ export default {
   "videos": [],
   "sections": [
     {
-      "title": "Uvod",
-      "blocks": [
-        "Prijavi se"
-      ]
-    },
-    {
-      "title": "AUSTRALIA TRAINING PROGRAM",
+      "title": "Australia Training program",
       "blocks": [
         "AUSTRALIA TRAINING PROGRAM AUSTRALIA INFORMATOR TRAINING VIZA (podklasa 407) USLOVI ZA PRIJAVU NA PROGRAM Procedura programa POTREBNA DOKUMENTACIJA CENA PROGRAMA POREZI U AUSTRALIJI DRŽAVE I GRADOVI AUSTRALIJE",
         "Australia Training program je namenjen isključivo ljudima koji su završili višu školu ili fakultet u oblasti Kulinarstva ili da u poslednje 2 godine imaju barem 12 meseci plaćenog radnog iskustva u oblasti kulinarstva. Ovaj program je namenjen stručnom usavršavanju u Australiji u trajanju od 12-18 meseci. Nakon završenog radnog dela programa ne postoji period za putovanja već kandidat mora da se vrati u matičnu zemlju. Ograničenja u godinama nema, dokle god kandidat ispunjava sve ostale uslove programa."
@@ -136,15 +130,8 @@ export default {
         "• Kandidat će popuniti anketu u vezi sa programom;",
         "• Finalni Training plan se potpisuje od strane kandidata i poslodavca i dostavlja se sponzorskoj agenciji AAG;",
         "• Sponzorska agencija AAG obaveštava Ministarstvo unutrašnjih poslova Australije o zaključivanju programa.",
-        "Powered by HTML5 Responsive FAQ",
         "Po prijavi na program, kandidat mora da donese:",
-        "• AAG CV obrazac koji je popunjen i ažuriran od strane kandidata na engleskom jeziku;",
-        "• 2 pisma preporuke na memorandumu firme;",
         "• Dokaz o radnom iskustvu od 12 meseci u maksimum poslednje dve godine od momenta apliciranja za vizu ili dokaz o studiranju ili završenim studijama u traženoj oblasti;",
-        "• Potvrda o završenim studijama ako student još uvek nema originalnu doplomu (original potvrda + prevod na engleski) ili diploma (original + prevod na engleski);",
-        "• Pasoš – skenirana prva stranica pasoša sa slikom;",
-        "• Kopija izvoda iz matične knjige rođenih + prevod na engleski jezik;",
-        "• Uverenje iz MUP-a da kandidat nije krivično gonjen (original + prevod na engleski).",
         "Spisak dokumentacije za viziranje će biti naknadno dostavljen kandidatu u fazi pripreme za viziranje od strane migracionog agenta.",
         "Cena programa je izražena u američkim dolarima (USD) a ukupan iznos je $4090.00 USD.",
         "• Prilikom podnošenja prijave i potpisivanja Ugovora – $100,00 u dinarskoj protivrednosti srednjeg kursa NBS na dan uplate.",
@@ -230,7 +217,7 @@ export default {
       ]
     },
     {
-      "title": "BANKARSKI SISTEM AUSTRALIJE",
+      "title": "Bankarski sistem australije",
       "blocks": [
         "Jedna od najbitnijih stvari kada planirate preseljenje čak i u drugi grad, a kamoli državu, jeste bankovni račun. U modernom društvu poslovanje bez bankovnog računa je nemoguće, na osnovu njega primate platu, ostvarujete penziono i zdravstveno osiguranje, plaćate sve transakcije i račune, podižete kredite i još mnogo toga.",
         "Stvar o kojoj morate da razmišljate pre Vašeg odlaska u Australiju jeste odabir odgovarajuće banke i otvaranje računa u istoj.",
@@ -239,7 +226,7 @@ export default {
       ]
     },
     {
-      "title": "MOBILNI OPERATERI U AUSTRALIJI",
+      "title": "Mobilni operateri u australiji",
       "blocks": [
         "Australija je jedna od prvih zemalja koja je u aktivnu upotrebu uvela mobilne telefone i generalno je među prvim državama u svetu po pitanju implementiranja nove tehnike i tehnologije. Kada kupujete novi telefon uvek posvetite pažnju svakom detalju, ceni, veličini, marki, memoriji, dodatnim pogodnostima i tako dalje. Isti je slučaj i sa brojem telefona, kolika je jačina signala po teritorijama, kakva je sama usluga. Provajderi mobilne telefonije su verovatno najstručnija lica koja mogu da Vam pruže informacije takvog tipa i daju pogodan savet. Takav je slučaj i u Australiji. U Australiji je izuzetno mali procenat stanovništva koji kupuje telefone koji nisu vezani za nekog mobilnog operatera.",
         "Vodeći mobilni provajderi Australije su:",
@@ -249,8 +236,7 @@ export default {
         "VIRGIN MOBILE. Virgin mobile je definitivno najmanji provajder u Australiji koji je praktično deo Optusa jer koristi njegovu mrežu.",
         "Kod svih navedenih provajdera možete sklopiti Ugovor o paketu koji Vam najviše odgovara. Najbitnije je da naglasite prilikom odabira paketa šta Vam zaista treba i naglasite da želite da znate konačnu cenu sa uključenim porezima da ne bi došlo do zabune.",
         "Savetujemo da, kada se tek doselite u Australiju, uzmete paket koji se unapred plaća i omogućava Vam određeni broj minuta, poruka, rominga za taj novac, jer su kamate za prekoračenje na ostalim paketima u Australiji dosta velike.",
-        "Bitno je napomenuti da većina dodatne opreme koju možda imate od prethodnih mobilnih telefona ne odgovara mobilnim telefonima koje uzimate u Australiji jer imaju drugačiju tehnologiju od nas. Upravo iz tog razloga nema svrhe nositi dodatnu mobilnu opremu koju verovatno nećete moći da koristite.",
-        "Powered by HTML5 Responsive FAQ"
+        "Bitno je napomenuti da većina dodatne opreme koju možda imate od prethodnih mobilnih telefona ne odgovara mobilnim telefonima koje uzimate u Australiji jer imaju drugačiju tehnologiju od nas. Upravo iz tog razloga nema svrhe nositi dodatnu mobilnu opremu koju verovatno nećete moći da koristite."
       ]
     },
     {
@@ -429,8 +415,7 @@ export default {
         "• Darvin je poznat po izuzetno toploj klimi tokom čitave godine i monsunskim pljuskovima.",
         "• Grad ima gustinu naseljenosti od 0,1 po kvadratnom kilometru, stoga je preporučljivo da pozdravite svaku osobu koju sretnete na putu jer su velike šanse da je to jedina osoba koju ćete videti neki određeni period.",
         "• Darvin je bliže Džakarti i Singapuru nego Sidneju i Melburnu.",
-        "• Ovaj grad je dom drevnog aboridžinskog naroda Larrakia.",
-        "Powered by HTML5 Responsive FAQ"
+        "• Ovaj grad je dom drevnog aboridžinskog naroda Larrakia."
       ]
     }
   ]

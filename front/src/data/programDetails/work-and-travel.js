@@ -9,23 +9,11 @@ export default {
   ],
   "sections": [
     {
-      "title": "Uvod",
-      "blocks": [
-        "Prijavi se"
-      ]
-    },
-    {
       "title": "Work and Travel USA",
       "blocks": [
         "Nisi siguran da li si podoban?",
         "Proveri za 2 minuta – odgovori na nekoliko pitanja i odmah vidi kako tvoj profil stoji.",
         "Proveri podobnost"
-      ]
-    },
-    {
-      "title": "Verujemo da je ovaj program jedno od najboljih iskustava koje možete steći ako ne u životu ali onda u toku svojih studija – PROVERENO!",
-      "blocks": [
-        "<span data-mce-type=\"bookmark\" style=\"display: inline-block; width: 0px; overflow: hidden; line-height: 0;\" class=\"mce_SELRES_start\"></span>"
       ]
     },
     {
@@ -40,7 +28,7 @@ export default {
       ]
     },
     {
-      "title": "SA NAMA POČINJE AVANTURA",
+      "title": "Sa nama počinje avantura",
       "blocks": [
         "Kada dođete kod nas, možete biti sigurni da ćete imati najbolje opcije u pogledu rada i smeštaja na jednoj od Vaših omiljenih destinacija u SAD. Mi smo među liderima u kulturnim i obrazovnim programima razmene sa Sjedinjenim Državama i imamo dugu listu partnerskih organizacija koji zastupaju poslodavce.",
         "Do sada smo poslali preko 6000 studenata u Sjedinjene Države, što nas čini jednom od najboljih kompanija naše vrste u Srbiji.",
@@ -151,23 +139,21 @@ export default {
         "3. Vrste poslova i lokacije za Work and Travel program",
         "Najbolje lokacije za Work and Travel program su manja sezonska turistička mesta, lokacije koje su turističke destinacije tokom cele godine i gradovi koji imaju potrebu za dodatnom radnom snagom zbog manjka lokalne radne snage. Bilo koji poslodavac, koji učestvuje na programu, mora da dokaže sezonalnost svog posla. Svi poslovi koji se nude našim studentima, nude se i američkim državljanima.",
         "4. Zarada na programu",
-        "Posao je obezbeđen studentima kako bi tokom trajanja programa student mogao da pokrije osnovne / egzistencijalne troškove (troškove smeštaja, hrane, transporta do posla kao i inicijalnih troškova pre samog programa).",
         "Količinu novca koju će student zaraditi i vratiti kući isključivo zavisi od samog studenta i njegovih sposobnosti! Zarada individualno varira i na nju utiču lični troškovi, način štednje, trud i zalaganje na poslu, dodatni posao i sl. Najbitnije je da sa jednim poslom student može povratiti uloženi novac.",
         "Mnogo je bilo situacija gde se pošalje grupa studenata na isto mesto i kod istog poslodavca i da svaki od njih ima različito iskustvo i različitu zaradu.",
         "5. Dodatni posao i prekovremeni rad",
         "Dodatni posao je ključna stvar na programu ako student želi da zaradi više. Iz tog razloga je jako bitno ići na lokacije koje omogućavaju dodatne poslove i dobro se pripremiti za njih.",
-        "Prekovremeni rad nude određeni poslodavci i to isključivo zavisi od trajanja turističke sezone, broja gostiju, ponašanja na poslu i ličnog zalaganja svakog pojedinca. NIKO ne može studentu obećati koliko će tačno imati radnih sati tokom boravka na programu. Obično se kreće sa manjim brojem sati jer je početak sezone i poslodavac mora da obuči studenta u vezi njegovih zaduženja na samom poslu. Kasnije, kad sezona dostigne vrhunac, od studenta će biti očekivano da radi i više od 40 sati u nedelji (mogućnost prekovremenog rada). Na kraju se opet broj radnih sati dovodi u neku normalu.",
-        "Powered by HTML5 Responsive FAQ"
+        "Prekovremeni rad nude određeni poslodavci i to isključivo zavisi od trajanja turističke sezone, broja gostiju, ponašanja na poslu i ličnog zalaganja svakog pojedinca. NIKO ne može studentu obećati koliko će tačno imati radnih sati tokom boravka na programu. Obično se kreće sa manjim brojem sati jer je početak sezone i poslodavac mora da obuči studenta u vezi njegovih zaduženja na samom poslu. Kasnije, kad sezona dostigne vrhunac, od studenta će biti očekivano da radi i više od 40 sati u nedelji (mogućnost prekovremenog rada). Na kraju se opet broj radnih sati dovodi u neku normalu."
       ]
     },
     {
-      "title": "SELF ADVENTURE PROGRAM",
+      "title": "Self Adventure program",
       "blocks": [
         "Ovaj program je idealan za sve one koji su u mogućnosti da samostalno pronađu poslodavca u SAD kao i mesto za stanovanje dok ste tamo. Mi smo tu da Vam organizujemo podršku sponzorske organizacije i pomognemo Vam u pripremi za put. Da bismo pojednostavili proces prijavljivanja, molimo Vas da nas kontaktirate pre prijave i preuzmete zvaničnu formu Job Offer-a i pitajte svog poslodavca da istu popuni. NAPOMENA: SELF PROGRAM SADRŽI ISTA PRAVILA KAO I FULL PROGRAM, A TO JE DA POSLOVI KOJE NAĐETE MORAJU ISPUNJAVATI USLOVE PROGRAMA PROPISANE OD STRANE STATE DEPARMENT-a! Listu zabranjenih poslova od strane State Department – a možete pronaći ovde (link)."
       ]
     },
     {
-      "title": "U cenu programa ulazi:",
+      "title": "Self Adventure: u cenu programa ulazi",
       "blocks": [
         "• Obezbeđivanje medicinskog osiguranja u zavisnosti od dužine trajanja programa.",
         "• Pribavljanje DS-2019 obrasca.",
@@ -180,7 +166,7 @@ export default {
       ]
     },
     {
-      "title": "U cenu programa NISU uključeni sledeći troškovi:",
+      "title": "Self Adventure: u cenu programa NISU uključeni sledeći troškovi",
       "blocks": [
         "• Troškovi viziranja ($185)",
         "• Troškovi avionske karte",
@@ -188,7 +174,7 @@ export default {
       ]
     },
     {
-      "title": "FULL ADVENTURE PROGRAM",
+      "title": "Full Adventure program",
       "blocks": [
         "U okviru ovog programa American Adventure Vam pronalazi radnu ponudu i sudeluje u organizovanju smeštaja na osnovu opcija koje dobijamo od naših američkih partnera. U ovom slučaju, Vaša jedina briga je da polažete ispite i spakujete se za leto. Ukoliko prvi put odlazite u Ameriku, onda je ovo idealan program za Vas! Možemo Vam ponuditi razne radne ponude koje se tiču sezonskih poslova a to su rad u restoranima, kafićima, hotelima, buticima, na štandu sa sladoledima, golf terenima ili zabavnim parkovima, gde imate prilike da zaradite istu platu kao i Amerikanci na sličnim pozicijama. To znači da ćete zaraditi od $10 – $20 po satu (u zavisnosti od toga na kojoj ste poziciji i gde radite), pri čemu se prekovremeni rad plaća uglavnom po sistemu „vreme i po“, tj. uobičajena satnica plus 50% za prekovremeni rad ( prekovremeni rad podrazumeva sve što je preko 40-tog sata nedeljno )",
         "Lokacije karakteristične za ovaj program su:",
@@ -214,21 +200,17 @@ export default {
       ]
     },
     {
-      "title": "U cenu programa ulazi:",
+      "title": "Full Adventure: u cenu programa ulazi",
       "blocks": [
         "• Obezbeđivanje Work and Travel programa – obezbeđivanje radne ponude,",
-        "• Obezbeđivanje medicinskog osiguranja u zavisnosti od dužine trajanja programa.",
         "• Pribavljanje DS-2019 obrasca,",
         "• Plaćanje SEVIS troškova (35$),",
-        "• Kurs engleskog / priprema za intervjua sa poslodavcem.",
-        "• Kompletna podrška kandidatu do polaska u SAD,",
         "• Program orijentacije pred polazak u SAD,",
-        "• Posredovanje agencije prilikom kupovine avio karte,",
-        "• Besplatan prevod potrebne dokumentacije."
+        "• Posredovanje agencije prilikom kupovine avio karte,"
       ]
     },
     {
-      "title": "U cenu programa NISU uključeni sledeći troškovi:",
+      "title": "Full Adventure: u cenu programa NISU uključeni sledeći troškovi",
       "blocks": [
         "• Troškovi viziranja ($185)",
         "• Troškovi avionske karte",
@@ -236,7 +218,7 @@ export default {
       ]
     },
     {
-      "title": "LIFEGUARD ADVENTURE PROGRAM",
+      "title": "Lifeguard Adventure program",
       "blocks": [
         "Ovaj program omogućava studentima nezaboravno iskustvo radeći na bazenima High Sierra Pools- a i Premier Pool Management-a. Dugogodišnja posvećenost i iskustvo naše kompanije će Vam omogućiti da na dobro organizovan način aplicirate na program, osigurate zaposlenje i pripremite za fantastično leto na bazenima SAD-a. Neophodno je proći i obuku koju možete opet organizovati preko nas i završiti je ovde u Srbiji ( što je bolja varijanta jer tamo kad dođete, odmah počinjete sa radom i ne gubite vreme a pritom je cena ista ) ili u Americi pre nego što vam počne radni angažman.",
         "Opis posla – Dok su na dužnosti, svi spasioci moraju obavljati sledeće:",
@@ -252,24 +234,17 @@ export default {
       ]
     },
     {
-      "title": "U cenu programa ulazi:",
+      "title": "Lifeguard Adventure: u cenu programa ulazi",
       "blocks": [
         "• Obezbeđivanje Work and Travel programa – obezbeđivanje radne ponude na bazenima,",
-        "• Obezbeđivanje medicinskog osiguranja u zavisnosti od dužine trajanja programa.",
-        "• Pribavljanje DS-2019 obrasca,",
-        "• Plaćanje SEVIS troškova (35$),",
-        "• Kompletna podrška kandidatu do polaska u SAD,",
-        "• Program orijentacije pred polazak u SAD,",
-        "• Posredovanje prilikom kupovine avio karte,",
-        "• Besplatan prevod potrebne dokumentacije."
+        "• Posredovanje prilikom kupovine avio karte,"
       ]
     },
     {
-      "title": "U cenu programa nisu uključeni sledeći troškovi:",
+      "title": "Lifeguard Adventure: u cenu programa nisu uključeni sledeći troškovi",
       "blocks": [
         "• Troškovi viziranja ($185)",
         "• Troškovi avionske karte",
-        "• Troškovi smeštaja, hrane i uopšte Vašeg boravka u SAD",
         "• Obuka za spasioce koja se radi u Srbiji ( 150$)"
       ]
     },
@@ -283,13 +258,13 @@ export default {
       ]
     },
     {
-      "title": "KORAK 1 – Odabir programa",
+      "title": "Korak 1 – Odabir programa",
       "blocks": [
         "Odlučite se za opciju programa: Self ADVENTURE, Full ADVENTURE ili Lifeguard program. Savetujemo Vam da se inicijalno informišete sa naše web strane i da stupite u kontakt sa nekim od naših predstavnika kako biste razrešili sve nedoumice."
       ]
     },
     {
-      "title": "KORAK 2 – Prijava na program",
+      "title": "Korak 2 – Prijava na program",
       "blocks": [
         "Nakon što ste se odlučili za program potrebno je da popunite prijavni obrazac na našoj web strani. Nakon toga će Vas kontaktirati naš predstavnik i generisati set dokumenata o pružanju usluga i informisati Vas o pogodnostima plaćanja programa.",
         "Po prijavi na program, u roku od 10 radnih dana, kandidat dostavlja:",
@@ -300,7 +275,7 @@ export default {
       ]
     },
     {
-      "title": "KORAK 3 – Apliciranje za posao",
+      "title": "Korak 3 – Apliciranje za posao",
       "blocks": [
         "Po prijemu na program, naši saradnici će biti u kontaktu i voditi Vas kroz proces aplikacije za posao (genirasanja CV-a, obuke za razgovore za posao…).",
         "Aplikacija za posao biće usaglašena sa Vašim zahtevima po pitanju lokacije i pozicije na kojoj ćete raditi.",
@@ -309,7 +284,7 @@ export default {
       ]
     },
     {
-      "title": "KORAK 4 – Prihvatanje posla i apliciranje za vizu",
+      "title": "Korak 4 – Prihvatanje posla i apliciranje za vizu",
       "blocks": [
         "Nakon što ste primljeni na željeni posao, sponzorska agencija, koja je zadužena za Vas tokom boravka u Sjedinjenim Američkim Državama, započinje generisanje programskih dokumenata koji omogućavaju izdavanje J1 vize.",
         "U međuvremenu, mi radimo na izdavanju DS2019 obrasca, plaćanju zdravstvenog osiguranja i SEVIS troškova.",
@@ -317,7 +292,7 @@ export default {
       ]
     },
     {
-      "title": "KORAK 5 – Orijentacioni sastanak",
+      "title": "Korak 5 – Orijentacioni sastanak",
       "blocks": [
         "Nakon viziranja i dobijene J1 SAD vize za svakog kandidata će se održati Pre Departure sastanak na kome ćete biti detaljno obavešteni koje su Vaše obaveze po pitanju programa dok ste u Americi. Prisustvo je obavezno."
       ]
@@ -336,12 +311,11 @@ export default {
       ]
     },
     {
-      "title": "Kupovina avio karte je moguća i pre odlaska na viziranje jer je Vam obezbeđujemo sjajne uslove kupovine avio karte:",
+      "title": "Kupovina avio karte je moguća i pre odlaska na viziranje jer je Vam obezbeđujemo sjajne uslove kupovine avio karte",
       "blocks": [
         "• Iznos uplaćen za avio kartu, u slučaju ne dobijanja vize, je 100% refundabilan",
         "• U cenu karte je uračunata besplatna promena datuma povratka",
-        "• Kupujemo avio kartu u skladu sa početkom Vaše radne ponude, usklađujemo je sa daljim transportom do krajne destinacije i mogućnošću ulaska u smeštaj.",
-        "Powered by HTML5 Responsive FAQ"
+        "• Kupujemo avio kartu u skladu sa početkom Vaše radne ponude, usklađujemo je sa daljim transportom do krajne destinacije i mogućnošću ulaska u smeštaj."
       ]
     },
     {
@@ -349,15 +323,8 @@ export default {
       "blocks": [
         "Pre dolaska u SAD, kako bi ostvarili zakonsko pravo da rade i putuju, svi polaznici programa moraju obezbediti J-1 vizu, koju dobijaju nakon intervjua u američkoj ambasadi u Beogradu. Tokom intervjua biće Vam postavljena neka od standardnih pitanja koja se postavljaju učesnicima Work and Travel programa. Neka od tih pitanja su : šta ćete da radite u SAD, gde ćete raditi, u koju državu i grad idete, šta studirate, čime vam se bave rpditelji, da li imate brata ili sestru, kakvi su vam planovi po završetku ovog programa i povratku u Srbiju…?",
         "Najbolji savet koji Vam možemo dati je da budete iskreni, odlučni, staloženi. Nema potrebe za nervozom i tremom, uvek odgovorite iskreno na pitanja.",
-        "Po prijavi na program, u roku od 10 radnih dana, kandidat dostavlja:",
-        "• 2 fotografije za američku vizu 5×5 (digitalnu kopiju dostaviti agenciji)",
-        "• Uverenje o statusu redovnog studenta",
         "• Kopija prve strane pasoša",
-        "• Uverenje da student nije bio krivično osuđivan (iz MUP-a)",
-        "Pre samog odlaska u ambasadu, minimum 10 radnih dana ranije, kandidat prilaže:",
         "• Index",
-        "• Originalan pasoš (biometrijski i mora trajati 6 meseci duže od završetka programa)",
-        "• Transkript položenih ispita overen od strane Vašeg fakulteta",
         "Opis pozicija – Poslovi u Americi",
         "Work and Travel program je namenjen studentima koji žele da rade i putuju u Sjedinjenim Državama tokom letnjeg raspusta. Program koji pruža American Adventure lociran je u oblastima i gradovima koje vredi posetiti i kao turista. Tačnije, razlog zašto poslodavcima treba radna snaga u ovim mestima je prvenstveno zbog popularnosti lokacije, što privlači veliki broj posetilaca tokom letnjih meseci. Pokreni svoju avanturu u mestima kao što su Las Vegas, Ocean City, Florida, California, Cape Cod, North Carolina, Alaska, Hawaii…",
         "Bez obzira na destinaciju, poslovi su sezonski, tako da u okviru osnovnih programa ne zahtevaju posebne kvalifikacije ili iskustvo u turizmu i ugostiteljstvu. U slučaju da Vaš budući posao zahteva direktan kontakt sa kupcima, šarm i komunikacione veštine kao i napredno poznavanje engleskog jezika će biti presudno.",
@@ -406,7 +373,7 @@ export default {
       ]
     },
     {
-      "title": "Poslovi koje učesnici W&T programa NE MOGU da rade",
+      "title": "Poslovi koje učesnici W&T programa ne mogu da rade",
       "blocks": [
         "Svaki učesnik Work and Travel programa ima sva prava kao i američki državljani po mnogo čemu. Razlika je ta što za J1 učesnike postoji lista poslova koje ne smeju da rade tokom trajanja programa.",
         "Listu poslova koje J1 student ne mogu da rade možete pronaći ovde:",
@@ -505,7 +472,6 @@ export default {
         "• Hobiji",
         "S obzirom na to da većina početnika i studenata nema previše radnog iskustva prilikom traženja posla, vrlo je korisno navesti posebne hobije ili znanja koja imate a koja se ne vide iz prethodnih podataka.",
         "Vaša reklama ka potencijalnom poslodavcu se ovde završava. Sve u svemu, morate shvatiti da je to dokument koji treba da Vas predstavlja u najboljem svetlu i da onaj ko Vas ne poznaje, poželi da Vas upozna!",
-        "Powered by HTML5 Responsive FAQ",
         "Nakon prijave na program dobijate detaljno uputstvo za svaki korak pre polaska u SAD: potrebnu dokumentaciju, rokove, kupovinu avio karte i orijentacioni sastanak. Za sva pitanja tu je naš tim."
       ]
     },
@@ -573,7 +539,6 @@ export default {
         "Za sve dodatne informacije koje Vas interesuju u vezi avio karata, možete poslati upit ili pozvati na:",
         "Mail: aviokarte@workandtravel.rs",
         "Tel: +381 64 107 2004",
-        "Powered by HTML5 Responsive FAQ",
         "Svako putovanje je samo po sebi korak u nešto novo i nepoznato. Ukoliko su Vam poznate neke informacije o programu i Vašem poslu uopšte, činjenica je da postoje još neke informacije koje je neophodno da znate pre nego što odete. Što bolje budete pripremljeni, bolje ćete iskoristiti ovaj program i moći ćete da uživate u njemu bez neprijatnih iznenađenja.",
         "Da ne biste previše razmišljali šta i kako, mi smo Vam sastavili jednu malu listu neophodnih stvari koje treba da obavite dok ne krenete na put.",
         "Posetite lekara i zubara!",
@@ -659,8 +624,7 @@ export default {
         "Ukoliko odete u medicinsku ustanovu sa kojom Vaša osiguravajuća kuća nema direktnu saradnju, moraćete da platite celokupni trošak lečenja. U ovom slučaju, obavezno uzmite račun kako biste mogli da dobijete refundaciju od osiguravajuće kuće.",
         "Ponesite sa sobom brošuru o osiguranju koju ste dobili u agenciji, prilikom davanja medicinskog tretmana trebaće Vam informacije o osiguravajućoj kući.",
         "Osiguranje često pokriva lečenje do određenog iznosa tako da ostatak troškova sami morate da snosite. Isto tako, veoma često postoji i učešće sa Vaše strane tzv DEDUCTABLE, u plaćanju troškova lečenja iako imate zdravstveno osiguranje. Obično je to učešće 50$ ili 100$ sve u zavisnoti od Vaše polise.",
-        "Za kraj, zato je uvek BOLJE SPREČITI NEGO LEČITI 🙂 Čuvajte se i ne izlažite rizičnim i opasnim situacijama po Vaše zdravlje.",
-        "Powered by HTML5 Responsive FAQ"
+        "Za kraj, zato je uvek BOLJE SPREČITI NEGO LEČITI 🙂 Čuvajte se i ne izlažite rizičnim i opasnim situacijama po Vaše zdravlje."
       ]
     },
     {
@@ -802,18 +766,7 @@ export default {
         "Odjavite se sa SEVIS-a",
         "Uđite na sajt i odjavite se ili kontaktirajte Vašu Sponzorsku agenciju i obavestitet ih o Vaim planovima za odlazak.",
         "Proverite prtljag",
-        "Obratite pažnju na prekoračenje u težini prtljaga. Pogledajte na svojoj avionskoj karti koja je dozvoljena težina kofera, pa se po tome i vodite. Zapamtite da se svaki kilogram preko dozvoljenog plaća.",
-        "Powered by HTML5 Responsive FAQ"
-      ]
-    },
-    {
-      "title": "W4 formular",
-      "blocks": [
-        "W4 formular",
-        "W4 formular – Employee’s Withholding Allowance Certificate – je dokument koji dobijate od poslodavca i treba da popunite pre početka radnog odnosa. Ukoliko menjate poslodavce ili imate dodatni posao, takođe popunjavate W4 obrazac. On je u korelaciji sa procesom povraćaja poreza na taj način što će se adresa navedena u W4 formularu koristiti da Vam se kasnije dostavi W2 formular – neophodan za povraćaj poreza. Na W4 formularu se navodi stalna adresa prebivališta u Srbiji.",
-        "Pomoć prilikom popunjavanja W4 obrasca:",
-        "• Većina Vas je statusa neoženjen/neudata, obavezno popuniti na trećoj liniji “single” jer je različit obračun poreza za ljude u braku i neoženjene tj. neudate,",
-        "• Na liniji 6 je potrebno popuniti “Non Resident Alien” jer na taj način ostvarujete povraćaj poreza."
+        "Obratite pažnju na prekoračenje u težini prtljaga. Pogledajte na svojoj avionskoj karti koja je dozvoljena težina kofera, pa se po tome i vodite. Zapamtite da se svaki kilogram preko dozvoljenog plaća."
       ]
     },
     {
@@ -862,8 +815,7 @@ export default {
         "Ček možete dobiti:",
         "• Na kućnu adresu. Čeka se prosečno od 6 – 12 nedelja. Ček možete unovčiti samo Vi lično!",
         "• Kao direktan depozit na Vaš račun u SAD. Prosečno vreme čekanja na depozit je od 4 – 6 nedelja.",
-        "Postoji mogućnost za svakog kandidata da on-line prati status refundacije povraćaja poreza.",
-        "Powered by HTML5 Responsive FAQ"
+        "Postoji mogućnost za svakog kandidata da on-line prati status refundacije povraćaja poreza."
       ]
     }
   ]

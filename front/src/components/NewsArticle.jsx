@@ -2,6 +2,7 @@
 import { useTranslation } from "../i18n/LanguageContext";
 import NewsImage from "./NewsImage";
 import newsData from "../data/news";
+import CtaBand from "./CtaBand";
 import { Button } from "./ui";
 
 // „Nazad na vesti" po jeziku (kratko, drži se ovde).
@@ -55,7 +56,7 @@ export default function NewsArticle({ slug, items = newsData, onNavigate = () =>
     : [tr(item.excerpt)];
 
   return (
-    <article className="bg-white pb-20 sm:pb-28">
+    <article className="bg-white">
       <div className="mx-auto max-w-3xl px-5 pt-10 sm:px-8 sm:pt-14">
         <a href={backHref} onClick={goBack} className="text-sm text-ink-2 underline-offset-4 hover:text-ink hover:underline">
           ← {backLabel}
@@ -86,6 +87,8 @@ export default function NewsArticle({ slug, items = newsData, onNavigate = () =>
           )
         )}
       </div>
+
+      <CtaBand className="mt-20" onNavigate={onNavigate} />
     </article>
   );
 }

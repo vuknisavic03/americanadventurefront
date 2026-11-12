@@ -7,19 +7,13 @@ export default {
   "videos": [],
   "sections": [
     {
-      "title": "Uvod",
-      "blocks": [
-        "Prijavi se"
-      ]
-    },
-    {
-      "title": "ONLINE INTERNSHIP PROGRAM",
+      "title": "Online Internship program",
       "blocks": [
         "We are looking forward to presenting you the ONLINE INTERNSHIP PROGRAM that was created as a product of the overall situation in the world around the COVID-19 virus!"
       ]
     },
     {
-      "title": "ONLINE INTERNSHIP PROGRAM",
+      "title": "Online Internship program",
       "blocks": [
         "Radujemo se što možemo da Vam predstavimo ONLINE INTERNSHIP PROGRAM koji je nastao kao proizvod iz celokupne situacije u svetu oko virusa COVID-19!"
       ]

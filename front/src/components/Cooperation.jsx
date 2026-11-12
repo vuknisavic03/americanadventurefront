@@ -23,14 +23,15 @@ const ANCHORS = [
 const EMPLOYER_POINTS = [
   { title: "Visoko motivisani studenti", text: "Tečno govore engleski jezik i poseduju radnu etiku." },
   { title: "Kompletna legalnost", text: "J-1 BridgeUSA vize sponzorisane od strane ovlašćenih State Department partnera." },
-  { title: "Podrška tokom sezone", text: "Stalna asistencija studentima i poslodavcima 24/7." },
+  { title: "Podrška tokom sezone", text: "Podrška studentima i poslodavcima tokom cele sezone." },
 ];
 
+// Brojke su iste kao na početnoj (izvor: workandtravel.rs).
 const EMPLOYER_STATS = [
-  { value: "15.000+", label: "Plasiranih studenata" },
-  { value: "99,2%", label: "Stopa uspeha na poslu" },
-  { value: "4 meseca", label: "Dostupnost (jun–oktobar)" },
-  { value: "24/7", label: "Podrška sponzora" },
+  { value: "8.123", label: "Učesnika do sada" },
+  { value: "83", label: "Grada u SAD" },
+  { value: "45", label: "Saveznih država" },
+  { value: "4 meseca", label: "Dostupnost (maj–oktobar)" },
 ];
 
 const AMBASSADOR_PERKS = [
@@ -41,9 +42,9 @@ const AMBASSADOR_PERKS = [
 ];
 
 const FRANCHISE_POINTS = [
-  { title: "Akreditovani ugovori", text: "Direktna partnerstva sa vodećim američkim sponzorima (Intrax, CCUSA, itd.)." },
+  { title: "Akreditovani ugovori", text: "Ugovori sa američkim sponzorskim organizacijama." },
   { title: "Jedinstveni IS i CRM", text: "Pristup kompletnoj digitalnoj platformi za vođenje kandidata, plaćanja i ugovora." },
-  { title: "Marketing i brend", text: "Prepoznatljivo ime sa preko 15 godina tradicije, SEO i društvene mreže." },
+  { title: "Marketing i brend", text: "Prepoznatljivo ime, sajt i društvene mreže." },
   { title: "Obuka osoblja", text: "Detaljna edukacija za vizne intervjue, administraciju i klijentski servis." },
 ];
 
@@ -135,7 +136,7 @@ export default function Cooperation({
           <div className="rounded-3xl bg-surface p-7 sm:p-10">
             <h3 className="text-xl font-semibold text-ink">Zapošljavanje J-1 studenata</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-ink-2">
-              Naša agencija uspešno sarađuje sa preko 200 poslodavaca širom SAD — od obale Atlantika do Pacifika i Aljaske.
+              Naši studenti rade kod poslodavaca širom SAD — od obale Atlantika do Pacifika i Aljaske.
             </p>
             <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8">
               {EMPLOYER_STATS.map((stat) => (

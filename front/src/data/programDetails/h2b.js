@@ -5,13 +5,7 @@ export default {
   "videos": [],
   "sections": [
     {
-      "title": "Uvod",
-      "blocks": [
-        "Prijavi se"
-      ]
-    },
-    {
-      "title": "PERFECT MOVING AND STORAGE",
+      "title": "Perfect moving and storage",
       "blocks": [
         "PERFECT MOVING AND STORAGE USLOVI RADA O H-2B VIZI KORACI PROGRAMA DOKUMENTACIJA",
         "PERFECT MOVING",
@@ -63,7 +57,6 @@ export default {
         "USLOVI ZA UČESTVOVANJE NA H-2B PROGRAMU",
         "Pravo učešća na H-2B programu imaju sve osobe, bez obzira na godine ili na nivo stručne spreme. Dobro poznavanje i korišćenje engleskog jezika nije uslov za učestvovanje na programu osim ukoliko poslodavac iz USA ne zahteva suprotno.",
         "Svaki H-2B kandidat svojim trenutnim statusom mora da dokaže da neće prekršiti pravila vize koja mu je data kao i da ubedi konzula u ambasadi USA da će se nakon završetka H-2B programa vratiti u zemlju gde ima stalno boravište tj. da ovu vizu neće iskoristiti zarad stalne imigracije u USA (Immigration and Naturalization Act (INA) Section 214b ).",
-        "Pošto je State Department odobrio dodatne H2B vize, pravo učešća imaju kandidati koji su u poslednje 3 godini bili nosioci H2B vize.",
         "Od kandidata se traži da pokažu čvrste veze sa zemljom gde imaju prijavljeno stalno prebivalište.",
         "Čvrste veze se mogu dokazati na osnovu:",
         "• socijalnih,",

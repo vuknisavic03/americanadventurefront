@@ -7,13 +7,7 @@ export default {
   ],
   "sections": [
     {
-      "title": "Uvod",
-      "blocks": [
-        "Prijavi se"
-      ]
-    },
-    {
-      "title": "ONLINE ŠKOLOVANJE U SREDNJIM ŠKOLAMA U AMERICI",
+      "title": "Online školovanje u srednjim školama u americi",
       "blocks": [
         "ONLINE ŠKOLOVANJE U SREDNJIM ŠKOLAMA U AMERICI STEKNITE SVETSKI PRIZNATU DIPLOMU! O ORGANIZATORU PROGRAMA - EDUCATIUS ACADEMY USLOVI ZA PRIJAVU NA PROGRAM KORACI NA PROGRAMU DODATNE USLUGE ŠTA JE UKLJUČENO U CENU PROGRAMA CENA, NAČIN I DINAMIKA PLAĆANJA PROGRAMA ZAŠTO SE PRIJAVITI NA PROGRAM GALERIJA, POZITIVNA ISKUSTVA, ALBUMI",
         "ONLINE ŠKOLOVANJE U SREDNJIM ŠKOLAMA U AMERICI",
@@ -24,14 +18,14 @@ export default {
       ]
     },
     {
-      "title": "R U READY 4 THE FUTURE?",
+      "title": "R u ready 4 the future?",
       "blocks": [
         "On-line Dualna Diploma – The next BIG THING!",
         "Program On-line Dualna Diploma je namenjeno za sve đake koji žele međunarodno priznato obrazovanje."
       ]
     },
     {
-      "title": "Zašto je đacima potrebna DUALNA DIPLOMA?",
+      "title": "Zašto je đacima potrebna dualna diploma?",
       "blocks": [
         "• Đaci dobijaju konkurentsku prednost prilikom apliciranja za fakultete, univerzitete i kasnije za stručnu praksu ili zaposlenje u odnosu na svoju generaciju.",
         "• Dualna diploma dodaje globalni element svakom CV-u od đaka i na taj način ga izdvaja iz grupe aplikanata.",
@@ -236,7 +230,7 @@ export default {
       ]
     },
     {
-      "title": "STUDENT QUOTES",
+      "title": "Student quotes",
       "blocks": [
         "‘’The course brought a lot of interesting new knowledge, and the teacher is kind and understanding.’’",
         "‘’I loved the course! My passion for psychology only grew with it and it also helped me to make a final decision about my degree. My teacher was very helpful, love her.’’",
