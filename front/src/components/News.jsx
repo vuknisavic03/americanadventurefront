@@ -1,8 +1,9 @@
 // News.jsx
+import { useState } from "react";
 import { useTranslation } from "../i18n/LanguageContext";
 import NewsImage from "./NewsImage";
 import newsData from "../data/news";
-import { Container, PageHeader } from "./ui";
+import { Button, Container, PageHeader } from "./ui";
 
 /**
  * News — stranica „Vesti".
@@ -22,7 +23,9 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
   const hrefOf = (item) => `/novosti/${item.slug}`;
   const go = (href) => (e) => onNavigate(e, href);
 
-  const [featured, ...rest] = items;
+  const [shown, setShown] = useState(12);
+  const [featured, ...others] = items;
+  const rest = others.slice(0, shown);
 
   const Meta = ({ item }) => (
     <p className="flex flex-wrap gap-x-3 text-sm">
@@ -83,6 +86,14 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
                   </div>
                 </article>
               ))}
+            </div>
+          )}
+
+          {others.length > shown && (
+            <div className="mt-14 flex justify-center">
+              <Button variant="outline" onClick={() => setShown((n) => n + 12)}>
+                Prikaži još ({others.length - shown})
+              </Button>
             </div>
           )}
         </Container>

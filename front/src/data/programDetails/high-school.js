@@ -1,0 +1,174 @@
+// Pun tekst programa, doslovno sa https://workandtravel.rs/program/srednja-skola-u-americi-2027-28-high-school-usa/ (izvoz 12.11.2026).
+export default {
+  "sourceUrl": "https://workandtravel.rs/program/srednja-skola-u-americi-2027-28-high-school-usa/",
+  "files": [
+    "https://workandtravel.rs/wp-content/uploads/2017/12/High-school-INFORMATOR-2027.pdf"
+  ],
+  "videos": [
+    "https://www.youtube.com/embed/x0NKYG_v71M",
+    "https://www.youtube.com/embed/oqcpawcy2vo?si=gh2XiaAgnU1gtXMS",
+    "https://www.youtube.com/embed/qJpRSoosRLQ?si=IG_gaUFKDrTRyBEl"
+  ],
+  "sections": [
+    {
+      "title": "Uvod",
+      "blocks": [
+        "Prijavi se"
+      ]
+    },
+    {
+      "title": "American Adventure od 2007. godine organizuje programe kulturne razmene sa SAD. Učenicima i roditeljima pružamo podršku tokom prijave, pripreme, boravka u Americi i povratka kući. Naša posvećenost i iskustvo čine nas pouzdanim partnerima za ovo nezaboravno putovanje obrazovanja.",
+      "blocks": [
+        "(doček host porodice na aerodromu)"
+      ]
+    },
+    {
+      "title": "✅ Mogućnost odabira škola u svim saveznim državama, regijama",
+      "blocks": [
+        "(na ekskurziciji sa host porodicom u Majamiju)"
+      ]
+    },
+    {
+      "title": "Da je ovo nešto najlepše što se može desiti jednom srednjoškolcu mogu da svedoče mnogi, sad, uspešni studenti ili zreli ljudi koji su na ovom programu već učestvovali!",
+      "blocks": [
+        "(sa drugarima iz razreda i sa vaterpola)"
+      ]
+    },
+    {
+      "title": "Prijavi se na besplatne konsultacije – zajedno gradimo mostove ka obrazovanju i snovima tvog deteta!",
+      "blocks": [
+        "(na fudbalskoj utakmici)"
+      ]
+    },
+    {
+      "title": "HIGH SCHOOL USA PROGRAM",
+      "blocks": [
+        "HIGH SCHOOL USA PROGRAM O ORGANIZATORU PROGRAMA USLOVI PRIJAVE NA PROGRAM ZAŠTO SE PRIJAVITI NA PROGRAM CENOVNIK DINAMIKA I KORACI PROGRAMA SREDNJE ŠKOLE U AMERICI HOST PORODICA U AMERICI LOKALNI KOORDINATOR ŠTA PROGRAM OBUHVATA? KORISNE INFORMACIJE GALERIJA INFORMATOR",
+        "Program HIGH SCHOOL USA – SREDNJE ŠKOLE U AMERICI je program kulturne razmene prevashodno namenjen pohađanju I, II, III ili IV razreda srednje škole u SAD kao i učenicima VIII razreda osnovnih škola.vvvvv Boravak je obezbeđen u američkim porodicama, pažljivo odabranim od strane naših Sponzorskih agencija. Pored kvalitetnog obrazovanja, program omogućava upoznavanje sa američkom kulturom, tradicijom i načinom života. Program ima za cilj i podizanje nivoa znanja engleskog jezika. Odlazak učenika na program razmene predstavlja veliko i jedinstveno životno iskustvo, kao i pripremu za buduće životne izazove i snalaženje u novim situacijama.",
+        "Ovaj program je direktno odobren od State Department-a a kao želja da se omogući učenicima da upoznaju američki način života, kulturu i tradiciju kroz boravak u američkoj porodici tokom jedne školske godine. Sponzorske agencije sa kojima sarađujemo, su odobrene od strane State Department-a da ovaj program realizuju kroz svoje agente širom sveta. Sponzorske agencije sa kojima sarađujemo imaju svoje regionalne menadžere i koordinatore i pokrivaju teritoriju cele Amerike i direktno uz pomoć svog tima na terenu nalaze pogodne porodice i škole za realizaciju ovog programa.",
+        "Izbor lokacije boravka učenika zasniva se na kompatibilnosti sa ponuđenim porodicama-domaćinima. Učenik može biti smešten na bilo kojoj lokaciji u SAD, uključujući manje gradove i ruralna područja. Učenik može izraziti želju za smeštajem u određenoj regiji ili državi uz doplatu (ukoliko se izbor lokacije potvrdi od strane naših Sponzorskih agencija).",
+        "• Lokacija škola: širom SAD",
+        "• Tip škola: mešovite škole (dečaci i devojčice), državne škole",
+        "• Nastavni program: američka gimnazija – jedno polugodište ili cela školska godina.",
+        "Council for Educational Travel, USA",
+        "• Council for Educational Travel, USA (CETUSA) is a not-for-profit international student exchange organization coordinating exchange experiences for high school students, university students and young professionals. CETUSA is a US Department of State Exchange Visitor (J-1 visa) sponsor organization.",
+        "• The mission of CETUSA is “to encourage a lifelong journey of global peace and understanding” for the students, host families and communities that are part of the exchange experience.",
+        "• Founded in 1995 by Rick Anaya and Terry Watson in San Clemente, California, CETUSA has coordinated exchanges for over 80,000 students. Those students and the communities where they live are forever impacted by the opportunity to understand and respect what makes each culture unique.",
+        "• Programs with CETUSA include:",
+        "○ a semester or yearlong high school exchange with host family placement,",
+        "○ an outbound program where high school students in the USA can study abroad,",
+        "○ the American Cultural Experience (ACE) High School Prep summer program housed on a university campus,",
+        "○ a training program for young professionals and",
+        "○ an internship program for university students.",
+        "• Each program has specific eligibility requirements with the opportunity to live in cities and towns across the United States.",
+        "• CETUSA has offices in San Clemente, California; Bellingham, Washington; and Grand Rapids, Michigan with community coordinators located in the communities where the students are placed.",
+        "• CETUSA’s management team has many years of experience in the student exchange field as well as a personal commitment to the CETUSA mission that they live every day.",
+        "○ Terry Watson, Chairman of the Board, has devoted more than 30 years of his professional life to this mission. In addition to hosting and placing exchange students, he founded a short-term program and administered programs for what was once the largest homestay organization in the United States.",
+        "○ Kim Carter, Executive Director, has lived abroad and is very passionate about our mission. Kim began working with CETUSA in 2014 and brings an extensive background in organizational development and communications.",
+        "○ Lisa Turnwall, High School Program Director, and her family hosted their first high school student in 1981. Lisa began her career in student exchange in 2006 after a number of years in the corporate world and succeeded her mother, Peg Spoelstra, as Program Director in 2015.",
+        "○ Kevin Watson, Director of the Trainee and Internship Programs, lived and taught English for several years in China and has worked in the international student exchange field for more than 20 years. Kevin took over the Training & Internship Programs in 2012.",
+        "• CETUSA is granted full listing in the Council on Standards for International Educational Travel (CSIET) Advisory List, and is a member of the World Youth Student and Educational Travel Confederation (WYSTC),the WYSE Work Abroad Association and IEE’s Generation Study Abroad initiative.",
+        "• Godište: Studenti ne mogu biti mlađi od 14.5 a ni stariji od 18,5 godina na početku programa, koji je ili 15. Avgust ili 15. Januar. Đaci za jesenji program moraju imati 14.5 godina pre 15og Avgusta. Đaci za januarski program moraju imati 14.5 godina pre 15og Januara.",
+        "• Minimum 3 godine učenja engleskog jezika: Đaci moraju da imaju minimalno 3 godine učenja engleskog jezika iza sebe u prethodnom školovanju;",
+        "• Nivoi razreda koji dolaze u obzir: Đaci moraju biti I, II, III, IV godina srednje škole kao i učenici VIII razreda osnovne škole. Ne mogu da diplomiraju pre početka programa;",
+        "• Prosek školovanja: 3 + na tekućoj godini (ne sme biti ocena 1 ili 2 na tekućoj godini). Traže se dobri i uzorni đaci. Potrebno je priložiti ocene iz prethodne 3 godine i spisak ocena (svedočanstvo) prevesti na engleski jezik.",
+        "• Engleski: 6 ili bolji (ocene od 1-10)",
+        "• ELTIS: Minimum što se traži je položen ELTIS test sa 215 bodova ili više",
+        "• Mentalno/Emocionalno zdravlje: Ne možemo da primamo na program đake koji imaju sledeće zdravstvene probleme: ADD, ADHD, Bi-Polarni poremećaj, šizofrenija, depresija, poremećaj ishrane itd.",
+        "• Alergija: Takođe ne možemo da primamo na program učenike koji imaju ozbiljne alergološke probleme kao ni one koji imaju astmu. Ovakva oboljenja nisu pokrivena osiguranjem koje se obezbeđuje učenicima na programu.",
+        "• Vakcinacije: Studenti moraju primiti sledeće osnovne vakcine pre početka programa:",
+        "4 doze Polio – poslednja doza mora biti u četvrtoj ili posle četvrte godine;",
+        "4 doze DTaP;",
+        "1 doza Tdap – poslednja doza mora biti u roku od 5 godina od datuma završetka programa;",
+        "2 doze MMR – prva doza mora biti na ili nakon prvog rođendana;",
+        "2 doze Varicella – prva doza mora biti na ili nakon prvog rođendana. Ukoliko je student imao varičele, mora navesti mesec/godinu kada ih je imao. 1 doza od svake za Hep A i Hep B;",
+        "1 doza za of Meningococcal (meningitis) – prva doza mora biti nakon 11. godine (samo ACW4Y).",
+        "Test na tuberkulozu – mora se uraditi u roku od 1 godine od datuma početka programa.",
+        "Vakcina Hepatitis B",
+        "NAPOMENA: Ukoliko studenti nemaju sve vakcinacije pre dolaska, moraju da prime nedostajuće vakcine. Đaci snose troškove toga. Naše osiguranje u USA ne pokriva troškove vakcinacije.",
+        "Školska godina u inostranstvu predstavlja nastavak i nadogradnju redovnog školovanja učenika. Pored pohađanja škole, učenici su u prilici da odlično nauče strani jezik i steknu internacionalno iskustvo. Srednjoškolska razmena je izazovno, veoma zabavno i sasvim specifično iskustvo. Učenik koji boravi deset meseci u stranoj zemlji nije gost ili turista, već član nove porodice i novog okruženja. Ovakvi programi podstiču sazrevanje, osamostaljivanje i otvaraju brojne mogućnosti.",
+        "Svi učesnici programa tokom boravka u inostranstvu imaju punu i kontinuiranu podršku naše partnerske organizacije i njihovih lokalnih koordinatora, koji žive u neposrednoj blizini učenika.",
+        "Investicija za ceo život",
+        "Učešće na programu predstavlja investiciju za ceo život. Kod najvećeg broja učenika program je uticao na izbor fakulteta i profesije. Učesnici programa se vidno razlikuju od svojih vršnjaka po tome što su se već dokazali kao uspešni u novim i nepoznatim okolnostima.",
+        "Šta učenik dobija učešćem na programu High school USA – Srednje škole u Americi?",
+        "• Usavršiće strani jezik",
+        "• Naučiće da praktično primeni svoje znanje",
+        "• Sagledaće sebe i svet iz nove perspektive",
+        "• Odmeriće svoje sposobnosti u drugom okruženju i postaće samostalniji",
+        "• Upoznaće nove prijatelje",
+        "• Steći će jedno potpuno novo životno iskustvo",
+        "Cena programa: $9400 + $95 prijave na program za školsku godinu, ($8400 + $95 prijave na program za jedno polugodište). Cena uključuje nastavu, smeštaj i hranu u host porodici)",
+        "Dodatni troškovi: troškovi vize (185$ aplikacija + 220$ SEVIS), obavezno zdravstveno osiguranje (1195$ za celu godinu i 695$ za jedno polugodište), avio karta, lični troškovi i nastavni materijal.",
+        "Odabir regije ili države (opciono): Kandidat ima pravo da bira regiju ili državu u kojoj će da boravi i ukoliko se dobije tražena regija ili država, vrši se doplata:",
+        "• $400,00 Regional Preference Fee",
+        "• $600,00 State preferences: Delaware, Maryland, Virginia, West Virginia, Kentucky, Tennessee, Mississippi, Alabama, Georgia, North Carolina, South Carolina, Vermont, Maine, New Hampshire, Massachusetts, Rhode Island, Montana, Wyoming, North Dakota, South Dakota, Nebraska, Iowa, Colorado, Kansas, Missouri, New Mexico, Oklahoma, Arkansas, Louisiana, Texas, Washington, Oregon, Idaho, Nevada, Utah and Arizona, Minnesota, Wisconsin, Michigan, Illinois, Indiana, Ohio, Pennsylvania, Michigan, Wisconsin, Indiana, Ohio and Illinois.",
+        "• $800,00 New York, New Jersey, Florida",
+        "• $1000,00 Alaska",
+        "• $1200,00 California, Hawaii",
+        "SAMOSTALNO PRONALAŽENJE HOST PORODICE",
+        "Ukoliko imate prijatelje u USA koji bi ispunili kriterijume i uslove HSP programa, bili voljni da Vam obezbede besplatan smeštaj i hranu tokom boravka u USA i raspoloženi za saradnju sa našom Sponzorskom agencijom / POSTOJI MOGUĆNOST DA SAMI SEBI PRONAĐETE HOST FAMILIJU.",
+        "Familija u kojoj ćete provoditi vreme NE SME da bude u rodbinskoj vezi sa Vama. Prijatelji, sa druge strane, dolaze u obzir.",
+        "Cena programa je ista jer Sponzorske agencije ulažu isti možda čak i veći napor i radne sate oko realizacije celog programa a kandidat će boraviti u familiji koju poznaje od ranije.",
+        "Prijava na program se vrši: do 31.03.2027. za sledeću školsku godinu – start je od avgusta 2027. ili do 30.09.2026. za polugodište od januara 2026.",
+        "Broj mesta je ograničen i ovi rokovi mogu da budu i kraći ukoliko se mesta popune pre navedenih datuma.",
+        "Koraci programa:",
+        "• Informativni razgovor sa predstavnikom American Adventure (intervju se zakazuje dan pre željenog datuma);",
+        "• Kandidat mora da dođe obavezno sa jednim roditeljem da čuje detalje o programu;",
+        "• Nakon razgovora kandidat se odlučuje da li želi da učestvuje na programu. Ukoliko je odgovor potvrdan, potpisuje se Ugovor o pružanju usluga sa agencijom American Adventure DOO i po potpisivanju ugovora se uplaćuje trošak prijave od $95 i avans za program od 2000$;",
+        "• Dobijaju se formulari za popunjavanje kao spisak dokumentacije koju je kandidat dužan da popuni / sakupi u roku od 5 radnih dana. American Adventure DOO pruža asistenciju prilikom popunjavanja formulara.",
+        "• Po potvrdi Sponzorske agencije da je kandidat primljen na program i da su formulari popunjeni adekvatno, ulazi se u proceduru nalaženja porodice (HOST FAMILY);",
+        "• Procedura nalaženja porodice može trajati od 3 nedelje do nekoliko meseci. Dešava se nekad da se porodica nađe i u avgustu za početak školske godine u avgustu. U svakom slučaju dobijanje porodice mora biti završeno do 5. septembra ukoliko je polazak u avgustu ili do 31. decembra za polaske u januaru.",
+        "• Nakon pronalaska Host porodice i škole u SAD o čemu će đaci i njihovi roditelji biti obavešteni putem e mail adrese ili završene provere i odobrenja Host porodice od strane Sponzorske agencije iz SAD (self program) – roditelja đaka su u obavezi da uplate drugu ratu programa (za školsku godinu $6100,00, za jedno polugodište $5100,00)",
+        "• Troškovi SEVIS ($220,00) programa se uplaćuju nakon pronalaska Host porodice i škole u SAD-u / Roditelji su u obavezi da uplate troškove SEVIS programa u roku od 5 radnih dana od dana prijema obaveštenja o pronalasku Host porodice ili završene provere i odobrenja Host porodice od strane Sponzorske agencije iz SAD (self program);",
+        "• Nakon pronalaska Host porodice i škole u SAD o čemu će đaci i njihovi roditelji biti obavešteni putem e mail adrese iz ili završene provere i odobrenja Host porodice od strane Sponzorske agencije iz SAD (self program) – Roditelji su u obavezi da uplate troškove medicinskog osiguranja u iznosu od $1195,00 (za celu školsku godinu) / $695,00 za jedno polugodište za đaka i to u roku od 5 radnih dana od datuma prijema obaveštenja.",
+        "• Ukoliko se đak i njegovi roditelji odluče da biraju regiju ili državu u kojoj će boraviti đak, roditelji su u obavezi u roku od 5 radnih dana od dana prijema obaveštenja da uplati naknadni trošak za dobijanje odabrane regije ili države.",
+        "• Nakon pristizanja neophodne dokumentacije iz SAD-a koja je potrebna da bi đak aplicirao za J1 vizu (DS 2019) – R0ditelji su u obavezi da uplate treću ratu programa u iznosu od $1300,00 u roku od 5 radnih dana od dana prijema obaveštenja o pristizanju dokumentacije;",
+        "• U roku od 2 radna dana od pristizanja neophodne dokumentacije za viziranje, roditelji su u obavezi da uplate troškove ambasade u iznosu od $185,00 po instrukcijama Davaoca usluga;",
+        "• Đak odlazi na intervju za vizu u Ambasadu / American Adventure DOO priprema đaka i roditelje za svaki korak do polaska.",
+        "• Rezerviše kartu za let prema svom plasmanu do najbližeg internacionalnog aerodorma. American Adventure DOO posreduje prilikom kupovine avio karte.",
+        "• Učenik kreće na put 5 dana pre početka škole.",
+        "American Adventure doo NE GARANTUJE DOBIJANJE VIZE, JER JE DISKRECIONO PRAVO SVAKE AMBASADE DA ODOBRI ILI ODBIJE VIZU POJEDINCU.",
+        "Vlada predrasuda da su američke škole lake, ali one su samo drugačije. Prednost američkog školskog sistema je to što pruža učenicima izbor i alternativu, tako da svako može da pronađe sebe, da se razvija i obrazuje u skladu sa svojim talentima i potrebama. Akcenat se stavlja na primenu teorijskog znanja u praksi. Američki sistem predviđa mogućnost izbora predmeta koje učenik bira uz pomoć školskog savetnika. Školska godina, zavisno od države, počinje od kraja jula do polovine septembra.",
+        "Pored obaveznog pohađanja škole, učenici se uključuju u sportske, društvene i vanškolske aktivnosti pri čemu imaju priliku da ispolje svoje talente.",
+        "Da bi se uspešno završila školska godina, neophodno je konstantno učiti i angažovati se u školskim aktivnostima, tokom čitave školske godine.",
+        "Vannastavne aktivnosti (sport, muzika, gluma, saradnja sa školskim novinama, hor, biznis klub i dr.) predstavljaju veoma važan segment u američkom obrazovnom sistemu. Njih organizuje škola posle nastave i veoma je važno aktivno učestvovati u njima.",
+        "Važno je napomenuti da najveći broj američkih škola, na kraju uspešno završenog poslednjeg razreda, učesnicima programa izdaje svedočanstvo o završenom razredu. Izdavanje diplome o završetku srednje škole nije česta pojava.",
+        "Sport je vrlo bitan za američko društvo. Nadamo se da ćete iskoristiti svaku priliku da se bavite sportom koji volite ili da se oprobate u sportovima koji nisu popularni u Evropi (američki fudbal ili bejzbol, golf). Ukoliko se bavite sportom u svojoj zemlji i želite da nastavite da trenirate u Americi to najčešće nije problem, ali se može desiti da sport koji trenirate nema u školi koja vas je upisala. Niko Vas neće sputavati da trenirate ono što želite. Pored svega gore navedenog moramo dodati da ukoliko bilo ko želi da učestvuje u sportskim aktivnostima, da igra za školu ili samo da trenira, mora da uradi i obavezni lekarski pregled koji nije uključen u medicinsko osiguranje programa i cenu tog pregleda plaćaće sam kandidat.",
+        "<span data-mce-type=\"bookmark\" style=\"display: inline-block; width: 0px; overflow: hidden; line-height: 0;\" class=\"mce_SELRES_start\">﻿</span>",
+        "Za razliku od naših škola, Američki sistem podrazumeva manji broj predmeta po polugodištu, ali sličan broj predmeta tokom jedne školske godine kao i kod nas. Američke škole su po predmetima slične našim gimnazijama, ali pored opštih predmeta tu se mogu naći predmeti iz oblasti umetnosti (od pevanja u horu, sviranja instrumenta, učestvovanja u drami, mjuziklu, preko vajarstva, pa do filmske produkcije), ekonomije, prava i slično. Jedino što sigurno nećete naći u američkim srednjim školama to su predmeti iz oblasti medicine i medicinskih nauka. Pravila škole su sasvim različita u odnosu na pravila kod nas. Prvo, razredni starešina ne postoji. Brigu o svakom učeniku vodi “savetnik”, koji će Vam i pomoći pre početka škole da izaberete adekvatne predmete. Tokom svakog polugodišta, kao strani učenik možete izabrati predmete prema Vašem interesovanju. Trebalo bi da znate da Vas niko neće upozoriti da predmet koji uzimate nije adekvatan Vašem razredu, zbog toga uvek tražite da pohađate predmete koji su adekvatni i odgovaraju nivou nastave koju biste imali u Srbiji. Možete izabrati između 6-8 predmeta po polugodištu. U poslednjih 15 godina američke škole retko i sve ređe izdaju diplome stranim đacima (maturantima), tako da ako završavate poslednji razred u Americi, vodite računa da škola zadržava pravo da Vam ne izda Diplomu. Obično je razlog vrlo racionalan, Vi ste većinu svog školovanja obavili u Srbiji, pa je logično da je Vaša škola ta koja bi trebalo da Vam izda Diplomu. Ovo ne važi samo za učenike iz Srbije već i za učenike svih zemalja sveta. Ukoliko škola ne izdaje diplomu što je u 90% slučajeva, ono što je sigurno je da ćete dobiti svedočanstvo sa ocenama za tu godinu. Vrlo je važno da u tom slučaju pohađate adekvatne predmete za 12. razred (tj. predmete za IV godinu srednje škole), da Vam škola na kraju godine izda potvrdu da ona ne izdaje Diplome stranim učenicima, ali da ste vi završili 12. razred (ili ukoliko niste upisani u adekvatan razred da ste pohađali predmete iz 12. razreda što je u Americi moguće za učenike na razmeni) i da možete aplicirati na bilo koji fakultet u SAD-u, ili da umesto Diplome donesete položeni SAT ili GED test. Svaki učenik je odgovoran za biranje predmeta, a diskreciono pravo je svake škole da proceni u koji će razred upisati učenika. Svaki učenik je odgovoran da na kraju školske godine donese originalna dokumenta u zemlju radi nostrifikacije. Svi dokumenti moraju imati APOSTILLE – pečat koji se dobija u lokalnom Home Office-u. Bez ovog pečata naše Ministarstvo neće uzimati u razmatranje svedočanstva i Diplome za nostrifikaciju.",
+        "USLUGE VALIDACIJE I OVERE APOSTILLE PEČATOM",
+        "Sponzorska agencija može da pruži usluge đacima oko kompletiranja potrebne dokumentacije koji zahteva Ministarstvo prosvete radi nostrifikacije. Naknada za ove usluge se plaća direktno Sponzorskoj agenciji.",
+        "KAKO NOSTRIFIKACIJU VRŠI MINISTARSTVO PROSVETE, OVA PRAVILA SE MOGU PROMENITI. AMERICAN ADVENTURE NE GARANTUJE DA ĆE KANDIDAT DOBITI DIPLOMU ILI REŠENJE O MATURI PO POVRATKU IZ AMERIKE, TE MOLIMO KANDIDATE DA SE O SVEMU INFORMIŠU NA SAJTU MINISTARSTVA PROSVETE NA VREME I PRE POVRATKA IZ AMERIKE.",
+        "http://www.mpn.gov.rs/enicnaric-srbija/",
+        "Sponzorska agencija takođe ne garantuje kandidatima dobijanje diplome, ali ukoliko škola ipak izdaje diplomu (mada niko ne može imati zahtev da bude plasiran u školu koja izdaje diplomu niti će Sponzorska agencija o tome izveštavati porodicu ili kandidata), može se desiti da škola ima posebna pravila za strane učenike i da neki predmeti ako ne i svi budu obavezni prema planu i programu škole. U tom slučaju učenik je dužan da uzme predmete koji su obavezni za dobijanje diplome, jer u suprotnom će morati da polaže maturu kad se vrati u zemlju za razliku od njegovih vršnjaka kojima američka škola ne izdaje diplomu, a koji poseduju dokaz o tome. Svako svedočanstvo i dokumentacija donesena iz inostranstva predaje se uz prateću dokumentaciju Ministartvu Prosvete kako to propisuje Ministarstvo, a nostrifikacija i razmatranje molbe za nostrifikaciju se vrši za sva dokumenta posebno, te je nemoguće predvideti da li će se matura priznati ili ne. Shodno reciprocitetu o priznavanju škole između naše zemlje i Amerike ne bi trebalo da bude bilo kakvih problema za nastavak školovanja ukoliko je dokumentacija kompletna. Pored redovne nastave, škola nudi učenicima niz drugih aktivnosti. Naš je savet da se učenici uključe u aktivnosti kojima se bave ili u aktivnosti u kojima žele da se oprobaju, jer će na taj način lakše i brže steći nove prijatelje. Najčešće se dešava da škola vrši pozajmicu knjiga svakom učeniku koji će iste na kraju polugodišta vratiti. Svaki učenik će takođe dobiti i svoju kasetu za knjige i imaće pristup svim mogućnostima u školi koje se nude i ostalim đacima. Često se dešava da naši učenici mogu uplatiti ručak u školi. Iako ova opcija nije obavezna, mi je toplo preporučujemo jer se radi o kuvanom obroku i većina Amerikanaca je koristi. Nije obaveza porodice da Vam ovaj trošak pokrije, ali je moguće da deca iz vaše porodice već imaju uplaćen ovaj obrok. Ukoliko želite, uplatite ga za sebe. On iznosi oko 3 dolara. Neke škole naplaćuju pozajmicu knjiga i laptop računara i za to treba imati izdvojeno oko 300$. Posebni predmeti koji iziskuju dodatni materijal ili poseban materijal za rad mogu finansijski opteretiti kandidata, jer svaki kandidat (tj. prirodni roditelji kandidata) je dužan da snosi troškove školskog pribora koji se u toj školi ne dobija na zajam. Većina učenika će imati organizovan prevoz do škole žutim školskim autobusima koje ste sigurno viđali na filmu. Ukoliko živite u delu mesta ili malom mestu gde autobus ne ide ili pak živite blizu škole, biće Vam ponuđen drugi prevoz.",
+        "Sponzorska agencija koja je i ujedno organizator programa, veoma pažljivo selektuje američke porodice zainteresovane da prime stranog učenika u svoj dom. Prilikom odabira porodice, vodi se računa o tome da porodica ispunjava sve programom predviđene uslove za prijem stranih učenika. Posebna pažnja se poklanja interesovanjima kako članova porodice, tako i stranog učenika.",
+        "Američke porodice koje učestvuju u ovom programu, imaju svest o vrednostima kulturne razmene i motivisane su da maksimalno pomognu stranom učeniku da se što lakše prilagodi američkom načinu života.",
+        "Porodice mogu biti porodice sa jednim ili sa oba roditelja, sa decom (vršnjacima učenika koga primaju u svoj dom ili mlađim od njega) ili bez dece. Jedna porodica može da primi dva učenika istovremeno (“double placement”). U tom slučaju, učenici moraju biti iz različitih zemalja.",
+        "Porodice koje primaju učenike su pune entuzijazma i žele da njihova deca ili oni sami saznaju o drugim narodima i kulturama kao i da podele svoju kulturu i način života sa novim članom, a pre svega vole decu. Zbog svega ovoga od svakog učenika se očekuje da poštuje svoju porodicu i da nastoji da se što pre prilagodi novim pravilima kuće u kojoj boravi. Vaša porodica će zauzvrat Vama pružiti otvoreno srce, kao i podršku tokom celog boravka. Od Vas će se očekivati da nakon završetka školskih obaveza slobodno vreme provodite zajedno kao i da obavljate sitne dužnosti u okviru porodice (sređivanje sobe, svojih stvari, pomoć u kući i sl.) uostalom ne više od onoga što i sami članovi obavljaju. Sigurno ćete imati priliku da pokažete šta znate, da im objasnite kako živimo, da spremite neko nacionalno jelo ili slično. Porodica će želeti da zna o vašoj zemlji i pomoći će Vam da razumete njihovu. Same porodice smeštene su širom Amerike, uglavnom se nalaze u manjim gradovima i mestima u ruralnim sredinama ali postoji mogućnost da budete smešteni i u većim gradovima. Naš savet je da se lokacija boravka ni ne bira (postoji opcija biranja određene oblasti ili čak države uz doplatu), već je mnogo važnije dobiti porodicu u koju ćete se najlakše uklopiti. Porodice su proverene, njih proverava osoblje Sponzorske agencije sa kojom sarađujemo. Svaka porodica mora imati preporuke iz zajednice u kojoj živi da bi učestvovala na programu. Porodica takođe mora imati osnovne finansijske uslove da primi dete iz druge zemlje. Kulturne razlike između dve zemlje su ogromne tako da je naš savet da kad god imate dilemu razgovarate sa svojom porodicom, jer to je najlakši način da se nesporazumi prevaziđu. Svaki kandidat je dužan da poštuje pravila porodice koja važe za drugu decu ili generalno važe za ukućane. Takođe je bitno napomenuti da je većina američkih porodica religiozna i da se od Vas očekuje da poštujete njihov red i kad je crkva u pitanju, tj. da sa njima idete u crkvu danima kada i oni idu. Naravno, odlazak u crkvu nije obavezan.",
+        "PROMENA PORODICE",
+        "Porodica se ne može menjati bez objektivnih razloga. Bez obzira na rasu, ekonomski status, religiju porodice, ovaj program je namenjen onima koji mogu prihvatiti sve razlike među ljudima. Shodno tome, ukoliko smatrate da ne biste mogli prihvatiti velike razlike, nemojte se ni prijavljivati na program.",
+        "<span data-mce-type=\"bookmark\" style=\"display: inline-block; width: 0px; overflow: hidden; line-height: 0;\" class=\"mce_SELRES_start\">﻿</span>",
+        "Lokalni koordinator je osoba koja, tokom trajanja programa, pruža podršku kako učeniku, tako i američkoj porodici i školi, kako bi proces prilagođavanja jednih na druge, kao i učenika na novu sredinu i drugačiji način života, prošao što lakše.",
+        "Lokalni koordinator je zadužen za rešavanje eventualnih problema, koji se mogu javiti u porodici ili školi tokom trajanja programa. Njegov zadatak je da najmanje jednom mesečno, a najčešće više puta mesečno, kontaktira učenika, porodicu i školu, kako bi proverio da li je sve u redu.",
+        "Svaki učesnik programa ima na raspolaganju besplatan kontakt telefon, dostupan 24 sata, 7 dana u nedelji, za hitne pozive i pružanje dodatne podrške kada je to potrebno.",
+        "Uloga lokalnog koordinatora je prvenstveno da pronađe odgovarajuću porodicu za dete koje učestvuje na programu. Koordinator je osoba koja je pre svega izvršila inspekciju porodice pre Vašeg dolaska i ustanovila da ima validne preporuke za učestvovanje na programu. Potom, koordinator je zadužen da po dolasku deteta objasni svoju ulogu i da napravi jedan orijentacioni sastanak u kome će kandidatu objasniti šta sve predstavnik radi i podsetiti učenika na njegova prava i obaveze. Lokalni koordinator je osoba koja se nalazi najdalje sat ili dva vožnje od porodice i učenika i konstantno prati uklapanje učenika u porodicu i u školu. Svaki predstavnik je obučen i ima bogato iskustvo u radu sa učenicima na razmeni. Od velike je važnosti da Vaš odnos prema Vašoj okolini bude korektan, iskren i otvoren. Jedini način da prevaziđete neki problem je preko predstavnika (ako o njemu ne možete razgovarati sa porodicom). Razgovor sa Vašim prijateljima, rođacima pa i roditeljima nekada jednostavno ne može rešiti problem, a njihovi saveti mogu i pogoršati odnose. Najčešće se dešava da kada učenici diskutuju o bilo kom problemu sa osobama koje nisu uključene u program, situacija se iskomplikuje. Da biste ovo izbegli, prvo sedite i razgovarajte sa američkom porodicom, pa ako ne možete zajednički da rešite problem konsultujte lokalnog koordinatora. Oni su tu da Vam pomognu i da zajedno sa Vama nađu najbolje moguće rešenje. Lokalni koordinatori su tu da pomognu oko potencijalnih problema, ali i Vi takođe morate preuzeti odgovornost, jer samo Vi možete učiniti Vaš boravak uspešnim.",
+        "NAŠ TIM U SAD BROJI 30 REGIONALNIH KOORDINATORA I 400 LOKALNIH KOORDINATORA. LOKALNI KOORDINATORI SU UDALJENI NE VIŠE OD 60 MILJA OD NAŠIH KANDIDATA.",
+        "+",
+        "• Administrativnu podršku od strane predstavnika American Adventure DOO, konsultacije, pomoć prilikom popunjavanja formulara, prikupljanja dokumentacije za program;",
+        "• Priručnik sa savetima za učešće na programu namenjen učenicima;",
+        "• Orijentacioni program namenjen učenicima i roditeljima pred odlazak na program;",
+        "• Transfer pri dolasku i odlasku u SAD;",
+        "• Smeštaj i hranu u američkoj porodici i pohađanje američke srednje škole;",
+        "• Podršku od strane lokalnog koordinatora tokom boravka u SAD;",
+        "• Pomoć, podršku i savete učenicima i roditeljima od strane predstavnika American Adventure DOO, kao i američke Sponzorske agencije tokom boravka u SAD;",
+        "OSIGURANJE",
+        "Svaka porodica u Srbiji je odgovorna za zdravlje svog deteta i pre nego što prijavi dete na program mora razmotriti da li ovaj program na bilo koji način može ugroziti njegovo/njeno zdravlje. Takođe i Sponzorska agencija iz SAD na osnovu zdravstvenog kartona koji ispunjava lekar svakog deteta može odlučiti da ne primi kandidata na program ukoliko smatra da je zdravstveno stanje takvo da može biti ugroženo ovim programom. Kao što smo napomenuli, svaki učenik je osiguran prema zakonima koji važe za ovaj program. Osiguranje ne podrazumeva bolesti zuba, nasledne bolesti, korekciju vida, preventivne medicinske mere… Takođe ne obuhvata lekove, fizikalnu terapiju i slično. Participacija je u Americi obavezna i plaća se od 50-250$, takođe se posebno plaćaju pregledi u vezi sa sportskim aktivnostima učenika. Svi koji se bave sportom moraju na licu mesta platiti osiguranje u slučaju sportskih povreda jer ono nije uključeno u cenu osiguranja.",
+        "DŽEPARAC",
+        "Roditelji svakog kandidata su dužni da obezbede džeparac za svoje dete tokom boravka. Ovaj džeparac neophodan je za sveske i pribor, ličnu higijenu, izlazak, ekskurzije, putovanja ili čak i dodatnu ishranu (ukoliko učenik recimo voli više da jede, a porodica ima drugačije navike, te kandidat želi da dopuni svoje obroke – to svakako može od svog džeparca, a ne može tražiti od porodice da dopunjavaju svoje navike). Džeparac mora biti između 300-350$ mesečno. Po dolasku u Ameriku, svaki kandidat će sa porodicom otići u banku i otvoriti svoj račun. Na taj račun prirodni roditelji učenika mogu uplaćivati džeparac, a kandidat može podizati novac u iznosu koji mu treba. Kada krene na program, učenik sa sobom treba da ponese iznos od bar 2 džeparca. Nikako novac ne držati na računu porodice. Učenici ne smeju pozajmljivati novac od porodice i moraju plaćati svoje telefonske i lične troškove.",
+        "PUTOVANJA",
+        "Tokom programa učeniku je zabranjeno putovanje van porodice domaćina ili sa predstavnikom. Prema tome samostalna putovanja, posete prirodnih roditelja nisu dozvoljene tokom boravka u Americi. Učenik se takođe ne može za vreme raspusta vraćati u Srbiju niti napuštati Ameriku. Putovanja su, prema tome, dozvoljena samo sa porodicom (mada porodica nije dužna da plaća smeštaj učeniku) ukoliko učenik želi da ide na putovanje i ukoliko može da ga sebi priušti ako ga porodica ne plaća. Učenik takođe može izabrati da ide na neko od ponuđenih putovanja u organizaciji Sponzorske agencije, a u pratnji koordinatora (opciono – posebno se plaća) ili na putovanje koje organizuje škola.",
+        "High school INFORMATOR"
+      ]
+    }
+  ]
+};

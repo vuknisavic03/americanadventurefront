@@ -271,6 +271,73 @@ const SWT_FAQS = [
   },
 ];
 
+// Pun tekst sa starog sajta — učitava se tek kad se program otvori (svaki fajl je poseban chunk).
+const DETAIL_LOADERS = import.meta.glob("../data/programDetails/*.js");
+const DETAIL_IDS = { "work-and-travel": ["work-and-travel", "lifeguards"] };
+
+function ProgramDetails({ programId }) {
+  const [parts, setParts] = useState([]);
+  useEffect(() => {
+    let alive = true;
+    setParts([]);
+    const ids = (DETAIL_IDS[programId] || [programId]).filter((id) => DETAIL_LOADERS[`../data/programDetails/${id}.js`]);
+    Promise.all(ids.map((id) => DETAIL_LOADERS[`../data/programDetails/${id}.js`]().then((m) => m.default))).then(
+      (loaded) => alive && setParts(loaded)
+    );
+    return () => {
+      alive = false;
+    };
+  }, [programId]);
+
+  const sections = parts.flatMap((part) => part.sections);
+  const files = [...new Set(parts.flatMap((part) => part.files || []))];
+  if (sections.length === 0) return null;
+
+  return (
+    <section id="detalji" className="mt-20 scroll-mt-36 border-t border-line pt-16">
+      <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-4">
+          <h2 className="font-display text-3xl font-bold text-ink">Sve o programu</h2>
+          <p className="mt-3 text-[15px] leading-relaxed text-ink-2">Uslovi, cene, koraci i pravila programa, u celosti.</p>
+          {files.length > 0 && (
+            <ul className="mt-6 space-y-2 text-sm">
+              {files.map((f) => (
+                <li key={f}>
+                  <a href={f} target="_blank" rel="noreferrer" className="font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink">
+                    {decodeURIComponent(f.split("/").pop())}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <div className="divide-y divide-line border-y border-line lg:col-span-8">
+          {sections.map((sec, i) => (
+            <details key={`${sec.title}-${i}`} className="group">
+              <summary className="flex list-none items-center justify-between gap-6 py-5 text-base font-semibold text-ink [&::-webkit-details-marker]:hidden">
+                {sec.title}
+                <ChevronDownIcon className="h-4 w-4 shrink-0 text-ink-3 transition-transform duration-150 group-open:rotate-180" />
+              </summary>
+              <div className="max-w-2xl space-y-3 pb-6 text-[15px] leading-relaxed text-ink-2">
+                {sec.blocks.map((b, j) =>
+                  b.startsWith("• ") ? (
+                    <p key={j} className="flex gap-2.5">
+                      <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-ink-3" aria-hidden="true" />
+                      <span>{b.slice(2)}</span>
+                    </p>
+                  ) : (
+                    <p key={j}>{b}</p>
+                  )
+                )}
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 const JOB_CATEGORIES = [
   { value: "all", label: "Sve kategorije" },
   { value: "bazen", label: "Spasioci (Lifeguards)" },
@@ -524,6 +591,9 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
             </div>
           </section>
         )}
+
+        {/* Pun tekst programa sa starog sajta */}
+        <ProgramDetails programId={program.id} />
       </Container>
     </div>
   );

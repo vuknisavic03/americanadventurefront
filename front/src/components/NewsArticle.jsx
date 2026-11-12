@@ -73,9 +73,18 @@ export default function NewsArticle({ slug, items = newsData, onNavigate = () =>
       </div>
 
       <div className="mx-auto mt-10 max-w-2xl space-y-5 px-5 text-[17px] leading-relaxed text-ink sm:px-8">
-        {paragraphs.map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
+        {paragraphs.map((p, i) =>
+          p.startsWith("## ") ? (
+            <h2 key={i} className="pt-4 text-xl font-semibold leading-snug text-ink">{p.slice(3)}</h2>
+          ) : p.startsWith("• ") ? (
+            <p key={i} className="flex gap-3">
+              <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-ink-3" aria-hidden="true" />
+              <span>{p.slice(2)}</span>
+            </p>
+          ) : (
+            <p key={i}>{p}</p>
+          )
+        )}
       </div>
     </article>
   );
