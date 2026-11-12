@@ -2,8 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "../i18n/LanguageContext";
 
-const BRAND_YELLOW = "#FDD503";
-const INK = "#231f20";
 
 function ChatIcon({ className = "h-6 w-6" }) {
   return (
@@ -83,21 +81,21 @@ export default function ChatWidget({ getReply }) {
       <div
         role="dialog"
         aria-label={t("chat.title")}
-        className={`fixed bottom-24 right-4 z-[60] flex w-[min(23rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.35)] ring-1 ring-black/10 transition-all duration-300 sm:right-6 ${
+        className={`fixed bottom-24 right-4 z-[60] flex w-[min(23rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-line transition-all duration-300 sm:right-6 ${
           open ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
         }`}
         style={{ height: "min(32rem, calc(100vh - 8rem))" }}
       >
         {/* Zaglavlje */}
-        <div className="flex items-center justify-between px-5 py-4" style={{ backgroundColor: INK }}>
+        <div className="bg-ink flex items-center justify-between px-5 py-4">
           <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full" style={{ backgroundColor: BRAND_YELLOW, color: INK }}>
+            <span className="bg-brand text-ink flex h-9 w-9 items-center justify-center rounded-full">
               <ChatIcon className="h-5 w-5" />
             </span>
             <div className="leading-tight">
-              <p className="text-sm font-bold text-white">{t("chat.title")}</p>
+              <p className="text-sm font-semibold text-white">{t("chat.title")}</p>
               <p className="flex items-center gap-1.5 text-xs text-white/55">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400" aria-hidden="true" />
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
                 {t("chat.subtitle")}
               </p>
             </div>
@@ -113,7 +111,7 @@ export default function ChatWidget({ getReply }) {
         </div>
 
         {/* Poruke */}
-        <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-[var(--brand-ink)]/[0.02] px-4 py-4">
+        <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-ink/[0.02] px-4 py-4">
           {/* Uvodna poruka bota */}
           <Bubble from="bot">{t("chat.welcome")}</Bubble>
           {messages.map((m, i) => (
@@ -129,20 +127,20 @@ export default function ChatWidget({ getReply }) {
         </div>
 
         {/* Unos */}
-        <form onSubmit={send} className="flex items-center gap-2 border-t border-black/10 bg-white px-3 py-3">
+        <form onSubmit={send} className="flex items-center gap-2 border-t border-line bg-white px-3 py-3">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={t("chat.placeholder")}
             aria-label={t("chat.placeholder")}
-            className="min-w-0 flex-1 rounded-full bg-black/[0.04] px-4 py-2.5 text-sm text-[var(--brand-ink)] placeholder:text-black/40 focus:outline-hidden focus:ring-2 focus:ring-[var(--brand-ink)]/15"
+            className="min-w-0 flex-1 rounded-full bg-black/[0.04] px-4 py-2.5 text-sm text-ink placeholder:text-ink-3/70 focus:outline-hidden focus:ring-2 focus:ring-ink/15"
           />
           <button
             type="submit"
             aria-label={t("chat.send")}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-40"
-            style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+            className="bg-brand text-ink flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-transform duration-150 disabled:opacity-40"
+           
             disabled={!input.trim()}
           >
             <SendIcon />
@@ -156,8 +154,7 @@ export default function ChatWidget({ getReply }) {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? t("chat.close") : t("chat.open")}
         aria-expanded={open}
-        className="fixed bottom-5 right-4 z-[60] flex h-14 w-14 items-center justify-center rounded-full shadow-[0_10px_30px_-6px_rgba(0,0,0,0.4)] transition-transform duration-200 hover:scale-105 active:scale-95 sm:right-6"
-        style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+        className="fixed bottom-5 right-4 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-brand text-ink shadow-lg transition-colors duration-150 hover:bg-brand-strong sm:right-6"
       >
         {open ? <CloseIcon className="h-6 w-6" /> : <ChatIcon className="h-6 w-6" />}
       </button>
@@ -171,9 +168,8 @@ function Bubble({ from, children }) {
     <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
       <p
         className={`max-w-[80%] whitespace-pre-line rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
-          isUser ? "rounded-br-sm" : "rounded-bl-sm"
+          isUser ? "rounded-br-sm bg-ink text-white" : "rounded-bl-sm bg-surface-2 text-ink"
         }`}
-        style={isUser ? { backgroundColor: INK, color: "#fff" } : { backgroundColor: "rgba(0,0,0,0.06)", color: INK }}
       >
         {children}
       </p>
@@ -182,5 +178,5 @@ function Bubble({ from, children }) {
 }
 
 function Dot({ delay = "0ms" }) {
-  return <span className="inline-block h-2 w-2 animate-bounce rounded-full bg-black/40" style={{ animationDelay: delay }} />;
+  return <span className="inline-block h-2 w-2 animate-bounce rounded-full bg-ink-3" style={{ animationDelay: delay }} />;
 }

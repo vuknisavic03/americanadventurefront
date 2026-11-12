@@ -62,27 +62,27 @@ export default function JobOfferModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-2 sm:p-4 backdrop-blur-xs overflow-y-auto">
-      <div className="relative my-4 flex max-h-[94vh] w-full max-w-4xl flex-col rounded-2xl bg-white shadow-2xl border border-black/10 overflow-hidden">
+      <div className="relative my-4 flex max-h-[94vh] w-full max-w-4xl flex-col rounded-2xl bg-white shadow-2xl border border-line overflow-hidden">
         {/* Top bar (print: hidden) */}
-        <div className="flex flex-wrap items-center justify-between border-b border-black/[0.08] bg-slate-900 px-6 py-3.5 text-white print:hidden">
+        <div className="flex flex-wrap items-center justify-between border-b border-line bg-ink px-6 py-3.5 text-white print:hidden">
           <div className="flex items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--brand-yellow)] text-xs font-black text-[var(--brand-ink)]">
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand text-xs font-bold text-ink">
               2.5
             </span>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-sm">Zvanični Job Offer & Ugovor o radu (SAD)</span>
+                <span className="font-semibold text-sm">Zvanični Job Offer & Ugovor o radu (SAD)</span>
                 {isAlreadySigned ? (
-                  <span className="rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 text-[10px] font-bold">
-                    POTPISANO I PRIHVAĆENO
+                  <span className="rounded-full bg-white/10 text-white/85 px-3 py-1 text-xs font-medium">
+                    Potpisano i prihvaćeno
                   </span>
                 ) : (
-                  <span className="rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 text-[10px] font-bold">
-                    ČEKA DIGITALNI POTPIS
+                  <span className="rounded-full bg-brand text-ink px-3 py-1 text-xs font-medium">
+                    Čeka digitalni potpis
                   </span>
                 )}
               </div>
-              <p className="text-[11px] text-slate-300">
+              <p className="text-xs text-neutral-300">
                 Broj ponude: {offer.offerNumber} • Poslodavac: {offer.companyName}
               </p>
             </div>
@@ -92,7 +92,7 @@ export default function JobOfferModal({
             <button
               type="button"
               onClick={() => window.print()}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-white/15 px-3 py-1.5 text-xs font-bold text-white hover:bg-white/25 transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/25 transition-colors"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
@@ -103,7 +103,7 @@ export default function JobOfferModal({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg bg-white/10 p-1.5 text-slate-300 hover:bg-white/20 hover:text-white transition-colors"
+              className="rounded-lg bg-white/10 p-1.5 text-neutral-300 hover:bg-white/20 hover:text-white transition-colors"
             >
               x
             </button>
@@ -111,91 +111,91 @@ export default function JobOfferModal({
         </div>
 
         {/* Telo ugovora o radu (A4 format) */}
-        <div className="flex-1 overflow-y-auto p-6 sm:p-10 bg-white text-slate-900 font-sans text-xs sm:text-sm space-y-6">
+        <div className="flex-1 overflow-y-auto p-6 sm:p-10 bg-white text-ink font-sans text-xs sm:text-sm space-y-6">
           {/* Zaglavlje ugovora */}
-          <div className="flex flex-col sm:flex-row justify-between items-start border-b-2 border-slate-900 pb-5 gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start border-b-2 border-ink pb-5 gap-4">
             <div>
-              <span className="font-mono text-[10px] font-black uppercase tracking-widest text-slate-500 block">
+              <span className="tabular-nums text-xs font-bold text-ink-3 block">
                 U.S. DEPARTMENT OF STATE • J-1 SUMMER WORK TRAVEL
               </span>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-950 tracking-tight mt-0.5">
+              <h2 className="text-xl sm:text-2xl font-bold text-ink tracking-tight mt-0.5">
                 JOB OFFER & PLACEMENT AGREEMENT
               </h2>
-              <p className="text-xs text-slate-600 mt-1 font-medium">
+              <p className="text-xs text-ink-2 mt-1 font-medium">
                 Sponzorski obrazac za izdavanje DS-2019 sertifikata o radnoj podobnosti
               </p>
             </div>
 
             <div className="text-left sm:text-right">
-              <span className="rounded-md bg-slate-100 px-2.5 py-1 font-mono text-xs font-black text-slate-800">
+              <span className="rounded-md bg-surface-2 px-2.5 py-1 tabular-nums text-xs font-bold text-ink">
                 {offer.offerNumber}
               </span>
-              <p className="text-xs text-slate-500 mt-1">Datum izdavanja: <strong>{new Date().toLocaleDateString("sr-RS")}</strong></p>
+              <p className="text-xs text-ink-3 mt-1">Datum izdavanja: <strong>{new Date().toLocaleDateString("sr-RS")}</strong></p>
             </div>
           </div>
 
           {/* Podaci o poslodavcu i učesniku */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-1">
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">
+            <div className="rounded-xl border border-line bg-neutral-50/70 p-4 space-y-1">
+              <span className="text-xs font-semibold text-ink-3">
                 1. HOST EMPLOYER (POSLODAVAC U SAD)
               </span>
-              <h3 className="font-black text-base text-slate-900">{offer.companyName}</h3>
-              <p className="text-xs text-slate-700">{offer.companyAddress}</p>
-              <div className="mt-2 text-xs text-slate-600 space-y-0.5">
-                <div>Federal EIN: <strong className="font-mono text-slate-900">{offer.ein}</strong></div>
+              <h3 className="font-bold text-base text-ink">{offer.companyName}</h3>
+              <p className="text-xs text-ink-2">{offer.companyAddress}</p>
+              <div className="mt-2 text-xs text-ink-2 space-y-0.5">
+                <div>Federal EIN: <strong className="tabular-nums text-ink">{offer.ein}</strong></div>
                 <div>Kontakt: <strong>{offer.supervisor}</strong> ({offer.phone})</div>
-                <div>Email: <strong className="text-slate-900">{offer.email}</strong></div>
+                <div>Email: <strong className="text-ink">{offer.email}</strong></div>
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-4 space-y-1">
-              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">
+            <div className="rounded-xl border border-line bg-neutral-50/70 p-4 space-y-1">
+              <span className="text-xs font-semibold text-ink-3">
                 2. J-1 PARTICIPANT (STUDENT KANDIDAT)
               </span>
-              <h3 className="font-black text-base text-slate-900">{candidate?.name || "Kandidat"}</h3>
-              <p className="text-xs text-slate-700">{candidate?.faculty || "Univerzitet u Beogradu"}</p>
-              <div className="mt-2 text-xs text-slate-600 space-y-0.5">
-                <div>Pasoš: <strong className="font-mono text-slate-900">{candidate?.passportNumber || "014298751"}</strong></div>
-                <div>Email: <strong className="text-slate-900">{candidate?.email}</strong></div>
-                <div>Telefon: <strong className="text-slate-900">{candidate?.phone || "+381 61 234 5678"}</strong></div>
+              <h3 className="font-bold text-base text-ink">{candidate?.name || "Kandidat"}</h3>
+              <p className="text-xs text-ink-2">{candidate?.faculty || "Univerzitet u Beogradu"}</p>
+              <div className="mt-2 text-xs text-ink-2 space-y-0.5">
+                <div>Pasoš: <strong className="tabular-nums text-ink">{candidate?.passportNumber || "014298751"}</strong></div>
+                <div>Email: <strong className="text-ink">{candidate?.email}</strong></div>
+                <div>Telefon: <strong className="text-ink">{candidate?.phone || "+381 61 234 5678"}</strong></div>
               </div>
             </div>
           </div>
 
           {/* Tabela uslova radnog mesta */}
           <div>
-            <h4 className="font-black text-xs uppercase tracking-wider text-slate-700 mb-2">
+            <h4 className="font-bold text-[13px] text-ink-2 mb-2">
               3. SPECIFIKACIJA RADNOG MESTA I NAKNADE:
             </h4>
-            <div className="rounded-xl border border-slate-200 overflow-hidden">
+            <div className="rounded-xl border border-line overflow-hidden">
               <table className="w-full text-left text-xs">
-                <tbody className="divide-y divide-slate-200">
-                  <tr className="bg-slate-50/70">
-                    <td className="py-2.5 px-4 font-bold text-slate-600 w-1/3">Radna pozicija (Job Title):</td>
-                    <td className="py-2.5 px-4 font-black text-slate-900 text-sm">{offer.position}</td>
+                <tbody className="divide-y divide-line">
+                  <tr className="bg-neutral-50/70">
+                    <td className="py-2.5 px-4 font-semibold text-ink-2 w-1/3">Radna pozicija (Job Title):</td>
+                    <td className="py-2.5 px-4 font-bold text-ink text-sm">{offer.position}</td>
                   </tr>
                   <tr>
-                    <td className="py-2.5 px-4 font-bold text-slate-600">Osnovna satnica (Hourly Wage):</td>
-                    <td className="py-2.5 px-4 font-mono font-black text-emerald-800 text-sm">{offer.wage}</td>
+                    <td className="py-2.5 px-4 font-semibold text-ink-2">Osnovna satnica (Hourly Wage):</td>
+                    <td className="py-2.5 px-4 tabular-nums font-bold text-emerald-800 text-sm">{offer.wage}</td>
                   </tr>
-                  <tr className="bg-slate-50/70">
-                    <td className="py-2.5 px-4 font-bold text-slate-600">Prekovremeni rad (Overtime):</td>
-                    <td className="py-2.5 px-4 font-mono font-bold text-slate-800">{offer.overtimeWage}</td>
+                  <tr className="bg-neutral-50/70">
+                    <td className="py-2.5 px-4 font-semibold text-ink-2">Prekovremeni rad (Overtime):</td>
+                    <td className="py-2.5 px-4 tabular-nums font-semibold text-ink">{offer.overtimeWage}</td>
                   </tr>
                   <tr>
-                    <td className="py-2.5 px-4 font-bold text-slate-600">Nedeljni fond radnih sati:</td>
-                    <td className="py-2.5 px-4 font-bold text-slate-800">{offer.hoursPerWeek}</td>
+                    <td className="py-2.5 px-4 font-semibold text-ink-2">Nedeljni fond radnih sati:</td>
+                    <td className="py-2.5 px-4 font-semibold text-ink">{offer.hoursPerWeek}</td>
                   </tr>
-                  <tr className="bg-slate-50/70">
-                    <td className="py-2.5 px-4 font-bold text-slate-600">Datumi rada (Employment Dates):</td>
-                    <td className="py-2.5 px-4 font-bold text-slate-900 font-mono">
+                  <tr className="bg-neutral-50/70">
+                    <td className="py-2.5 px-4 font-semibold text-ink-2">Datumi rada (Employment Dates):</td>
+                    <td className="py-2.5 px-4 font-semibold text-ink tabular-nums">
                       {offer.startDate} – {offer.endDate}
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-2.5 px-4 font-bold text-slate-600">Isplata zarade:</td>
-                    <td className="py-2.5 px-4 text-slate-700">{offer.payFrequency}</td>
+                    <td className="py-2.5 px-4 font-semibold text-ink-2">Isplata zarade:</td>
+                    <td className="py-2.5 px-4 text-ink-2">{offer.payFrequency}</td>
                   </tr>
                 </tbody>
               </table>
@@ -204,29 +204,29 @@ export default function JobOfferModal({
 
           {/* Tabela uslova smeštaja */}
           <div>
-            <h4 className="font-black text-xs uppercase tracking-wider text-slate-700 mb-2">
+            <h4 className="font-bold text-[13px] text-ink-2 mb-2">
               4. DETALJI SMEŠTAJA I DODATNE POGODNOSTI:
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3.5 space-y-1">
-                <span className="font-bold text-slate-900 block">Lokacija i cena smeštaja:</span>
-                <p className="text-slate-700">{offer.housingAddress}</p>
-                <div className="mt-1 font-mono text-xs text-slate-800">
+              <div className="rounded-2xl border border-line bg-white p-5 space-y-1 sm:p-6">
+                <span className="font-semibold text-ink block">Lokacija i cena smeštaja:</span>
+                <p className="text-ink-2">{offer.housingAddress}</p>
+                <div className="mt-1 tabular-nums text-xs text-ink">
                   Cena: <strong>{offer.housingCost}</strong> • Depozit: <strong>{offer.housingDeposit}</strong>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-slate-50 p-3.5 space-y-1">
-                <span className="font-bold text-slate-900 block"> Hrana i transport:</span>
-                <p className="text-slate-700">{offer.mealPlan}</p>
-                <p className="text-slate-700">{offer.transportation}</p>
+              <div className="rounded-2xl border border-line bg-white p-5 space-y-1 sm:p-6">
+                <span className="font-semibold text-ink block"> Hrana i transport:</span>
+                <p className="text-ink-2">{offer.mealPlan}</p>
+                <p className="text-ink-2">{offer.transportation}</p>
               </div>
             </div>
           </div>
 
           {/* Pravne odredbe */}
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-[11px] text-slate-600 space-y-1.5 leading-relaxed">
-            <span className="font-bold text-slate-900 uppercase tracking-wide block">
+          <div className="rounded-2xl border border-line bg-white p-5 text-xs text-ink-2 space-y-1.5 leading-relaxed sm:p-6">
+            <span className="font-semibold text-ink uppercase tracking-wide block">
               5. J-1 SUMMER WORK TRAVEL REGULATIVE I OBAVEZE:
             </span>
             <p>
@@ -238,13 +238,13 @@ export default function JobOfferModal({
           </div>
 
           {/* DIGITALNI POTPIS */}
-          <div className="rounded-2xl border-2 border-slate-900 bg-white p-5 space-y-4">
+          <div className="rounded-2xl border-2 border-ink bg-white p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <span className="font-black text-xs uppercase tracking-wider text-slate-900">
+              <span className="font-bold text-[13px] text-ink">
                 6. DIGITALNI POTPIS UČESNIKA
               </span>
               {isAlreadySigned && (
-                <span className="text-xs font-bold text-emerald-700 flex items-center gap-1">
+                <span className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
                   Potpisano: {new Date(offer.signedAt || Date.now()).toLocaleDateString("sr-RS")}
                 </span>
               )}
@@ -252,13 +252,13 @@ export default function JobOfferModal({
 
             {!isAlreadySigned ? (
               <form onSubmit={handleSign} className="space-y-3">
-                <label className="flex items-start gap-2.5 text-xs text-slate-700 cursor-pointer">
+                <label className="flex items-start gap-2.5 text-xs text-ink-2 cursor-pointer">
                   <input
                     type="checkbox"
                     required
                     checked={agreedTerms}
                     onChange={(e) => setAgreedTerms(e.target.checked)}
-                    className="mt-0.5 accent-slate-900"
+                    className="mt-0.5 accent-neutral-900"
                   />
                   <span>
                     Izjavljujem da sam detaljno pročitao/la uslove radne ponude, satnicu, cenu smeštaja i zaduženja, te ih u celosti i dobrovoljno prihvatam.
@@ -266,7 +266,7 @@ export default function JobOfferModal({
                 </label>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-800 mb-1">
+                  <label className="block text-xs font-semibold text-ink mb-1">
                     Upišite vaše puno ime i prezime kao digitalni potpis:
                   </label>
                   <input
@@ -275,7 +275,7 @@ export default function JobOfferModal({
                     value={signatureText}
                     onChange={(e) => setSignatureText(e.target.value)}
                     placeholder="npr. Nemanja Stojadinović"
-                    className="w-full sm:max-w-md rounded-xl border border-black/15 bg-white px-3.5 py-2 font-serif text-base italic text-slate-900 focus:border-slate-900 focus:outline-hidden"
+                    className="w-full sm:max-w-md rounded-xl border border-line-strong bg-white px-3.5 py-2 font-serif text-base italic text-ink focus:border-ink focus:outline-hidden"
                   />
                 </div>
 
@@ -283,7 +283,7 @@ export default function JobOfferModal({
                   <button
                     type="submit"
                     disabled={isSubmitting || !agreedTerms || !signatureText.trim()}
-                    className="rounded-xl bg-emerald-600 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md hover:bg-emerald-700 disabled:opacity-50 transition-all flex items-center gap-2"
+                    className="rounded-full bg-emerald-600 px-6 py-2.5 text-[13px] font-semibold text-white shadow-md hover:bg-emerald-700 disabled:opacity-50 transition-all flex items-center gap-2"
                   >
                     {isSubmitting ? (
                       <>
@@ -297,18 +297,18 @@ export default function JobOfferModal({
                 </div>
               </form>
             ) : (
-              <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-emerald-200 bg-emerald-50/70 p-4">
+              <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl bg-emerald-50 p-4">
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-emerald-800">Digitalni potpis:</span>
-                  <div className="font-serif italic font-black text-lg text-emerald-950 mt-0.5">
+                  <span className="text-xs font-semibold text-emerald-800">Digitalni potpis:</span>
+                  <div className="font-serif italic font-bold text-lg text-emerald-950 mt-0.5">
                     {offer.signature || candidate?.name}
                   </div>
-                  <span className="text-xs text-emerald-800 font-mono">
+                  <span className="text-xs text-emerald-800 tabular-nums">
                     ID verifikacije: SHA256-JO-{candidate?.id?.slice(-6) || "928174"}
                   </span>
                 </div>
                 <div className="text-right">
-                  <span className="rounded-full bg-emerald-600 px-3 py-1 text-xs font-bold text-white shadow-2xs">
+                  <span className="rounded-full bg-emerald-600 px-3 py-1 text-xs font-medium text-white">
                     Job Offer prihvaćen
                   </span>
                 </div>

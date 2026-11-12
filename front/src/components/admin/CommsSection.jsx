@@ -12,7 +12,7 @@ export default function CommsSection() {
   const [sent, setSent] = useState(false);
 
   const inputCls =
-    "w-full rounded-lg border border-black/[0.12] bg-white px-3.5 py-2.5 text-sm text-[var(--brand-ink)] transition-colors duration-150 placeholder:text-black/35 focus:border-[var(--brand-ink)] focus:outline-hidden focus:ring-2 focus:ring-[var(--brand-ink)]/10";
+    "w-full rounded-lg border border-line-strong bg-white px-3.5 py-2.5 text-sm text-ink transition-colors duration-150 placeholder:text-ink-3/70 focus:border-ink focus:outline-hidden focus:ring-2 focus:ring-ink/10";
 
   const recipients = [
     ["all", t("admin.commsAll")],
@@ -58,7 +58,7 @@ export default function CommsSection() {
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <Card className="p-6">
-          <div className="inline-flex rounded-lg bg-black/[0.04] p-1">
+          <div className="inline-flex rounded-lg bg-surface-2 p-1">
             {[
               ["email", "E-mail"],
               ["sms", "SMS"],
@@ -71,7 +71,7 @@ export default function CommsSection() {
                   setSent(false);
                 }}
                 className={`rounded-md px-4 py-1.5 text-sm font-semibold transition-colors duration-150 ${
-                  mode === id ? "bg-white text-[var(--brand-ink)] shadow-xs" : "text-[var(--brand-ink)]/55"
+                  mode === id ? "bg-white text-ink" : "text-ink-3"
                 }`}
               >
                 {label}
@@ -81,7 +81,7 @@ export default function CommsSection() {
 
           <form onSubmit={submit} className="mt-6 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-[var(--brand-ink)]">{t("admin.commsRecipients")}</label>
+              <label className="block text-sm font-medium text-ink">{t("admin.commsRecipients")}</label>
               <select className={`${inputCls} mt-1.5 appearance-none`} value={recipient} onChange={(e) => setRecipient(e.target.value)}>
                 {recipients.map(([id, label]) => (
                   <option key={id} value={id}>{label}</option>
@@ -91,24 +91,24 @@ export default function CommsSection() {
 
             {mode === "email" && (
               <div>
-                <label className="block text-sm font-medium text-[var(--brand-ink)]">{t("admin.commsSubject")}</label>
+                <label className="block text-sm font-medium text-ink">{t("admin.commsSubject")}</label>
                 <input value={subject} onChange={(e) => setSubject(e.target.value)} className={`${inputCls} mt-1.5`} required />
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-[var(--brand-ink)]">{t("admin.commsMessage")}</label>
+              <label className="block text-sm font-medium text-ink">{t("admin.commsMessage")}</label>
               <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={6} className={`${inputCls} mt-1.5 resize-y`} required />
             </div>
 
-            {sent && <p className="text-sm font-medium text-green-600">{t("admin.commsSent")}</p>}
+            {sent && <p className="text-sm font-medium text-emerald-600">{t("admin.commsSent")}</p>}
 
             <PrimaryButton type="submit">{t("admin.commsSend")}</PrimaryButton>
           </form>
         </Card>
 
         <div>
-          <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-[var(--brand-ink)]/45">{t("admin.commsRecent")}</h2>
+          <h2 className="mb-3 text-sm font-semibold text-ink-3">{t("admin.commsRecent")}</h2>
           <div className="space-y-2.5">
             {recentList.map((r, idx) => (
               <button
@@ -121,13 +121,13 @@ export default function CommsSection() {
                 }}
                 className="w-full text-left"
               >
-                <Card className="p-4 transition-colors hover:bg-black/[0.02]">
+                <Card className="p-4 transition-colors hover:bg-surface">
                   <div className="flex items-center justify-between gap-2">
                     <Badge tone={r.channel === "SMS" ? "blue" : "slate"}>{r.channel}</Badge>
-                    <span className="text-xs text-[var(--brand-ink)]/45">{r.date}</span>
+                    <span className="text-xs text-ink-3">{r.date}</span>
                   </div>
-                  <p className="mt-2 truncate text-sm font-semibold text-[var(--brand-ink)]">{r.subject}</p>
-                  <p className="mt-0.5 text-xs text-[var(--brand-ink)]/55">{r.to}</p>
+                  <p className="mt-2 truncate text-sm font-semibold text-ink">{r.subject}</p>
+                  <p className="mt-0.5 text-xs text-ink-3">{r.to}</p>
                 </Card>
               </button>
             ))}

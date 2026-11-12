@@ -1,46 +1,212 @@
 @import "tailwindcss";
 
 /*
-  Kompatibilnost sa Tailwind v3: podrazumevana boja bordera.
-  U v4 je default `currentColor`; vraćamo na gray-200 da postojeći
-  `border` (bez eksplicitne boje) izgleda kao pre.
+  American Adventure — dizajn sistem (v2)
+  ---------------------------------------------------------------------------
+  Jedan izvor istine za boje, tipografiju, radijuse i senke. Sve komponente
+  koriste Tailwind utility klase koje čitaju ove tokene:
+
+    Brend      bg-brand  text-ink  bg-ink  (žuta #FDD503 + ink #231F20 — nepromenjeno)
+    Tekst      text-ink (primarni)  text-ink-2 (sekundarni)  text-ink-3 (prigušen)
+    Površine   bg-white  bg-surface  bg-surface-2
+    Linije     border-line  border-line-strong
+    Stanja     emerald (uspeh)  red (greška)  amber (pažnja, izveden iz brend žute)  neutral (info)
+               — plava se ne koristi; informativna stanja su neutralna (bg-surface-2 + text-ink)
+
+  JS pristup istim vrednostima: src/theme/tokens.js
 */
+
+/* Brend font — Archivo (varijabilni: težina 100–900, širina 62–125 %), hostovan lokalno. */
+@font-face {
+  font-family: "Archivo Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url("./assets/fonts/archivo-latin-ext-standard-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Archivo Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url("./assets/fonts/archivo-latin-standard-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  --font-sans: "Archivo Variable", "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Brend */
+  --color-brand: #fdd503;
+  --color-brand-strong: #ecc500; /* hover/pressed na žutoj */
+  --color-brand-soft: #fff8d1; /* tonirana podloga */
+  --color-ink: #231f20;
+
+  /* Tekst (svi nivoi prolaze WCAG AA na beloj) */
+  --color-ink-2: #5a5657;
+  --color-ink-3: #757273;
+
+  /* Površine i linije */
+  --color-surface: #f7f6f5;
+  --color-surface-2: #efedec;
+  --color-line: color-mix(in srgb, #231f20 10%, transparent);
+  --color-line-strong: color-mix(in srgb, #231f20 20%, transparent);
+
+  /* Neutralna skala tonirana ka ink-u (umesto hladnih slate/gray) */
+  --color-neutral-50: #f7f6f5;
+  --color-neutral-100: #efedec;
+  --color-neutral-200: #e4e1e0;
+  --color-neutral-300: #d0cccb;
+  --color-neutral-400: #a5a1a1;
+  --color-neutral-500: #757273;
+  --color-neutral-600: #5a5657;
+  --color-neutral-700: #464243;
+  --color-neutral-800: #322e2f;
+  --color-neutral-900: #231f20;
+  --color-neutral-950: #171415;
+
+  /* „Pažnja" skala izvedena iz brend žute — upozorenja ostaju u bojama brenda */
+  --color-amber-50: #fffbe6;
+  --color-amber-100: #fff4bf;
+  --color-amber-200: #ffea8a;
+  --color-amber-300: #fdd503;
+  --color-amber-400: #ecc500;
+  --color-amber-500: #c9a300;
+  --color-amber-600: #9c7d00;
+  --color-amber-700: #775f00;
+  --color-amber-800: #5c4a00;
+  --color-amber-900: #453700;
+  --color-amber-950: #2b2200;
+
+  /* Tipografska skala — dodatni najmanji korak (ništa ispod 11px) */
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1rem;
+
+  /* Radijusi: kontrole 10–12px, kartice 16px, paneli 24px, dugmad/čipovi pill */
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+
+  /* Senke: strukturu nose linije; senka samo za slojeve iznad sadržaja */
+  --shadow-2xs: 0 0 #0000;
+  --shadow-xs: 0 0 #0000;
+  --shadow-sm: 0 1px 2px rgb(35 31 32 / 0.05);
+  --shadow-md: 0 6px 16px -4px rgb(35 31 32 / 0.1), 0 2px 4px -2px rgb(35 31 32 / 0.05);
+  --shadow-lg: 0 14px 32px -8px rgb(35 31 32 / 0.14), 0 4px 8px -4px rgb(35 31 32 / 0.05);
+  --shadow-xl: 0 24px 48px -12px rgb(35 31 32 / 0.18);
+  --shadow-2xl: 0 32px 72px -16px rgb(35 31 32 / 0.28);
+
+  --animate-rise: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Naslovni rez: isti Archivo, proširen (kao slova u logotipu). */
+@utility font-display {
+  font-stretch: 122%;
+  letter-spacing: -0.02em;
+}
+
+/* Brend „marker" — žuta podloga iza ključne fraze (jedini dekorativni akcent). */
+@utility marker {
+  background-color: var(--color-brand);
+  color: var(--color-ink);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.05em 0.3em;
+}
+
+/* Vodoravne trake (tabovi) koje se skroluju bez vidljivog klizača. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @layer base {
+  /* Podrazumevana boja bordera = hairline linija sistema. */
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--color-line);
   }
-}
 
-/*
-  Brend tokeni — drže se na JEDNOM mestu.
-  Koriste se u komponentama preko core utility klasa sa arbitrary vrednostima:
-    bg-[var(--brand-yellow)]  text-[var(--brand-ink)]  border-[var(--brand-ink)]
-  (JS pristup istim vrednostima: src/theme/tokens.js)
-*/
-:root {
-  --brand-yellow: #fdd503; /* žuta — pozadina brenda */
-  --brand-ink: #231f20;    /* tamna / ink — logo i tekst */
-}
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-html {
-  scroll-behavior: smooth;
-}
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
 
-body {
-  margin: 0;
-  font-family: "Archivo", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  color: var(--brand-ink);
-  background-color: #ffffff;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+  h1,
+  h2 {
+    font-stretch: 112%;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
 
-/* Vidljiv focus ring radi pristupačnosti (tastatura) */
-:focus-visible {
-  outline: 2px solid var(--brand-ink);
-  outline-offset: 2px;
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Tailwind v4 više ne postavlja pointer na dugmad. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary,
+  label[for],
+  select:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: var(--color-ink);
+  }
+
+  /* Vidljiv fokus za tastaturu. */
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }

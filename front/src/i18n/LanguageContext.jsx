@@ -12,7 +12,7 @@
 // podrazumevani jezik (SR), a `setLang` ne radi ništa.
 
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { DEFAULT_LANG, translations } from "./translations";
+import { DEFAULT_LANG, loadLanguage, translations } from "./translations";
 
 const LanguageContext = createContext(null);
 
@@ -30,11 +30,17 @@ function translate(lang, key, vars) {
 }
 
 export function LanguageProvider({ children, initialLang = DEFAULT_LANG }) {
-  const [lang, setLang] = useState(initialLang);
+  const [lang, setLangState] = useState(initialLang);
+
+  // Rečnik jezika se učitava na zahtev, pa tek onda menjamo jezik (bez treptaja ključeva).
+  const setLang = useCallback(async (code) => {
+    const dict = await loadLanguage(code);
+    if (dict) setLangState(code);
+  }, []);
 
   const t = useCallback((key, vars) => translate(lang, key, vars), [lang]);
 
-  const value = useMemo(() => ({ lang, setLang, t }), [lang, t]);
+  const value = useMemo(() => ({ lang, setLang, t }), [lang, setLang, t]);
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }

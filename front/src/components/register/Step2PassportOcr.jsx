@@ -1,7 +1,7 @@
 // front/src/components/register/Step2PassportOcr.jsx
 // Korak 2: Upload pasoša, OCR skeniranje sa MRZ parserom i potvrda ličnih podataka
 
-import { BRAND_YELLOW, INK, labelCls, inputCls, BackIcon, CameraIcon, ScanIcon } from "./ui";
+import { labelCls, inputCls, BackIcon, CameraIcon, ScanIcon } from "./ui";
 
 export default function Step2PassportOcr({
   passportImage,
@@ -30,14 +30,14 @@ export default function Step2PassportOcr({
       <button
         type="button"
         onClick={onBack}
-        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--brand-ink)]/60 hover:text-[var(--brand-ink)]"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink-3 hover:text-ink"
       >
         <BackIcon /> {t("reg.back")}
       </button>
-      <h1 className="mt-3 text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
+      <h1 className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
         {t("reg.passportTitle")}
       </h1>
-      <p className="mt-2 text-sm text-[var(--brand-ink)]/65">
+      <p className="mt-2 text-sm text-ink-2">
         {t("reg.passportSubtitle")}
       </p>
 
@@ -47,28 +47,28 @@ export default function Step2PassportOcr({
           <label className={labelCls}>{t("reg.passportUpload")}</label>
           <div
             onClick={() => passportInputRef.current?.click()}
-            className="mt-2 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-black/20 bg-black/[0.02] p-6 text-center transition-colors hover:border-black/40 hover:bg-black/[0.04]"
+            className="mt-2 flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-line-strong bg-surface p-6 text-center transition-colors hover:border-line-strong hover:bg-surface-2"
           >
             {passportImage ? (
               <div className="relative w-full">
                 <img
                   src={passportImage}
                   alt="Skenirani pasoš"
-                  className="mx-auto max-h-48 rounded-xl object-contain shadow-sm"
+                  className="mx-auto max-h-48 rounded-xl object-contain"
                 />
-                <span className="mt-2 inline-block text-xs font-bold text-[var(--brand-ink)] underline">
+                <span className="mt-2 inline-block text-xs font-semibold text-ink underline">
                   Zameni sliku pasoša
                 </span>
               </div>
             ) : (
               <>
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--brand-yellow)]/30 text-[var(--brand-ink)]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-brand/30 text-ink">
                   <CameraIcon />
                 </div>
-                <p className="mt-3 text-sm font-semibold text-[var(--brand-ink)]">
+                <p className="mt-3 text-sm font-semibold text-ink">
                   Kliknite da slikate ili otpremite fotografiju pasoša
                 </p>
-                <p className="mt-1 text-xs text-[var(--brand-ink)]/50">
+                <p className="mt-1 text-xs text-ink-3">
                   JPG, PNG ili PDF stranice sa fotografijom i MRZ kodom
                 </p>
               </>
@@ -87,7 +87,7 @@ export default function Step2PassportOcr({
             <button
               type="button"
               onClick={onRunSampleOcr}
-              className="mt-2 text-xs font-semibold text-[var(--brand-ink)]/65 underline hover:text-[var(--brand-ink)]"
+              className="mt-2 text-xs font-semibold text-ink-2 underline hover:text-ink"
             >
               Ili upotrebi primerak pasoša sa MRZ kodom za OCR skeniranje
             </button>
@@ -96,14 +96,14 @@ export default function Step2PassportOcr({
 
         {/* Status skeniranja */}
         {isScanning && (
-          <div className="flex items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-xs font-semibold text-amber-900">
-            <ScanIcon className="h-5 w-5 animate-pulse text-amber-600" />
+          <div className="flex items-center gap-3 rounded-xl bg-amber-50 p-4 text-xs font-semibold text-amber-900">
+            <ScanIcon className="h-5 w-5 text-amber-600" />
             <span>{t("reg.passportScanning")}</span>
           </div>
         )}
 
         {scanCompleted && (
-          <div className="rounded-xl border border-green-200 bg-green-50 p-3.5 text-xs font-semibold text-green-900">
+          <div className="rounded-xl bg-emerald-50 p-3.5 text-xs font-semibold text-emerald-900">
             {ocrStatusMessage || t("reg.passportExtractSuccess")}
           </div>
         )}
@@ -141,7 +141,7 @@ export default function Step2PassportOcr({
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="reg-jmbg" className={labelCls}>
-              {t("app.jmbg")} <span className="font-normal text-black/50">(13 cifara)</span>
+              {t("app.jmbg")} <span className="font-normal text-ink-3">(13 cifara)</span>
             </label>
             <input
               id="reg-jmbg"
@@ -188,8 +188,7 @@ export default function Step2PassportOcr({
         <button
           type="submit"
           disabled={!passportImage || isScanning}
-          className="mt-6 w-full rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-[0.08em] shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:opacity-40"
-          style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+          className="bg-brand text-ink mt-6 w-full rounded-full px-7 py-3.5 text-sm font-semibold disabled:opacity-40 transition-colors hover:bg-brand-strong"
         >
           {t("reg.continue")}
         </button>

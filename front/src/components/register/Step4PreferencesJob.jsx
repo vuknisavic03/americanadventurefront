@@ -1,7 +1,7 @@
 // front/src/components/register/Step4PreferencesJob.jsx
 // Korak 4: Preferencije posla, nivo engleskog jezika, afilijati i šifra grupe
 
-import { BRAND_YELLOW, INK, labelCls, inputCls, BackIcon } from "./ui";
+import { labelCls, inputCls, BackIcon } from "./ui";
 
 export default function Step4PreferencesJob({
   prefLocation,
@@ -25,14 +25,14 @@ export default function Step4PreferencesJob({
       <button
         type="button"
         onClick={onBack}
-        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--brand-ink)]/60 hover:text-[var(--brand-ink)]"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink-3 hover:text-ink"
       >
         <BackIcon /> {t("reg.back")}
       </button>
-      <h1 className="mt-3 text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
+      <h1 className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
         {t("reg.prefTitle")}
       </h1>
-      <p className="mt-2 text-sm text-[var(--brand-ink)]/65">
+      <p className="mt-2 text-sm text-ink-2">
         {t("reg.prefSubtitle")}
       </p>
 
@@ -100,18 +100,18 @@ export default function Step4PreferencesJob({
         </div>
 
         {/* Opciona preporuka / Afilijate i Grupna prijava */}
-        <div className="rounded-2xl border border-black/10 bg-black/[0.02] p-4.5 space-y-3">
+        <div className="rounded-2xl border border-line bg-surface p-4.5 space-y-3">
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/70">
+            <h3 className="text-[13px] font-semibold text-ink-2">
               Popusti i preporuke (opciono)
             </h3>
-            <p className="mt-0.5 text-xs text-black/55 leading-relaxed">
+            <p className="mt-0.5 text-xs text-ink-3 leading-relaxed">
               Ukoliko vas je preporučio prijatelj ili se prijavljujete sa studentskom grupom, unesite kodove ispod:
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label htmlFor="reg-ref" className="block text-xs font-bold text-[var(--brand-ink)]">
+              <label htmlFor="reg-ref" className="block text-xs font-semibold text-ink">
                 Kod preporuke (Afilijate)
               </label>
               <input
@@ -122,12 +122,12 @@ export default function Step4PreferencesJob({
                 placeholder="npr. REF-PETAR1"
                 className={inputCls}
               />
-              <p className="mt-1 text-[11px] text-black/45 leading-tight">
+              <p className="mt-1 text-xs text-ink-3 leading-tight">
                 Prijatelj dobija $100 popusta na poslednjoj rati ukoliko prođete vizu i dobijete posao.
               </p>
             </div>
             <div>
-              <label htmlFor="reg-group" className="block text-xs font-bold text-[var(--brand-ink)]">
+              <label htmlFor="reg-group" className="block text-xs font-semibold text-ink">
                 Šifra grupe (Grupni popust)
               </label>
               <input
@@ -138,7 +138,7 @@ export default function Step4PreferencesJob({
                 placeholder="npr. BG-SUMMER-2026"
                 className={inputCls}
               />
-              <p className="mt-1 text-[11px] text-black/45 leading-tight">
+              <p className="mt-1 text-xs text-ink-3 leading-tight">
                 Popust od $150 se obračunava ako 5+ kandidata iz grupe dobije posao i vizu.
               </p>
             </div>
@@ -148,8 +148,7 @@ export default function Step4PreferencesJob({
         <div className="pt-2">
           <button
             type="submit"
-            className="w-full rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-[0.08em] shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-            style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+            className="bg-brand text-ink w-full rounded-full px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-brand-strong"
           >
             {t("reg.completeRegistration")}
           </button>

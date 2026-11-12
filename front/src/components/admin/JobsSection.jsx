@@ -130,7 +130,7 @@ export default function JobsSection() {
   const upd = (key) => (e) => setForm((prev) => ({ ...prev, [key]: e.target.value }));
 
   const fieldCls =
-    "w-full rounded-lg border border-black/15 bg-white px-3 py-2 text-xs text-[var(--brand-ink)] transition-colors placeholder:text-black/35 focus:border-[var(--brand-ink)] focus:outline-hidden focus:ring-1 focus:ring-[var(--brand-ink)]";
+    "w-full rounded-lg border border-line-strong bg-white px-3 py-2 text-xs text-ink transition-colors placeholder:text-ink-3/70 focus:border-ink focus:outline-hidden focus:ring-1 focus:ring-ink";
 
   return (
     <div className="space-y-6">
@@ -141,7 +141,7 @@ export default function JobsSection() {
           <button
             type="button"
             onClick={handleOpenAddModal}
-            className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand-ink)] px-4 py-2.5 text-xs font-bold text-white shadow-xs transition-colors hover:bg-black"
+            className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-neutral-950"
           >
             <PlusIcon className="h-4 w-4" />
             <span>Dodaj novi posao</span>
@@ -150,7 +150,7 @@ export default function JobsSection() {
       />
 
       {toastMessage && (
-        <div className="rounded-xl border border-emerald-300 bg-emerald-50 px-4 py-3 text-xs font-bold text-emerald-900 shadow-2xs">
+        <div className="rounded-xl bg-emerald-50 px-4 py-3 text-xs font-semibold text-emerald-900">
           {toastMessage}
         </div>
       )}
@@ -159,13 +159,13 @@ export default function JobsSection() {
       <Card className="p-4">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="relative flex-1">
-            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-black/40 h-4 w-4" />
+            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-3 h-4 w-4" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Pretraži poslove po nazivu, poslodavcu, gradu..."
-              className="w-full rounded-lg border border-black/15 bg-white py-2 pl-9 pr-3 text-xs text-[var(--brand-ink)] placeholder:text-black/35 focus:border-[var(--brand-ink)] focus:outline-hidden"
+              className="w-full rounded-lg border border-line-strong bg-white py-2 pl-9 pr-3 text-xs text-ink placeholder:text-ink-3/70 focus:border-ink focus:outline-hidden"
             />
           </div>
 
@@ -173,7 +173,7 @@ export default function JobsSection() {
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="rounded-lg border border-black/15 bg-white px-3 py-2 text-xs font-medium text-[var(--brand-ink)] focus:border-[var(--brand-ink)] focus:outline-hidden"
+              className="rounded-lg border border-line-strong bg-white px-3 py-2 text-xs font-medium text-ink focus:border-ink focus:outline-hidden"
             >
               <option value="ALL">Sve kategorije</option>
               {CATEGORIES.map((c) => (
@@ -182,7 +182,7 @@ export default function JobsSection() {
                 </option>
               ))}
             </select>
-            <span className="text-xs font-bold text-black/50 shrink-0">
+            <span className="text-xs font-semibold text-ink-3 shrink-0">
               Ukupno: {filteredJobs.length}
             </span>
           </div>
@@ -192,13 +192,13 @@ export default function JobsSection() {
       {/* Grid kartica poslova */}
       {filteredJobs.length === 0 ? (
         <Card className="p-12 text-center">
-          <p className="text-sm font-bold text-[var(--brand-ink)]/70">
+          <p className="text-sm font-semibold text-ink-2">
             Nema pronađenih poslova po unetim kriterijumima pretrage.
           </p>
           <button
             type="button"
             onClick={handleOpenAddModal}
-            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[var(--brand-ink)] px-4 py-2 text-xs font-bold text-white hover:bg-black"
+            className="mt-4 inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-xs font-semibold text-white hover:bg-neutral-950"
           >
             <PlusIcon className="h-4 w-4" />
             <span>Dodaj prvi posao</span>
@@ -207,62 +207,62 @@ export default function JobsSection() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredJobs.map((job) => (
-            <Card key={job.id} className="p-4 flex flex-col justify-between hover:border-black/20 transition-colors">
+            <Card key={job.id} className="p-4 flex flex-col justify-between hover:border-line-strong transition-colors">
               <div className="space-y-3">
-                <div className="flex items-start justify-between gap-2 border-b border-black/[0.06] pb-2.5">
+                <div className="flex items-start justify-between gap-2 mb-4">
                   <div>
-                    <span className="rounded-full bg-blue-50 border border-blue-200 px-2 py-0.5 text-[10px] font-bold text-blue-800 uppercase tracking-wide">
+                    <span className="rounded-full bg-surface border border-line px-3 py-1 text-xs font-medium text-ink">
                       {job.category || "Opšti posao"}
                     </span>
-                    <h3 className="text-base font-extrabold text-[var(--brand-ink)] mt-1">
+                    <h3 className="text-base font-bold text-ink mt-1">
                       {job.title}
                     </h3>
-                    <p className="text-xs font-bold text-[var(--brand-ink)]/70">
+                    <p className="text-xs font-semibold text-ink-2">
                       {job.employer}
                     </p>
                   </div>
-                  <span className="rounded-md bg-amber-50 border border-amber-200 px-2 py-1 text-xs font-black text-amber-900 shrink-0">
+                  <span className="rounded-md bg-amber-50 px-2 py-1 text-xs font-bold text-amber-900 shrink-0">
                     {job.wage || "Satnica po dogovoru"}
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-xs pt-1">
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-black/40 block">Lokacija</span>
-                    <span className="font-semibold text-black/80">{job.city || "SAD"}</span>
+                    <span className="text-xs font-semibold text-ink-3 block">Lokacija</span>
+                    <span className="font-semibold text-ink-2">{job.city || "SAD"}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-black/40 block">Radno vreme</span>
-                    <span className="font-semibold text-black/80">{job.hoursPerWeek || "35-40 h"}</span>
+                    <span className="text-xs font-semibold text-ink-3 block">Radno vreme</span>
+                    <span className="font-semibold text-ink-2">{job.hoursPerWeek || "35-40 h"}</span>
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-black/40 block">Smeštaj</span>
-                    <span className="font-semibold text-black/80 truncate block" title={job.housing}>
+                    <span className="text-xs font-semibold text-ink-3 block">Smeštaj</span>
+                    <span className="font-semibold text-ink-2 truncate block" title={job.housing}>
                       {job.housing || "Obezbeđen"}
                     </span>
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-black/40 block">Period</span>
-                    <span className="font-semibold text-black/80">{job.period || "Letnja sezona"}</span>
+                    <span className="text-xs font-semibold text-ink-3 block">Period</span>
+                    <span className="font-semibold text-ink-2">{job.period || "Letnja sezona"}</span>
                   </div>
                 </div>
 
                 {job.summary && (
-                  <p className="text-xs text-black/60 line-clamp-2 pt-1 border-t border-black/[0.04]">
+                  <p className="text-xs text-ink-3 line-clamp-2 pt-1 border-t border-line">
                     {job.summary}
                   </p>
                 )}
               </div>
 
-              <div className="mt-4 flex items-center justify-between border-t border-black/[0.06] pt-3">
-                <span className="text-[11px] font-bold text-black/40">
+              <div className="mt-4 flex items-center justify-between border-t border-line pt-3">
+                <span className="text-xs font-semibold text-ink-3">
                   Nivo engleskog: {job.englishLevel || "B2"}
                 </span>
                 <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     onClick={() => handleOpenEditModal(job)}
-                    className="inline-flex items-center gap-1 rounded-lg border border-black/15 bg-white px-2.5 py-1 text-xs font-bold text-slate-800 hover:bg-black/5 transition-colors"
+                    className="inline-flex items-center gap-1 rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2 transition-colors"
                   >
                     <EditIcon className="h-3.5 w-3.5" />
                     <span>Izmeni</span>
@@ -270,7 +270,7 @@ export default function JobsSection() {
                   <button
                     type="button"
                     onClick={() => handleDelete(job.id, job.title)}
-                    className="inline-flex items-center gap-1 rounded-lg border border-red-200 bg-red-50 px-2 py-1 text-xs font-bold text-red-700 hover:bg-red-100 transition-colors"
+                    className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-700 hover:bg-red-100 transition-colors"
                   >
                     <TrashIcon className="h-3.5 w-3.5" />
                     <span>Obriši</span>
@@ -285,20 +285,20 @@ export default function JobsSection() {
       {/* Modal za unos i izmenu posla */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs overflow-y-auto">
-          <div className="relative my-6 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl border border-black/10 space-y-4">
-            <div className="flex items-center justify-between border-b border-black/[0.08] pb-3">
+          <div className="relative my-6 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl border border-line space-y-4">
+            <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-base font-extrabold text-[var(--brand-ink)]">
+                <h3 className="text-base font-bold text-ink">
                   {editingJob ? "Izmena radne ponude" : "Unos novog posla u bazu"}
                 </h3>
-                <p className="text-xs text-black/50 mt-0.5">
+                <p className="text-xs text-ink-3 mt-0.5">
                   Popunite detalje o poslodavcu i poziciji koja će se nuditi kandidatima.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setModalOpen(false)}
-                className="rounded-lg p-1.5 text-black/50 hover:bg-black/5"
+                className="rounded-lg p-1.5 text-ink-3 hover:bg-surface-2"
               >
                 <XIcon className="h-5 w-5" />
               </button>
@@ -307,7 +307,7 @@ export default function JobsSection() {
             <form onSubmit={handleSubmit} className="space-y-3.5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70 mb-1">
+                  <label className="block text-xs font-semibold text-ink-2 mb-1">
                     Naziv radne pozicije
                   </label>
                   <input
@@ -319,7 +319,7 @@ export default function JobsSection() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70 mb-1">
+                  <label className="block text-xs font-semibold text-ink-2 mb-1">
                     Naziv poslodavca / kompanije
                   </label>
                   <input
@@ -334,7 +334,7 @@ export default function JobsSection() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70 mb-1">
+                  <label className="block text-xs font-semibold text-ink-2 mb-1">
                     Kategorija posla
                   </label>
                   <select value={form.category} onChange={upd("category")} className={fieldCls}>
@@ -346,7 +346,7 @@ export default function JobsSection() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70 mb-1">
+                  <label className="block text-xs font-semibold text-ink-2 mb-1">
                     Grad i savezna država
                   </label>
                   <input
@@ -361,7 +361,7 @@ export default function JobsSection() {
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70 mb-1">
+                  <label className="block text-xs font-semibold text-ink-2 mb-1">
                     Satnica (USD/h)
                   </label>
                   <input
@@ -373,7 +373,7 @@ export default function JobsSection() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70 mb-1">
+                  <label className="block text-xs font-semibold text-ink-2 mb-1">
                     Nedeljno radnih sati
                   </label>
                   <input
@@ -384,7 +384,7 @@ export default function JobsSection() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70 mb-1">
+                  <label className="block text-xs font-semibold text-ink-2 mb-1">
                     Potreban nivo engleskog
                   </label>
                   <select value={form.englishLevel} onChange={upd("englishLevel")} className={fieldCls}>
@@ -397,7 +397,7 @@ export default function JobsSection() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70 mb-1">
+                  <label className="block text-xs font-semibold text-ink-2 mb-1">
                     Smeštaj (opis i cena)
                   </label>
                   <input
@@ -408,7 +408,7 @@ export default function JobsSection() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70 mb-1">
+                  <label className="block text-xs font-semibold text-ink-2 mb-1">
                     Period rada (od - do)
                   </label>
                   <input
@@ -421,7 +421,7 @@ export default function JobsSection() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-black/70 mb-1">
+                <label className="block text-xs font-semibold text-ink-2 mb-1">
                   Kratak sažetak pozicije
                 </label>
                 <input
@@ -433,7 +433,7 @@ export default function JobsSection() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-black/70 mb-1">
+                <label className="block text-xs font-semibold text-ink-2 mb-1">
                   Detaljan opis zaduženja i uslova
                 </label>
                 <textarea
@@ -445,17 +445,17 @@ export default function JobsSection() {
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 border-t border-black/[0.08] pt-4">
+              <div className="flex items-center justify-end gap-2 border-t border-line pt-4">
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="rounded-lg border border-black/15 bg-white px-4 py-2 text-xs font-bold text-black/70 hover:bg-black/5"
+                  className="rounded-full border border-line-strong bg-white px-4 py-2 text-xs font-semibold text-ink-2 hover:bg-surface-2"
                 >
                   Odustani
                 </button>
                 <button
                   type="submit"
-                  className="rounded-lg bg-[var(--brand-ink)] px-5 py-2 text-xs font-bold text-white shadow-xs hover:bg-black"
+                  className="rounded-full bg-ink px-5 py-2 text-xs font-semibold text-white hover:bg-neutral-950"
                 >
                   {editingJob ? "Sačuvaj izmene" : "Kreiraj posao"}
                 </button>

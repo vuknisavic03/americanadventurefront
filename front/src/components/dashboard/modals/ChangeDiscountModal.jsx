@@ -1,7 +1,6 @@
 // front/src/components/dashboard/modals/ChangeDiscountModal.jsx
 import { useState } from "react";
 import { getPromotions } from "../../../data/candidateStore";
-import { BRAND_YELLOW } from "../constants";
 
 export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
   const promotions = getPromotions();
@@ -38,7 +37,7 @@ export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
   };
 
   const inputCls =
-    "mt-1 w-full rounded-xl border border-black/15 bg-white px-3.5 py-2 text-xs text-[var(--brand-ink)] placeholder:text-black/30 focus:border-[var(--brand-ink)] focus:outline-hidden focus:ring-1 focus:ring-[var(--brand-ink)]/15";
+    "mt-1 w-full rounded-xl border border-line-strong bg-white px-3.5 py-2 text-xs text-ink placeholder:text-ink-3/70 focus:border-ink focus:outline-hidden focus:ring-1 focus:ring-ink/15";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
@@ -46,26 +45,26 @@ export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-5 top-5 text-xl font-bold text-black/40 hover:text-black"
+          className="absolute right-5 top-5 text-xl font-semibold text-ink-3 hover:text-ink"
           aria-label="Zatvori"
         >
           ✕
         </button>
 
-        <div className="border-b border-black/[0.08] pb-4">
-          <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-[11px] font-black uppercase tracking-wider text-amber-900">
+        <div className="border-b border-line pb-4">
+          <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800">
             Pravilnik o popustima
           </span>
-          <h2 className="mt-2 text-xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-2xl">
+          <h2 className="mt-2 text-xl font-bold tracking-tight text-ink sm:text-2xl">
             Promena ugovorenog popusta / promocije
           </h2>
-          <p className="mt-2 text-xs leading-relaxed text-black/65">
+          <p className="mt-2 text-xs leading-relaxed text-ink-2">
             <strong>Pravilo agencije:</strong> Može se koristiti <strong>samo jedan popust</strong>. Ako ste izabrali popust na početku, a kasnije želite da ga zamenite za popust na kraju programa (ili obrnuto), ovde možete slobodno napraviti promenu pre konačnog obračuna.
           </p>
         </div>
 
         {error && (
-          <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-xs font-bold text-red-800">
+          <div className="mt-4 rounded-xl bg-red-50 p-3 text-xs font-semibold text-red-800">
             {error}
           </div>
         )}
@@ -76,8 +75,8 @@ export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
             <label
               className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-all ${
                 selectedId === "none"
-                  ? "border-[var(--brand-ink)] bg-black/[0.03] shadow-xs"
-                  : "border-black/10 hover:border-black/20"
+                  ? "border-ink bg-surface"
+                  : "border-line hover:border-line-strong"
               }`}
             >
               <input
@@ -86,14 +85,14 @@ export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
                 value="none"
                 checked={selectedId === "none"}
                 onChange={() => setSelectedId("none")}
-                className="mt-1 accent-[var(--brand-ink)]"
+                className="mt-1 accent-ink"
               />
               <div className="flex-1">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-bold text-[var(--brand-ink)]">Standardna cena programa (Bez popusta)</p>
-                  <span className="text-xs font-semibold text-black/50">$0</span>
+                  <p className="text-sm font-semibold text-ink">Standardna cena programa (Bez popusta)</p>
+                  <span className="text-xs font-semibold text-ink-3">$0</span>
                 </div>
-                <p className="mt-0.5 text-xs text-black/55">Puna ugovorena cena programa bez specijalnih olakšica.</p>
+                <p className="mt-0.5 text-xs text-ink-3">Puna ugovorena cena programa bez specijalnih olakšica.</p>
               </div>
             </label>
 
@@ -107,8 +106,8 @@ export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
                   key={promo.id}
                   className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-all ${
                     isSelected
-                      ? "border-[var(--brand-ink)] bg-amber-500/[0.04] shadow-xs"
-                      : "border-black/10 hover:border-black/20"
+                      ? "border-ink bg-amber-500/[0.04]"
+                      : "border-line hover:border-line-strong"
                   }`}
                 >
                   <input
@@ -117,49 +116,49 @@ export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
                     value={promo.id}
                     checked={isSelected}
                     onChange={() => setSelectedId(promo.id)}
-                    className="mt-1 accent-[var(--brand-ink)]"
+                    className="mt-1 accent-ink"
                   />
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center justify-between gap-1.5">
                       <div className="flex items-center gap-2">
-                        <p className="text-sm font-bold text-[var(--brand-ink)]">{promo.name}</p>
-                        <span className="rounded-md bg-black/5 px-2 py-0.5 text-[10px] font-black tracking-wider text-black/70">
+                        <p className="text-sm font-semibold text-ink">{promo.name}</p>
+                        <span className="rounded-md bg-surface-2 px-2 py-0.5 text-2xs font-bold tracking-wider text-ink-2">
                           {promo.code}
                         </span>
                       </div>
-                      <span className="text-sm font-black text-emerald-700">
+                      <span className="text-sm font-bold text-emerald-700">
                         -{promo.amountFormatted || `$${promo.amount}`}
                       </span>
                     </div>
 
                     <div className="mt-1.5 flex flex-wrap items-center gap-2">
                       <span
-                        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider ${
+                        className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium ${
                           isImmediate
                             ? "bg-emerald-100 text-emerald-800"
-                            : "bg-indigo-100 text-indigo-900"
+                            : "bg-surface-2 text-ink"
                         }`}
                       >
                         {isImmediate ? "Obračun: Odmah" : "Obračun: Na kraju (poslednja rata)"}
                       </span>
                       {promo.conditionType === "group" && (
-                        <span className="rounded-full bg-purple-100 px-2 py-0.5 text-[10px] font-bold text-purple-900">
+                        <span className="rounded-full bg-surface-2 px-3 py-1 text-xs font-medium text-ink">
                           Uslov: 5+ viza & posao
                         </span>
                       )}
                       {promo.conditionType === "affiliate" && (
-                        <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-bold text-blue-900">
+                        <span className="rounded-full bg-surface-2 px-3 py-1 text-xs font-medium text-ink">
                           Uslov: Prijatelj prolazi vizu & posao
                         </span>
                       )}
                     </div>
 
-                    <p className="mt-1.5 text-xs text-black/70 leading-relaxed">
+                    <p className="mt-1.5 text-xs text-ink-2 leading-relaxed">
                       {promo.description}
                     </p>
 
                     {promo.conditionText && (
-                      <p className="mt-1 text-[11px] font-semibold text-black/50">
+                      <p className="mt-1 text-xs font-semibold text-ink-3">
                         Uslov: {promo.conditionText}
                       </p>
                     )}
@@ -171,8 +170,8 @@ export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
 
           {/* Dinamička polja za uslove izabrane promocije */}
           {selectedPromo?.conditionType === "group" && (
-            <div className="rounded-2xl border border-purple-200 bg-purple-50/70 p-4">
-              <label className="block text-xs font-bold text-purple-950">
+            <div className="rounded-2xl border border-line bg-surface p-4">
+              <label className="block text-xs font-semibold text-ink">
                 Šifra vaše grupe <span className="text-red-500">*</span>
               </label>
               <input
@@ -183,24 +182,24 @@ export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
                 className={inputCls}
                 required
               />
-              <p className="mt-1.5 text-[11px] text-purple-900/80 leading-relaxed">
+              <p className="mt-1.5 text-xs text-ink leading-relaxed">
                 <strong>Važno:</strong> Popust za grupu od $150 se obračunava na kraju programa i dobija se samo ako preko 5+ članova vaše grupe dobije posao i prođe viziranje u ambasadi.
               </p>
             </div>
           )}
 
           {selectedPromo?.conditionType === "affiliate" && (
-            <div className="rounded-2xl border border-blue-200 bg-blue-50/70 p-4 text-xs text-blue-950">
-              <p className="font-bold">Afilijate program — Dovedi prijatelja</p>
-              <p className="mt-1 text-blue-900/80 leading-relaxed">
+            <div className="rounded-2xl border border-line bg-surface p-4 text-xs text-ink">
+              <p className="font-semibold">Afilijate program — Dovedi prijatelja</p>
+              <p className="mt-1 text-ink leading-relaxed">
                 Popust od $100 po svakom dovedenom prijatelju obračunava se na poslednjoj rati. Priznaje se isključivo za prijatelje koji prođu viziranje i dobiju posao. Detaljan uvid u status prijavljenih prijatelja imate na svom kandidatskom nalogu.
               </p>
             </div>
           )}
 
           {selectedPromo?.conditionType === "family" && (
-            <div className="rounded-2xl border border-amber-200 bg-amber-50/70 p-4">
-              <label className="block text-xs font-bold text-amber-950">
+            <div className="rounded-2xl bg-amber-50 p-4">
+              <label className="block text-xs font-semibold text-amber-950">
                 Ime i prezime brata / sestre <span className="text-red-500">*</span>
               </label>
               <input
@@ -211,15 +210,15 @@ export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
                 className={inputCls}
                 required
               />
-              <p className="mt-1.5 text-[11px] text-amber-900/80">
+              <p className="mt-1.5 text-xs text-amber-900/80">
                 Popust od $100 se primenjuje kada se brat i sestra zajedno prijave za istu sezonu.
               </p>
             </div>
           )}
 
           {selectedPromo?.conditionType === "club_card" && (
-            <div className="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4">
-              <label className="block text-xs font-bold text-emerald-950">
+            <div className="rounded-2xl bg-emerald-50 p-4">
+              <label className="block text-xs font-semibold text-emerald-950">
                 Broj Loyalty / Alumni kartice <span className="text-red-500">*</span>
               </label>
               <input
@@ -233,18 +232,17 @@ export default function ChangeDiscountModal({ candidate, onClose, onSave }) {
             </div>
           )}
 
-          <div className="flex items-center justify-between border-t border-black/[0.08] pt-4 mt-6">
+          <div className="flex items-center justify-between border-t border-line pt-4 mt-6">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-full border border-black/15 bg-white px-5 py-2.5 text-xs font-bold text-black/70 hover:bg-black/5"
+              className="rounded-full border border-line-strong bg-white px-5 py-2.5 text-xs font-semibold text-ink-2 hover:bg-surface-2"
             >
               Odustani
             </button>
             <button
               type="submit"
-              className="rounded-full px-7 py-2.5 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)] shadow-md hover:brightness-105"
-              style={{ backgroundColor: BRAND_YELLOW }}
+              className="bg-brand rounded-full px-7 py-2.5 text-[13px] font-semibold text-ink transition-colors hover:bg-brand-strong"
             >
               Potvrdi promenu popusta
             </button>

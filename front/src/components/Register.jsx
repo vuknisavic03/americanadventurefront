@@ -2,10 +2,8 @@
 // Glavni orkestrator za registraciju kandidata u 4 koraka
 
 import { useState, useRef, useEffect } from "react";
-import Logo from "./Logo";
 import { useTranslation } from "../i18n/LanguageContext";
 import {
-  validateInvitationForRegistration,
   verifyInvitationWithBackend,
   scanPassportWithBackend,
   registerCandidateWithBackend,
@@ -361,17 +359,12 @@ export default function Register({
   };
 
   return (
-    <section className="flex min-h-[calc(100vh-6rem)] items-center justify-center bg-[var(--brand-ink)]/[0.03] px-4 py-12 sm:px-6">
-      <div className="w-full max-w-xl">
-        {/* Logo */}
-        <a href={logoHref} onClick={go(logoHref)} aria-label={t("a11y.home")} className="mx-auto flex w-fit text-[var(--brand-ink)] transition-opacity duration-200 hover:opacity-80">
-          <Logo className="h-10 w-auto" />
-        </a>
-
+    <section className="bg-surface px-5 py-14 sm:py-20">
+      <div className="mx-auto w-full max-w-xl">
         {/* Stepper progress */}
         <RegisterStepper step={step} t={t} />
 
-        <div className="mt-6 rounded-2xl border border-black/10 bg-white p-6 shadow-sm sm:p-9">
+        <div className="mt-8 rounded-3xl border border-line bg-white p-7 sm:p-10">
           {step === 1 && (
             <Step1Activation
               email={email}
@@ -458,23 +451,23 @@ export default function Register({
         </div>
 
         {/* Link za prijavu ako korisnik već ima nalog */}
-        <div className="mt-6 space-y-2 text-center text-sm text-[var(--brand-ink)]/65">
+        <div className="mt-6 space-y-2 text-center text-sm text-ink-2">
           <p>
             {t("reg.haveAccount")}{" "}
             <a
               href={loginHref}
               onClick={go(loginHref)}
-              className="font-bold text-[var(--brand-ink)] underline-offset-2 hover:underline"
+              className="font-semibold text-ink underline-offset-2 hover:underline"
             >
               {t("auth.loginAccount")}
             </a>
           </p>
-          <p className="text-xs text-[var(--brand-ink)]/60">
+          <p className="text-xs text-ink-3">
             {t("login.notInterviewed")}{" "}
             <a
               href={applyHref}
               onClick={go(applyHref)}
-              className="font-semibold text-[var(--brand-ink)] underline hover:opacity-80"
+              className="font-semibold text-ink underline hover:opacity-80"
             >
               {t("login.applyFree")}
             </a>

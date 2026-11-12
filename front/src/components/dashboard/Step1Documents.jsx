@@ -6,13 +6,14 @@ import {
   ShieldIcon,
   SparklesIcon,
 } from "./icons";
-import { BRAND_YELLOW, INK } from "./constants";
 import {
   getTranslatedFacultyName,
   getTranslatedStudyYear,
   openPrintableTranslationWindow,
   getDs160Status,
 } from "../../data/candidateStore";
+
+import { StepShell } from "./ui";
 
 export default function Step1Documents({
   candidate,
@@ -63,82 +64,70 @@ export default function Step1Documents({
   t,
 }) {
   return (
-    <section className="mt-4 rounded-2xl border border-black/[0.08] bg-white p-3.5 shadow-xs sm:p-4">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.06] pb-2.5">
-        <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white font-black text-sm shadow-xs">
-            1
-          </span>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="rounded-md bg-slate-900 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-white">
-                KORAK 1
-              </span>
-              <h2 className="text-base sm:text-lg font-black text-[var(--brand-ink)]">
-                Profil kandidata, Dokumentacija & Zvanični sudski prevodi
-              </h2>
-            </div>
-            <p className="text-xs text-[var(--brand-ink)]/65 mt-0.5">
-              Kompletiranje dosijea za američkog sponzora i poslodavca. Nakon unosa CV-ja i uverenja, zvanični prevodi se overavaju automatski.
-            </p>
-          </div>
-        </div>
+    <StepShell
+      index="1"
+      state={isStep1Done ? "done" : !isRegistrationDone ? "locked" : "current"}
+      kicker="Korak 1"
+      title="Profil, dokumenta i prevodi"
+      description="Kompletiranje dosijea za američkog sponzora i poslodavca. Nakon unosa CV-ja i uverenja, zvanični prevodi se overavaju automatski."
+      status={
         <span
-          className={`rounded-full px-3.5 py-1 text-xs font-bold ${
-            isStep1Done
-              ? "bg-green-100 text-green-900 border border-green-300"
+            className={`inline-flex shrink-0 items-center rounded-full px-3 py-1 text-xs font-medium ${
+              isStep1Done
+                ? "bg-emerald-100 text-emerald-800"
+                : isDocumentsRejected
+                ? "bg-red-100 text-red-700"
+                : isDocumentsPending
+                ? "bg-amber-100 text-amber-800"
+                : !isRegistrationDone
+                ? "bg-surface-2 text-ink-2"
+                : "bg-surface-2 text-ink"
+            }`}
+          >
+            {isStep1Done
+              ? "Dosije kompletiran i odobren"
               : isDocumentsRejected
-              ? "bg-rose-100 text-rose-950 border border-rose-300 animate-pulse"
+              ? "Zahteva dopunu dosijea"
               : isDocumentsPending
-              ? "bg-amber-100 text-amber-900 border border-amber-300"
+              ? "Čeka se odobrenje koordinatora"
               : !isRegistrationDone
-              ? "bg-slate-100 text-slate-700 border border-slate-300"
-              : "bg-blue-100 text-blue-900 border border-blue-300"
-          }`}
-        >
-          {isStep1Done
-            ? "✓ Dosije kompletiran i odobren"
-            : isDocumentsRejected
-            ? "Zahteva dopunu dosijea"
-            : isDocumentsPending
-            ? "Čeka se odobrenje koordinatora"
-            : !isRegistrationDone
-            ? "Zaključano do uplate I rate"
-            : "U pripremi"}
-        </span>
-      </div>
+              ? "Zaključano do uplate I rate"
+              : "U pripremi"}
+          </span>
+      }
+    >
 
       {/* Upozorenje ako je dosije vraćen na dopunu od strane koordinatora */}
       {isDocumentsRejected && (
-        <div className="mt-3.5 rounded-xl border-2 border-rose-400 bg-rose-50/95 p-4 text-xs text-rose-950 shadow-xs">
+        <div className="rounded-xl bg-red-50 p-4 text-[13px] text-red-950">
           <div className="flex items-start gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-rose-600 text-white font-bold text-lg shadow-2xs">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-600 text-white font-semibold text-lg">
               ✕
             </span>
             <div className="flex-1 space-y-1.5">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <p className="text-sm font-extrabold text-rose-950">
+                <p className="text-sm font-bold text-red-950">
                   Dosije je vraćen na dopunu od strane koordinatora
                 </p>
-                <span className="rounded-full bg-rose-200 px-3 py-0.5 text-[11px] font-black uppercase text-rose-900 border border-rose-300">
+                <span className="rounded-full bg-red-200 px-3 py-1 text-xs font-medium text-red-900 border border-red-300">
                   Zahteva dopunu
                 </span>
               </div>
-              <p className="text-xs text-rose-900 font-medium">
+              <p className="text-[13px] text-red-900 font-medium">
                 Koordinator agencije je pregledao vašu dokumentaciju i uneo sledeće obrazloženje:
               </p>
-              <div className="rounded-lg border border-rose-200 bg-white p-3 font-medium text-rose-900 text-xs shadow-2xs">
+              <div className="rounded-lg border border-red-200 bg-white p-3 font-medium text-red-900 text-[13px]">
                 <strong>Obrazloženje koordinatora: </strong>
                 <span className="italic">
                   "{candidate.documentsRejectionReason || "Molimo priložite ispravan ili dopunjen dokument prema uputstvu."}"
                 </span>
                 {candidate.documentsRejectedAt && (
-                  <span className="block text-[11px] text-rose-700/70 mt-1">
+                  <span className="block text-[13px] text-red-700/70 mt-1">
                     Datum provere: {new Date(candidate.documentsRejectedAt).toLocaleDateString("sr-RS")}
                   </span>
                 )}
               </div>
-              <p className="text-[11px] text-rose-800/90 font-semibold">
+              <p className="text-[13px] text-red-800/90 font-semibold">
                 Molimo zamenite neispravne dokumente u sekcijama ispod, a zatim na dnu stranice pošaljite dopunjeni dosije na ponovni pregled.
               </p>
             </div>
@@ -148,13 +137,10 @@ export default function Step1Documents({
 
       {/* Gate upozorenje ako Korak 0 nije završen */}
       {!isRegistrationDone && (
-        <div className="mt-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50/90 p-3.5 text-xs text-amber-950">
+        <div className="flex flex-col justify-between gap-3 rounded-xl bg-amber-50 px-4 py-3.5 text-[13px] text-amber-900 sm:flex-row sm:items-center">
           <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-500 text-white font-bold text-base">
-             
-            </span>
             <div>
-              <p className="font-bold text-amber-950 text-sm">
+              <p className="font-semibold text-amber-950 text-sm">
                 Korak 1 je zaključan: Čeka se završetak Registracije (Ugovor & I Rata)
               </p>
               <p className="text-amber-900/80 mt-0.5">
@@ -162,7 +148,7 @@ export default function Step1Documents({
               </p>
             </div>
           </div>
-          <span className="shrink-0 rounded-full bg-amber-200 px-3 py-1 text-[11px] font-black text-amber-900">
+          <span className="shrink-0 rounded-full bg-amber-200 px-3 py-1 text-xs font-medium text-amber-900">
             Potrebna Registracija
           </span>
         </div>
@@ -189,13 +175,13 @@ export default function Step1Documents({
         };
 
         return (
-          <div className="mt-3 rounded-xl border border-black/10 bg-black/[0.02] p-3 text-xs">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-black/[0.06] pb-2 mb-2">
+          <div className="rounded-2xl border border-line bg-white p-5 text-[13px] sm:p-6">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
               <div>
-                <h4 className="font-extrabold text-sm text-[var(--brand-ink)]">
+                <h4 className="text-base font-semibold leading-snug text-ink">
                   Lični podaci i verifikacija biometrijskog pasoša
                 </h4>
-                <p className="text-[11px] text-[var(--brand-ink)]/60">
+                <p className="text-[13px] text-ink-3">
                   Podaci su u potpunosti sinhronizovani sa DS-160 obrascem za vizu SAD.
                 </p>
               </div>
@@ -204,20 +190,20 @@ export default function Step1Documents({
                   const dsSt = getDs160Status(candidate.ds160);
                   if (dsSt.isComplete) {
                     return (
-                      <span className="rounded-full bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 text-[10px] font-bold text-emerald-900">
+                      <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
                         DS-160 Kompletiran
                       </span>
                     );
                   }
                   if (dsSt.isStarted) {
                     return (
-                      <span className="rounded-full bg-amber-100 border border-amber-300 px-2.5 py-0.5 text-[10px] font-bold text-amber-900">
+                      <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800">
                         DS-160 U izradi ({dsSt.filledCount}/{dsSt.totalCount})
                       </span>
                     );
                   }
                   return (
-                    <span className="rounded-full bg-black/5 border border-black/10 px-2.5 py-0.5 text-[10px] font-bold text-black/60">
+                    <span className="rounded-full bg-surface-2 px-3 py-1 text-xs font-medium text-ink-3">
                       DS-160 Nije popunjavan
                     </span>
                   );
@@ -226,7 +212,7 @@ export default function Step1Documents({
                   <button
                     type="button"
                     onClick={() => setShowDs160Modal(true)}
-                    className="rounded-lg border border-black/15 bg-white px-3 py-1 text-[11px] font-bold text-[var(--brand-ink)] hover:bg-black/5 shadow-2xs transition-colors"
+                    className="rounded-full border border-line-strong bg-white px-3 py-1 text-[13px] font-semibold text-ink hover:bg-surface-2 transition-colors"
                   >
                     Uredi / Proveri u DS-160 obrascu
                   </button>
@@ -235,53 +221,53 @@ export default function Step1Documents({
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Ime</span>
-                <span className="font-bold text-black text-xs mt-0.5 block truncate">{pData.firstName}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Ime</span>
+                <span className="font-semibold text-ink text-[13px] mt-0.5 block truncate">{pData.firstName}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Prezime</span>
-                <span className="font-bold text-black text-xs mt-0.5 block truncate">{pData.lastName}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Prezime</span>
+                <span className="font-semibold text-ink text-[13px] mt-0.5 block truncate">{pData.lastName}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Pol</span>
-                <span className="font-bold text-black text-xs mt-0.5 block truncate">{pData.gender}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Pol</span>
+                <span className="font-semibold text-ink text-[13px] mt-0.5 block truncate">{pData.gender}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Datum rođenja</span>
-                <span className="font-bold text-black text-xs mt-0.5 block truncate">{pData.birthDate}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Datum rođenja</span>
+                <span className="font-semibold text-ink text-[13px] mt-0.5 block truncate">{pData.birthDate}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Mesto rođenja</span>
-                <span className="font-bold text-black text-xs mt-0.5 block truncate" title={pData.birthPlace}>{pData.birthPlace}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Mesto rođenja</span>
+                <span className="font-semibold text-ink text-[13px] mt-0.5 block truncate" title={pData.birthPlace}>{pData.birthPlace}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Državljanstvo</span>
-                <span className="font-bold text-black text-xs mt-0.5 block truncate">{pData.citizenship}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Državljanstvo</span>
+                <span className="font-semibold text-ink text-[13px] mt-0.5 block truncate">{pData.citizenship}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">JMBG</span>
-                <span className="font-mono font-bold text-black text-xs mt-0.5 block truncate">{pData.jmbg}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">JMBG</span>
+                <span className="tabular-nums font-semibold text-ink text-[13px] mt-0.5 block truncate">{pData.jmbg}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Broj pasoša</span>
-                <span className="font-mono font-bold text-black text-xs mt-0.5 block truncate">{pData.passportNumber}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Broj pasoša</span>
+                <span className="tabular-nums font-semibold text-ink text-[13px] mt-0.5 block truncate">{pData.passportNumber}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Važenje pasoša</span>
-                <span className="font-bold text-black text-xs mt-0.5 block truncate">{pData.passportExpiryDate}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Važenje pasoša</span>
+                <span className="font-semibold text-ink text-[13px] mt-0.5 block truncate">{pData.passportExpiryDate}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Mobilni telefon</span>
-                <span className="font-bold text-black text-xs mt-0.5 block truncate">{pData.phone}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Mobilni telefon</span>
+                <span className="font-semibold text-ink text-[13px] mt-0.5 block truncate">{pData.phone}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Email adresa</span>
-                <span className="font-bold text-black text-xs mt-0.5 block truncate" title={pData.email}>{pData.email}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Email adresa</span>
+                <span className="font-semibold text-ink text-[13px] mt-0.5 block truncate" title={pData.email}>{pData.email}</span>
               </div>
-              <div className="rounded-lg bg-white p-2.5 border border-black/10">
-                <span className="text-[10px] uppercase font-bold text-black/50 block">Adresa prebivališta</span>
-                <span className="font-bold text-black text-xs mt-0.5 block truncate" title={pData.address}>{pData.address}</span>
+              <div className="rounded-xl bg-surface px-4 py-3">
+                <span className="text-[13px] font-semibold text-ink-3 block">Adresa prebivališta</span>
+                <span className="font-semibold text-ink text-[13px] mt-0.5 block truncate" title={pData.address}>{pData.address}</span>
               </div>
             </div>
           </div>
@@ -289,33 +275,33 @@ export default function Step1Documents({
       })()}
 
       {/* Podkorak 1.2: Studentski profil, CV Builder & Video prezentacija */}
-      <div className="mt-3 rounded-2xl border-2 border-slate-900 bg-gradient-to-br from-amber-50/60 via-white to-amber-50/40 p-3.5 sm:p-4 shadow-sm">
+      <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
-            <h3 className="text-base sm:text-lg font-black text-slate-900">
-              Studentski profil, CV Builder & Video prezentacija
+            <h3 className="text-base font-semibold leading-snug text-ink">
+              Studentski profil, CV i video prezentacija
             </h3>
-            <p className="text-xs text-slate-600 max-w-xl">
+            <p className="text-[13px] text-ink-2 max-w-xl">
               Unesite radno iskustvo, veštine, termine dostupnosti za rad i nivo engleskog jezika. Američki poslodavci na osnovu ovog profila biraju kandidate za intervju.
             </p>
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
             <div className="text-right">
-              <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <div className="text-[13px] font-semibold text-ink-3">
                 Status profila
               </div>
-              <div className="text-sm font-black text-emerald-800 font-mono">
-                {candidate.profileCompleted ? "Kompletiran ✓" : "U pripremi"}
+              <div className={`text-sm font-semibold ${candidate.profileCompleted ? "text-emerald-700" : "text-ink"}`}>
+                {candidate.profileCompleted ? "Kompletiran" : "U pripremi"}
               </div>
             </div>
 
             <button
               type="button"
               onClick={() => setShowProfileBuilderModal(true)}
-              className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-black transition-all"
+              className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-[13px] font-semibold text-white hover:bg-neutral-950 transition-all"
             >
-              <svg className="h-4 w-4 text-[var(--brand-yellow)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-4 w-4 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
               </svg>
               <span>Uredi profil & CV</span>
@@ -324,40 +310,40 @@ export default function Step1Documents({
         </div>
 
         {/* Brzi sažetak profila u bedževima */}
-        <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-2.5 border-t border-black/[0.08] text-xs">
-          <div className="rounded-xl border border-black/10 bg-white/90 p-2.5">
-            <span className="text-[10px] uppercase font-bold text-slate-400 block">Dostupnost za rad</span>
-            <span className="font-bold text-slate-900 mt-0.5 block">
-              🗓️ {candidate.availability?.startDate || "25.05.2026"} – {candidate.availability?.endDate || "25.09.2026"}
+        <div className="mt-4 grid grid-cols-1 gap-3 text-[13px] sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rounded-xl bg-surface px-4 py-3">
+            <span className="text-[13px] font-semibold text-neutral-400 block">Dostupnost za rad</span>
+            <span className="font-semibold text-ink mt-0.5 block">
+              {candidate.availability?.startDate || "25.05.2026"} – {candidate.availability?.endDate || "25.09.2026"}
             </span>
-            <span className="text-[11px] text-slate-500">
+            <span className="text-[13px] text-ink-3">
               Grace period: do {candidate.availability?.travelUntil || "20.10.2026"}
             </span>
           </div>
 
-          <div className="rounded-xl border border-black/10 bg-white/90 p-2.5">
-            <span className="text-[10px] uppercase font-bold text-slate-400 block">Radno iskustvo u CV-ju</span>
-            <span className="font-bold text-slate-900 mt-0.5 block">
+          <div className="rounded-xl bg-surface px-4 py-3">
+            <span className="text-[13px] font-semibold text-neutral-400 block">Radno iskustvo u CV-ju</span>
+            <span className="font-semibold text-ink mt-0.5 block">
               {candidate.workExperience?.length || 0} unetih pozicija
             </span>
-            <span className="text-[11px] text-slate-500 truncate block">
+            <span className="text-[13px] text-ink-3 truncate block">
               {candidate.cvFileName || "CV još nije otpremljen"}
             </span>
           </div>
 
-          <div className="rounded-xl border border-black/10 bg-white/90 p-2.5">
-            <span className="text-[10px] uppercase font-bold text-slate-400 block">Preferencije posla & SAD</span>
-            <span className="font-bold text-slate-900 mt-0.5 block truncate">
-              🎯 {candidate.preferences?.position || "Nije izabrano"}
+          <div className="rounded-xl bg-surface px-4 py-3">
+            <span className="text-[13px] font-semibold text-neutral-400 block">Preferencije posla & SAD</span>
+            <span className="font-semibold text-ink mt-0.5 block truncate">
+              {candidate.preferences?.position || "Nije izabrano"}
             </span>
-            <span className="text-[11px] text-slate-500 truncate block">
+            <span className="text-[13px] text-ink-3 truncate block">
               {candidate.preferences?.locationType || "Obala i nacionalni parkovi"}
             </span>
           </div>
 
-          <div className="rounded-xl border border-black/10 bg-white/90 p-2.5">
-            <span className="text-[10px] uppercase font-bold text-slate-400 block">Video prezentacija (60s)</span>
-            <span className="font-bold text-slate-900 mt-0.5 block flex items-center gap-1.5">
+          <div className="rounded-xl bg-surface px-4 py-3">
+            <span className="text-[13px] font-semibold text-neutral-400 block">Video prezentacija (60s)</span>
+            <span className="font-semibold text-ink mt-0.5 block flex items-center gap-1.5">
               {candidate.youtubeUrl ? (
                 <>
                   <span className="h-2 w-2 rounded-full bg-emerald-500" />
@@ -365,35 +351,35 @@ export default function Step1Documents({
                 </>
               ) : (
                 <>
-                  <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
+                  <span className="h-2 w-2 rounded-full bg-amber-500" />
                   <span className="text-amber-700">Čeka se link</span>
                 </>
               )}
             </span>
-            <span className="text-[11px] text-slate-500">
+            <span className="text-[13px] text-ink-3">
               Nivo engleskog: <strong>{candidate.englishLevel || candidate.preferences?.englishLevel || "B2"}</strong>
             </span>
           </div>
         </div>
       </div>
 
-      <div className="mt-3 space-y-2.5">
+      <div className="space-y-4">
         {/* 1. YOUTUBE VIDEO */}
-        <div className="rounded-xl border border-black/10 bg-white p-3.5 sm:p-4 shadow-2xs">
+        <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex items-center gap-3">
               <span
                 className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-                  candidate.youtubeUrl ? "bg-red-600 text-white" : "bg-black/[0.06] text-black/60"
+                  candidate.youtubeUrl ? "bg-ink text-white" : "bg-surface-2 text-ink-3"
                 }`}
               >
                 <PlayIcon className="h-5 w-5" />
               </span>
               <div>
-                <h3 className="text-base font-bold text-[var(--brand-ink)]">
+                <h3 className="text-base font-semibold text-ink">
                   1. {t("dash.youtubeTitle")}
                 </h3>
-                <p className="text-xs text-[var(--brand-ink)]/60">
+                <p className="text-[13px] text-ink-3">
                   {t("dash.youtubeSubtitle")}
                 </p>
               </div>
@@ -403,7 +389,7 @@ export default function Step1Documents({
               <a
                 href="/documents/AA_Instrukcija_za_video_CV.pdf"
                 download="AA_Instrukcija_za_video_CV.pdf"
-                className="rounded-full border border-black/15 bg-white px-3.5 py-1.5 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-50 flex items-center gap-1"
+                className="rounded-full border border-line-strong bg-white px-3.5 py-1.5 text-[13px] font-semibold text-ink-2 transition-colors hover:bg-surface flex items-center gap-1"
                 title="Preuzmite zvanični PDF dokument sa smernicama i primerima"
               >
                 PDF Uputstvo
@@ -411,7 +397,7 @@ export default function Step1Documents({
               <button
                 type="button"
                 onClick={() => setShowVideoModal(true)}
-                className="rounded-full border border-black/15 bg-white px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)] transition-colors hover:bg-black/[0.04]"
+                className="rounded-full border border-line-strong bg-white px-3.5 py-1.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
               >
                 {t("dash.youtubeInstructionsBtn")}
               </button>
@@ -419,7 +405,7 @@ export default function Step1Documents({
                 <button
                   type="button"
                   onClick={() => setIsYoutubeEditing(true)}
-                  className="text-xs font-semibold text-[var(--brand-ink)]/60 underline hover:text-[var(--brand-ink)]"
+                  className="text-[13px] font-semibold text-ink-3 underline hover:text-ink"
                 >
                   Izmeni link
                 </button>
@@ -435,12 +421,11 @@ export default function Step1Documents({
                 value={youtubeInput}
                 onChange={(e) => setYoutubeInput(e.target.value)}
                 placeholder={t("dash.youtubePlaceholder")}
-                className="flex-1 rounded-xl border border-black/15 px-4 py-2.5 text-sm placeholder:text-black/35 focus:border-[var(--brand-ink)] focus:outline-hidden"
+                className="flex-1 rounded-xl border border-line-strong px-4 py-2.5 text-sm placeholder:text-ink-3/70 focus:border-ink focus:outline-hidden"
               />
               <button
                 type="submit"
-                className="rounded-xl px-5 py-2.5 text-xs font-bold uppercase tracking-wider shadow-xs transition-opacity hover:opacity-90"
-                style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+                className="bg-brand text-ink rounded-full px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-brand-strong"
               >
                 Sačuvaj
               </button>
@@ -448,7 +433,7 @@ export default function Step1Documents({
           ) : (
             <div className="mt-4">
               {embedUrl ? (
-                <div className="overflow-hidden rounded-xl border border-black/10">
+                <div className="overflow-hidden rounded-xl border border-line">
                   <iframe
                     src={embedUrl}
                     title="YouTube video predstavljanje"
@@ -462,32 +447,32 @@ export default function Step1Documents({
                   href={candidate.youtubeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block text-xs font-bold text-blue-700 underline"
+                  className="inline-block text-[13px] font-semibold text-ink underline"
                 >
                   {candidate.youtubeUrl}
                 </a>
               )}
-              <p className="mt-2 text-xs font-semibold text-green-700">✓ Video link je sačuvan i spreman za poslodavce</p>
+              <p className="mt-2 text-[13px] font-semibold text-emerald-700">✓ Video link je sačuvan i spreman za poslodavce</p>
             </div>
           )}
         </div>
 
         {/* 2. CV DOKUMENT */}
-        <div className="rounded-xl border border-black/10 bg-white p-3.5 sm:p-4 shadow-2xs">
+        <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <span
                 className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-                  candidate.cvFileName ? "bg-blue-600 text-white" : "bg-black/[0.06] text-black/60"
+                  candidate.cvFileName ? "bg-ink text-white" : "bg-surface-2 text-ink-3"
                 }`}
               >
                 <FileIcon className="h-5 w-5" />
               </span>
               <div>
-                <h3 className="text-base font-bold text-[var(--brand-ink)]">
+                <h3 className="text-base font-semibold text-ink">
                   2. {t("dash.cvTitle")}
                 </h3>
-                <p className="text-xs text-[var(--brand-ink)]/60">
+                <p className="text-[13px] text-ink-3">
                   {t("dash.cvSubtitle")}
                 </p>
               </div>
@@ -497,7 +482,7 @@ export default function Step1Documents({
               <button
                 type="button"
                 onClick={() => cvInputRef.current?.click()}
-                className="rounded-full border border-black/15 bg-white px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)] transition-colors hover:bg-black/[0.04]"
+                className="rounded-full border border-line-strong bg-white px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
               >
                 {candidate.cvFileName ? "Zameni CV" : t("dash.cvUploadBtn")}
               </button>
@@ -512,7 +497,7 @@ export default function Step1Documents({
           </div>
 
           {candidate.cvFileName ? (
-            <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-green-700">
+            <div className="mt-3 flex items-center gap-2 text-[13px] font-semibold text-emerald-700">
               <CheckIcon className="h-4 w-4" />
               <span>Otpremljen dokument: <strong>{candidate.cvFileName}</strong></span>
             </div>
@@ -524,7 +509,7 @@ export default function Step1Documents({
                   setCvFile("Luka_Jovanovic_CV.pdf");
                   updateCandidateState({ cvFileName: "Luka_Jovanovic_CV.pdf" });
                 }}
-                className="text-xs font-semibold text-[var(--brand-ink)]/60 underline hover:text-[var(--brand-ink)]"
+                className="text-[13px] font-semibold text-ink-3 underline hover:text-ink"
               >
                 Ili ubaci primerak CV-ja (demo)
               </button>
@@ -533,21 +518,21 @@ export default function Step1Documents({
         </div>
 
         {/* PODKORAK 1.3: UVERENJE SA FAKULTETA + ZVANIČNI SUDSKI PREVOD */}
-        <div className="rounded-xl border border-black/10 bg-white p-3.5 sm:p-4 shadow-2xs">
+        <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <span
                 className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-                  candidate.facultyCertFileName || facultyFile ? "bg-amber-500 text-white" : "bg-black/[0.06] text-black/60"
+                  candidate.facultyCertFileName || facultyFile ? "bg-ink text-white" : "bg-surface-2 text-ink-3"
                 }`}
               >
                 <FileIcon className="h-5 w-5" />
               </span>
               <div>
-                <h3 className="text-base font-bold text-[var(--brand-ink)]">
+                <h3 className="text-base font-semibold text-ink">
                   Uverenje sa fakulteta o redovnom studiranju + Zvanični prevod
                 </h3>
-                <p className="text-xs text-[var(--brand-ink)]/60 mt-0.5">
+                <p className="text-[13px] text-ink-3 mt-0.5">
                   Potvrda fakulteta o redovnom statusu studenta + Zvanični sudski prevod na engleski za sponzora (1-klik PDF)
                 </p>
               </div>
@@ -558,7 +543,7 @@ export default function Step1Documents({
                 type="button"
                 onClick={() => certInputRef.current?.click()}
                 disabled={isUploadingCert}
-                className="rounded-full border border-black/15 bg-white px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)] transition-colors hover:bg-black/[0.04] disabled:opacity-50"
+                className="rounded-full border border-line-strong bg-white px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-surface-2 disabled:opacity-50"
               >
                 {isUploadingCert
                   ? "Otpremanje..."
@@ -577,20 +562,20 @@ export default function Step1Documents({
           </div>
 
           {candidate.facultyCertFileName || facultyFile ? (
-            <div className="mt-3 rounded-xl border border-black/10 bg-black/[0.02] p-3 text-xs">
+            <div className="rounded-2xl border border-line bg-white p-5 text-[13px] sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="text-xs">
-                  <p className="font-bold text-[var(--brand-ink)]">
+                <div className="text-[13px]">
+                  <p className="font-semibold text-ink">
                     Originalni dokument: {candidate.facultyCertFileName || facultyFile}
                   </p>
-                  <p className="text-[var(--brand-ink)]/60">
+                  <p className="text-ink-3">
                     {getTranslatedFacultyName(candidate.faculty || candidate.university || "Fakultet")} • {getTranslatedStudyYear(candidate.studyYear || "YEAR_2")}
                   </p>
                 </div>
 
                 {aiTranslationReady ? (
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="flex items-center gap-1 text-xs font-bold text-green-700">
+                    <span className="flex items-center gap-1 text-[13px] font-semibold text-emerald-700">
                       <CheckIcon className="h-4 w-4" /> Zvanični sudski prevod verifikovan
                     </span>
                     <button
@@ -599,17 +584,17 @@ export default function Step1Documents({
                         setActiveTranslationDoc("faculty");
                         setShowTranslationModal(true);
                       }}
-                      className="rounded-lg bg-green-100 px-3 py-1.5 text-xs font-bold text-green-900 hover:bg-green-200"
+                      className="rounded-full bg-emerald-100 px-3 py-1.5 text-[13px] font-semibold text-emerald-800 hover:bg-emerald-200"
                     >
-                      👁️ Pogledaj prevod
+                      Pogledaj prevod
                     </button>
                     <button
                       type="button"
                       onClick={() => openPrintableTranslationWindow("faculty", candidate)}
-                      className="rounded-lg bg-[var(--brand-ink)] px-3 py-1.5 text-xs font-bold text-white hover:bg-black inline-flex items-center gap-1"
+                      className="rounded-full bg-ink px-3 py-1.5 text-[13px] font-semibold text-white hover:bg-neutral-950 inline-flex items-center gap-1"
                       title="Preuzmite overen prevod u PDF formatu za sponzora"
                     >
-                      <span>🖨️ Preuzmi prevod (PDF)</span>
+                      <span>Preuzmi prevod (PDF)</span>
                     </button>
                   </div>
                 ) : (
@@ -617,8 +602,7 @@ export default function Step1Documents({
                     type="button"
                     onClick={runAiTranslation}
                     disabled={isTranslating}
-                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider shadow-xs transition-all hover:scale-105"
-                    style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+                    className="bg-brand text-ink inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors hover:bg-brand-strong"
                   >
                     <SparklesIcon className="h-4 w-4" />
                     {isTranslating ? t("dash.aiTranslating") : t("dash.aiTranslateBtn")}
@@ -641,7 +625,7 @@ export default function Step1Documents({
                   setUploadToast("✓ Dodato primerak uverenja sa sertifikovanim prevodom!");
                   setTimeout(() => setUploadToast(""), 4000);
                 }}
-                className="text-xs font-semibold text-[var(--brand-ink)]/60 underline hover:text-[var(--brand-ink)]"
+                className="text-[13px] font-semibold text-ink-3 underline hover:text-ink"
               >
                 Ili ubaci demo primerak uverenja
               </button>
@@ -650,26 +634,26 @@ export default function Step1Documents({
         </div>
 
         {/* PODKORAK 1.4: UVERENJE O NEKAŽNJAVANJU IZ MUP-A + ZVANIČNI PREVOD */}
-        <div className="rounded-xl border border-black/10 bg-white p-3.5 sm:p-4 shadow-2xs">
+        <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <span
                 className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-                  candidate.policeCertificateFileName || policeFile ? "bg-blue-600 text-white" : "bg-black/[0.06] text-black/60"
+                  candidate.policeCertificateFileName || policeFile ? "bg-ink text-white" : "bg-surface-2 text-ink-3"
                 }`}
               >
                 <ShieldIcon className="h-5 w-5" />
               </span>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-base font-bold text-[var(--brand-ink)]">
+                  <h3 className="text-base font-semibold text-ink">
                     Uverenje o nekažnjavanju iz MUP-a + Zvanični prevod
                   </h3>
-                  <span className="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-800">
-                    OBAVEZNO ZA SPONZORA
+                  <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
+                    Obavezno za sponzora
                   </span>
                 </div>
-                <p className="text-xs text-[var(--brand-ink)]/60 mt-0.5">
+                <p className="text-[13px] text-ink-3 mt-0.5">
                   Potvrda MUP-a RS da niste osuđivani + sertifikovan overen prevod na engleski jezik (Police Clearance)
                 </p>
               </div>
@@ -679,7 +663,7 @@ export default function Step1Documents({
               <button
                 type="button"
                 onClick={() => policeInputRef.current?.click()}
-                className="rounded-full border border-black/15 bg-white px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)] transition-colors hover:bg-black/[0.04]"
+                className="rounded-full border border-line-strong bg-white px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
               >
                 {candidate.policeCertificateFileName || policeFile ? "Zameni uverenje" : "Otpremi MUP uverenje"}
               </button>
@@ -694,18 +678,18 @@ export default function Step1Documents({
           </div>
 
           {candidate.policeCertificateFileName || policeFile ? (
-            <div className="mt-3 rounded-xl border border-black/10 bg-black/[0.02] p-3 text-xs">
+            <div className="rounded-2xl border border-line bg-white p-5 text-[13px] sm:p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="text-xs">
-                  <p className="font-bold text-[var(--brand-ink)]">
+                <div className="text-[13px]">
+                  <p className="font-semibold text-ink">
                     Originalni dokument: {candidate.policeCertificateFileName || policeFile}
                   </p>
-                  <p className="text-[var(--brand-ink)]/60">Uverenje iz kaznene evidencije (MUP RS)</p>
+                  <p className="text-ink-3">Uverenje iz kaznene evidencije (MUP RS)</p>
                 </div>
 
                 {policeTranslationReady ? (
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="flex items-center gap-1 text-xs font-bold text-green-700">
+                    <span className="flex items-center gap-1 text-[13px] font-semibold text-emerald-700">
                       <CheckIcon className="h-4 w-4" /> Sertifikovan prevod verifikovan
                     </span>
                     <button
@@ -714,17 +698,17 @@ export default function Step1Documents({
                         setActiveTranslationDoc("police");
                         setShowTranslationModal(true);
                       }}
-                      className="rounded-lg bg-green-100 px-3 py-1.5 text-xs font-bold text-green-900 hover:bg-green-200"
+                      className="rounded-full bg-emerald-100 px-3 py-1.5 text-[13px] font-semibold text-emerald-800 hover:bg-emerald-200"
                     >
-                      👁️ Pogledaj prevod
+                      Pogledaj prevod
                     </button>
                     <button
                       type="button"
                       onClick={() => openPrintableTranslationWindow("police", candidate)}
-                      className="rounded-lg bg-[var(--brand-ink)] px-3 py-1.5 text-xs font-bold text-white hover:bg-black inline-flex items-center gap-1"
+                      className="rounded-full bg-ink px-3 py-1.5 text-[13px] font-semibold text-white hover:bg-neutral-950 inline-flex items-center gap-1"
                       title="Preuzmite overeni prevod MUP uverenja u PDF formatu"
                     >
-                      <span>🖨️ Preuzmi prevod (PDF)</span>
+                      <span>Preuzmi prevod (PDF)</span>
                     </button>
                   </div>
                 ) : (
@@ -732,8 +716,7 @@ export default function Step1Documents({
                     type="button"
                     onClick={runPoliceTranslation}
                     disabled={isTranslatingPolice}
-                    className="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider shadow-xs transition-all hover:scale-105"
-                    style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+                    className="bg-brand text-ink inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors hover:bg-brand-strong"
                   >
                     <SparklesIcon className="h-4 w-4" />
                     {isTranslatingPolice ? "Prevođenje u toku..." : "Prevedi MUP uverenje"}
@@ -756,7 +739,7 @@ export default function Step1Documents({
                   setUploadToast("✓ Dodato Uverenje o nekažnjavanju iz MUP-a sa sertifikovanim prevodom!");
                   setTimeout(() => setUploadToast(""), 4000);
                 }}
-                className="text-xs font-semibold text-[var(--brand-ink)]/60 underline hover:text-[var(--brand-ink)]"
+                className="text-[13px] font-semibold text-ink-3 underline hover:text-ink"
               >
                 Ili ubaci primerak Uverenja iz MUP-a (demo)
               </button>
@@ -766,33 +749,33 @@ export default function Step1Documents({
       </div>
 
       {/* AKCIONO DUGME / STATUS VERIFIKACIJE DOSIJEA */}
-      <div className="mt-4 border-t border-black/[0.08] pt-3">
+      <div className="mt-4 border-t border-line pt-3">
         {isDocumentsApproved ? (
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 rounded-xl border border-green-300 bg-green-50 p-3">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 rounded-xl bg-emerald-50 p-3">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-green-600 text-white">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white">
                 <CheckIcon className="h-5 w-5" />
               </span>
               <div>
-                <p className="text-sm font-bold text-green-950">
+                <p className="text-sm font-semibold text-emerald-950">
                   Dokumentacija i profil su uspešno odobreni od sponzora
                 </p>
-                <p className="text-xs text-green-800/80">
+                <p className="text-[13px] text-emerald-800/80">
                   Tvoj CV, video predstavljanje, uverenje sa fakulteta i MUP potvrda sa overenim prevodom su prihvaćeni i prosleđeni poslodavcima u Koraku 2.
                 </p>
               </div>
             </div>
-            <span className="shrink-0 rounded-full bg-green-200 px-3.5 py-1 text-xs font-extrabold text-green-900">
+            <span className="shrink-0 rounded-full bg-emerald-200 px-3 py-1 text-xs font-medium text-emerald-900">
               Odobreno ✓
             </span>
           </div>
         ) : isDocumentsRejected ? (
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border-2 border-rose-400 bg-rose-50/90 p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl bg-red-50 p-4">
             <div className="space-y-1">
-              <p className="text-sm font-extrabold text-rose-950 flex items-center gap-2">
-                <span></span> Dosije zahteva dopunu pre slanja na odobrenje sponzoru
+              <p className="text-sm font-bold text-red-950 flex items-center gap-2">
+                Dosije zahteva dopunu pre slanja na odobrenje sponzoru
               </p>
-              <p className="text-xs text-rose-900/80 leading-relaxed">
+              <p className="text-[13px] text-red-900/80 leading-relaxed">
                 Nakon što priložite ispravan dokument u sekcijama iznad, kliknite na dugme desno kako bi koordinator ponovo pregledao vaš dosije.
               </p>
             </div>
@@ -800,18 +783,18 @@ export default function Step1Documents({
               type="button"
               disabled={!isRequirementsMet || !isRegistrationDone}
               onClick={handleSubmitForReview}
-              className="shrink-0 rounded-full bg-rose-600 hover:bg-rose-700 px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-md transition-all hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed"
+              className="shrink-0 rounded-full bg-red-600 hover:bg-red-700 px-6 py-2.5 text-sm font-semibold text-white transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             >
               Pošalji dopunjeni dosije na ponovni pregled
             </button>
           </div>
         ) : isDocumentsPending ? (
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-amber-300 bg-amber-50/90 p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl bg-amber-50 p-4">
             <div className="space-y-1">
-              <p className="text-sm font-extrabold text-amber-950 flex items-center gap-2">
-                <span></span> Dosije je poslat na verifikaciju — čeka se odobrenje koordinatora i sponzora
+              <p className="text-sm font-bold text-amber-950 flex items-center gap-2">
+                Dosije je poslat na verifikaciju — čeka se odobrenje koordinatora i sponzora
               </p>
-              <p className="text-xs text-amber-900/80 leading-relaxed">
+              <p className="text-[13px] text-amber-900/80 leading-relaxed">
                 Vaš CV, akademsko uverenje i prevod MUP potvrde pregleda tim zadužen za komunikaciju sa američkim sponzorima. Čim administrator odobri dosije, automatski se otključava odabir radnih ponuda u Koraku 2.
               </p>
             </div>
@@ -820,14 +803,14 @@ export default function Step1Documents({
         ) : (
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div>
-              <p className="text-sm font-bold text-[var(--brand-ink)]">
+              <p className="text-sm font-semibold text-ink">
                 {isRequirementsMet
                   ? isRegistrationDone
                     ? "Sva dokumenta su spremna za slanje na verifikaciju!"
                     : "Dokumenta su spremna, ali ugovor i I rata još nisu potvrđeni."
                   : "Dopunite nedostajuće stavke pre slanja na obradu."}
               </p>
-              <p className="text-xs text-[var(--brand-ink)]/55">
+              <p className="text-[13px] text-ink-3">
                 {isRegistrationDone
                   ? "Nakon slanja, koordinatori agencije verifikuju profil i otključavaju prijavu za poslove u Koraku 2."
                   : "Potrebno je da administrator odobri ugovor i potvrdi I ratu u koraku Registracija pre verifikacije dosijea."}
@@ -838,8 +821,8 @@ export default function Step1Documents({
               type="button"
               disabled={!isRequirementsMet || !isRegistrationDone}
               onClick={handleSubmitForReview}
-              className="w-full shrink-0 rounded-full px-6 py-2.5 text-xs font-bold uppercase tracking-[0.08em] shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto"
-              style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+              className="bg-brand text-ink w-full shrink-0 rounded-full px-6 py-2.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40 sm:w-auto transition-colors hover:bg-brand-strong"
+             
               title={
                 !isRegistrationDone
                   ? "Potrebno je završiti Registraciju (Ugovor i I rata)"
@@ -853,6 +836,6 @@ export default function Step1Documents({
           </div>
         )}
       </div>
-    </section>
+    </StepShell>
   );
 }

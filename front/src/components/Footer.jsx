@@ -4,8 +4,6 @@ import { useTranslation } from "../i18n/LanguageContext";
 import defaultNavItems from "../data/navItems";
 import programItems from "../data/programItems";
 
-const BRAND_YELLOW = "#FDD503";
-
 // Ikonice za društvene mreže (Prilog 1B, Sekcija 6: Google+ uklonjen, TikTok dodat, Twitter zamenjen sa X)
 function InstagramIcon({ className = "h-5 w-5" }) {
   return (
@@ -109,8 +107,8 @@ export default function Footer({
   };
 
   return (
-    <footer className="bg-[var(--brand-ink)] text-white">
-      <div className="mx-auto max-w-6xl px-6 py-16 sm:px-10 sm:py-20">
+    <footer className="bg-ink text-white">
+      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-10">
           {/* Brend + social */}
           <div className="lg:col-span-4">
@@ -118,16 +116,16 @@ export default function Footer({
               href={logoHref}
               onClick={go(logoHref)}
               aria-label={t("a11y.home") || "Početna"}
-              className="inline-flex text-white transition-opacity duration-200 hover:opacity-80"
+              className="inline-flex text-white"
             >
               <Logo className="h-14 w-auto" />
             </a>
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">
               {t("footer.tagline") ||
                 "Vodeća agencija za Work and Travel USA i programe međunarodne razmene sa tradicijom dužom od 15 godina."}
             </p>
 
-            <p className="mt-7 text-xs font-bold uppercase tracking-[0.16em] text-white/50">
+            <p className="mt-8 text-sm text-white/55">
               {t("footer.followTitle") || "Pratite nas na mrežama"}
             </p>
             <div className="mt-3 flex gap-2.5">
@@ -138,7 +136,7 @@ export default function Footer({
                   aria-label={name}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition-all duration-200 hover:border-transparent hover:bg-[var(--brand-yellow)] hover:text-[var(--brand-ink)]"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white transition-colors duration-150 hover:border-brand hover:bg-brand hover:text-ink"
                 >
                   <Icon />
                 </a>
@@ -148,16 +146,16 @@ export default function Footer({
 
           {/* Glavni meni */}
           <nav className="lg:col-span-2" aria-label="Navigacija">
-            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-white/50">Meni</h3>
+            <h3 className="text-sm text-white/55">{t("footer.navTitle")}</h3>
             <ul className="mt-4 space-y-2.5">
               {navItems.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
                     onClick={go(item.href)}
-                    className="text-sm text-white/75 transition-colors duration-150 hover:text-[var(--brand-yellow)]"
+                    className="text-sm text-white/85 transition-colors duration-150 hover:text-brand"
                   >
-                    {item.label || (item.key ? t(item.key) : "")}
+                    {item.key ? t(item.key) : item.label}
                   </a>
                 </li>
               ))}
@@ -166,14 +164,14 @@ export default function Footer({
 
           {/* Svi programi (Prilog 1B) */}
           <nav className="lg:col-span-3" aria-label="Programi">
-            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-white/50">Programi</h3>
+            <h3 className="text-sm text-white/55">{t("footer.programsTitle")}</h3>
             <ul className="mt-4 space-y-2.5">
               {programs.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
                     onClick={go(item.href)}
-                    className="text-sm text-white/75 transition-colors duration-150 hover:text-[var(--brand-yellow)]"
+                    className="text-sm text-white/85 transition-colors duration-150 hover:text-brand"
                   >
                     {item.label}
                   </a>
@@ -184,28 +182,28 @@ export default function Footer({
 
           {/* Kontakt */}
           <div className="lg:col-span-3">
-            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-white/50">Kontakt</h3>
-            <ul className="mt-4 space-y-4 text-sm text-white/75">
+            <h3 className="text-sm text-white/55">{t("footer.contactTitle")}</h3>
+            <ul className="mt-4 space-y-4 text-sm text-white/85">
               <li className="flex gap-3">
-                <PinIcon className="mt-0.5 h-4 w-4 shrink-0 text-[var(--brand-yellow)]" />
+                <PinIcon className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
                 <span>
                   <span className="block font-semibold text-white">{contact.city}</span>
                   {contact.address}
                 </span>
               </li>
               <li className="flex gap-3">
-                <PhoneIcon className="mt-0.5 h-4 w-4 shrink-0 text-[var(--brand-yellow)]" />
+                <PhoneIcon className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
                 <span className="flex flex-col">
                   {contact.phones.map((phone) => (
-                    <a key={phone} href={telHref(phone)} className="transition-colors duration-150 hover:text-[var(--brand-yellow)]">
+                    <a key={phone} href={telHref(phone)} className="transition-colors duration-150 hover:text-brand">
                       {phone}
                     </a>
                   ))}
                 </span>
               </li>
               <li className="flex gap-3">
-                <MailIcon className="mt-0.5 h-4 w-4 shrink-0 text-[var(--brand-yellow)]" />
-                <a href={`mailto:${contact.email}`} className="break-all transition-colors duration-150 hover:text-[var(--brand-yellow)]">
+                <MailIcon className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+                <a href={`mailto:${contact.email}`} className="break-all transition-colors duration-150 hover:text-brand">
                   {contact.email}
                 </a>
               </li>
@@ -216,23 +214,13 @@ export default function Footer({
 
       {/* Donja linija */}
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-6 py-6 text-xs text-white/50 sm:flex-row sm:px-10">
-          <p>© {year} American Adventure DOO. Sva prava zadržana.</p>
-          <div className="flex items-center gap-4">
-            <a
-              href="/admin"
-              onClick={(e) => {
-                e.preventDefault();
-                onNavigate && onNavigate(e, "/admin");
-              }}
-              className="text-white/35 transition-colors duration-150 hover:text-white/80"
-            >
-              Admin portal
-            </a>
-            <p className="font-semibold uppercase tracking-[0.16em]" style={{ color: BRAND_YELLOW, opacity: 0.7 }}>
-              Work &amp; Travel USA 2026/2027
-            </p>
-          </div>
+        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-2 px-5 py-6 text-[13px] text-white/55 sm:flex-row sm:items-center sm:px-8">
+          <p>
+            © {year} American Adventure DOO. {t("footer.rights")}
+          </p>
+          <a href="/admin" onClick={go("/admin")} className="transition-colors duration-150 hover:text-white">
+            {t("footer.staff")}
+          </a>
         </div>
       </div>
     </footer>

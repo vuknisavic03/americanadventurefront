@@ -8,14 +8,12 @@ import {
   downloadContractPdf,
   downloadResponsibilityStatementPdf,
   signCandidateContract,
-  downloadPaymentSlipPdf,
   openPrintablePaymentSlipWindow,
   uploadDocumentWithBackend,
   uploadSignedContractWithBackend,
   readFileAsDataUrl,
   saveCandidateDs160WithBackend,
   getDs160Status,
-  isDs160Complete,
   changeCandidateDiscount,
   calculateProfileScore,
   reportInstallmentPayment,
@@ -257,7 +255,10 @@ export default function Dashboard({
   const isStep4Done = isDeparture;
   const isStep5Done = isReady;
 
-  const [activeStepTab, setActiveStepTab] = useState("all"); // 'all' | 'reg' | 'step1' | 'step2' | 'step3'
+  // 'all' | 'reg' | 'step1' | 'step2' | 'step3' — portal se otvara na koraku koji je trenutno na redu.
+  const [activeStepTab, setActiveStepTab] = useState(() =>
+    !isRegistrationDone ? "reg" : !isStep1Done ? "step1" : !isStep2Done ? "step2" : "step3"
+  );
 
   let statusBadgeText = candidate.paymentMethod === "now"
     ? "Registracija — Ugovor i uplata programa u celosti"
@@ -773,7 +774,7 @@ export default function Dashboard({
   const embedUrl = getYouTubeEmbedUrl(candidate.youtubeUrl);
 
   return (
-    <div className="min-h-screen bg-[#fafafa] text-[var(--brand-ink)]">
+    <div className="min-h-screen bg-surface text-ink">
       {/* Zaglavlje, Hero, Brze akcije, Stepper i Filter tabovi */}
       <DashboardHeader
         candidate={candidate}
@@ -815,7 +816,7 @@ export default function Dashboard({
       />
 
       {/* Glavni sadržaj koraka */}
-      <main className="mx-auto max-w-7xl px-3 py-4 sm:px-4 lg:px-4">
+      <main className="mx-auto max-w-6xl px-5 pb-20 pt-10 sm:px-8">
         {/* FAZA 0: REGISTRACIJA, IZBOR PROGRAMA, UGOVOR & I RATA */}
         {(activeStepTab === "all" || activeStepTab === "reg") && (
           <Step0Registration

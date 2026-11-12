@@ -1,11 +1,8 @@
 // front/src/components/admin/ui.jsx
 import { useEffect } from "react";
 
-export const BRAND_YELLOW = "#FDD503";
-export const INK = "#231f20";
-
 export const FIELD_CLS =
-  "w-full rounded-lg border border-black/[0.12] bg-white px-3.5 py-2.5 text-sm text-[var(--brand-ink)] transition-colors duration-150 placeholder:text-black/35 focus:border-[var(--brand-ink)] focus:outline-hidden focus:ring-2 focus:ring-[var(--brand-ink)]/10";
+  "w-full rounded-lg border border-line-strong bg-white px-3.5 py-2.5 text-sm text-ink transition-colors duration-150 placeholder:text-ink-3/70 focus:border-ink focus:outline-hidden focus:ring-2 focus:ring-ink/10";
 
 /* ---------- IKONICE ---------- */
 const ic = "h-[18px] w-[18px]";
@@ -250,11 +247,11 @@ export const PIPELINE_STEPS = [
 ];
 
 export const TONE = {
-  slate: "bg-black/[0.06] text-[var(--brand-ink)]/70",
+  slate: "bg-surface-2 text-ink-2",
   amber: "bg-amber-100 text-amber-700",
-  blue: "bg-blue-100 text-blue-700",
-  violet: "bg-violet-100 text-violet-700",
-  green: "bg-green-100 text-green-700",
+  blue: "bg-surface-2 text-ink",
+  violet: "bg-surface-2 text-ink",
+  green: "bg-emerald-100 text-emerald-700",
 };
 
 export function BriefcaseIcon({ className = ic }) {
@@ -285,8 +282,8 @@ export function PageHeader({ title, subtitle, action }) {
   return (
     <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-[var(--brand-ink)]">{title}</h1>
-        <p className="mt-1 text-sm text-[var(--brand-ink)]/55">{subtitle}</p>
+        <h1 className="font-display text-3xl font-bold leading-[1.1] text-ink">{title}</h1>
+        {subtitle && <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink-2">{subtitle}</p>}
       </div>
       {action}
     </div>
@@ -299,8 +296,7 @@ export function PrimaryButton({ children, onClick, type = "button", disabled = f
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white transition-opacity duration-150 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
-      style={{ backgroundColor: INK }}
+      className={`inline-flex items-center justify-center gap-2 rounded-full bg-ink px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
     >
       {children}
     </button>
@@ -312,7 +308,7 @@ export function SecondaryButton({ children, onClick, type = "button", className 
     <button
       type={type}
       onClick={onClick}
-      className={`rounded-lg border border-black/[0.12] px-4 py-2.5 text-sm font-semibold text-[var(--brand-ink)] transition-colors duration-150 hover:bg-black/[0.04] ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-full border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors duration-150 hover:bg-surface ${className}`}
     >
       {children}
     </button>
@@ -320,13 +316,13 @@ export function SecondaryButton({ children, onClick, type = "button", className 
 }
 
 export function Card({ children, className = "" }) {
-  return <div className={`rounded-xl border border-black/[0.07] bg-white ${className}`}>{children}</div>;
+  return <div className={`rounded-2xl border border-line bg-white ${className}`}>{children}</div>;
 }
 
 export function EmptyState({ children }) {
   return (
     <Card className="flex flex-col items-center justify-center px-6 py-16 text-center">
-      <p className="max-w-sm text-sm text-[var(--brand-ink)]/50">{children}</p>
+      <p className="max-w-sm text-sm text-ink-3">{children}</p>
     </Card>
   );
 }
@@ -334,17 +330,17 @@ export function EmptyState({ children }) {
 export function StatCard({ label, value, accent = false }) {
   return (
     <Card className="px-5 py-4">
-      <p className="text-xs font-semibold uppercase tracking-wide text-[var(--brand-ink)]/45">{label}</p>
+      <p className="text-[13px] text-ink-3">{label}</p>
       <p className="mt-1.5 flex items-baseline gap-2">
-        <span className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)]">{value}</span>
-        {accent && <span className="h-2 w-2 rounded-full" style={{ backgroundColor: BRAND_YELLOW }} aria-hidden="true" />}
+        <span className="font-display text-3xl font-bold tabular-nums text-ink">{value}</span>
+        {accent && <span className="h-2 w-2 rounded-full bg-brand" aria-hidden="true" />}
       </p>
     </Card>
   );
 }
 
 export function Badge({ tone = "slate", children }) {
-  return <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${TONE[tone] || TONE.slate}`}>{children}</span>;
+  return <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${TONE[tone] || TONE.slate}`}>{children}</span>;
 }
 
 export function GhostIconButton({ onClick, label, children, danger = false }) {
@@ -355,7 +351,7 @@ export function GhostIconButton({ onClick, label, children, danger = false }) {
       aria-label={label}
       title={label}
       className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors duration-150 ${
-        danger ? "text-red-500 hover:bg-red-50" : "text-[var(--brand-ink)]/55 hover:bg-black/[0.05] hover:text-[var(--brand-ink)]"
+        danger ? "text-red-500 hover:bg-red-50" : "text-ink-3 hover:bg-surface-2 hover:text-ink"
       }`}
     >
       {children}
@@ -366,7 +362,7 @@ export function GhostIconButton({ onClick, label, children, danger = false }) {
 export function Field({ label, children }) {
   return (
     <label className="block">
-      <span className="block text-xs font-semibold uppercase tracking-wider text-[var(--brand-ink)]/70">{label}</span>
+      <span className="block text-[13px] font-medium text-ink">{label}</span>
       <span className="mt-1.5 block">{children}</span>
     </label>
   );
@@ -396,15 +392,15 @@ export function Modal({ title, onClose, children, footer, wide = false, extraWid
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className={`relative flex max-h-[92vh] w-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-2xl transition-all ${widthClass}`}
+        className={`relative flex max-h-[92vh] w-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-2xl transition-all ${widthClass}`}
       >
-        <div className="flex shrink-0 items-center justify-between border-b border-black/[0.08] bg-[#fcfcfd] px-6 py-4 sm:px-8 sm:py-5">
-          <h2 className="text-base font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-lg">{title}</h2>
-          <GhostIconButton label="✕" onClick={onClose}><XIcon /></GhostIconButton>
+        <div className="flex shrink-0 items-center justify-between gap-4 border-b border-line px-6 py-4 sm:px-8">
+          <h2 className="text-lg font-semibold leading-snug text-ink">{title}</h2>
+          <GhostIconButton label="Zatvori" onClick={onClose}><XIcon /></GhostIconButton>
         </div>
         <div className="flex-1 overflow-y-auto p-6 sm:p-8">{children}</div>
         {footer && (
-          <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-black/[0.08] bg-[#f8f9fb] px-6 py-4 sm:px-8">
+          <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-line px-6 py-4 sm:px-8">
             {footer}
           </div>
         )}

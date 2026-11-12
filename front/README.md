@@ -21,48 +21,65 @@ npm run preview   # lokalni pregled build-a
 ## Struktura
 
 ```
-americanadventure/
-├── index.html              # Archivo font, #root
-├── vite.config.js          # Vite + React + Tailwind v4 plugin
+front/
+├── index.html
+├── vite.config.js            # Vite + React + Tailwind v4 plugin, /api proxy ka backendu
 ├── public/
-│   └── favicon.svg
+│   ├── documents/            # ugovori, uplatnice i uputstva koje portal nudi za preuzimanje
+│   └── videos/               # hero.mp4 (1600×900), hero-mobile.mp4 (960×540), hero-poster.jpg
 └── src/
-    ├── main.jsx            # React entry
-    ├── App.jsx             # korenska kompozicija — uklapa Header + sekcije
-    ├── index.css           # @import "tailwindcss" + brend tokeni (CSS varijable)
-    ├── theme/
-    │   └── tokens.js       # brend tokeni za JS pristup
-    ├── data/
-    │   └── navItems.js     # stavke navigacije (jedan izvor istine)
-    └── components/         # svaki UI element = zaseban fajl
-        ├── Logo.jsx
-        └── Header.jsx
+    ├── main.jsx              # React entry
+    ├── App.jsx               # rutiranje (History API), sesija, lazy učitavanje stranica
+    ├── config.js             # DEMO_MODE (VITE_DEMO_MODE=false za produkciju)
+    ├── index.css             # dizajn sistem: @theme tokeni, font, bazni stilovi
+    ├── theme/tokens.js       # isti tokeni za JS (štampani dokumenti, canvas)
+    ├── i18n/                 # LanguageContext + locales/ (SR u paketu, ostali na zahtev)
+    ├── data/                 # navigacija, programi, poslovi, candidateStore (API + lokalni keš)
+    └── components/
+        ├── ui/               # zajednički primitivi: Button, Container, SectionHeading, Badge, ikonice
+        ├── dashboard/        # portal kandidata: DashboardHeader, Step0–3, ui.jsx (StepShell, Panel, Field…)
+        ├── register/         # aktivacija naloga u 4 koraka
+        ├── admin/            # admin portal: sekcije, modali, ui.jsx (PageHeader, Card, Modal…)
+        └── *.jsx             # javne stranice (Hero, ProgramsPage, Discounts, News, Contact…)
 ```
 
-> **Stack:** React 19 · Vite 8 · Tailwind v4. Tailwind se učitava preko `@tailwindcss/vite` plugina — nema `tailwind.config.js` ni `postcss.config.js` (sadržaj se detektuje automatski).
+> **Stack:** React 19 · Vite 8 · Tailwind v4. Tailwind se učitava preko `@tailwindcss/vite` plugina — nema `tailwind.config.js` ni `postcss.config.js`; tema je u `src/index.css` (`@theme`).
 
 ## Konvencije
 
-- **React + Tailwind v4**, samo core utility klase (bez custom Tailwind configa).
-- **Svaki UI element je zaseban fajl** u `src/components/`.
-- Komponente su **samostalne**: props sa default vrednostima (rade i bez backenda), akcije preko callback propsa (`onNavigate`, `onLogin`, ...), bez tvrdo zakucanih zavisnosti ka backendu.
-- Sav UI tekst je na **srpskom (latinica)**.
-- Semantički HTML + osnovna pristupačnost (aria gde ima smisla).
+- **React + Tailwind v4**, utility klase koje čitaju tokene teme. Bez inline boja i bez heks vrednosti u komponentama.
+- Ono što se ponavlja živi u primitivima (`components/ui`, `dashboard/ui.jsx`, `admin/ui.jsx`) — pre pisanja novog dugmeta, kartice ili značke proveri da li već postoji.
+- Akcije idu preko callback propsa (`onNavigate`, `onSubmit`…); komponente ne zavise od rutera.
+- Sav UI tekst je na **srpskom (latinica)**, rečenični stil (bez teksta pisanog velikim slovima).
+- Semantički HTML + pristupačnost: vidljiv fokus, `aria-*` gde ima smisla, poštuje se `prefers-reduced-motion`.
 - **Bez dodatnih biblioteka** dok se izričito ne odobre.
 
-## Brend tokeni
+## Dizajn sistem
 
-Drže se na jednom mestu:
+Jedan izvor istine je `src/index.css` (`@theme`). Brend boje su nepromenjene: žuta `#FDD503` i ink `#231F20`.
 
-- CSS (za komponente): `src/index.css` → `--brand-yellow: #FDD503`, `--brand-ink: #231f20`. Koriste se kao `bg-[var(--brand-yellow)]`, `text-[var(--brand-ink)]`.
-- JS (za grafike/inline): `src/theme/tokens.js`.
-- Font: **Archivo** (učitan u `index.html`).
+| Namena | Klase |
+| --- | --- |
+| Brend | `bg-brand` (hover `bg-brand-strong`), `bg-ink`, `text-ink` |
+| Tekst | `text-ink` · `text-ink-2` (sekundarni) · `text-ink-3` (prigušen) |
+| Površine | `bg-white` · `bg-surface` · `bg-surface-2` |
+| Linije | `border-line` · `border-line-strong` |
+| Stanja | `emerald` uspeh · `amber` pažnja (izveden iz brend žute) · `red` greška · neutralno za info |
+| Naslovi | `font-display` (Archivo, prošireni rez) |
+
+Pravila:
+
+- **Žuto dugme je jedna glavna akcija po ekranu.** Sporedne akcije su `outline` ili `ghost`; tamno (`dark`) za akcije unutar portala.
+- **Strukturu nose linije i podloge, ne senke.** Senka je rezervisana za slojeve iznad sadržaja (meni, modal, chat).
+- **Hijerarhija u portalima:** strana `bg-surface` → kartica `bg-white` sa `border-line` → pločica `bg-surface`. Bez kartice u kartici sa okvirom.
+- **Radijusi:** kontrole `rounded-xl`, kartice `rounded-2xl`, paneli `rounded-3xl`, dugmad i značke `rounded-full`.
+- **Font:** Archivo (varijabilni) hostovan lokalno u `src/assets/fonts` — nema zahteva ka Google Fonts.
 
 ## Prevod (i18n)
 
 Sav vidljiv tekst ide kroz prevod — **nema tvrdo zakucanih stringova u komponentama**.
 
-- Rečnik: `src/i18n/translations.js` (jezici: EN, SR, HR, MK, BS; makedonski latinicom). Novi tekst = dodaš ključ u svaki jezik.
+- Rečnici: `src/i18n/locales/<jezik>.js` (SR, EN, HR, MK, BS; makedonski latinicom). U početni paket ide samo SR, ostali se učitavaju na zahtev. Novi tekst = ključ u `sr.js` (obavezno) i u ostale jezike.
 - Logika: `src/i18n/LanguageContext.jsx` — `LanguageProvider` (postavljen u `main.jsx`) + hook `useTranslation()`.
 - U komponenti:
 
@@ -81,20 +98,8 @@ Sav vidljiv tekst ide kroz prevod — **nema tvrdo zakucanih stringova u kompone
 
 **Konvencija od sada:** svaka nova komponenta od starta koristi `useTranslation()` za tekst.
 
-## Za backend
+## Veza sa backendom
 
-- Navigacija ulazi preko `navItems` propsa (default: `src/data/navItems.js`) — može se servirati i sa API-ja.
-- Sve akcije idu preko callback propsa: `onNavigate(href, e)`, `onLogin()`, `onRegister()`. Trenutno su placeholder (`console.log`) u `App.jsx` — zameniti pravim routerom/auth-om.
-- Komponente ne drže globalni state niti pozivaju API direktno; podaci ulaze kroz props.
-
-## Komponente
-
-### `Logo.jsx`
-Brend logo kao inline SVG. Boju nasleđuje preko `currentColor` (radi na žutoj i na tamnoj podlozi), veličina preko `className`.
-
-Props: `className` (default `h-9 w-auto`), `title`.
-
-### `Header.jsx`
-Sticky žuti header — vizuelni jezik sajta. Navigacija sa animiranom linijom na hover, auth dugmad, mobilni meni (hamburger → X + padajući panel).
-
-Props: `navItems`, `activeHref`, `onNavigate`, `onLogin`, `onRegister`, `logoHref`.
+- Backend se ne nalazi u ovom direktorijumu (`apps/platform`); frontend ga zove preko `/api/*` (Vite proxy lokalno, reverse proxy na hostingu — `netlify.toml` / `vercel.json`).
+- Pozivi ka API-ju su u `src/data/candidateStore/*` i `App.jsx` (prijava administratora). Komponente dobijaju podatke kroz props i callback-ove.
+- `VITE_DEMO_MODE=false` isključuje demo administratora i prečicu na strani za prijavu — obavezno za produkcioni build.

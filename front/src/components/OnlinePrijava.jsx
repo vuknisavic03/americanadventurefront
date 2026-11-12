@@ -1,12 +1,10 @@
 // OnlinePrijava.jsx
 import { useEffect, useState } from "react";
-import Logo from "./Logo";
+import { labelCls as baseLabelCls, inputCls as baseInputCls, ArrowRightIcon } from "./ui";
 import { useTranslation } from "../i18n/LanguageContext";
 import programItems from "../data/programItems";
 import { submitPreApplicationWithBackend } from "../data/candidateStore";
 
-const BRAND_YELLOW = "#FDD503";
-const INK = "#231f20";
 const DEFAULT_BIRTH_DATE = "2005-01-01";
 const PUBLIC_UNIVERSITIES = [
   { name: "Univerzitet u Beogradu", city: "Beograd"},
@@ -45,15 +43,6 @@ function CheckCircleIcon({ className = "h-9 w-9" }) {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
       <circle cx="12" cy="12" r="9" />
       <path d="M8 12.5l2.5 2.5L16 9.5" />
-    </svg>
-  );
-}
-
-function ClockIcon({ className = "h-9 w-9" }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7.5V12l3 2" />
     </svg>
   );
 }
@@ -195,55 +184,39 @@ export default function OnlinePrijava({
     setStep("done");
   };
 
-  const labelCls = "block text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/70";
-  const inputCls =
-    "mt-1.5 w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-sm text-[var(--brand-ink)] transition-colors duration-150 placeholder:text-black/35 focus:border-[var(--brand-ink)] focus:outline-hidden focus:ring-2 focus:ring-[var(--brand-ink)]/15";
-  const req = <span className="text-red-500 font-bold" aria-hidden="true"> *</span>;
+  const labelCls = baseLabelCls;
+  const inputCls = `mt-2 ${baseInputCls}`;
+  const req = <span className="text-red-600" aria-hidden="true"> *</span>;
 
   return (
-    <section className="flex min-h-[calc(100vh-6rem)] items-center justify-center bg-[var(--brand-ink)]/[0.03] px-6 py-16 sm:py-20">
-      <div className="w-full max-w-2xl">
-        <a
-          href={logoHref}
-          onClick={go(logoHref)}
-          aria-label={t("a11y.home")}
-          className="mx-auto flex w-fit text-[var(--brand-ink)] transition-opacity duration-200 hover:opacity-80"
-        >
-          <Logo className="h-12 w-auto" />
-        </a>
-
-        {/* Koraci selekcije procesa (Prilog 1A) */}
+    <section className="bg-surface px-5 py-14 sm:py-20">
+      <div className="mx-auto w-full max-w-2xl">
+        {/* Koraci selekcije (Prilog 1A) */}
         {step !== "done" && (
-          <ol className="mx-auto mt-8 flex max-w-md items-center justify-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.08em] text-[var(--brand-ink)]/45">
-            <span className="flex h-7 items-center whitespace-nowrap rounded-full bg-[var(--brand-ink)] px-3 text-[0.68rem] font-bold text-white">
-              1. Online prijava
-            </span>
-            <span className="h-1 w-1 shrink-0 rounded-full bg-black/20" />
-            <span className="flex h-7 items-center whitespace-nowrap rounded-full bg-black/[0.06] px-3 text-[0.68rem] font-bold text-[var(--brand-ink)]/45">
-              2. Selekcija
-            </span>
-            <span className="h-1 w-1 shrink-0 rounded-full bg-black/20" />
-            <span className="flex h-7 items-center whitespace-nowrap rounded-full bg-black/[0.06] px-3 text-[0.68rem] font-bold text-[var(--brand-ink)]/45">
-              3. Konsultacije
-            </span>
-            <span className="h-1 w-1 shrink-0 rounded-full bg-black/20" />
-            <span className="flex h-7 items-center whitespace-nowrap rounded-full bg-black/[0.06] px-3 text-[0.68rem] font-bold text-[var(--brand-ink)]/45">
-              4. Nalog
-            </span>
+          <ol className="grid grid-cols-4 gap-2 sm:gap-3">
+            {["Online prijava", "Selekcija", "Konsultacije", "Nalog"].map((label, i) => (
+              <li
+                key={label}
+                aria-current={i === 0 ? "step" : undefined}
+                className={`border-t-2 pt-2.5 ${i === 0 ? "border-ink" : "border-line-strong"}`}
+              >
+                <span className={`block text-xs tabular-nums ${i === 0 ? "text-ink" : "text-ink-3"}`}>{i + 1}</span>
+                <span className={`mt-0.5 hidden text-[13px] leading-snug sm:block ${i === 0 ? "font-semibold text-ink" : "text-ink-3"}`}>
+                  {label}
+                </span>
+              </li>
+            ))}
           </ol>
         )}
 
-        <div className="mt-6 rounded-3xl border border-black/10 bg-white p-7 shadow-xs sm:p-10">
+        <div className={`rounded-3xl border border-line bg-white p-7 sm:p-10 ${step !== "done" ? "mt-8" : ""}`}>
           {/* KORAK 1: IZBOR PROGRAMA */}
           {step === "program" && (
             <>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--brand-ink)]/45">
-                Korak 1/2 · Izbor programa
-              </p>
-              <h1 className="mt-1.5 text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
+              <h1 className="font-display text-3xl font-bold leading-[1.1] text-ink">
                 Izaberite program za prijavu
               </h1>
-              <p className="mt-2 text-sm text-[var(--brand-ink)]/65">
+              <p className="mt-2 text-sm text-ink-2">
                 Prijavna forma se automatski prilagođava zahtevima izabranog programa.
               </p>
 
@@ -258,25 +231,21 @@ export default function OnlinePrijava({
                         setSelectedProgram(p.id || "work-and-travel");
                         setStep("form");
                       }}
-                      className={`flex w-full items-center justify-between rounded-xl border px-4 py-3.5 text-left text-sm font-semibold transition-colors duration-150 ${
-                        sel
-                          ? "border-[var(--brand-ink)] bg-[var(--brand-yellow)]/10 text-[var(--brand-ink)]"
-                          : "border-black/10 text-[var(--brand-ink)]/80 hover:bg-black/[0.03]"
+                      className={`flex w-full items-center justify-between rounded-xl border px-4 py-3.5 text-left text-sm font-medium transition-colors duration-150 ${
+                        sel ? "border-ink bg-surface text-ink" : "border-line-strong text-ink hover:border-ink/40"
                       }`}
                     >
                       <span className="flex items-center gap-3">
                         <span
-                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
-                            sel ? "border-[var(--brand-ink)]" : "border-black/25"
+                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
+                            sel ? "border-ink" : "border-line-strong"
                           }`}
                         >
-                          {sel && <span className="h-2.5 w-2.5 rounded-full bg-[var(--brand-ink)]" />}
+                          {sel && <span className="h-2.5 w-2.5 rounded-full bg-ink" />}
                         </span>
                         <span>{p.label}</span>
                       </span>
-                      <span className="text-xs font-normal text-[var(--brand-ink)]/45">
-                        {PROGRAM_DESTINATIONS[p.id]?.email}
-                      </span>
+                      <ArrowRightIcon className="h-4 w-4 shrink-0 text-ink-3" />
                     </button>
                   );
                 })}
@@ -287,32 +256,30 @@ export default function OnlinePrijava({
           {/* KORAK 2: DINAMIČKA PRIJAVNA FORMA PREMA PRILOGU 1B (SEKCIJA 4) */}
           {step === "form" && (
             <>
-              <div className="flex items-center justify-between border-b border-black/10 pb-4">
+              <div className="flex items-center justify-between mb-4">
                 <button
                   type="button"
                   onClick={() => setStep("program")}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/55 transition-colors hover:text-[var(--brand-ink)]"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-2 transition-colors hover:text-ink"
                 >
                   <BackIcon /> Promeni program
                 </button>
-                <span className="rounded-full bg-black/[0.04] px-3 py-1 text-xs font-bold text-[var(--brand-ink)]">
+                <span className="rounded-full bg-surface-2 px-3 py-1 text-xs font-medium text-ink">
                   {destInfo.label}
                 </span>
               </div>
 
               <div className="mt-4">
-                <h1 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
-                  Prijavni formular
-                </h1>
-                <p className="mt-1 text-xs text-[var(--brand-ink)]/55">
-                  Podaci iz ove forme se šalju direktno na: <strong className="text-[var(--brand-ink)]">{destInfo.email}</strong>
+                <h1 className="font-display text-3xl font-bold leading-[1.1] text-ink">Prijavni formular</h1>
+                <p className="mt-2 text-sm text-ink-2">
+                  Prijava stiže direktno timu agencije. Javljamo se na e-mail i telefon koje navedeš.
                 </p>
               </div>
 
-              <form onSubmit={submit} className="mt-6 space-y-5">
+              <form onSubmit={submit} className="mt-8 space-y-8">
                 {/* 1. OSNOVNI LIČNI PODACI (Obavezni za sve programe) */}
-                <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                <div className="border-t border-line pt-6">
+                  <h3 className="text-base font-semibold text-ink">
                     Osnovni lični podaci
                   </h3>
 
@@ -331,7 +298,7 @@ export default function OnlinePrijava({
                     <div>
                       <label htmlFor="bd" className={labelCls}>Datum rođenja{req}</label>
                       <input id="bd" type="date" required max={latestAdultBirthDate} value={form.birthDate} onChange={upd("birthDate")} className={inputCls} />
-                      <p className="mt-1 text-xs text-[var(--brand-ink)]/55">Prijava je moguća samo za punoletne osobe.</p>
+                      <p className="mt-1 text-xs text-ink-3">Prijava je moguća samo za punoletne osobe.</p>
                     </div>
                     <div>
                       <label htmlFor="addr" className={labelCls}>Puna adresa stanovanja{req}</label>
@@ -353,8 +320,8 @@ export default function OnlinePrijava({
 
                 {/* 2. SPECIFIČNA POLJA ZA WORK AND TRAVEL (Prilog 1B, tačka 4) */}
                 {selectedProgram === "work-and-travel" && (
-                  <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                  <div className="border-t border-line pt-6">
+                    <h3 className="text-base font-semibold text-ink">
                       Podaci o studijama (Work and Travel)
                     </h3>
 
@@ -414,8 +381,8 @@ export default function OnlinePrijava({
 
                 {/* 3. SPECIFIČNA POLJA ZA INTERNSHIP / H-2B */}
                 {(selectedProgram === "internship" || selectedProgram === "h2b") && (
-                  <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                  <div className="border-t border-line pt-6">
+                    <h3 className="text-base font-semibold text-ink">
                       Oblast rada / usavršavanja
                     </h3>
                     <div className="mt-4">
@@ -427,8 +394,8 @@ export default function OnlinePrijava({
 
                 {/* 4. SPECIFIČNA POLJA ZA HIGH SCHOOL */}
                 {selectedProgram === "high-school" && (
-                  <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                  <div className="border-t border-line pt-6">
+                    <h3 className="text-base font-semibold text-ink">
                       Podaci o roditeljima (High School Program)
                     </h3>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -454,8 +421,8 @@ export default function OnlinePrijava({
 
                 {/* 5. SPECIFIČNA POLJA ZA AU PAIR */}
                 {selectedProgram === "au-pair" && (
-                  <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                  <div className="border-t border-line pt-6">
+                    <h3 className="text-base font-semibold text-ink">
                       Vozačka dozvola (Au Pair USA)
                     </h3>
                     <div className="mt-4">
@@ -470,8 +437,8 @@ export default function OnlinePrijava({
 
                 {/* 6. SPECIFIČNA POLJA ZA AVIO KARTE */}
                 {selectedProgram === "avio-karte" && (
-                  <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                  <div className="border-t border-line pt-6">
+                    <h3 className="text-base font-semibold text-ink">
                       Detalji leta i karte (Avio karte)
                     </h3>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -513,7 +480,7 @@ export default function OnlinePrijava({
                 {/* OPCIONA NAPOMENA (Prilog 1B, tačka 3) */}
                 <div>
                   <label htmlFor="note" className={labelCls}>
-                    Napomena / Dodatna pitanja <span className="font-normal text-[var(--brand-ink)]/40">(opciono)</span>
+                    Napomena / Dodatna pitanja <span className="font-normal text-ink-3">(opciono)</span>
                   </label>
                   <textarea
                     id="note"
@@ -527,27 +494,27 @@ export default function OnlinePrijava({
 
                 {/* OBAVEZNA SAGLASNOST SA POLITIKOM PRIVATNOSTI (Prilog 1B, tačka 3) */}
                 <div className="space-y-3 pt-2">
-                  <label className="flex items-start gap-3 text-xs text-[var(--brand-ink)]/80">
+                  <label className="flex items-start gap-3 text-xs text-ink-2">
                     <input
                       type="checkbox"
                       required
                       checked={privacy}
                       onChange={(e) => setPrivacy(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 rounded-sm border-black/30 accent-[var(--brand-ink)]"
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded-sm border-line-strong accent-ink"
                     />
                     <span>
                       Saglasan/na sam sa obradom mojih podataka o ličnosti u svrhu ove prijave i upoznat/a sam sa{" "}
-                      <span className="font-bold underline">Politikom privatnosti</span> American Adventure agencije.{req}
+                      <span className="font-semibold underline">Politikom privatnosti</span> American Adventure agencije.{req}
                     </span>
                   </label>
 
                   {/* ZASEBNA OPCIONA NEWSLETTER SAGLASNOST (Prilog 1B, tačka 3) */}
-                  <label className="flex items-start gap-3 text-xs text-[var(--brand-ink)]/80">
+                  <label className="flex items-start gap-3 text-xs text-ink-2">
                     <input
                       type="checkbox"
                       checked={newsletter}
                       onChange={(e) => setNewsletter(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 rounded-sm border-black/30 accent-[var(--brand-ink)]"
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded-sm border-line-strong accent-ink"
                     />
                     <span>
                       Želim da primam obaveštenja o akcijama, popustima i novim otvorenim poslovima (opciono).
@@ -559,13 +526,12 @@ export default function OnlinePrijava({
                 <button
                   type="submit"
                   disabled={!privacy}
-                  className="w-full rounded-full py-4 text-sm font-bold uppercase tracking-[0.08em] shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
-                  style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+                  className="bg-brand text-ink w-full rounded-full py-4 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40 transition-colors hover:bg-brand-strong"
                 >
-                  POŠALJI PRIJAVU ZA {destInfo.label.toUpperCase()}
+                  Pošalji prijavu za {destInfo.label}
                 </button>
 
-                <p className="text-center text-xs text-[var(--brand-ink)]/50">
+                <p className="text-center text-xs text-ink-3">
                   Prijava je potpuno besplatna i ne obavezuje vas na potpisivanje ugovora.
                 </p>
               </form>
@@ -575,34 +541,27 @@ export default function OnlinePrijava({
           {/* KORAK 3: POTVRDA USPEŠNOG SLANJA */}
           {step === "done" && (
             <div className="flex flex-col items-center py-6 text-center">
-              <span className="flex h-16 w-16 items-center justify-center rounded-full" style={{ backgroundColor: BRAND_YELLOW, color: INK }}>
+              <span className="bg-brand text-ink flex h-16 w-16 items-center justify-center rounded-full">
                 <CheckCircleIcon className="h-9 w-9" />
               </span>
-              <h1 className="mt-5 text-2xl font-extrabold text-[var(--brand-ink)]">
-                Prijava je uspešno poslata!
-              </h1>
-              <p className="mt-2 max-w-md text-sm text-[var(--brand-ink)]/70">
-                Hvala vam na prijavi za <strong>{destInfo.label}</strong>. Podaci su uspešno evidentirani i prosleđeni timu na <strong>{destInfo.email}</strong>.
+              <h1 className="mt-6 font-display text-3xl font-bold leading-[1.1] text-ink">Prijava je poslata</h1>
+              <p className="mt-3 max-w-md text-base text-ink-2">
+                Hvala na prijavi za <strong className="font-semibold text-ink">{destInfo.label}</strong>. Podaci su evidentirani i naš tim ih je dobio.
               </p>
 
-              <div className="mt-6 w-full max-w-md rounded-2xl border border-black/10 bg-[var(--brand-yellow)]/[0.08] p-5 text-left">
-                <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full" style={{ backgroundColor: BRAND_YELLOW, color: INK }}>
-                  <ClockIcon className="h-7 w-7" />
-                </span>
-                <h2 className="mt-4 text-center text-sm font-bold text-[var(--brand-ink)]">
-                  Naredni koraci u procesu:
-                </h2>
-                <ol className="mt-4 space-y-2.5 text-xs text-[var(--brand-ink)]/80">
+              <div className="mt-8 w-full max-w-md rounded-2xl bg-surface p-6 text-left">
+                <h2 className="text-sm font-semibold text-ink">Šta sledi</h2>
+                <ol className="mt-4 space-y-3 text-sm leading-relaxed text-ink-2">
                   <li className="flex items-start gap-2.5">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand-ink)] text-[0.65rem] font-bold text-white">1</span>
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">1</span>
                     <span>Naš koordinator će vas kontaktirati telefonom ili putem emaila radi inicijalnog razgovora.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand-ink)] text-[0.65rem] font-bold text-white">2</span>
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">2</span>
                     <span>Zakazujemo besplatne informativne konsultacije (uživo u kancelariji ili online preko video poziva).</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand-ink)] text-[0.65rem] font-bold text-white">3</span>
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">3</span>
                     <span>Nakon odobrenja aktiviramo vaš lični nalog na portalu za unos kompletne dokumentacije i izbor posla.</span>
                   </li>
                 </ol>
@@ -642,15 +601,14 @@ export default function OnlinePrijava({
                     setPrivacy(false);
                     setStep("program");
                   }}
-                  className="rounded-full border border-black/15 px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)] hover:bg-black/5"
+                  className="inline-flex h-11 items-center justify-center rounded-full border border-line-strong px-5 text-sm font-semibold text-ink transition-colors hover:bg-surface"
                 >
                   Nova prijava
                 </button>
                 <a
                   href={logoHref}
                   onClick={go(logoHref)}
-                  className="rounded-full px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)] shadow-xs"
-                  style={{ backgroundColor: BRAND_YELLOW }}
+                  className="inline-flex h-11 items-center justify-center rounded-full bg-brand px-5 text-sm font-semibold text-ink transition-colors hover:bg-brand-strong"
                 >
                   Povratak na početnu stranu
                 </a>

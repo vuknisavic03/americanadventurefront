@@ -1,7 +1,6 @@
 // front/src/components/dashboard/modals/Ds160Modal.jsx
 import { useState } from "react";
 import { CloseIcon } from "../icons";
-import { BRAND_YELLOW } from "../constants";
 import { getDs160Status } from "../../../data/candidateStore";
 
 export default function Ds160Modal({ candidate, onClose, onSave }) {
@@ -54,7 +53,7 @@ export default function Ds160Modal({ candidate, onClose, onSave }) {
   const dsStatus = getDs160Status(f);
 
   const inputCls =
-    "w-full rounded-lg border border-black/15 bg-white px-3 py-2 text-xs text-[var(--brand-ink)] transition-colors placeholder:text-black/35 focus:border-[var(--brand-ink)] focus:outline-hidden focus:ring-1 focus:ring-[var(--brand-ink)]";
+    "w-full rounded-lg border border-line-strong bg-white px-3 py-2 text-xs text-ink transition-colors placeholder:text-ink-3/70 focus:border-ink focus:outline-hidden focus:ring-1 focus:ring-ink";
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
@@ -64,40 +63,40 @@ export default function Ds160Modal({ candidate, onClose, onSave }) {
         aria-label="DS-160 Upitnik za izradu J-1 vize"
         className="relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
       >
-        <div className="flex items-center justify-between border-b border-black/[0.08] px-6 py-4">
+        <div className="flex items-center justify-between border-b border-line px-6 py-4">
           <div>
-            <h2 className="text-base font-bold text-[var(--brand-ink)]">
+            <h2 className="text-base font-semibold text-ink">
               Upitnik za izradu DS-160 vize za SAD (J-1)
             </h2>
-            <p className="text-[11px] text-[var(--brand-ink)]/55">
+            <p className="text-xs text-ink-3">
               Zvanični formular agencije American Adventure po specifikaciji US State Department-a
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full p-1.5 text-black/50 hover:bg-black/5 hover:text-black"
+            className="rounded-full p-1.5 text-ink-3 hover:bg-surface-2 hover:text-ink"
           >
             <CloseIcon className="h-5 w-5" />
           </button>
         </div>
 
         {/* Zvanično upozorenje agencije & Preuzimanje Word dokumenta */}
-        <div className="border-b border-black/[0.08] bg-amber-50 px-6 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs text-amber-950">
+        <div className="border-b border-line bg-amber-50 px-6 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs text-amber-950">
           <div className="leading-snug">
             <strong>VAŽNA NAPOMENA AGENCIJE:</strong> Molimo Vas da dva puta proverite unete podatke. Netačnost informacija može rezultirati odbijanjem vize.
           </div>
           <a
             href="/documents/UPITNIK_za_izradu_DS160_J1.docx"
             download="UPITNIK_za_izradu_DS160_J1.docx"
-            className="shrink-0 rounded-lg bg-white border border-amber-300 px-3 py-1 text-[11px] font-bold text-amber-950 hover:bg-amber-100 shadow-2xs"
+            className="shrink-0 rounded-full bg-white border border-amber-300 px-3 py-1 text-xs font-semibold text-amber-950 hover:bg-amber-100"
           >
             Preuzmi originalni Word (.docx)
           </a>
         </div>
 
         {/* Tab traka */}
-        <div className="flex border-b border-black/[0.08] bg-black/[0.02] px-6">
+        <div className="flex border-b border-line bg-surface px-6">
           {[
             ["personal", "1. Lični podaci & Pasoš"],
             ["us_travel", "2. Poslodavac & Putovanje"],
@@ -108,10 +107,10 @@ export default function Ds160Modal({ candidate, onClose, onSave }) {
               key={id}
               type="button"
               onClick={() => setActiveTab(id)}
-              className={`border-b-2 px-3.5 py-3 text-xs font-bold transition-colors ${
+              className={`border-b-2 px-3.5 py-3 text-xs font-semibold transition-colors ${
                 activeTab === id
-                  ? "border-[var(--brand-ink)] text-[var(--brand-ink)]"
-                  : "border-transparent text-black/45 hover:text-black"
+                  ? "border-ink text-ink"
+                  : "border-transparent text-ink-3 hover:text-ink"
               }`}
             >
               {label}
@@ -124,22 +123,22 @@ export default function Ds160Modal({ candidate, onClose, onSave }) {
           {activeTab === "personal" && (
             <div className="grid gap-3.5 sm:grid-cols-2">
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Prezime i devojačko</label>
+                <label className="block text-xs font-semibold text-ink-2">Prezime i devojačko</label>
                 <input value={f.lastNameAndMaiden} onChange={upd("lastNameAndMaiden")} className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Ime</label>
+                <label className="block text-xs font-semibold text-ink-2">Ime</label>
                 <input value={f.firstName} onChange={upd("firstName")} className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Pol</label>
+                <label className="block text-xs font-semibold text-ink-2">Pol</label>
                 <select value={f.gender} onChange={upd("gender")} className={inputCls}>
                   <option value="Muški">Muški</option>
                   <option value="Ženski">Ženski</option>
                 </select>
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Bračno stanje</label>
+                <label className="block text-xs font-semibold text-ink-2">Bračno stanje</label>
                 <select value={f.maritalStatus} onChange={upd("maritalStatus")} className={inputCls}>
                   <option value="Neoženjen / Neudata">Neoženjen / Neudata</option>
                   <option value="U braku">U braku</option>
@@ -148,27 +147,27 @@ export default function Ds160Modal({ candidate, onClose, onSave }) {
                 </select>
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Datum rođenja (DD/MM/GGGG)</label>
+                <label className="block text-xs font-semibold text-ink-2">Datum rođenja (DD/MM/GGGG)</label>
                 <input value={f.dateOfBirth} onChange={upd("dateOfBirth")} className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Mesto i država rođenja</label>
+                <label className="block text-xs font-semibold text-ink-2">Mesto i država rođenja</label>
                 <input value={f.birthPlace} onChange={upd("birthPlace")} className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">JMBG (13 cifara)</label>
+                <label className="block text-xs font-semibold text-ink-2">JMBG (13 cifara)</label>
                 <input value={f.jmbg} onChange={upd("jmbg")} className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">SSN (ako ste ga ranije dobili u SAD)</label>
+                <label className="block text-xs font-semibold text-ink-2">SSN (ako ste ga ranije dobili u SAD)</label>
                 <input value={f.ssn} onChange={upd("ssn")} placeholder="Ostavite prazno ako nemate" className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Broj važećeg pasoša</label>
+                <label className="block text-xs font-semibold text-ink-2">Broj važećeg pasoša</label>
                 <input value={f.passportNumber} onChange={upd("passportNumber")} className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Datum isteka pasoša (DD/MM/GGGG)</label>
+                <label className="block text-xs font-semibold text-ink-2">Datum isteka pasoša (DD/MM/GGGG)</label>
                 <input value={f.passportExpiryDate} onChange={upd("passportExpiryDate")} className={inputCls} />
               </div>
             </div>
@@ -178,34 +177,34 @@ export default function Ds160Modal({ candidate, onClose, onSave }) {
             <div className="space-y-3.5">
               <div className="grid gap-3.5 sm:grid-cols-2">
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70">Naziv poslodavca / kompanije u SAD</label>
+                  <label className="block text-xs font-semibold text-ink-2">Naziv poslodavca / kompanije u SAD</label>
                   <input value={f.employerInfo} onChange={upd("employerInfo")} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70">Ime i prezime supervizora</label>
+                  <label className="block text-xs font-semibold text-ink-2">Ime i prezime supervizora</label>
                   <input value={f.supervisorName} onChange={upd("supervisorName")} className={inputCls} />
                 </div>
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Adresa smeštaja ili poslodavca u SAD</label>
+                <label className="block text-xs font-semibold text-ink-2">Adresa smeštaja ili poslodavca u SAD</label>
                 <input value={f.stayAddress} onChange={upd("stayAddress")} className={inputCls} />
               </div>
               <div className="grid gap-3.5 sm:grid-cols-2">
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70">Kontakt telefon kompanije u SAD</label>
+                  <label className="block text-xs font-semibold text-ink-2">Kontakt telefon kompanije u SAD</label>
                   <input value={f.employerPhone} onChange={upd("employerPhone")} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70">Ko finansira put i program</label>
+                  <label className="block text-xs font-semibold text-ink-2">Ko finansira put i program</label>
                   <input value={f.tripFunder} onChange={upd("tripFunder")} className={inputCls} />
                 </div>
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Prethodni boravci u SAD (datumi i svrhe boravka)</label>
+                <label className="block text-xs font-semibold text-ink-2">Prethodni boravci u SAD (datumi i svrhe boravka)</label>
                 <input value={f.previousUsTravel} onChange={upd("previousUsTravel")} className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Da li ste ikada odbijeni za vizu SAD?</label>
+                <label className="block text-xs font-semibold text-ink-2">Da li ste ikada odbijeni za vizu SAD?</label>
                 <input value={f.visaRefusal} onChange={upd("visaRefusal")} className={inputCls} />
               </div>
             </div>
@@ -215,25 +214,25 @@ export default function Ds160Modal({ candidate, onClose, onSave }) {
             <div className="space-y-3.5">
               <div className="grid gap-3.5 sm:grid-cols-2">
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70">Adresa prebivališta u Srbiji</label>
+                  <label className="block text-xs font-semibold text-ink-2">Adresa prebivališta u Srbiji</label>
                   <input value={f.homeAddress} onChange={upd("homeAddress")} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70">Mobilni telefon</label>
+                  <label className="block text-xs font-semibold text-ink-2">Mobilni telefon</label>
                   <input value={f.mobilePhone} onChange={upd("mobilePhone")} className={inputCls} />
                 </div>
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Nalozi na društvenim mrežama u zadnjih 5 godina (profili moraju biti otključani)</label>
+                <label className="block text-xs font-semibold text-ink-2">Nalozi na društvenim mrežama u zadnjih 5 godina (profili moraju biti otključani)</label>
                 <textarea rows={2} value={f.socialMediaAccounts} onChange={upd("socialMediaAccounts")} className={`${inputCls} resize-y`} />
               </div>
               <div className="grid gap-3.5 sm:grid-cols-2">
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70">Završena srednja škola (naziv i grad)</label>
+                  <label className="block text-xs font-semibold text-ink-2">Završena srednja škola (naziv i grad)</label>
                   <input value={f.highSchoolInfo} onChange={upd("highSchoolInfo")} className={inputCls} />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-bold text-black/70">Fakultet i smer studiranja</label>
+                  <label className="block text-xs font-semibold text-ink-2">Fakultet i smer studiranja</label>
                   <input value={f.university} onChange={upd("university")} className={inputCls} />
                 </div>
               </div>
@@ -242,40 +241,40 @@ export default function Ds160Modal({ candidate, onClose, onSave }) {
 
           {activeTab === "references" && (
             <div className="space-y-3.5">
-              <p className="text-xs text-black/60">
+              <p className="text-xs text-ink-3">
                 Po propisima ambasade SAD, neophodno je navesti 2 osobe u Srbiji koje vas poznaju a nisu u krvnom srodstvu.
               </p>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">1. Kontakt lice u Srbiji (Ime, prezime, adresa, telefon)</label>
+                <label className="block text-xs font-semibold text-ink-2">1. Kontakt lice u Srbiji (Ime, prezime, adresa, telefon)</label>
                 <input value={f.referencePerson1} onChange={upd("referencePerson1")} className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">2. Kontakt lice u Srbiji (Ime, prezime, adresa, telefon)</label>
+                <label className="block text-xs font-semibold text-ink-2">2. Kontakt lice u Srbiji (Ime, prezime, adresa, telefon)</label>
                 <input value={f.referencePerson2} onChange={upd("referencePerson2")} className={inputCls} />
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-black/70">Kontakt za hitne slučajeve (Roditelj / staratelj — telefon i ime)</label>
+                <label className="block text-xs font-semibold text-ink-2">Kontakt za hitne slučajeve (Roditelj / staratelj — telefon i ime)</label>
                 <input value={f.emergencyContact} onChange={upd("emergencyContact")} className={inputCls} />
               </div>
             </div>
           )}
 
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-black/[0.08] pt-4 mt-6">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4 mt-6">
             <div className="flex items-center gap-2">
               <span
-                className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold ${
+                className={`rounded-full px-3 py-1 text-xs font-medium ${
                   dsStatus.isComplete
-                    ? "bg-emerald-100 text-emerald-900 border border-emerald-300"
+                    ? "bg-emerald-100 text-emerald-800"
                     : dsStatus.isStarted
-                    ? "bg-amber-100 text-amber-900 border border-amber-300"
-                    : "bg-black/10 text-black/60"
+                    ? "bg-amber-100 text-amber-800"
+                    : "bg-surface-2 text-ink-3"
                 }`}
               >
                 {dsStatus.isComplete
                   ? "Kompletno popunjeno (17/17 polja)"
                   : `Delimično popunjeno (${dsStatus.filledCount}/${dsStatus.totalCount} obaveznih polja)`}
               </span>
-              <span className="text-[11px] text-black/50 hidden sm:inline">
+              <span className="text-xs text-ink-3 hidden sm:inline">
                 {dsStatus.isComplete
                   ? "Svi podaci su uneti."
                   : "Možete sačuvati uneto i dovršiti kasnije."}
@@ -285,14 +284,13 @@ export default function Ds160Modal({ candidate, onClose, onSave }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-full border border-black/15 bg-white px-5 py-2.5 text-xs font-bold text-black/70 hover:bg-black/5"
+                className="rounded-full border border-line-strong bg-white px-5 py-2.5 text-xs font-semibold text-ink-2 hover:bg-surface-2"
               >
                 Odustani
               </button>
               <button
                 type="submit"
-                className="rounded-full px-7 py-2.5 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)] shadow-md hover:brightness-105"
-                style={{ backgroundColor: BRAND_YELLOW }}
+                className="bg-brand rounded-full px-7 py-2.5 text-[13px] font-semibold text-ink transition-colors hover:bg-brand-strong"
               >
                 {dsStatus.isComplete ? "Sačuvaj popunjen upitnik" : "Sačuvaj delimično (Nacrt)"}
               </button>

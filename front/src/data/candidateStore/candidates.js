@@ -1,15 +1,9 @@
 // front/src/data/candidateStore/candidates.js
 // Upravljanje profilima kandidata, sinhronizacija, reaktivni prelasci koraka i statusi dokumenata
 
-import {
-  CANDIDATES_KEY,
-  INVITATIONS_KEY,
-  CURRENT_USER_KEY,
-  PROMOTIONS_KEY,
-  loadData,
-  saveData,
-} from "./storage.js";
+import { CANDIDATES_KEY, INVITATIONS_KEY, loadData, saveData } from "./storage.js";
 import { INITIAL_CANDIDATES, INITIAL_INVITATIONS } from "./mockSeed.js";
+import { getCandidates, getCurrentUser, setCurrentUser } from "./session.js";
 import { ensureCandidateInstallmentInvoice, getCurrentNbsRate } from "../invoicesStore.js";
 
 /**
@@ -113,7 +107,7 @@ export function getCandidateStepInfo(candidate) {
       stepKey: "registration",
       stepTitle: "Registracija",
       subLabel: "Ugovor i I rata",
-      badgeCls: "bg-amber-50 text-amber-800 border-amber-200",
+      badgeCls: "bg-amber-100 text-amber-800 border-transparent",
       dotCls: "bg-amber-500",
     };
   }
@@ -126,7 +120,7 @@ export function getCandidateStepInfo(candidate) {
       stepKey: "rejected",
       stepTitle: "Odbijena prijava",
       subLabel: candidate.decisionNote || "Ne ispunjava uslove programa",
-      badgeCls: "bg-red-50 text-red-700 border-red-200",
+      badgeCls: "bg-red-100 text-red-700 border-transparent",
       dotCls: "bg-red-500",
     };
   }
@@ -147,8 +141,8 @@ export function getCandidateStepInfo(candidate) {
       stepKey: "selection",
       stepTitle: "Prijava i selekcija",
       subLabel,
-      badgeCls: "bg-purple-50 text-purple-700 border-purple-200",
-      dotCls: "bg-purple-500",
+      badgeCls: "bg-surface-2 text-ink border-transparent",
+      dotCls: "bg-ink",
     };
   }
 
@@ -203,7 +197,7 @@ export function getCandidateStepInfo(candidate) {
       subLabel: candidate.flightDepartureDate
         ? `Let: ${candidate.flightDepartureDate} • Spreman za polazak`
         : "Spreman za polazak u SAD",
-      badgeCls: "bg-emerald-100 text-emerald-900 border-emerald-300",
+      badgeCls: "bg-emerald-100 text-emerald-800 border-transparent",
       dotCls: "bg-emerald-600",
     };
   }
@@ -220,8 +214,8 @@ export function getCandidateStepInfo(candidate) {
       stepKey: "departure",
       stepTitle: "Čekanje na vizu",
       subLabel,
-      badgeCls: "bg-teal-50 text-teal-800 border-teal-200",
-      dotCls: "bg-teal-500",
+      badgeCls: "bg-emerald-100 text-emerald-800 border-transparent",
+      dotCls: "bg-emerald-600",
     };
   }
 
@@ -256,8 +250,8 @@ export function getCandidateStepInfo(candidate) {
       stepKey: "job",
       stepTitle: "Korak 2: Posao i ponuda",
       subLabel,
-      badgeCls: "bg-indigo-50 text-indigo-800 border-indigo-200",
-      dotCls: "bg-indigo-500",
+      badgeCls: "bg-surface-2 text-ink border-transparent",
+      dotCls: "bg-ink",
     };
   }
 
@@ -268,7 +262,7 @@ export function getCandidateStepInfo(candidate) {
         stepKey: "review",
         stepTitle: "Registracija",
         subLabel: "Ugovor odbijen — potreban novi upload",
-        badgeCls: "bg-red-50 text-red-700 border-red-200",
+        badgeCls: "bg-red-100 text-red-700 border-transparent",
         dotCls: "bg-red-500",
       };
     }
@@ -286,8 +280,8 @@ export function getCandidateStepInfo(candidate) {
       stepKey: "docs",
       stepTitle: "Korak 1: Profil i dokumenta",
       subLabel,
-      badgeCls: "bg-blue-50 text-blue-800 border-blue-200",
-      dotCls: "bg-blue-500",
+      badgeCls: "bg-surface-2 text-ink border-transparent",
+      dotCls: "bg-ink",
     };
   }
 
@@ -314,65 +308,15 @@ export function getCandidateStepInfo(candidate) {
     stepKey: "review",
     stepTitle: "Registracija",
     subLabel: regSubLabel,
-    badgeCls: "bg-amber-50 text-amber-800 border-amber-200",
+    badgeCls: "bg-amber-100 text-amber-800 border-transparent",
     dotCls: "bg-amber-500",
   };
-}
-
-export function getCandidates() {
-  return loadData(CANDIDATES_KEY, INITIAL_CANDIDATES);
-}
-
-export function getCurrentUser() {
-  return loadData(CURRENT_USER_KEY, null);
-}
-
-export function setCurrentUser(user) {
-  saveData(CURRENT_USER_KEY, user);
-}
-
-export function clearCurrentUser() {
-  try {
-    localStorage.removeItem(CURRENT_USER_KEY);
-  } catch {}
 }
 
 export function resetDemoData() {
   saveData(CANDIDATES_KEY, INITIAL_CANDIDATES);
   saveData(INVITATIONS_KEY, INITIAL_INVITATIONS);
   return INITIAL_CANDIDATES;
-}
-
-/**
- * Sinhronizuje podatke kandidata i pozivnica sa backend servera (/api/public/portal-state).
- */
-export async function syncFromBackend(email) {
-  try {
-    const url = email
-      ? `/api/public/portal-state?email=${encodeURIComponent(email)}`
-      : "/api/public/portal-state";
-    const res = await fetch(url, { credentials: "include" });
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (Array.isArray(data.invitations)) {
-      saveData(INVITATIONS_KEY, data.invitations);
-    }
-    if (Array.isArray(data.candidates)) {
-      saveData(CANDIDATES_KEY, data.candidates);
-    }
-    if (Array.isArray(data.promotions) && data.promotions.length > 0) {
-      saveData(PROMOTIONS_KEY, data.promotions);
-    }
-    if (data.candidate) {
-      const current = getCurrentUser();
-      if (current && current.email?.toLowerCase() === data.candidate.email?.toLowerCase()) {
-        setCurrentUser({ ...current, ...data.candidate });
-      }
-    }
-    return data;
-  } catch {
-    return null;
-  }
 }
 
 /**

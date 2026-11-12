@@ -101,16 +101,16 @@ export function PromotionModal({ promo, onSave, onClose }) {
         </div>
 
         {/* VRSTA OBRAČUNA: ODMAH VS NA KRAJU */}
-        <div className="rounded-xl border border-black/10 bg-black/[0.02] p-4 space-y-2">
-          <label className="block text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/70">
+        <div className="rounded-2xl border border-line bg-white p-5 space-y-2 sm:p-6">
+          <label className="block text-[13px] font-semibold text-ink-2">
             Vrsta obračuna popusta:
           </label>
           <div className="grid gap-3 sm:grid-cols-2 pt-1">
             <label
               className={`flex items-start gap-3 rounded-lg border p-3 cursor-pointer transition-colors ${
                 f.timing === "immediate"
-                  ? "border-emerald-500 bg-emerald-50/50"
-                  : "border-black/10 bg-white hover:bg-black/[0.02]"
+                  ? "bg-emerald-50"
+                  : "border-line bg-white hover:bg-surface"
               }`}
             >
               <input
@@ -122,10 +122,10 @@ export function PromotionModal({ promo, onSave, onClose }) {
                 className="mt-0.5 accent-emerald-600"
               />
               <div>
-                <span className="block text-xs font-bold text-emerald-950">
+                <span className="block text-xs font-semibold text-emerald-950">
                   Obračunava se odmah
                 </span>
-                <span className="block text-[11px] text-emerald-900/70">
+                <span className="block text-xs text-emerald-900/70">
                   Popust se odmah odbija od osnovne cene programa pri potpisivanju / prvoj uplati.
                 </span>
               </div>
@@ -134,8 +134,8 @@ export function PromotionModal({ promo, onSave, onClose }) {
             <label
               className={`flex items-start gap-3 rounded-lg border p-3 cursor-pointer transition-colors ${
                 f.timing === "end"
-                  ? "border-sky-500 bg-sky-50/50"
-                  : "border-black/10 bg-white hover:bg-black/[0.02]"
+                  ? "border-ink bg-surface"
+                  : "border-line bg-white hover:bg-surface"
               }`}
             >
               <input
@@ -144,13 +144,13 @@ export function PromotionModal({ promo, onSave, onClose }) {
                 value="end"
                 checked={f.timing === "end"}
                 onChange={() => setF((prev) => ({ ...prev, timing: "end" }))}
-                className="mt-0.5 accent-sky-600"
+                className="mt-0.5 accent-ink"
               />
               <div>
-                <span className="block text-xs font-bold text-sky-950">
+                <span className="block text-xs font-semibold text-ink">
                   Na kraju (poslednja rata)
                 </span>
-                <span className="block text-[11px] text-sky-900/70">
+                <span className="block text-xs text-ink">
                   Popust se realizuje na poslednjoj rati (npr. grupni, afilijate, family, club card).
                 </span>
               </div>
@@ -208,12 +208,12 @@ export function PromotionModal({ promo, onSave, onClose }) {
           />
         </Field>
 
-        <label className="flex items-center gap-2 text-xs font-bold cursor-pointer">
+        <label className="flex items-center gap-2 text-xs font-semibold cursor-pointer">
           <input
             type="checkbox"
             checked={f.active}
             onChange={upd("active")}
-            className="h-4 w-4 rounded accent-[var(--brand-ink)]"
+            className="h-4 w-4 rounded accent-ink"
           />
           <span>Promocija je trenutno aktivna i vidljiva kandidatima</span>
         </label>
@@ -273,18 +273,18 @@ export function AddAffiliateModal({ open, onClose, onSave, candidates }) {
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-xs font-bold text-red-800">
+          <div className="rounded-xl bg-red-50 p-3 text-xs font-semibold text-red-800">
             {error}
           </div>
         )}
 
-        <div className="rounded-xl border border-sky-100 bg-sky-50/70 p-3.5 text-xs text-sky-950 leading-relaxed">
+        <div className="rounded-2xl border border-line bg-white p-5 text-xs text-ink leading-relaxed sm:p-6">
           <strong>Afilijate pravilo ($100 popust na poslednjoj rati):</strong> Preporučilac ostvaruje popust od $100 po dovedenom studentu <strong>samo ako taj student obezbedi posao i prođe viziranje u ambasadi</strong>.
         </div>
 
         {/* 1. Preporučilac */}
         <div>
-          <label className="block text-xs font-bold text-[var(--brand-ink)]">
+          <label className="block text-xs font-semibold text-ink">
             Email preporučioca (Kome se pripisuje popust) <span className="text-red-500">*</span>
           </label>
           <input
@@ -305,19 +305,19 @@ export function AddAffiliateModal({ open, onClose, onSave, candidates }) {
           </datalist>
 
           {matchedReferrer ? (
-            <p className="mt-1.5 text-[11px] font-semibold text-emerald-800">
-              ✓ Preporučilac pronađen: <strong>{matchedReferrer.firstName} {matchedReferrer.lastName}</strong> (Kod: <span className="font-mono">{matchedReferrer.referralCode}</span>)
+            <p className="mt-1.5 text-xs font-semibold text-emerald-800">
+              ✓ Preporučilac pronađen: <strong>{matchedReferrer.firstName} {matchedReferrer.lastName}</strong> (Kod: <span className="tabular-nums">{matchedReferrer.referralCode}</span>)
             </p>
           ) : referrerEmail.includes("@") ? (
-            <p className="mt-1.5 text-[11px] text-amber-800">
-              ℹ Kandidat sa ovim emailom još nije u bazi — sistem će mu automatski kreirati profil i referral kod.
+            <p className="mt-1.5 text-xs text-amber-800">
+              Kandidat sa ovim emailom još nije u bazi — sistem će mu automatski kreirati profil i referral kod.
             </p>
           ) : null}
         </div>
 
         {/* 2. Dovedeni student */}
         <div>
-          <label className="block text-xs font-bold text-[var(--brand-ink)]">
+          <label className="block text-xs font-semibold text-ink">
             Email dovedenog kandidata (Prijatelj koji se vezuje) <span className="text-red-500">*</span>
           </label>
           <input
@@ -340,12 +340,12 @@ export function AddAffiliateModal({ open, onClose, onSave, candidates }) {
           </datalist>
 
           {matchedReferred ? (
-            <p className="mt-1.5 text-[11px] font-semibold text-emerald-800">
+            <p className="mt-1.5 text-xs font-semibold text-emerald-800">
               ✓ Dovedeni kandidat postoji u bazi: <strong>{matchedReferred.firstName} {matchedReferred.lastName}</strong> (Status: {matchedReferred.status})
             </p>
           ) : (
             <div className="mt-2 space-y-1">
-              <span className="block text-[11px] text-black/55">
+              <span className="block text-xs text-ink-3">
                 Kandidat još nije u sistemu. Unesite ime i prezime za evidenciju:
               </span>
               <input
@@ -360,37 +360,37 @@ export function AddAffiliateModal({ open, onClose, onSave, candidates }) {
         </div>
 
         {/* Uslovi: Posao i Viza */}
-        <div className="rounded-xl border border-black/10 bg-black/[0.02] p-4 space-y-2.5">
-          <span className="block text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/70">
+        <div className="rounded-2xl border border-line bg-white p-5 space-y-2.5 sm:p-6">
+          <span className="block text-[13px] font-semibold text-ink-2">
             Status dovedenog kandidata (Posao & Viza)
           </span>
 
-          <label className="flex items-center gap-2.5 text-xs font-semibold text-[var(--brand-ink)] cursor-pointer">
+          <label className="flex items-center gap-2.5 text-xs font-semibold text-ink cursor-pointer">
             <input
               type="checkbox"
               checked={hasJob}
               onChange={(e) => setHasJob(e.target.checked)}
-              className="h-4 w-4 rounded accent-[var(--brand-ink)]"
+              className="h-4 w-4 rounded accent-ink"
             />
             <span>Dovedeni kandidat ima obezbeđen posao (Job Offer)</span>
           </label>
 
-          <label className="flex items-center gap-2.5 text-xs font-semibold text-[var(--brand-ink)] cursor-pointer">
+          <label className="flex items-center gap-2.5 text-xs font-semibold text-ink cursor-pointer">
             <input
               type="checkbox"
               checked={hasVisa}
               onChange={(e) => setHasVisa(e.target.checked)}
-              className="h-4 w-4 rounded accent-[var(--brand-ink)]"
+              className="h-4 w-4 rounded accent-ink"
             />
             <span>Dovedeni kandidat je prošao viziranje (Visa Approved)</span>
           </label>
 
           <div className="pt-1.5">
             <span
-              className={`inline-block rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-wider ${
+              className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${
                 hasJob && hasVisa
-                  ? "bg-emerald-100 text-emerald-900 border border-emerald-300"
-                  : "bg-amber-100 text-amber-900"
+                  ? "bg-emerald-100 text-emerald-800"
+                  : "bg-amber-100 text-amber-800"
               }`}
             >
               {hasJob && hasVisa
@@ -400,7 +400,7 @@ export function AddAffiliateModal({ open, onClose, onSave, candidates }) {
           </div>
         </div>
 
-        <div className="flex items-center justify-between border-t border-black/[0.08] pt-4 mt-6">
+        <div className="flex items-center justify-between border-t border-line pt-4 mt-6">
           <SecondaryButton type="button" onClick={onClose}>
             Odustani
           </SecondaryButton>

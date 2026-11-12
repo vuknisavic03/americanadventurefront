@@ -13,6 +13,7 @@ import {
 } from "../data/invoicesStore";
 import InvoiceModal from "./InvoiceModal";
 import NewInvoiceModal from "./NewInvoiceModal";
+import { PageHeader, PrimaryButton, SecondaryButton, PlusIcon } from "./admin/ui";
 
 export default function FinancesSection({ candidates: propCandidates = [] }) {
   const candidates = propCandidates.length ? propCandidates : getCandidates();
@@ -105,122 +106,52 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
     <div className="space-y-6">
       {/* Toast notifikacija */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white shadow-xl flex items-center gap-2 border border-slate-700 animate-bounce">
+        <div className="fixed bottom-6 right-6 z-50 rounded-xl bg-ink px-4 py-3 text-sm font-semibold text-white shadow-xl flex items-center gap-2 border border-neutral-700">
           <span>{toast}</span>
         </div>
       )}
 
       {/* Header sekcije */}
-      <div className="flex flex-wrap items-start justify-between gap-4 border-b border-black/[0.08] pb-5">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-xs font-black text-sm">
-              KIR
-            </span>
-            <h1 className="text-2xl font-black tracking-tight text-[var(--brand-ink)]">
-              Knjiga izdatih računa (KIR) & Finansije
-            </h1>
+      <PageHeader
+        title="Finansije i KIR"
+        subtitle="Knjiga izdatih računa: evidencija faktura, obračun po srednjem kursu NBS, IPS QR nalozi i izvoz za knjigovodstvo."
+        action={
+          <div className="flex flex-wrap items-center gap-2">
+            <SecondaryButton onClick={() => exportKirToCsv(filteredInvoices)}>Izvezi KIR (CSV)</SecondaryButton>
+            <SecondaryButton onClick={() => window.print()}>Štampaj knjigu</SecondaryButton>
+            <PrimaryButton onClick={() => setShowNewModal(true)}>
+              <PlusIcon />
+              Izdaj novu fakturu
+            </PrimaryButton>
           </div>
-          <p className="mt-1 text-sm text-[var(--brand-ink)]/65">
-            Zvanična evidencija izdatih faktura, obračun po srednjem kursu NBS, IPS QR nalozi i izvoz za knjigovodstvo.
-          </p>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => exportKirToCsv(filteredInvoices)}
-            className="inline-flex items-center gap-2 rounded-xl border border-black/15 bg-white px-3.5 py-2 text-xs font-bold text-slate-800 shadow-2xs hover:bg-black/[0.04] transition-colors"
-          >
-            <svg className="h-4 w-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <span>Eksportuj KIR (Excel / CSV)</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => window.print()}
-            className="inline-flex items-center gap-2 rounded-xl border border-black/15 bg-white px-3 py-2 text-xs font-bold text-slate-800 shadow-2xs hover:bg-black/[0.04] transition-colors"
-          >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-            </svg>
-            <span>Štampaj knjigu</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setShowNewModal(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand-ink)] px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-black transition-colors"
-          >
-            <span className="text-base leading-none">+</span>
-            <span>Izdaj novu fakturu</span>
-          </button>
-        </div>
-      </div>
+        }
+      />
 
       {/* KPI finansijske kartice */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="rounded-2xl border border-black/[0.08] bg-white p-4 shadow-2xs">
-          <div className="flex items-center justify-between text-xs font-extrabold uppercase tracking-wider text-slate-500">
-            <span>Ukupno fakturisano</span>
-            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-700 font-bold">KIR</span>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {[
+          { label: "Ukupno fakturisano", value: formatRsd(stats.totalBilledRsd), note: `${stats.count} faktura u knjizi` },
+          { label: "Naplaćeno", value: formatRsd(stats.totalPaidRsd), note: `U devizama: ${formatEur(stats.totalPaidEur)}`, dot: "bg-emerald-500" },
+          { label: "Potraživanja na čekanju", value: formatRsd(stats.totalPendingRsd), note: "Izdate uplatnice, rok 7 dana", dot: "bg-brand" },
+          { label: "PKZ — odloženo (SAD)", value: formatRsd(stats.totalPkzRsd), note: "Otplata kroz III ratu tokom leta" },
+        ].map((k) => (
+          <div key={k.label} className="rounded-2xl border border-line bg-white px-5 py-4">
+            <p className="flex items-center gap-2 text-[13px] text-ink-3">
+              {k.dot && <span className={`h-2 w-2 rounded-full ${k.dot}`} aria-hidden="true" />}
+              {k.label}
+            </p>
+            <p className="mt-1.5 font-display text-2xl font-bold tabular-nums text-ink">{k.value}</p>
+            <p className="mt-1 text-xs text-ink-3">{k.note}</p>
           </div>
-          <div className="mt-2 text-xl font-black text-slate-950 font-mono">
-            {formatRsd(stats.totalBilledRsd)}
-          </div>
-          <p className="mt-1 text-xs text-slate-500 font-medium">
-            Ukupno zavedeno: <strong>{stats.count} faktura</strong>
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4 shadow-2xs">
-          <div className="flex items-center justify-between text-xs font-extrabold uppercase tracking-wider text-emerald-800">
-            <span>Naplaćeno (Realizacija)</span>
-            <span className="rounded-full bg-emerald-200 px-2 py-0.5 text-[10px] text-emerald-950 font-bold">IZVOD</span>
-          </div>
-          <div className="mt-2 text-xl font-black text-emerald-950 font-mono">
-            {formatRsd(stats.totalPaidRsd)}
-          </div>
-          <p className="mt-1 text-xs text-emerald-800 font-semibold">
-            Likvidirano u devizama: <strong>{formatEur(stats.totalPaidEur)}</strong>
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-4 shadow-2xs">
-          <div className="flex items-center justify-between text-xs font-extrabold uppercase tracking-wider text-amber-800">
-            <span>Potraživanja na čekanju</span>
-            <span className="rounded-full bg-amber-200 px-2 py-0.5 text-[10px] text-amber-950 font-bold">ROK 7 DANA</span>
-          </div>
-          <div className="mt-2 text-xl font-black text-amber-950 font-mono">
-            {formatRsd(stats.totalPendingRsd)}
-          </div>
-          <p className="mt-1 text-xs text-amber-800 font-medium">
-            Izdate uplatnice sa IPS QR kodom
-          </p>
-        </div>
-
-        <div className="rounded-2xl border border-blue-200 bg-blue-50/60 p-4 shadow-2xs">
-          <div className="flex items-center justify-between text-xs font-extrabold uppercase tracking-wider text-blue-800">
-            <span>PKZ Odloženo (SAD)</span>
-            <span className="rounded-full bg-blue-200 px-2 py-0.5 text-[10px] text-blue-950 font-bold">ZARADE</span>
-          </div>
-          <div className="mt-2 text-xl font-black text-blue-950 font-mono">
-            {formatRsd(stats.totalPkzRsd)}
-          </div>
-          <p className="mt-1 text-xs text-blue-800 font-medium">
-            Otplata kroz III ratu tokom leta u SAD
-          </p>
-        </div>
+        ))}
       </div>
 
       {/* Filteri i pretraga */}
-      <div className="rounded-2xl border border-black/[0.08] bg-white p-4 shadow-2xs space-y-3">
+      <div className="rounded-2xl border border-line bg-white p-4 space-y-3">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="relative w-full sm:max-w-md">
             <svg
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -232,12 +163,12 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Pretraga po broju računa (FAKT-), kandidatu, JMBG-u, svrsi..."
-              className="w-full rounded-xl border border-black/15 bg-slate-50 py-2 pl-9 pr-3 text-xs text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-slate-900 focus:outline-hidden"
+              className="w-full rounded-xl border border-line-strong bg-surface py-2 pl-9 pr-3 text-xs text-ink placeholder:text-ink-3/70 focus:bg-white focus:border-ink focus:outline-hidden"
             />
           </div>
 
           <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
-            <span className="text-[11px] font-bold text-slate-500 mr-1">Status:</span>
+            <span className="text-xs font-semibold text-ink-3 mr-1">Status:</span>
             {[
               ["ALL", "Sve"],
               ["PAID", "Plaćeno"],
@@ -249,10 +180,10 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
                 key={st}
                 type="button"
                 onClick={() => setStatusFilter(st)}
-                className={`rounded-lg px-2.5 py-1 text-xs font-bold transition-colors ${
+                className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors ${
                   statusFilter === st
-                    ? "bg-slate-900 text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    ? "bg-ink text-white"
+                    : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
                 }`}
               >
                 {lbl}
@@ -261,8 +192,8 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-black/[0.05]">
-          <span className="text-[11px] font-bold text-slate-500 mr-1">Vrsta uplate:</span>
+        <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-line">
+          <span className="text-xs font-semibold text-ink-3 mr-1">Vrsta uplate:</span>
           {[
             ["ALL", "Sve usluge"],
             ["RATE_1", "I Rata"],
@@ -275,10 +206,10 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
               key={sv}
               type="button"
               onClick={() => setServiceFilter(sv)}
-              className={`rounded-md px-2 py-0.5 text-[11px] font-semibold transition-colors ${
+              className={`rounded-md px-2 py-0.5 text-xs font-semibold transition-colors ${
                 serviceFilter === sv
-                  ? "bg-amber-400 text-slate-950 font-bold"
-                  : "bg-black/[0.04] text-slate-600 hover:bg-black/[0.07]"
+                  ? "bg-amber-400 text-ink font-semibold"
+                  : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
               }`}
             >
               {lbl}
@@ -288,17 +219,17 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
       </div>
 
       {/* KIR Tabela izdatih računa */}
-      <div className="rounded-2xl border border-black/[0.08] bg-white shadow-2xs overflow-hidden">
-        <div className="border-b border-black/[0.08] bg-slate-50 px-5 py-3 flex flex-wrap items-center justify-between gap-2">
+      <div className="rounded-2xl border border-line bg-white overflow-hidden">
+        <div className="border-b border-line bg-surface px-5 py-3 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-black uppercase tracking-wider text-slate-700">
+            <span className="tabular-nums text-[13px] font-bold text-ink-2">
               Zvanični registar KIR (Knjiga izdatih računa)
             </span>
-            <span className="rounded-full bg-slate-200 px-2 py-0.5 text-[11px] font-bold text-slate-700">
+            <span className="rounded-full bg-neutral-200 px-3 py-1 text-xs font-medium text-ink-2">
               {filteredInvoices.length} računa
             </span>
           </div>
-          <span className="text-xs text-slate-500 italic">
+          <span className="text-xs text-ink-3 italic">
             * Stopa PDV: 0% oslobođeno po čl. 24. stav 1. tačka 1. ZPDV
           </span>
         </div>
@@ -306,7 +237,7 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-black/10 bg-slate-100/70 text-[11px] font-black uppercase tracking-wider text-slate-600">
+              <tr className="border-b border-line bg-neutral-100/70 text-xs font-bold text-ink-2">
                 <th className="py-3 px-3 text-center w-10">R.br</th>
                 <th className="py-3 px-3">Broj računa</th>
                 <th className="py-3 px-3">Datum prometa</th>
@@ -315,64 +246,64 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
                 <th className="py-3 px-3 text-right">Devizni iznos</th>
                 <th className="py-3 px-3 text-right">NBS Kurs</th>
                 <th className="py-3 px-3 text-right">Osnovica (RSD)</th>
-                <th className="py-3 px-3 text-right font-black">Ukupno RSD</th>
+                <th className="py-3 px-3 text-right font-bold">Ukupno RSD</th>
                 <th className="py-3 px-3 text-center">Status</th>
                 <th className="py-3 px-3 text-center">Akcije</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-black/[0.06]">
+            <tbody className="divide-y divide-line">
               {filteredInvoices.length === 0 ? (
                 <tr>
-                  <td colSpan="11" className="py-8 text-center text-slate-400">
+                  <td colSpan="11" className="py-8 text-center text-neutral-400">
                     Nema faktura u izabranoj pretrazi.
                   </td>
                 </tr>
               ) : (
                 filteredInvoices.map((inv, idx) => {
-                  const st = PAYMENT_STATUSES[inv.status] || { label: inv.status, badgeCls: "bg-gray-100" };
+                  const st = PAYMENT_STATUSES[inv.status] || { label: inv.status, badgeCls: "bg-surface-2" };
                   return (
                     <tr
                       key={inv.id}
-                      className="hover:bg-slate-50/80 transition-colors cursor-pointer"
+                      className="hover:bg-neutral-50/80 transition-colors cursor-pointer"
                       onClick={() => setSelectedInvoice(inv)}
                     >
-                      <td className="py-3 px-3 text-center font-mono font-bold text-slate-400">
+                      <td className="py-3 px-3 text-center tabular-nums font-semibold text-neutral-400">
                         {idx + 1}
                       </td>
-                      <td className="py-3 px-3 font-mono font-black text-slate-900 whitespace-nowrap">
-                        <span className="underline decoration-slate-300 underline-offset-2 hover:decoration-slate-900">
+                      <td className="py-3 px-3 tabular-nums font-bold text-ink whitespace-nowrap">
+                        <span className="underline decoration-neutral-300 underline-offset-2 hover:decoration-neutral-900">
                           {inv.invoiceNumber}
                         </span>
                       </td>
-                      <td className="py-3 px-3 whitespace-nowrap font-mono text-slate-600">
+                      <td className="py-3 px-3 whitespace-nowrap tabular-nums text-ink-2">
                         {inv.deliveryDate}
                       </td>
                       <td className="py-3 px-3">
-                        <div className="font-bold text-slate-900">{inv.candidateName}</div>
-                        <div className="text-[10px] text-slate-500 font-mono">
+                        <div className="font-semibold text-ink">{inv.candidateName}</div>
+                        <div className="text-2xs text-ink-3 tabular-nums">
                           {inv.candidateJmbg || inv.candidateCity || "—"}
                         </div>
                       </td>
                       <td className="py-3 px-3 max-w-xs truncate" title={inv.purpose}>
-                        <div className="font-semibold text-slate-800 truncate">{inv.purpose}</div>
-                        <div className="text-[10px] text-slate-500">
+                        <div className="font-semibold text-ink truncate">{inv.purpose}</div>
+                        <div className="text-2xs text-ink-3">
                           {PAYMENT_METHODS[inv.paymentMethod] || inv.paymentMethod}
                         </div>
                       </td>
-                      <td className="py-3 px-3 text-right font-mono font-bold text-slate-900 whitespace-nowrap">
+                      <td className="py-3 px-3 text-right tabular-nums font-semibold text-ink whitespace-nowrap">
                         {inv.currency === "EUR" ? formatEur(inv.originalAmount) : `${inv.originalAmount} USD`}
                       </td>
-                      <td className="py-3 px-3 text-right font-mono text-slate-600 whitespace-nowrap">
+                      <td className="py-3 px-3 text-right tabular-nums text-ink-2 whitespace-nowrap">
                         {Number(inv.exchangeRate).toFixed(4)}
                       </td>
-                      <td className="py-3 px-3 text-right font-mono text-slate-700 whitespace-nowrap">
+                      <td className="py-3 px-3 text-right tabular-nums text-ink-2 whitespace-nowrap">
                         {formatRsd(inv.vatBaseRsd)}
                       </td>
-                      <td className="py-3 px-3 text-right font-mono font-black text-emerald-900 whitespace-nowrap">
+                      <td className="py-3 px-3 text-right tabular-nums font-bold text-emerald-900 whitespace-nowrap">
                         {formatRsd(inv.totalRsd)}
                       </td>
                       <td className="py-3 px-3 text-center whitespace-nowrap">
-                        <span className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-black border ${st.badgeCls}`}>
+                        <span className={`inline-block rounded-full px-3 py-1 text-xs font-medium border ${st.badgeCls}`}>
                           {st.label}
                         </span>
                       </td>
@@ -382,7 +313,7 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
                             type="button"
                             title="Pregledaj i odštampaj fakturu"
                             onClick={() => setSelectedInvoice(inv)}
-                            className="rounded-lg bg-slate-100 p-1.5 text-slate-700 hover:bg-slate-200 transition-colors"
+                            className="rounded-lg bg-surface-2 p-1.5 text-ink-2 hover:bg-neutral-200 transition-colors"
                           >
                             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -394,7 +325,7 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
                               type="button"
                               title="Proknjiži uplatu"
                               onClick={() => handleStatusChange(inv.id, "PAID")}
-                              className="rounded-lg bg-emerald-50 border border-emerald-300 p-1.5 text-emerald-800 hover:bg-emerald-100 transition-colors"
+                              className="rounded-lg bg-emerald-50 p-1.5 text-emerald-800 hover:bg-emerald-100 transition-colors"
                             >
                               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
@@ -413,10 +344,9 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
       </div>
 
       {/* Pravna napomena na dnu */}
-      <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-600 flex items-start gap-3">
-        <span className="text-base">ℹ️</span>
+      <div className="rounded-xl border border-line bg-surface p-4 text-xs text-ink-2 flex items-start gap-3">
         <div className="space-y-1">
-          <p className="font-bold text-slate-800">
+          <p className="font-semibold text-ink">
             Pravno-računovodstveni standardi agencije:
           </p>
           <p>

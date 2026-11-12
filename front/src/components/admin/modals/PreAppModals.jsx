@@ -55,14 +55,14 @@ export function RecordCallModal({ candidate, onSave, onClose }) {
       }
     >
       <div className="space-y-4 text-xs">
-        <div className="rounded-xl border border-black/10 bg-black/[0.02] p-3.5">
-          <p className="font-extrabold text-sm text-[var(--brand-ink)]">
+        <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
+          <p className="text-base font-semibold leading-snug text-ink">
             {candidate.name || `${candidate.firstName} ${candidate.lastName}`}
           </p>
-          <p className="text-[var(--brand-ink)]/70 mt-0.5">
-            Tel: <strong className="text-[var(--brand-ink)] font-bold">{candidate.phone || "Nije unet"}</strong> · Email: {candidate.email}
+          <p className="text-ink-2 mt-0.5">
+            Tel: <strong className="text-ink font-semibold">{candidate.phone || "Nije unet"}</strong> · Email: {candidate.email}
           </p>
-          <p className="mt-1 text-[var(--brand-ink)]/60">
+          <p className="mt-1 text-ink-3">
             {candidate.faculty || "Fakultet"} ({candidate.studyCity || "Beograd"}) · Godina: {candidate.studyYear || "2"} · Nivo engleskog: {candidate.preferences?.englishLevel || "B2"}
           </p>
         </div>
@@ -110,12 +110,12 @@ export function RecordCallModal({ candidate, onSave, onClose }) {
           />
         </Field>
 
-        <label className="flex items-center gap-2.5 cursor-pointer rounded-lg border border-black/10 bg-black/[0.015] p-3 font-semibold text-[var(--brand-ink)]/80 hover:bg-black/[0.03]">
+        <label className="flex items-center gap-2.5 cursor-pointer rounded-lg border border-line bg-surface p-3 font-semibold text-ink-2 hover:bg-surface">
           <input
             type="checkbox"
             checked={sendMaterials}
             onChange={(e) => setSendMaterials(e.target.checked)}
-            className="h-4 w-4 rounded border-black/20 text-[var(--brand-ink)]"
+            className="h-4 w-4 rounded border-line-strong text-ink"
           />
           <span>Automatski pošalji informativni paket (katalog programa i vodič) na email</span>
         </label>
@@ -168,29 +168,29 @@ export function CandidateSelectionModal({ candidate, onSave, onClose }) {
       }
     >
       <div className="space-y-4 text-xs">
-        <div className="rounded-xl border border-black/10 bg-black/[0.02] p-3.5">
-          <p className="font-extrabold text-sm text-[var(--brand-ink)]">
+        <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
+          <p className="text-base font-semibold leading-snug text-ink">
             {candidate.name || `${candidate.firstName} ${candidate.lastName}`}
           </p>
-          <p className="text-[var(--brand-ink)]/70 mt-0.5">
+          <p className="text-ink-2 mt-0.5">
             Email: {candidate.email} · Tel: {candidate.phone || "Nema telefona"} · {candidate.faculty || "Fakultet"} ({candidate.studyCity || "Beograd"})
           </p>
-          <p className="mt-1 text-[var(--brand-ink)]/60">
+          <p className="mt-1 text-ink-3">
             Godina studija: {candidate.studyYear || "/"} · ESPB: {candidate.ectsPoints || 0} · Engleski: {candidate.preferences?.englishLevel || "/"}
           </p>
         </div>
 
         {/* Radio izbor: Ispunjava uslove (FR-007) vs Ne ispunjava uslove (FR-009) */}
         <div className="space-y-2">
-          <label className="block text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/70">
+          <label className="block text-[13px] font-semibold text-ink-2">
             Selekciona odluka radnika agencije:
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <label
               className={`flex items-start gap-3 rounded-xl border p-3.5 cursor-pointer transition-all ${
                 decision === "QUALIFIED"
-                  ? "border-emerald-500 bg-emerald-50/70 shadow-xs ring-2 ring-emerald-500/20"
-                  : "border-black/10 bg-white hover:bg-black/[0.02]"
+                  ? "bg-emerald-50 ring-2 ring-emerald-500/20"
+                  : "border-line bg-white hover:bg-surface"
               }`}
             >
               <input
@@ -202,10 +202,10 @@ export function CandidateSelectionModal({ candidate, onSave, onClose }) {
                 className="mt-0.5 h-4 w-4 accent-emerald-600"
               />
               <div>
-                <p className="font-black text-sm text-emerald-950">
+                <p className="font-bold text-sm text-emerald-950">
                   Ispunjava uslove
                 </p>
-                <p className="mt-0.5 text-[11px] text-emerald-900/80">
+                <p className="mt-0.5 text-xs text-emerald-900/80">
                   Kandidat zadovoljava kriterijume redovnog studenta i J-1 vize. Pokreće se automatsko slanje ugovora i poziv na konsultacije.
                 </p>
               </div>
@@ -214,8 +214,8 @@ export function CandidateSelectionModal({ candidate, onSave, onClose }) {
             <label
               className={`flex items-start gap-3 rounded-xl border p-3.5 cursor-pointer transition-all ${
                 decision === "REJECTED"
-                  ? "border-red-500 bg-red-50/70 shadow-xs ring-2 ring-red-500/20"
-                  : "border-black/10 bg-white hover:bg-black/[0.02]"
+                  ? "bg-red-50 ring-2 ring-red-500/20"
+                  : "border-line bg-white hover:bg-surface"
               }`}
             >
               <input
@@ -227,10 +227,10 @@ export function CandidateSelectionModal({ candidate, onSave, onClose }) {
                 className="mt-0.5 h-4 w-4 accent-red-600"
               />
               <div>
-                <p className="font-black text-sm text-red-950">
+                <p className="font-bold text-sm text-red-950">
                   Ne ispunjava uslove
                 </p>
-                <p className="mt-0.5 text-[11px] text-red-900/80">
+                <p className="mt-0.5 text-xs text-red-900/80">
                   Kandidat ne ispunjava uslove za prijem na program. Zaustavlja se automatski tok uz obaveznu napomenu.
                 </p>
               </div>
@@ -240,9 +240,9 @@ export function CandidateSelectionModal({ candidate, onSave, onClose }) {
 
         {/* Ako ISPUNJAVA uslove: FR-008 & FR-011 */}
         {decision === "QUALIFIED" && (
-          <div className="space-y-3 rounded-xl border border-emerald-200 bg-emerald-50/50 p-4">
+          <div className="space-y-3 rounded-xl bg-emerald-50 p-4">
             <div className="flex items-center justify-between">
-              <span className="font-black text-xs text-emerald-950 uppercase tracking-wider">
+              <span className="font-bold text-[13px] text-emerald-950">
                 Automatski tok nakon selekcije
               </span>
               <Badge tone="green">Spremno za slanje</Badge>
@@ -256,10 +256,10 @@ export function CandidateSelectionModal({ candidate, onSave, onClose }) {
                 className="mt-0.5 h-4 w-4 rounded accent-emerald-600"
               />
               <div>
-                <p className="font-bold text-xs">
+                <p className="font-semibold text-xs">
                   Automatsko slanje obavezne dokumentacije na email kandidata
                 </p>
-                <p className="text-[11px] text-emerald-900/80 mt-0.5">
+                <p className="text-xs text-emerald-900/80 mt-0.5">
                   Šalje se zvanični Ugovor 2027 (Full / Self Placement), Izjava o odgovornosti i Pravila programa koja kandidat mora pročitati pre konsultacija.
                 </p>
               </div>
@@ -269,14 +269,14 @@ export function CandidateSelectionModal({ candidate, onSave, onClose }) {
               <button
                 type="button"
                 onClick={() => downloadContractPdf(candidate.id, candidate.email)}
-                className="inline-flex items-center gap-1 rounded-md border border-emerald-300 bg-white px-2.5 py-1 text-[11px] font-bold text-emerald-900 hover:bg-emerald-50"
+                className="inline-flex items-center gap-1 rounded-full border border-emerald-300 bg-white px-2.5 py-1 text-xs font-semibold text-emerald-900 hover:bg-emerald-50"
               >
                 Pregledaj Ugovor (PDF)
               </button>
               <button
                 type="button"
                 onClick={() => downloadResponsibilityStatementPdf(candidate.id, candidate.email)}
-                className="inline-flex items-center gap-1 rounded-md border border-emerald-300 bg-white px-2.5 py-1 text-[11px] font-bold text-emerald-900 hover:bg-emerald-50"
+                className="inline-flex items-center gap-1 rounded-full border border-emerald-300 bg-white px-2.5 py-1 text-xs font-semibold text-emerald-900 hover:bg-emerald-50"
               >
                 Pregledaj Izjavu o odgovornosti (PDF)
               </button>
@@ -290,10 +290,10 @@ export function CandidateSelectionModal({ candidate, onSave, onClose }) {
                 className="mt-0.5 h-4 w-4 rounded accent-emerald-600"
               />
               <div>
-                <p className="font-bold text-xs">
+                <p className="font-semibold text-xs">
                   Drugi email — link za zakazivanje konsultacija (Calendly)
                 </p>
-                <p className="text-[11px] text-emerald-900/80 mt-0.5">
+                <p className="text-xs text-emerald-900/80 mt-0.5">
                   Kandidatu se šalje personalizovani link za rezervaciju termina online ili uživo konsultacija.
                 </p>
               </div>
@@ -303,8 +303,8 @@ export function CandidateSelectionModal({ candidate, onSave, onClose }) {
 
         {/* Ako NE ISPUNJAVA uslove: FR-010 & BR-005 */}
         {decision === "REJECTED" && (
-          <div className="space-y-3 rounded-xl border border-red-200 bg-red-50 p-4">
-            <span className="font-black text-xs text-red-950 uppercase tracking-wider">
+          <div className="space-y-3 rounded-xl bg-red-50 p-4">
+            <span className="font-bold text-[13px] text-red-950">
               Obavezna napomena za kandidata koji ne ispunjava uslove
             </span>
 
@@ -379,11 +379,11 @@ export function ScheduleConsultationModal({ candidate, onSave, onClose }) {
       }
     >
       <div className="space-y-4 text-xs">
-        <div className="rounded-xl border border-black/10 bg-black/[0.02] p-3.5">
-          <p className="font-extrabold text-sm text-[var(--brand-ink)]">
+        <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
+          <p className="text-base font-semibold leading-snug text-ink">
             {candidate.name || `${candidate.firstName} ${candidate.lastName}`}
           </p>
-          <p className="text-[var(--brand-ink)]/70 mt-0.5">
+          <p className="text-ink-2 mt-0.5">
             Email: {candidate.email} · Tel: {candidate.phone || "Nema telefona"} · {candidate.faculty || "Fakultet"}
           </p>
         </div>
@@ -519,20 +519,20 @@ export function ProfileReadinessModal({ candidate, onSave, onActivateDirectly, o
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
             <CheckIcon className="h-7 w-7" />
           </div>
-          <h3 className="text-xl font-extrabold text-[var(--brand-ink)]">
+          <h3 className="text-xl font-bold text-ink">
             Kandidat je spreman za profil!
           </h3>
-          <p className="text-[var(--brand-ink)]/70">
+          <p className="text-ink-2">
             Student <strong>{candidate.name}</strong> je ispunio sve preduslove.
             Aktivacioni kod je uspešno generisan:
           </p>
 
-          <div className="my-4 rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50 p-5">
-            <p className="text-xs font-bold uppercase tracking-wider text-amber-800">Verifikacioni kod za registraciju naloga</p>
-            <p className="mt-2 font-mono text-3xl font-black tracking-widest text-[var(--brand-ink)]">
+          <div className="my-4 rounded-2xl border-dashed bg-amber-50 p-5">
+            <p className="text-[13px] font-semibold text-amber-800">Verifikacioni kod za registraciju naloga</p>
+            <p className="mt-2 tabular-nums text-3xl font-bold tracking-widest text-ink">
               {result.code}
             </p>
-            <p className="mt-1 text-xs text-[var(--brand-ink)]/60">
+            <p className="mt-1 text-xs text-ink-3">
               Paket: {result.packageName} · Konačna cena: €{result.finalPrice} EUR
             </p>
           </div>
@@ -541,14 +541,14 @@ export function ProfileReadinessModal({ candidate, onSave, onActivateDirectly, o
             <button
               type="button"
               onClick={copyCode}
-              className="inline-flex items-center gap-1.5 rounded-full border border-black/15 bg-white px-4 py-2 text-xs font-bold shadow-xs hover:bg-black/5"
+              className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white px-4 py-2 text-xs font-semibold hover:bg-surface-2"
             >
               {copied ? "Kod je kopiran!" : "Kopiraj aktivacioni kod"}
             </button>
             <button
               type="button"
               onClick={handleActivateNow}
-              className="inline-flex items-center gap-1.5 rounded-full bg-emerald-600 px-5 py-2 text-xs font-black text-white shadow-xs hover:bg-emerald-700 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 rounded-full bg-emerald-600 px-5 py-2 text-xs font-bold text-white hover:bg-emerald-700 transition-all"
             >
               Aktiviraj nalog odmah
             </button>
@@ -556,32 +556,32 @@ export function ProfileReadinessModal({ candidate, onSave, onActivateDirectly, o
         </div>
       ) : (
         <div className="space-y-4 text-xs">
-          <div className="rounded-xl border border-black/10 bg-black/[0.02] p-3.5">
-            <p className="font-extrabold text-sm text-[var(--brand-ink)]">
+          <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
+            <p className="text-base font-semibold leading-snug text-ink">
               {candidate.name || `${candidate.firstName} ${candidate.lastName}`}
             </p>
-            <p className="text-[var(--brand-ink)]/70 mt-0.5">
+            <p className="text-ink-2 mt-0.5">
               Email: {candidate.email} · Tel: {candidate.phone || "Nema telefona"} · {candidate.faculty || "Fakultet"}
             </p>
           </div>
 
           {/* CHECKLIST PREDUSLOVA PREMA BR-002 i FR-015 */}
-          <div className="rounded-xl border border-black/10 bg-white p-4 space-y-3">
-            <span className="block font-black text-xs uppercase tracking-wider text-[var(--brand-ink)]/60">
+          <div className="rounded-xl border border-line bg-white p-4 space-y-3">
+            <span className="block font-bold text-[13px] text-ink-3">
               Provera preduslova za kreiranje profila:
             </span>
 
             <div className="space-y-2">
               <div className={`flex items-center justify-between p-2.5 rounded-lg border ${
-                isSelectionPassed ? "border-emerald-200 bg-emerald-50 text-emerald-950" : "border-amber-200 bg-amber-50 text-amber-950"
+                isSelectionPassed ? "bg-emerald-50 text-emerald-950" : "bg-amber-50 text-amber-950"
               }`}>
                 <div className="flex items-center gap-2">
-                  <span className={`flex h-5 w-5 items-center justify-center rounded-full text-xs font-black ${
+                  <span className={`flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold ${
                     isSelectionPassed ? "bg-emerald-600 text-white" : "bg-amber-400 text-amber-950"
                   }`}>
                     {isSelectionPassed ? "✓" : "!"}
                   </span>
-                  <span className="font-bold">1. Inicijalna selekcija: Kandidat ispunjava uslove</span>
+                  <span className="font-semibold">1. Inicijalna selekcija: Kandidat ispunjava uslove</span>
                 </div>
                 <Badge tone={isSelectionPassed ? "green" : "amber"}>
                   {isSelectionPassed ? "Ispunjava uslove" : "Nije označeno"}
@@ -589,15 +589,15 @@ export function ProfileReadinessModal({ candidate, onSave, onActivateDirectly, o
               </div>
 
               <div className={`flex items-center justify-between p-2.5 rounded-lg border ${
-                isDocsSent ? "border-emerald-200 bg-emerald-50 text-emerald-950" : "border-amber-200 bg-amber-50 text-amber-950"
+                isDocsSent ? "bg-emerald-50 text-emerald-950" : "bg-amber-50 text-amber-950"
               }`}>
                 <div className="flex items-center gap-2">
-                  <span className={`flex h-5 w-5 items-center justify-center rounded-full text-xs font-black ${
+                  <span className={`flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold ${
                     isDocsSent ? "bg-emerald-600 text-white" : "bg-amber-400 text-amber-950"
                   }`}>
                     {isDocsSent ? "✓" : "!"}
                   </span>
-                  <span className="font-bold">2. Obavezna dokumenta poslata kandidatu</span>
+                  <span className="font-semibold">2. Obavezna dokumenta poslata kandidatu</span>
                 </div>
                 <Badge tone={isDocsSent ? "green" : "amber"}>
                   {isDocsSent ? "Poslata dokumenta" : "Nisu poslata"}
@@ -605,15 +605,15 @@ export function ProfileReadinessModal({ candidate, onSave, onActivateDirectly, o
               </div>
 
               <div className={`flex items-center justify-between p-2.5 rounded-lg border ${
-                isConsultationAttended ? "border-emerald-200 bg-emerald-50 text-emerald-950" : "border-amber-200 bg-amber-50 text-amber-950"
+                isConsultationAttended ? "bg-emerald-50 text-emerald-950" : "bg-amber-50 text-amber-950"
               }`}>
                 <div className="flex items-center gap-2">
-                  <span className={`flex h-5 w-5 items-center justify-center rounded-full text-xs font-black ${
+                  <span className={`flex h-5 w-5 items-center justify-center rounded-full text-xs font-bold ${
                     isConsultationAttended ? "bg-emerald-600 text-white" : "bg-amber-400 text-amber-950"
                   }`}>
                     {isConsultationAttended ? "✓" : "!"}
                   </span>
-                  <span className="font-bold">3. Konsultacije održane i kandidat je prisustvovao</span>
+                  <span className="font-semibold">3. Konsultacije održane i kandidat je prisustvovao</span>
                 </div>
                 <Badge tone={isConsultationAttended ? "green" : "amber"}>
                   {isConsultationAttended ? "Održane (prisustvovao)" : candidate.consultationStatus === "SCHEDULED" ? "Samo zakazane" : "Nisu održane"}
@@ -622,11 +622,11 @@ export function ProfileReadinessModal({ candidate, onSave, onActivateDirectly, o
             </div>
 
             {!allPrerequisitesMet && (
-              <div className="rounded-lg border border-amber-300 bg-amber-50/80 p-3 text-[11px] text-amber-950">
-                <p className="font-bold">
+              <div className="rounded-lg bg-amber-50 p-3 text-xs text-amber-950">
+                <p className="font-semibold">
                   Prema poslovnom pravilu BR-002, kandidat ne može biti označen kao spreman za kreiranje profila dok ne prođe selekciju, primi ugovor i održi konsultacije.
                 </p>
-                <label className="mt-2.5 flex items-center gap-2 cursor-pointer font-extrabold text-amber-950">
+                <label className="mt-2.5 flex items-center gap-2 cursor-pointer font-bold text-amber-950">
                   <input
                     type="checkbox"
                     checked={bypassPrerequisites}
@@ -677,9 +677,9 @@ export function ProfileReadinessModal({ candidate, onSave, onActivateDirectly, o
               </Field>
             </div>
 
-            <div className="rounded-xl border border-black/10 bg-black/[0.02] p-3.5 flex items-center justify-between">
-              <span className="text-[var(--brand-ink)]/70">Konačna ugovorena cena programa:</span>
-              <span className="text-base font-black text-[var(--brand-ink)]">
+            <div className="rounded-xl border border-line bg-surface p-3.5 flex items-center justify-between">
+              <span className="text-ink-2">Konačna ugovorena cena programa:</span>
+              <span className="text-base font-bold text-ink">
                 €{finalPrice} EUR
               </span>
             </div>
@@ -717,7 +717,7 @@ export function RejectPreAppModal({ candidate, onSave, onClose }) {
           <button
             type="button"
             onClick={handleSubmit}
-            className="rounded-lg bg-red-600 px-4 py-2 text-xs font-bold text-white shadow-xs hover:bg-red-700"
+            className="rounded-full bg-red-600 px-4 py-2 text-xs font-semibold text-white hover:bg-red-700"
           >
             Potvrdi odbijanje prijave
           </button>
@@ -725,11 +725,11 @@ export function RejectPreAppModal({ candidate, onSave, onClose }) {
       }
     >
       <div className="space-y-4 text-xs">
-        <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-red-950">
-          <p className="font-bold">
+        <div className="rounded-xl bg-red-50 p-3 text-red-950">
+          <p className="font-semibold">
             Da li ste sigurni da želite da odbijete prijavu za {candidate.name}?
           </p>
-          <p className="mt-1 text-[11px] text-red-900/80">
+          <p className="mt-1 text-xs text-red-900/80">
             Prijava će biti označena kao odbijena i arhivirana, bez izdavanja registracionog koda.
           </p>
         </div>
@@ -939,46 +939,46 @@ export function GenerateCodeModal({ onCreated, onClose }) {
     >
       {generatedResult ? (
         <div className="space-y-4 text-center py-4">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-100 text-green-700">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
             <CheckIcon className="h-7 w-7" />
           </div>
-          <h3 className="text-xl font-extrabold text-[var(--brand-ink)]">
+          <h3 className="text-xl font-bold text-ink">
             {t("admin.codeCreatedSuccess")}
           </h3>
-          <p className="text-xs text-[var(--brand-ink)]/65">
+          <p className="text-xs text-ink-2">
             Kod je generisan i simulirano poslat na: <strong>{generatedResult.email}</strong>
           </p>
 
-          <div className="my-5 rounded-2xl border-2 border-dashed border-amber-300 bg-amber-50 p-6">
-            <p className="text-xs font-bold uppercase tracking-wider text-amber-800">Verifikacioni kod kandidata</p>
-            <p className="mt-2 font-mono text-3xl font-black tracking-widest text-[var(--brand-ink)]">
+          <div className="my-5 rounded-2xl border-dashed bg-amber-50 p-6">
+            <p className="text-[13px] font-semibold text-amber-800">Verifikacioni kod kandidata</p>
+            <p className="mt-2 tabular-nums text-3xl font-bold tracking-widest text-ink">
               {generatedResult.code}
             </p>
             <button
               type="button"
               onClick={copyCode}
-              className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-black/15 bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-wider shadow-xs hover:bg-black/[0.04]"
+              className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white px-4 py-1.5 text-[13px] font-semibold hover:bg-surface-2"
             >
               {copied ? "✓ Kopirano!" : "Kopiraj kod"}
             </button>
           </div>
 
-          <div className="rounded-xl border border-black/10 bg-black/[0.02] p-4 text-left text-xs space-y-1">
+          <div className="rounded-2xl border border-line bg-white p-5 text-left text-xs space-y-1 sm:p-6">
             <p><span className="font-semibold">Paket:</span> {generatedResult.packageName}</p>
             <p><span className="font-semibold">Redovna cena:</span> {generatedResult.basePrice} €</p>
             {generatedResult.discount > 0 && (
-              <p className="text-green-700 font-semibold">
+              <p className="text-emerald-700 font-semibold">
                 <span>Popust:</span> -{generatedResult.discount} € ({generatedResult.discountNote})
               </p>
             )}
-            <p className="font-bold text-sm text-[var(--brand-ink)] pt-1">
+            <p className="font-semibold text-sm text-ink pt-1">
               Konačna cena: {generatedResult.finalPrice} €
             </p>
           </div>
         </div>
       ) : (
         <form onSubmit={handleGenerate} className="space-y-4">
-          <p className="text-xs text-[var(--brand-ink)]/60">
+          <p className="text-xs text-ink-3">
             {t("admin.generateCodeDesc")}
           </p>
 
@@ -1043,13 +1043,13 @@ export function GenerateCodeModal({ onCreated, onClose }) {
             </Field>
           </div>
 
-          <div className="rounded-xl border border-black/10 bg-[var(--brand-yellow)]/10 p-3.5 text-xs">
-            <div className="flex justify-between items-center font-bold text-[var(--brand-ink)]">
+          <div className="rounded-xl border border-line bg-brand/10 p-3.5 text-xs">
+            <div className="flex justify-between items-center font-semibold text-ink">
               <span>Ukupno za uplatu kandidata:</span>
               <span className="text-sm">{finalPrice} €</span>
             </div>
             {Number(discount) > 0 && (
-              <p className="mt-0.5 text-green-700">
+              <p className="mt-0.5 text-emerald-700">
                 Uračunat popust od {discount} € ({discountNote || "Odobren popust"})
               </p>
             )}

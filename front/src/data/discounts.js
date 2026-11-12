@@ -53,7 +53,7 @@ export const DEFAULT_PROMOTIONS = [
     timing: "end",
     timingLabel: "Obračunava se na kraju (poslednja rata)",
     description:
-      "Svaki nosilac kartice, raniji učesnik SWT programa American Adventure agencije, ostvaruje popust od $100 na Work and Travel program 2026 i taj popust se ostvaruje prilikom plaćanja poslednje rate.",
+      "Svaki nosilac kartice, raniji učesnik SWT programa American Adventure agencije, ostvaruje popust od $100 na Work and Travel program 2027 i taj popust se ostvaruje prilikom plaćanja poslednje rate.",
     conditionType: "club_card",
     conditionText: "Nosilac Adventure Club kartice (raniji učesnik SWT)",
     active: true,
@@ -165,7 +165,7 @@ export const DEFAULT_PROMOTIONS = [
 
 export const discountGroups = [
   {
-    program: "Promocije Work and Travel 2026 (Prilog br. 1)",
+    program: "Promocije Work and Travel 2027",
     notice:
       "Naručilac usluge može ISKORISTITI JEDNU OD PONUĐENIH PROMOCIJA i ne postoji opcija da se više promocija kombinuju. Može se koristiti samo jedan popust, a izabrani popust možete promeniti u bilo kom trenutku pre konačnog obračuna.",
     items: DEFAULT_PROMOTIONS.map((promo) => ({
@@ -184,13 +184,13 @@ export const discountGroups = [
       {
         id: "hs-early",
         title: "Early Bird popust — $300",
-        text: "Đaci koji se prijave do 1.10.2025. dobijaju $300 popusta na cenu programa.",
+        text: "Đaci koji su se prijavili do 1.10.2026. dobijaju $300 popusta na cenu programa.",
         timing: "immediate",
         timingLabel: "Obračunava se odmah",
       },
       {
         id: "hs-installments",
-        title: "Jednake mesečne rate do avgusta 2026",
+        title: "Jednake mesečne rate do avgusta 2027",
         text: "Plaćanje na jednake mesečne rate — ranija prijava znači više rata.",
         timing: "end",
         timingLabel: "Model plaćanja na rate",

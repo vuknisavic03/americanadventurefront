@@ -3,7 +3,8 @@
 
 import { PROMOTIONS_KEY, loadData, saveData } from "./storage.js";
 import { DEFAULT_PROMOTIONS } from "../discounts.js";
-import { getCandidates, saveCandidate } from "./candidates.js";
+import { saveCandidate } from "./candidates.js";
+import { getCandidates } from "./session.js";
 
 export function getPromotions() {
   const loaded = loadData(PROMOTIONS_KEY, null);

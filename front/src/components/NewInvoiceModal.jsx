@@ -92,21 +92,21 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
 
   return (
     <div className="fixed inset-0 z-[130] flex items-center justify-center bg-black/60 p-3 sm:p-6 backdrop-blur-xs overflow-y-auto">
-      <div className="relative my-auto flex max-h-[92vh] w-full max-w-2xl lg:max-w-3xl xl:max-w-4xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl border border-black/10">
-        <div className="flex shrink-0 items-center justify-between border-b border-black/[0.08] bg-[#fcfcfd] px-6 py-4 sm:px-8">
+      <div className="relative my-auto flex max-h-[92vh] w-full max-w-2xl lg:max-w-3xl xl:max-w-4xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl border border-line">
+        <div className="flex shrink-0 items-center justify-between border-b border-line bg-surface px-6 py-4 sm:px-8">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--brand-yellow)] text-sm font-black text-[var(--brand-ink)]">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-sm font-bold text-ink">
               +
             </span>
             <div>
-              <h3 className="text-lg font-extrabold text-[var(--brand-ink)]">Izdavanje nove fakture</h3>
-              <p className="text-xs text-black/55">Knjiga izdatih računa (KIR) • Obračun po NBS kursu</p>
+              <h3 className="text-lg font-bold text-ink">Izdavanje nove fakture</h3>
+              <p className="text-xs text-ink-3">Knjiga izdatih računa (KIR) • Obračun po NBS kursu</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-2 text-black/40 hover:bg-black/[0.05] hover:text-black"
+            className="rounded-lg p-2 text-ink-3 hover:bg-surface-2 hover:text-ink"
           >
             ✕
           </button>
@@ -115,11 +115,11 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-5 text-xs">
           {/* Odabir kandidata */}
           <div>
-            <label className="block font-bold text-slate-700 mb-1">Kandidat iz baze:</label>
+            <label className="block font-semibold text-ink-2 mb-1">Kandidat iz baze:</label>
             <select
               value={candidateId}
               onChange={(e) => handleCandidateChange(e.target.value)}
-              className="w-full rounded-lg border border-black/15 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-900 focus:border-slate-900 focus:bg-white focus:outline-hidden"
+              className="w-full rounded-lg border border-line-strong bg-surface px-3 py-2 text-sm font-semibold text-ink focus:border-ink focus:bg-white focus:outline-hidden"
             >
               <option value="">-- Odaberite kandidata ili unesite ručno --</option>
               {candidates.map((c) => (
@@ -132,30 +132,30 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block font-semibold text-slate-700 mb-0.5">Ime i prezime kupca:</label>
+              <label className="block font-semibold text-ink-2 mb-0.5">Ime i prezime kupca:</label>
               <input
                 type="text"
                 required
                 value={candidateName}
                 onChange={(e) => setCandidateName(e.target.value)}
-                className="w-full rounded-lg border border-black/15 px-3 py-2 text-sm"
+                className="w-full rounded-lg border border-line-strong px-3 py-2 text-sm"
               />
             </div>
             <div>
-              <label className="block font-semibold text-slate-700 mb-0.5">JMBG / Broj pasoša:</label>
+              <label className="block font-semibold text-ink-2 mb-0.5">JMBG / Broj pasoša:</label>
               <input
                 type="text"
                 value={candidateJmbg}
                 onChange={(e) => setCandidateJmbg(e.target.value)}
                 placeholder="13 cifara JMBG"
-                className="w-full rounded-lg border border-black/15 px-3 py-2 text-sm font-mono"
+                className="w-full rounded-lg border border-line-strong px-3 py-2 text-sm tabular-nums"
               />
             </div>
           </div>
 
           {/* Tip usluge */}
           <div>
-            <label className="block font-bold text-slate-700 mb-1">Tip usluge / Svrha fakturisanja:</label>
+            <label className="block font-semibold text-ink-2 mb-1">Tip usluge / Svrha fakturisanja:</label>
             <div className="flex flex-wrap gap-1.5 mb-2">
               {[
                 ["RATE_1", "I Rata (450 €)"],
@@ -168,10 +168,10 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
                   key={t}
                   type="button"
                   onClick={() => handleServiceChange(t)}
-                  className={`rounded-lg px-2.5 py-1 text-xs font-bold transition-colors ${
+                  className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition-colors ${
                     serviceType === t
-                      ? "bg-slate-900 text-white"
-                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                      ? "bg-ink text-white"
+                      : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
                   }`}
                 >
                   {lbl}
@@ -183,14 +183,14 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
               required
               value={purpose}
               onChange={(e) => setPurpose(e.target.value)}
-              className="w-full rounded-lg border border-black/15 px-3 py-2 text-sm"
+              className="w-full rounded-lg border border-line-strong px-3 py-2 text-sm"
             />
           </div>
 
           {/* Iznos, Valuta i NBS Kurs */}
-          <div className="grid grid-cols-3 gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <div className="grid grid-cols-3 gap-3 bg-surface p-3 rounded-xl border border-line">
             <div>
-              <label className="block font-bold text-slate-700 mb-1">Iznos devizni:</label>
+              <label className="block font-semibold text-ink-2 mb-1">Iznos devizni:</label>
               <div className="flex items-center gap-1">
                 <input
                   type="number"
@@ -198,7 +198,7 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
                   required
                   value={originalAmount}
                   onChange={(e) => setOriginalAmount(e.target.value)}
-                  className="w-full rounded-lg border border-black/15 bg-white px-3 py-1.5 text-sm font-bold font-mono"
+                  className="w-full rounded-lg border border-line-strong bg-white px-3 py-1.5 text-sm font-semibold tabular-nums"
                 />
                 <select
                   value={currency}
@@ -207,7 +207,7 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
                     setCurrency(c);
                     setExchangeRate(NBS_RATES[c] || 117.1524);
                   }}
-                  className="rounded-lg border border-black/15 bg-white px-2 py-1.5 text-xs font-bold"
+                  className="rounded-lg border border-line-strong bg-white px-2 py-1.5 text-xs font-semibold"
                 >
                   <option value="EUR">EUR</option>
                   <option value="USD">USD</option>
@@ -216,35 +216,35 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
             </div>
 
             <div>
-              <label className="block font-bold text-slate-700 mb-1">NBS Srednji kurs:</label>
+              <label className="block font-semibold text-ink-2 mb-1">NBS Srednji kurs:</label>
               <input
                 type="number"
                 step="0.0001"
                 required
                 value={exchangeRate}
                 onChange={(e) => setExchangeRate(e.target.value)}
-                className="w-full rounded-lg border border-black/15 bg-white px-3 py-1.5 text-sm font-mono"
+                className="w-full rounded-lg border border-line-strong bg-white px-3 py-1.5 text-sm tabular-nums"
               />
-              <span className="text-[10px] text-slate-500">6 decimala po NBS</span>
+              <span className="text-2xs text-ink-3">6 decimala po NBS</span>
             </div>
 
             <div>
-              <label className="block font-bold text-slate-700 mb-1">Ukupno u RSD:</label>
-              <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-1.5 text-sm font-black font-mono text-emerald-900">
+              <label className="block font-semibold text-ink-2 mb-1">Ukupno u RSD:</label>
+              <div className="rounded-lg bg-emerald-50 px-3 py-1.5 text-sm font-bold tabular-nums text-emerald-900">
                 {Number(calculatedRsd).toLocaleString("sr-RS", { minimumFractionDigits: 2 })} RSD
               </div>
-              <span className="text-[10px] text-emerald-700">Osnovica (PDV 0%)</span>
+              <span className="text-2xs text-emerald-700">Osnovica (PDV 0%)</span>
             </div>
           </div>
 
           {/* Način plaćanja i dospeće */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block font-semibold text-slate-700 mb-1">Način plaćanja:</label>
+              <label className="block font-semibold text-ink-2 mb-1">Način plaćanja:</label>
               <select
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="w-full rounded-lg border border-black/15 bg-white px-3 py-2 text-xs"
+                className="w-full rounded-lg border border-line-strong bg-white px-3 py-2 text-xs"
               >
                 {Object.entries(PAYMENT_METHODS).map(([k, v]) => (
                   <option key={k} value={k}>
@@ -255,27 +255,27 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
             </div>
 
             <div>
-              <label className="block font-semibold text-slate-700 mb-1">Rok dospeća:</label>
+              <label className="block font-semibold text-ink-2 mb-1">Rok dospeća:</label>
               <input
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full rounded-lg border border-black/15 bg-white px-3 py-1.5 text-xs font-mono"
+                className="w-full rounded-lg border border-line-strong bg-white px-3 py-1.5 text-xs tabular-nums"
               />
             </div>
           </div>
 
-          <div className="flex justify-end gap-2 border-t border-black/[0.08] pt-4">
+          <div className="flex justify-end gap-2 border-t border-line pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg bg-black/[0.05] px-4 py-2 text-xs font-bold text-slate-700 hover:bg-black/[0.1]"
+              className="rounded-full bg-surface-2 px-4 py-2 text-xs font-semibold text-ink-2 hover:bg-neutral-200"
             >
               Odustani
             </button>
             <button
               type="submit"
-              className="rounded-lg bg-[var(--brand-ink)] px-5 py-2 text-xs font-bold text-white hover:bg-black shadow-xs"
+              className="rounded-full bg-ink px-5 py-2 text-xs font-semibold text-white hover:bg-neutral-950"
             >
               Kreiraj fakturu i zavedi u KIR
             </button>

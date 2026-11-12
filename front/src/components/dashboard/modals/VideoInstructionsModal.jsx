@@ -1,23 +1,19 @@
 // front/src/components/dashboard/modals/VideoInstructionsModal.jsx
 import { CloseIcon } from "../icons";
-import { BRAND_YELLOW, INK } from "../constants";
 
 export default function VideoInstructionsModal({ isOpen, onClose, t }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in">
-      <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl border border-black/10">
-        <div className="flex items-center justify-between border-b border-black/10 px-6 py-4 bg-slate-900 text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+      <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl border border-line">
+        <div className="flex items-center justify-between border-b border-line px-6 py-4 bg-ink text-white">
           <div className="flex items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-400 text-slate-950 font-black text-sm">
-              🎬
-            </span>
             <div>
-              <h3 className="text-base font-extrabold text-white">
+              <h3 className="text-base font-bold text-white">
                 Zvanična instrukcija za pravljenje video CV-a
               </h3>
-              <p className="text-[11px] text-white/70">
+              <p className="text-xs text-white/70">
                 American Adventure — Work & Travel USA Video Resume Guide
               </p>
             </div>
@@ -31,32 +27,32 @@ export default function VideoInstructionsModal({ isOpen, onClose, t }) {
           </button>
         </div>
 
-        <div className="max-h-[75vh] overflow-y-auto p-6 space-y-4 text-xs text-[var(--brand-ink)]/80 leading-relaxed">
+        <div className="max-h-[75vh] overflow-y-auto p-6 space-y-4 text-xs text-ink-2 leading-relaxed">
           {/* Preuzimanje zvaničnog PDF-a */}
-          <div className="flex items-center justify-between rounded-xl border border-blue-200 bg-blue-50/70 p-3.5">
+          <div className="flex items-center justify-between rounded-xl border border-line bg-surface p-3.5">
             <div>
-              <span className="font-bold text-blue-950 block text-xs">
-                📄 Zvanični PDF agencijski dokument
+              <span className="font-semibold text-ink block text-xs">
+                Zvanični PDF agencijski dokument
               </span>
-              <span className="text-[11px] text-blue-900/70">
+              <span className="text-xs text-ink">
                 Preuzmite originalno uputstvo agencije sa svim smernicama i primerima.
               </span>
             </div>
             <a
               href="/documents/AA_Instrukcija_za_video_CV.pdf"
               download="AA_Instrukcija_za_video_CV.pdf"
-              className="rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold px-3 py-1.5 text-xs transition-colors shrink-0"
+              className="rounded-full bg-ink hover:bg-neutral-950 text-white font-semibold px-3 py-1.5 text-xs transition-colors shrink-0"
             >
-              ⬇ Preuzmi PDF
+              Preuzmi PDF
             </a>
           </div>
 
           {/* Opšta pravila */}
-          <div className="rounded-xl border border-black/10 bg-slate-50 p-4 space-y-2">
-            <h4 className="font-extrabold text-slate-900 text-xs uppercase tracking-wide">
-              Trajanje videa, oblačenje, način govora, osmeh 😊
+          <div className="rounded-2xl border border-line bg-white p-5 space-y-2 sm:p-6">
+            <h4 className="font-bold text-ink text-[13px]">
+              Trajanje videa, oblačenje, način govora, osmeh 
             </h4>
-            <ul className="list-disc pl-5 space-y-1 text-slate-700">
+            <ul className="list-disc pl-5 space-y-1 text-ink-2">
               <li><strong>Trajanje:</strong> Video <strong>ne bi trebalo da bude duži od 2 minuta</strong>.</li>
               <li><strong>Oblačenje:</strong> Obucite se poslovno (business casual) kao da idete na sastanak sa direktorom kompanije. <em>Muškarci:</em> košulja, farmerke i cipele; <em>Devojke:</em> bluza, farmerke i cipele.</li>
               <li><strong>Govor:</strong> Pričajte polako i razgovetno kako bi poslodavac mogao da razume svaku vašu reč/rečenicu.</li>
@@ -66,10 +62,10 @@ export default function VideoInstructionsModal({ isOpen, onClose, t }) {
 
           {/* Obavezno odgovoriti */}
           <div className="space-y-2">
-            <h4 className="font-extrabold text-slate-900 text-xs uppercase tracking-wide">
+            <h4 className="font-bold text-ink text-[13px]">
               1. Obavezno je odgovoriti na sledeće:
             </h4>
-            <ul className="list-disc pl-5 space-y-1 text-slate-700">
+            <ul className="list-disc pl-5 space-y-1 text-ink-2">
               <li><strong>Osnovne informacije o sebi:</strong> ime, prezime, grad iz kog dolazite, fakultet koji studirate...</li>
               <li><strong>Radno iskustvo:</strong> Ukoliko ste već bili na SWT programu, to je obavezno istaći; ukoliko niste, navedite radno iskustvo stečeno u Srbiji ili inostranstvu.</li>
               <li><strong>Ako nemate radnog iskustva:</strong> navedite da ste volontirali na nekom događaju ili učestvovali u organizaciji studentskih i školskih aktivnosti.</li>
@@ -78,11 +74,11 @@ export default function VideoInstructionsModal({ isOpen, onClose, t }) {
 
           {/* Dodatna pitanja */}
           <div className="space-y-2">
-            <h4 className="font-extrabold text-slate-900 text-xs uppercase tracking-wide">
+            <h4 className="font-bold text-ink text-[13px]">
               2. Dodatna pitanja (izaberite 3–5 pitanja — NE treba odgovoriti na sva):
             </h4>
-            <div className="grid gap-2 sm:grid-cols-2 bg-slate-50 p-3 rounded-xl border border-black/5">
-              <div className="space-y-1.5 text-slate-700">
+            <div className="grid gap-2 sm:grid-cols-2 bg-surface p-3 rounded-xl border border-line">
+              <div className="space-y-1.5 text-ink-2">
                 <p>• Šta za Vas znači odlazak na Work and Travel program / zašto želite da idete?</p>
                 <p>• Šta želite da Amerikanci nauče o vašoj kulturi?</p>
                 <p>• Koje su Vaše prednosti? <em>(izbegavajte opšta mesta poput samo "komunikativnost")</em></p>
@@ -90,7 +86,7 @@ export default function VideoInstructionsModal({ isOpen, onClose, t }) {
                 <p>• Šta Vas čini dobrim zaposlenim — zašto poslodavac treba baš Vas da zaposli?</p>
                 <p>• Koji će vam biti najveći izazov života i rada u Americi?</p>
               </div>
-              <div className="space-y-1.5 text-slate-700">
+              <div className="space-y-1.5 text-ink-2">
                 <p>• Čemu se najviše radujete da vidite, posetite ili radite u Americi?</p>
                 <p>• Koje 3 stvari biste preporučili strancima da vide ili rade u Srbiji?</p>
                 <p>• Kako bi vaš karakter opisali rodbina ili prijatelji?</p>
@@ -102,17 +98,17 @@ export default function VideoInstructionsModal({ isOpen, onClose, t }) {
           </div>
 
           {/* Obavezno finalno pitanje */}
-          <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-amber-950 font-semibold">
-            ⭐ <strong>Obavezno finalno pitanje na kraju videa:</strong><br />
+          <div className="rounded-xl bg-amber-50 p-3 text-amber-950 font-semibold">
+            <strong>Obavezno finalno pitanje na kraju videa:</strong><br />
             <em>"Šta bi još kompanija koja Vas zapošljava trebalo da zna o vama?"</em>
           </div>
 
           {/* Pravi primeri studentskih video CV-ja */}
           <div>
-            <h4 className="font-extrabold text-slate-900 text-xs uppercase tracking-wide mb-2">
+            <h4 className="font-bold text-ink text-[13px] mb-2">
               Zvanični primeri studentskih video CV snimaka:
             </h4>
-            <div className="overflow-hidden rounded-xl border border-black/10 shadow-sm bg-black">
+            <div className="overflow-hidden rounded-xl border border-line bg-ink">
               <iframe
                 src="https://www.youtube.com/embed/5nfIF6QW3RM"
                 title="Primer zvaničnog video CV-a - American Adventure"
@@ -120,22 +116,21 @@ export default function VideoInstructionsModal({ isOpen, onClose, t }) {
                 allowFullScreen
               />
             </div>
-            <div className="mt-2.5 flex flex-wrap gap-2 text-[11px]">
-              <span className="text-slate-500 font-semibold">Dodatni primeri na YouTube:</span>
-              <a href="https://youtu.be/PhtfiddS9P8" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Primer 2 ↗</a>
-              <a href="https://youtu.be/GN8l0aBMz5I" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Primer 3 ↗</a>
-              <a href="https://youtu.be/gxBT9ZUC93w" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Primer 4 ↗</a>
-              <a href="https://youtu.be/ZULkNRep1HA" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Primer 5 ↗</a>
+            <div className="mt-2.5 flex flex-wrap gap-2 text-xs">
+              <span className="text-ink-3 font-semibold">Dodatni primeri na YouTube:</span>
+              <a href="https://youtu.be/PhtfiddS9P8" target="_blank" rel="noopener noreferrer" className="text-ink hover:underline">Primer 2 ↗</a>
+              <a href="https://youtu.be/GN8l0aBMz5I" target="_blank" rel="noopener noreferrer" className="text-ink hover:underline">Primer 3 ↗</a>
+              <a href="https://youtu.be/gxBT9ZUC93w" target="_blank" rel="noopener noreferrer" className="text-ink hover:underline">Primer 4 ↗</a>
+              <a href="https://youtu.be/ZULkNRep1HA" target="_blank" rel="noopener noreferrer" className="text-ink hover:underline">Primer 5 ↗</a>
             </div>
           </div>
 
-          <div className="pt-2 flex items-center justify-between border-t border-black/10">
-            <span className="text-[11px] text-slate-500">American Adventure 2027</span>
+          <div className="pt-2 flex items-center justify-between border-t border-line">
+            <span className="text-xs text-ink-3">American Adventure 2027</span>
             <button
               type="button"
               onClick={onClose}
-              className="rounded-full px-6 py-2.5 text-xs font-bold uppercase tracking-wider shadow-sm hover:brightness-105"
-              style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+              className="bg-brand text-ink rounded-full px-6 py-2.5 text-[13px] font-semibold transition-colors hover:bg-brand-strong"
             >
               Razumem, zatvori uputstvo ✓
             </button>

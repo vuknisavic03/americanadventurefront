@@ -156,20 +156,20 @@ export default function DiscountsSection() {
       />
 
       {toast && (
-        <div className="rounded-xl border border-green-300 bg-green-50 p-4 text-xs font-bold text-green-900 shadow-xs animate-in fade-in">
+        <div className="rounded-xl bg-emerald-50 p-4 text-xs font-semibold text-emerald-900">
           ✓ {toast}
         </div>
       )}
 
       {/* GLAVNI TABOVI SEKCIJE */}
-      <div className="flex border-b border-black/[0.08]">
+      <div className="flex border-b border-line">
         <button
           type="button"
           onClick={() => setActiveTab("promotions")}
           className={`flex items-center gap-2 border-b-2 px-5 py-3 text-sm font-semibold transition-colors duration-150 ${
             activeTab === "promotions"
-              ? "border-[var(--brand-ink)] text-[var(--brand-ink)] font-bold"
-              : "border-transparent text-[var(--brand-ink)]/55 hover:text-[var(--brand-ink)]"
+              ? "border-ink text-ink font-semibold"
+              : "border-transparent text-ink-3 hover:text-ink"
           }`}
         >
           <span>Sve promocije i popusti ({promotions.length})</span>
@@ -180,13 +180,13 @@ export default function DiscountsSection() {
           onClick={() => setActiveTab("affiliates")}
           className={`flex items-center gap-2 border-b-2 px-5 py-3 text-sm font-semibold transition-colors duration-150 ${
             activeTab === "affiliates"
-              ? "border-[var(--brand-ink)] text-[var(--brand-ink)] font-bold"
-              : "border-transparent text-[var(--brand-ink)]/55 hover:text-[var(--brand-ink)]"
+              ? "border-ink text-ink font-semibold"
+              : "border-transparent text-ink-3 hover:text-ink"
           }`}
         >
           <span>Afilijate / Preporuke ({affiliateStatsList.length})</span>
           {totalQualifiedReferrals > 0 && (
-            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800">
+            <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
               {totalQualifiedReferrals} kvalifikovano
             </span>
           )}
@@ -197,13 +197,13 @@ export default function DiscountsSection() {
           onClick={() => setActiveTab("groups")}
           className={`flex items-center gap-2 border-b-2 px-5 py-3 text-sm font-semibold transition-colors duration-150 ${
             activeTab === "groups"
-              ? "border-[var(--brand-ink)] text-[var(--brand-ink)] font-bold"
-              : "border-transparent text-[var(--brand-ink)]/55 hover:text-[var(--brand-ink)]"
+              ? "border-ink text-ink font-semibold"
+              : "border-transparent text-ink-3 hover:text-ink"
           }`}
         >
           <span>Grupe (Uslov 5+) ({groupStatsList.length})</span>
           {totalQualifiedGroups > 0 && (
-            <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800">
+            <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
               {totalQualifiedGroups} odobreno
             </span>
           )}
@@ -217,7 +217,7 @@ export default function DiscountsSection() {
         <div className="space-y-4">
           {/* Filteri i pretraga */}
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-black/10 bg-white p-1">
+            <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-line bg-white p-1">
               {[
                 ["all", `Svi (${promotions.length})`],
                 ["immediate", `Obračun odmah (${promotions.filter((p) => p.timing === "immediate").length})`],
@@ -230,8 +230,8 @@ export default function DiscountsSection() {
                   onClick={() => setFilterTiming(key)}
                   className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
                     filterTiming === key
-                      ? "bg-[var(--brand-ink)] text-white shadow-xs"
-                      : "text-[var(--brand-ink)]/60 hover:bg-black/[0.04]"
+                      ? "bg-ink text-white"
+                      : "text-ink-3 hover:bg-surface-2"
                   }`}
                 >
                   {label}
@@ -240,7 +240,7 @@ export default function DiscountsSection() {
             </div>
 
             <div className="relative w-full sm:w-64">
-              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--brand-ink)]/40">
+              <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-3">
                 <SearchIcon />
               </span>
               <input
@@ -248,7 +248,7 @@ export default function DiscountsSection() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Pretraži popust..."
-                className="w-full rounded-lg border border-black/15 bg-white py-2 pl-9 pr-3 text-xs placeholder:text-black/35 focus:outline-hidden focus:ring-2 focus:ring-[var(--brand-ink)]/10"
+                className="w-full rounded-lg border border-line-strong bg-white py-2 pl-9 pr-3 text-xs placeholder:text-ink-3/70 focus:outline-hidden focus:ring-2 focus:ring-ink/10"
               />
             </div>
           </div>
@@ -258,18 +258,18 @@ export default function DiscountsSection() {
             {filteredPromos.map((promo) => {
               const usingCount = candidates.filter((c) => c.discountId === promo.id).length;
               return (
-                <Card key={promo.id} className="flex flex-col justify-between p-5 hover:border-black/25 transition-all">
+                <Card key={promo.id} className="flex flex-col justify-between p-5 hover:border-line-strong transition-all">
                   <div>
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="font-mono text-[10px] font-bold rounded-md bg-black/[0.06] px-2 py-0.5 text-[var(--brand-ink)]/70">
+                        <span className="tabular-nums text-2xs font-semibold rounded-md bg-surface-2 px-2 py-0.5 text-ink-2">
                           {promo.code || promo.id}
                         </span>
                         <span
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider ${
+                          className={`rounded-full px-3 py-1 text-xs font-medium ${
                             promo.timing === "immediate"
-                              ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
-                              : "bg-sky-100 text-sky-800 border border-sky-200"
+                              ? "bg-emerald-100 text-emerald-800"
+                              : "bg-surface-2 text-ink"
                           }`}
                         >
                           {promo.timing === "immediate" ? "Obračun: Odmah" : "Obračun: Na kraju"}
@@ -284,34 +284,34 @@ export default function DiscountsSection() {
                       />
                     </div>
 
-                    <h3 className="mt-3 text-base font-extrabold text-[var(--brand-ink)] leading-snug">
+                    <h3 className="mt-3 text-base font-bold text-ink leading-snug">
                       {promo.name || promo.title}
                     </h3>
 
                     <div className="mt-1 flex items-baseline gap-1.5">
-                      <span className="text-xl font-black text-[var(--brand-ink)]">
+                      <span className="text-xl font-bold text-ink">
                         {promo.amount > 0 ? `-${promo.amount} $` : "Pogodnost"}
                       </span>
                       {promo.timing === "end" && (
-                        <span className="text-[11px] font-semibold text-[var(--brand-ink)]/50">
+                        <span className="text-xs font-semibold text-ink-3">
                           (poslednja rata)
                         </span>
                       )}
                     </div>
 
-                    <p className="mt-2 text-xs leading-relaxed text-[var(--brand-ink)]/70 line-clamp-3">
+                    <p className="mt-2 text-xs leading-relaxed text-ink-2 line-clamp-3">
                       {promo.description}
                     </p>
 
                     {promo.conditionText && (
-                      <div className="mt-3 rounded-md bg-black/[0.03] p-2 text-[11px] font-medium text-[var(--brand-ink)]/75">
+                      <div className="mt-3 rounded-md bg-surface p-2 text-xs font-medium text-ink-2">
                         <strong>Uslov:</strong> {promo.conditionText}
                       </div>
                     )}
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-black/[0.06] flex items-center justify-between text-xs">
-                    <span className="font-semibold text-[var(--brand-ink)]/60">
+                  <div className="mt-4 pt-3 border-t border-line flex items-center justify-between text-xs">
+                    <span className="font-semibold text-ink-3">
                       {usingCount} kandidat(a)
                     </span>
 
@@ -319,10 +319,10 @@ export default function DiscountsSection() {
                       <button
                         type="button"
                         onClick={() => handleToggleActive(promo)}
-                        className={`rounded-md px-2 py-1 text-[11px] font-bold transition-colors ${
+                        className={`rounded-md px-2 py-1 text-xs font-semibold transition-colors ${
                           promo.active
-                            ? "bg-amber-100 text-amber-900 hover:bg-amber-200"
-                            : "bg-emerald-100 text-emerald-900 hover:bg-emerald-200"
+                            ? "bg-amber-100 text-amber-800 hover:bg-amber-200"
+                            : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
                         }`}
                       >
                         {promo.active ? "Pauziraj" : "Aktiviraj"}
@@ -331,7 +331,7 @@ export default function DiscountsSection() {
                       <button
                         type="button"
                         onClick={() => handleOpenEdit(promo)}
-                        className="rounded-md border border-black/15 bg-white px-2 py-1 text-[11px] font-semibold hover:bg-black/[0.03]"
+                        className="rounded-full border border-line-strong bg-white px-2 py-1 text-xs font-semibold hover:bg-surface"
                       >
                         Izmeni
                       </button>
@@ -340,7 +340,7 @@ export default function DiscountsSection() {
                         <button
                           type="button"
                           onClick={() => handleDeletePromo(promo.id, promo.name)}
-                          className="rounded-md border border-red-200 bg-red-50 px-2 py-1 text-[11px] font-semibold text-red-700 hover:bg-red-100"
+                          className="rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-700 hover:bg-red-100"
                         >
                           Obriši
                         </button>
@@ -359,10 +359,10 @@ export default function DiscountsSection() {
       ======================================================== */}
       {activeTab === "affiliates" && (
         <div className="space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-black/10 bg-white p-4 shadow-xs">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-line bg-white p-4">
             <div>
-              <h3 className="text-sm font-bold text-[var(--brand-ink)]">Afilijate program i preporuke</h3>
-              <p className="text-xs text-[var(--brand-ink)]/60">
+              <h3 className="text-sm font-semibold text-ink">Afilijate program i preporuke</h3>
+              <p className="text-xs text-ink-3">
                 Povežite preporučioca i dovedenog kandidata preko emaila ili pratite automatske registracije.
               </p>
             </div>
@@ -371,31 +371,31 @@ export default function DiscountsSection() {
             </PrimaryButton>
           </div>
 
-          <div className="rounded-xl border border-black/10 bg-sky-50/50 p-4 text-xs leading-relaxed text-sky-950">
+          <div className="rounded-2xl border border-line bg-white p-5 text-xs leading-relaxed text-ink sm:p-6">
             <strong>Pravilo Afilijate programa (Cashback):</strong> Kandidat ostvaruje popust od <strong>$100 po dovedenom prijatelju</strong> na poslednjoj rati. Popust se stiče <strong>ISKLJUČIVO ukoliko prijatelj uspešno prođe viziranje i obezbedi posao</strong>.
           </div>
 
           {/* KPI zbirni podaci */}
           <div className="grid gap-4 sm:grid-cols-4">
             <Card className="p-4">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand-ink)]/50">Ukupno dovedenih</span>
-              <p className="mt-1 text-2xl font-black text-[var(--brand-ink)]">{totalReferredCount}</p>
+              <span className="text-xs font-semibold text-ink-3">Ukupno dovedenih</span>
+              <p className="mt-1 text-2xl font-bold text-ink">{totalReferredCount}</p>
             </Card>
             <Card className="p-4">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand-ink)]/50">Dobili posao</span>
-              <p className="mt-1 text-2xl font-black text-blue-700">
+              <span className="text-xs font-semibold text-ink-3">Dobili posao</span>
+              <p className="mt-1 text-2xl font-bold text-ink">
                 {affiliateStatsList.reduce((sum, i) => sum + i.stats.withJobCount, 0)}
               </p>
             </Card>
             <Card className="p-4">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand-ink)]/50">Dobili vizu</span>
-              <p className="mt-1 text-2xl font-black text-amber-700">
+              <span className="text-xs font-semibold text-ink-3">Dobili vizu</span>
+              <p className="mt-1 text-2xl font-bold text-amber-700">
                 {affiliateStatsList.reduce((sum, i) => sum + i.stats.withVisaCount, 0)}
               </p>
             </Card>
-            <Card className="p-4 bg-emerald-50/60 border-emerald-200">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-900/60">Kvalifikovani popust</span>
-              <p className="mt-1 text-2xl font-black text-emerald-900">
+            <Card className="p-4 bg-emerald-50">
+              <span className="text-xs font-semibold text-emerald-900/60">Kvalifikovani popust</span>
+              <p className="mt-1 text-2xl font-bold text-emerald-900">
                 ${totalAffiliateDiscounts} <span className="text-xs font-semibold">({totalQualifiedReferrals} prijatelja)</span>
               </p>
             </Card>
@@ -403,7 +403,7 @@ export default function DiscountsSection() {
 
           {/* Lista afilijata */}
           {affiliateStatsList.length === 0 ? (
-            <Card className="p-8 text-center text-xs text-[var(--brand-ink)]/50 space-y-3">
+            <Card className="p-8 text-center text-xs text-ink-3 space-y-3">
               <p>Trenutno nijedan kandidat nema evidentirane preporuke prijatelja sa afilijate kodom.</p>
               <div>
                 <PrimaryButton onClick={() => setAffiliateModalOpen(true)}>
@@ -415,32 +415,32 @@ export default function DiscountsSection() {
             <div className="space-y-3">
               {affiliateStatsList.map(({ candidate, stats }) => (
                 <Card key={candidate.id} className="p-5">
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.06] pb-3">
+                  <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <div>
-                      <h4 className="text-sm font-extrabold text-[var(--brand-ink)]">
+                      <h4 className="text-base font-semibold leading-snug text-ink">
                         {candidate.firstName} {candidate.lastName}
                       </h4>
-                      <p className="text-xs text-[var(--brand-ink)]/60">{candidate.email}</p>
+                      <p className="text-xs text-ink-3">{candidate.email}</p>
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-xs font-bold rounded-lg bg-black/[0.05] px-2.5 py-1">
+                      <span className="tabular-nums text-xs font-semibold rounded-lg bg-surface-2 px-2.5 py-1">
                         Kod: {stats.referralCode}
                       </span>
-                      <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-extrabold text-emerald-900">
+                      <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
                         Popust: ${stats.earnedDiscount} ({stats.qualifiedCount} kvalifikovanih)
                       </span>
                     </div>
                   </div>
 
                   <div className="mt-3">
-                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/40 mb-2">
+                    <p className="text-[13px] font-semibold text-ink-3 mb-2">
                       Dovedeni prijatelji ({stats.totalReferred}):
                     </p>
                     <div className="overflow-x-auto">
                       <table className="w-full text-left text-xs">
                         <thead>
-                          <tr className="border-b border-black/[0.06] text-[var(--brand-ink)]/50">
+                          <tr className="border-b border-line text-ink-3">
                             <th className="py-2">Prijatelj</th>
                             <th className="py-2">Posao</th>
                             <th className="py-2">Viza</th>
@@ -448,20 +448,20 @@ export default function DiscountsSection() {
                             <th className="py-2 text-right">Akcije</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-black/[0.04]">
+                        <tbody className="divide-y divide-line">
                           {stats.referrals.map((r) => (
                             <tr key={r.id}>
-                              <td className="py-2 font-semibold text-[var(--brand-ink)]">
+                              <td className="py-2 font-semibold text-ink">
                                 <div>{r.name}</div>
-                                <div className="text-[10px] text-black/50 font-normal">{r.email}</div>
+                                <div className="text-2xs text-ink-3 font-normal">{r.email}</div>
                               </td>
                               <td className="py-2">
                                 <button
                                   type="button"
                                   onClick={() => handleToggleFriendFlag(r.id, "hasJob", r.hasJob)}
                                   title="Kliknite za brzu promenu statusa posla"
-                                  className={`rounded-md px-2 py-0.5 text-[10px] font-bold transition-all cursor-pointer hover:opacity-80 ${
-                                    r.hasJob ? "bg-green-100 text-green-800 border border-green-300" : "bg-black/[0.05] text-black/60 hover:bg-black/10"
+                                  className={`rounded-full px-2 py-0.5 text-2xs font-semibold transition-all cursor-pointer hover:opacity-80 ${
+                                    r.hasJob ? "bg-emerald-100 text-emerald-800" : "bg-surface-2 text-ink-3 hover:bg-neutral-200"
                                   }`}
                                 >
                                   {r.hasJob ? "✓ Posao potvrđen" : "○ U proceduri (klikni)"}
@@ -472,18 +472,18 @@ export default function DiscountsSection() {
                                   type="button"
                                   onClick={() => handleToggleFriendFlag(r.id, "hasVisa", r.hasVisa)}
                                   title="Kliknite za brzu promenu statusa vize"
-                                  className={`rounded-md px-2 py-0.5 text-[10px] font-bold transition-all cursor-pointer hover:opacity-80 ${
-                                    r.hasVisa ? "bg-green-100 text-green-800 border border-green-300" : "bg-black/[0.05] text-black/60 hover:bg-black/10"
+                                  className={`rounded-full px-2 py-0.5 text-2xs font-semibold transition-all cursor-pointer hover:opacity-80 ${
+                                    r.hasVisa ? "bg-emerald-100 text-emerald-800" : "bg-surface-2 text-ink-3 hover:bg-neutral-200"
                                   }`}
                                 >
                                   {r.hasVisa ? "✓ Viza odobrena" : "○ Čeka vizu (klikni)"}
                                 </button>
                               </td>
                               <td className="py-2">
-                                <span className={`rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase ${
+                                <span className={`rounded-full px-3 py-1 text-xs font-medium ${
                                   r.isQualified
-                                    ? "bg-emerald-100 text-emerald-900 border border-emerald-300"
-                                    : "bg-amber-100 text-amber-900"
+                                    ? "bg-emerald-100 text-emerald-800"
+                                    : "bg-amber-100 text-amber-800"
                                 }`}>
                                   {r.isQualified ? "Kvalifikovan (-$100)" : "Čeka vizu & posao"}
                                 </span>
@@ -492,7 +492,7 @@ export default function DiscountsSection() {
                                 <button
                                   type="button"
                                   onClick={() => handleUnlinkFriend(r.id, r.name)}
-                                  className="rounded-md border border-red-200 bg-red-50/70 px-2 py-0.5 text-[10px] font-bold text-red-700 hover:bg-red-100 transition-colors"
+                                  className="rounded-full bg-red-50 px-2 py-0.5 text-2xs font-semibold text-red-700 hover:bg-red-100 transition-colors"
                                   title="Ukloni afilijate vezu"
                                 >
                                   Ukloni
@@ -516,25 +516,25 @@ export default function DiscountsSection() {
       ======================================================== */}
       {activeTab === "groups" && (
         <div className="space-y-4">
-          <div className="rounded-xl border border-black/10 bg-amber-50/50 p-4 text-xs leading-relaxed text-amber-950">
+          <div className="rounded-xl border border-line bg-amber-50/50 p-4 text-xs leading-relaxed text-amber-950">
             <strong>Pravilo za Grupni popust:</strong> Grupni popust od <strong>$100 po prijavljenom kandidatu</strong> ostvaruje se na poslednjoj rati <strong>SAMO AKO preko 5+ (najmanje 5) članova grupe uspešno obezbedi i vizu i posao</strong>.
           </div>
 
           {groupStatsList.length === 0 ? (
-            <Card className="p-8 text-center text-xs text-[var(--brand-ink)]/50">
+            <Card className="p-8 text-center text-xs text-ink-3">
               Trenutno nijedan kandidat nema dodeljenu šifru grupe. Šifru grupe možete uneti u profilu kandidata ili pri prijavi.
             </Card>
           ) : (
             <div className="space-y-4">
               {groupStatsList.map((g) => (
                 <Card key={g.groupCode} className="p-5">
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-black/[0.06] pb-3">
+                  <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-sm font-extrabold text-[var(--brand-ink)]">
+                        <span className="tabular-nums text-sm font-bold text-ink">
                           Šifra grupe: {g.groupCode}
                         </span>
-                        <span className="text-xs font-semibold text-[var(--brand-ink)]/60">
+                        <span className="text-xs font-semibold text-ink-3">
                           ({g.totalMembers} prijavljenih članova)
                         </span>
                       </div>
@@ -542,12 +542,12 @@ export default function DiscountsSection() {
 
                     <div>
                       {g.isGroupQualified ? (
-                        <span className="rounded-full bg-emerald-100 border border-emerald-300 px-3 py-1 text-xs font-black text-emerald-900">
+                        <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
                           ✓ USLOV ISPUNJEN (5+) — Popust $100 po članu ODOBREN!
                         </span>
                       ) : (
-                        <span className="rounded-full bg-amber-100 border border-amber-300 px-3 py-1 text-xs font-bold text-amber-900">
-                          ⚠ Na čekanju ({g.qualifiedCount}/5 sa vizom i poslom)
+                        <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800">
+                          Na čekanju ({g.qualifiedCount}/5 sa vizom i poslom)
                         </span>
                       )}
                     </div>
@@ -555,11 +555,11 @@ export default function DiscountsSection() {
 
                   {/* Progres do 5 članova */}
                   <div className="mt-3">
-                    <div className="flex justify-between text-xs font-bold text-[var(--brand-ink)]/70 mb-1">
+                    <div className="flex justify-between text-xs font-semibold text-ink-2 mb-1">
                       <span>Kvalifikovani članovi sa vizom i poslom:</span>
                       <span>{g.qualifiedCount} od 5 (potrebno {Math.max(0, 5 - g.qualifiedCount)} još)</span>
                     </div>
-                    <div className="h-2 w-full overflow-hidden rounded-full bg-black/[0.08]">
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-surface-2">
                       <div
                         className={`h-full rounded-full transition-all duration-300 ${
                           g.isGroupQualified ? "bg-emerald-600" : "bg-amber-500"
@@ -571,40 +571,40 @@ export default function DiscountsSection() {
 
                   {/* Spisak članova grupe */}
                   <div className="mt-4">
-                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/40 mb-2">
+                    <p className="text-[13px] font-semibold text-ink-3 mb-2">
                       Članovi grupe:
                     </p>
                     <div className="overflow-x-auto">
                       <table className="w-full text-left text-xs">
                         <thead>
-                          <tr className="border-b border-black/[0.06] text-[var(--brand-ink)]/50">
+                          <tr className="border-b border-line text-ink-3">
                             <th className="py-2">Član grupe</th>
                             <th className="py-2">Posao</th>
                             <th className="py-2">Viza</th>
                             <th className="py-2">Ispunjen uslov</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-black/[0.04]">
+                        <tbody className="divide-y divide-line">
                           {g.members.map((m) => (
                             <tr key={m.id}>
-                              <td className="py-2 font-semibold text-[var(--brand-ink)]">{m.name}</td>
+                              <td className="py-2 font-semibold text-ink">{m.name}</td>
                               <td className="py-2">
-                                <span className={`rounded-md px-2 py-0.5 text-[10px] font-bold ${
-                                  m.hasJob ? "bg-green-100 text-green-800" : "bg-black/[0.05] text-black/50"
+                                <span className={`rounded-md px-2 py-0.5 text-2xs font-semibold ${
+                                  m.hasJob ? "bg-emerald-100 text-emerald-800" : "bg-surface-2 text-ink-3"
                                 }`}>
                                   {m.hasJob ? "✓ Posao potvrđen" : "U proceduri"}
                                 </span>
                               </td>
                               <td className="py-2">
-                                <span className={`rounded-md px-2 py-0.5 text-[10px] font-bold ${
-                                  m.hasVisa ? "bg-green-100 text-green-800" : "bg-black/[0.05] text-black/50"
+                                <span className={`rounded-md px-2 py-0.5 text-2xs font-semibold ${
+                                  m.hasVisa ? "bg-emerald-100 text-emerald-800" : "bg-surface-2 text-ink-3"
                                 }`}>
                                   {m.hasVisa ? "✓ Viza odobrena" : "Čeka viziranje"}
                                 </span>
                               </td>
                               <td className="py-2">
-                                <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                                  m.isQualified ? "bg-emerald-100 text-emerald-900" : "bg-black/[0.05] text-black/40"
+                                <span className={`rounded-full px-3 py-1 text-xs font-medium ${
+                                  m.isQualified ? "bg-emerald-100 text-emerald-800" : "bg-surface-2 text-ink-3"
                                 }`}>
                                   {m.isQualified ? "✓ Viza & Posao OK" : "Čeka uslov"}
                                 </span>

@@ -25,7 +25,6 @@ import {
 import {
   STATUS,
   STATUS_FLOW,
-  PIPELINE_STEPS,
   CheckIcon,
   PlusIcon,
   SearchIcon,
@@ -50,7 +49,6 @@ import {
   ScheduleConsultationModal,
   CandidateSelectionModal,
   ProfileReadinessModal,
-  QualifyCandidateModal,
   RejectPreAppModal,
   NewPreAppModal,
   GenerateCodeModal,
@@ -120,7 +118,7 @@ export default function UsersSection() {
   const [copiedCode, setCopiedCode] = useState("");
 
   const inputCls =
-    "w-full rounded-lg border border-black/[0.12] bg-white py-2.5 pl-9 pr-3.5 text-sm text-[var(--brand-ink)] transition-colors duration-150 placeholder:text-black/35 focus:border-[var(--brand-ink)] focus:outline-hidden focus:ring-2 focus:ring-[var(--brand-ink)]/10";
+    "w-full rounded-lg border border-line-strong bg-white py-2.5 pl-9 pr-3.5 text-sm text-ink transition-colors duration-150 placeholder:text-ink-3/70 focus:border-ink focus:outline-hidden focus:ring-2 focus:ring-ink/10";
 
   // Čuvanje izmena aplikacije kandidata (pun dosije)
   const handleSaveCandidate = (updatedCandidate, options = {}) => {
@@ -558,7 +556,7 @@ export default function UsersSection() {
                 <button
                   type="button"
                   onClick={() => downloadPreApplicationsExcel(preAppsList)}
-                  className="inline-flex items-center gap-2 rounded-lg border border-black/15 bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-ink)] shadow-xs transition-colors hover:bg-black/[0.04]"
+                  className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
                   title="Preuzmi sve prijave, trijažne i selekcione podatke u Excel (.xlsx / UTF-8 CSV) tabeli"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-emerald-700">
@@ -583,7 +581,7 @@ export default function UsersSection() {
                 <button
                   type="button"
                   onClick={downloadEmbassyExport}
-                  className="inline-flex items-center gap-2 rounded-lg border border-black/15 bg-white px-4 py-2.5 text-sm font-semibold text-[var(--brand-ink)] shadow-xs transition-colors hover:bg-black/[0.04]"
+                  className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
                   title="Preuzmi zvaničnu tabelu kandidata za Ambasadu SAD i US sponzore (Tabela za Ambasadu.xlsx)"
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-emerald-700">
@@ -603,9 +601,9 @@ export default function UsersSection() {
       />
 
       {successToast && (
-        <div className="mb-6 flex items-center justify-between rounded-xl border border-green-300 bg-green-50 px-4 py-3 text-xs font-bold text-green-900 shadow-xs">
+        <div className="mb-6 flex items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-xs font-semibold text-emerald-900">
           <span>✓ {successToast}</span>
-          <button type="button" onClick={() => setSuccessToast("")} className="text-green-800 hover:text-green-950 font-black">
+          <button type="button" onClick={() => setSuccessToast("")} className="text-emerald-800 hover:text-emerald-950 font-bold">
             ✕
           </button>
         </div>
@@ -619,21 +617,21 @@ export default function UsersSection() {
       </div>
 
       {/* Tabovi: Faza 0 (Prijave & Selekcija) vs Faze 1-3 (Aktivni kandidati) vs Pozivnice */}
-      <div className="mb-5 flex flex-wrap gap-2 border-b border-black/[0.08] pb-3">
+      <div className="mb-5 flex flex-wrap gap-2 border-b border-line pb-3">
         <button
           type="button"
           onClick={() => setActiveTab("preApplications")}
-          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-colors ${
+          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
             activeTab === "preApplications"
-              ? "bg-[var(--brand-ink)] text-white shadow-xs"
-              : "bg-black/[0.04] text-[var(--brand-ink)]/70 hover:bg-black/[0.07]"
+              ? "bg-ink text-white"
+              : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
           }`}
         >
           <span>Prijave i Selekcija</span>
-          <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${
+          <span className={`rounded-full px-3 py-1 text-xs font-medium ${
             activeTab === "preApplications"
-              ? "bg-[var(--brand-yellow)] text-[var(--brand-ink)]"
-              : "bg-black/10 text-[var(--brand-ink)]"
+              ? "bg-brand text-ink"
+              : "bg-neutral-200 text-ink"
           }`}>
             {preAppsList.length}
           </span>
@@ -642,17 +640,17 @@ export default function UsersSection() {
         <button
           type="button"
           onClick={() => setActiveTab("candidates")}
-          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-colors ${
+          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
             activeTab === "candidates"
-              ? "bg-[var(--brand-ink)] text-white shadow-xs"
-              : "bg-black/[0.04] text-[var(--brand-ink)]/70 hover:bg-black/[0.07]"
+              ? "bg-ink text-white"
+              : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
           }`}
         >
           <span>Aktivni kandidati</span>
-          <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${
+          <span className={`rounded-full px-3 py-1 text-xs font-medium ${
             activeTab === "candidates"
-              ? "bg-[var(--brand-yellow)] text-[var(--brand-ink)]"
-              : "bg-black/10 text-[var(--brand-ink)]"
+              ? "bg-brand text-ink"
+              : "bg-neutral-200 text-ink"
           }`}>
             {activeProgramCandidates.length}
           </span>
@@ -661,17 +659,17 @@ export default function UsersSection() {
         <button
           type="button"
           onClick={() => setActiveTab("invitations")}
-          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-colors ${
+          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
             activeTab === "invitations"
-              ? "bg-[var(--brand-ink)] text-white shadow-xs"
-              : "bg-black/[0.04] text-[var(--brand-ink)]/70 hover:bg-black/[0.07]"
+              ? "bg-ink text-white"
+              : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
           }`}
         >
           <span>{t("admin.pendingInvitations")}</span>
-          <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${
+          <span className={`rounded-full px-3 py-1 text-xs font-medium ${
             activeTab === "invitations"
-              ? "bg-[var(--brand-yellow)] text-[var(--brand-ink)]"
-              : "bg-black/10 text-[var(--brand-ink)]"
+              ? "bg-brand text-ink"
+              : "bg-neutral-200 text-ink"
           }`}>
             {invitations.length}
           </span>
@@ -686,7 +684,7 @@ export default function UsersSection() {
           {/* Pretraga i filteri po fazama trijaže */}
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative sm:max-w-xs sm:flex-1">
-              <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--brand-ink)]/40" />
+              <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-3" />
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -702,8 +700,8 @@ export default function UsersSection() {
                   onClick={() => setPreAppFilter(id)}
                   className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-150 ${
                     preAppFilter === id
-                      ? "bg-[var(--brand-ink)] text-white shadow-2xs"
-                      : "bg-black/[0.05] text-[var(--brand-ink)]/65 hover:bg-black/[0.08]"
+                      ? "bg-ink text-white"
+                      : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
                   }`}
                 >
                   {label}
@@ -716,44 +714,44 @@ export default function UsersSection() {
             <EmptyState>Nema prijava u ovoj kategoriji pretrage.</EmptyState>
           ) : (
             <Card className="overflow-hidden">
-              <div className="border-b border-black/[0.06] bg-black/[0.02] px-5 py-3 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/50">
+              <div className="border-b border-line bg-surface px-5 py-3 text-[13px] font-semibold text-ink-3">
                 Evidencija prijava, trijaže, konsultacija i kvalifikacionog praga (Faza 0)
               </div>
-              <ul className="divide-y divide-black/[0.06]">
+              <ul className="divide-y divide-line">
                 {preAppRows.map((s) => (
                   <li
                     key={s.id}
-                    className="flex flex-col gap-4 p-5 transition-colors hover:bg-black/[0.015]"
+                    className="flex flex-col gap-4 p-5 transition-colors hover:bg-surface"
                   >
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       {/* Student info */}
                       <div className="flex items-start gap-3.5 min-w-[280px] max-w-sm">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-yellow)] text-sm font-black text-[var(--brand-ink)] shadow-2xs">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand text-sm font-bold text-ink">
                           {s.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                         </span>
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="font-bold text-sm text-[var(--brand-ink)] truncate">{s.name}</span>
+                            <span className="font-semibold text-sm text-ink truncate">{s.name}</span>
                             {s.isNew && (
-                              <span className="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700 animate-pulse">
+                              <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
                                 NOVO
                               </span>
                             )}
                           </div>
-                          <p className="text-xs text-[var(--brand-ink)]/70 mt-0.5">
-                            ✉️ {s.email}
+                          <p className="text-xs text-ink-2 mt-0.5">
+                            {s.email}
                           </p>
-                          <p className="text-xs text-[var(--brand-ink)]/70">
-                            📞 <strong>{s.phone || "Nije unet"}</strong>
+                          <p className="text-xs text-ink-2">
+                            <strong>{s.phone || "Nije unet"}</strong>
                           </p>
-                          <div className="mt-1.5 flex flex-wrap gap-1.5 text-[11px] text-[var(--brand-ink)]/65">
-                            <span className="inline-flex items-center rounded-md bg-black/[0.04] px-2 py-0.5 font-medium">
+                          <div className="mt-1.5 flex flex-wrap gap-1.5 text-xs text-ink-2">
+                            <span className="inline-flex items-center rounded-md bg-surface-2 px-2 py-0.5 font-medium">
                               {s.faculty || "Fakultet"} ({s.studyCity || "Beograd"})
                             </span>
-                            <span className="inline-flex items-center rounded-md bg-black/[0.04] px-2 py-0.5 font-medium">
+                            <span className="inline-flex items-center rounded-md bg-surface-2 px-2 py-0.5 font-medium">
                               Godina: {s.studyYear === "YEAR_1" ? "1. god" : s.studyYear === "YEAR_2" ? "2. god" : s.studyYear === "YEAR_3" ? "3. god" : s.studyYear === "YEAR_4" ? "4. god" : s.studyYear === "MASTER" ? "Master" : s.studyYear || "2. god"} ({s.ectsPoints || 0} ESPB)
                             </span>
-                            <span className="inline-flex items-center rounded-md bg-amber-50 text-amber-900 border border-amber-200 px-2 py-0.5 font-bold">
+                            <span className="inline-flex items-center rounded-md bg-amber-50 text-amber-900 px-2 py-0.5 font-semibold">
                               Engleski: {s.preferences?.englishLevel || "B2"}
                             </span>
                           </div>
@@ -763,10 +761,10 @@ export default function UsersSection() {
                       {/* 3 Faze obrade u karticama: 1. Poziv, 2. Konsultacije, 3. Selekcija */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1 min-w-[320px]">
                         {/* KORAK 1: Trijaža & Poziv */}
-                        <div className="rounded-xl border border-black/10 bg-white p-3 shadow-2xs flex flex-col justify-between">
+                        <div className="rounded-xl border border-line bg-white p-3 flex flex-col justify-between">
                           <div>
                             <div className="flex items-center justify-between gap-1 mb-1.5">
-                              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand-ink)]/50">
+                              <span className="text-xs font-semibold text-ink-3">
                                 1. Poziv & Trijaža
                               </span>
                               {s.contactStatus === "REACHED" || s.latestContactOutcome === "REACHED" ? (
@@ -780,36 +778,36 @@ export default function UsersSection() {
                               )}
                             </div>
                             {s.contactNotes ? (
-                              <p className="text-[11px] text-[var(--brand-ink)]/80 line-clamp-2 italic bg-black/[0.02] p-1.5 rounded-md">
+                              <p className="text-xs text-ink-2 line-clamp-2 italic bg-surface p-1.5 rounded-md">
                                 "{s.contactNotes}"
                               </p>
                             ) : (
-                              <p className="text-[11px] text-[var(--brand-ink)]/40 italic">Nema zabeleške sa poziva</p>
+                              <p className="text-xs text-ink-3 italic">Nema zabeleške sa poziva</p>
                             )}
                             {s.nextContactAt && (
-                              <p className="mt-1 text-[10px] font-bold text-amber-800">
+                              <p className="mt-1 text-2xs font-semibold text-amber-800">
                                 ⏰ Sledeći kontakt: {new Date(s.nextContactAt).toLocaleString("sr-RS", { dateStyle: "short", timeStyle: "short" })}
                               </p>
                             )}
                           </div>
-                          <div className="mt-2.5 pt-2 border-t border-black/5 flex items-center justify-between">
+                          <div className="mt-2.5 pt-2 border-t border-line flex items-center justify-between">
                             <button
                               type="button"
                               onClick={() => setSelectedCallCandidate(s)}
-                              className="inline-flex items-center gap-1.5 rounded-md border border-black/15 bg-white px-2.5 py-1 text-xs font-bold text-[var(--brand-ink)] hover:bg-black/[0.04]"
+                              className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
                             >
-                              <PhoneIcon className="h-3.5 w-3.5 text-blue-700" />
+                              <PhoneIcon className="h-3.5 w-3.5 text-ink" />
                               <span>{s.contactStatus ? "Ažuriraj poziv" : "Evidentiraj poziv"}</span>
                             </button>
                             {s.infoMaterialsSent ? (
-                              <span className="text-[10px] font-bold text-emerald-700 flex items-center gap-0.5" title={`Poslato: ${s.infoMaterialsSentAt ? new Date(s.infoMaterialsSentAt).toLocaleDateString() : "Da"}`}>
+                              <span className="text-2xs font-semibold text-emerald-700 flex items-center gap-0.5" title={`Poslato: ${s.infoMaterialsSentAt ? new Date(s.infoMaterialsSentAt).toLocaleDateString() : "Da"}`}>
                                 ✓ Info paket
                               </span>
                             ) : (
                               <button
                                 type="button"
                                 onClick={() => handleSendMaterials(s)}
-                                className="text-[10px] font-bold text-blue-800 hover:underline flex items-center gap-1"
+                                className="text-2xs font-semibold text-ink hover:underline flex items-center gap-1"
                                 title="Pošalji info brošuru i cenovnik na email kandidata"
                               >
                                 <MailIcon className="h-3 w-3" />
@@ -820,16 +818,16 @@ export default function UsersSection() {
                         </div>
 
                         {/* KORAK 2: Konsultacije (1-na-1) */}
-                        <div className="rounded-xl border border-black/10 bg-white p-3 shadow-2xs flex flex-col justify-between">
+                        <div className="rounded-xl border border-line bg-white p-3 flex flex-col justify-between">
                           <div>
                             <div className="flex items-center justify-between gap-1 mb-1.5">
-                              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand-ink)]/50">
+                              <span className="text-xs font-semibold text-ink-3">
                                 2. Info Konsultacije
                               </span>
                               {s.consultationStatus === "ATTENDED" ? (
                                 <Badge tone="green">✓ Održane</Badge>
                               ) : s.consultationStatus === "SCHEDULED" ? (
-                                <Badge tone="blue">📅 Zakazane</Badge>
+                                <Badge tone="blue">Zakazane</Badge>
                               ) : s.consultationStatus === "NO_SHOW" ? (
                                 <Badge tone="red">✕ Nije došao</Badge>
                               ) : (
@@ -837,38 +835,38 @@ export default function UsersSection() {
                               )}
                             </div>
                             {s.consultationStartsAt ? (
-                              <div className="text-[11px] font-bold text-[var(--brand-ink)]">
+                              <div className="text-xs font-semibold text-ink">
                                 {new Date(s.consultationStartsAt).toLocaleString("sr-RS", { dateStyle: "short", timeStyle: "short" })}
-                                <span className="ml-1.5 font-normal text-[10px] text-[var(--brand-ink)]/60">
-                                  ({s.consultationType === "IN_PERSON" ? "🏢 Uživo" : "💻 Online"})
+                                <span className="ml-1.5 font-normal text-2xs text-ink-3">
+                                  ({s.consultationType === "IN_PERSON" ? "Uživo" : "Online"})
                                 </span>
                               </div>
                             ) : (
-                              <p className="text-[11px] text-[var(--brand-ink)]/40 italic">Nije zakazan termin</p>
+                              <p className="text-xs text-ink-3 italic">Nije zakazan termin</p>
                             )}
                             {s.consultationNotes && (
-                              <p className="mt-1 text-[11px] text-[var(--brand-ink)]/80 line-clamp-2 italic bg-black/[0.02] p-1.5 rounded-md">
+                              <p className="mt-1 text-xs text-ink-2 line-clamp-2 italic bg-surface p-1.5 rounded-md">
                                 "{s.consultationNotes}"
                               </p>
                             )}
                           </div>
-                          <div className="mt-2.5 pt-2 border-t border-black/5">
+                          <div className="mt-2.5 pt-2 border-t border-line">
                             <button
                               type="button"
                               onClick={() => setSelectedConsultationCandidate(s)}
-                              className="inline-flex items-center gap-1.5 rounded-md border border-black/15 bg-white px-2.5 py-1 text-xs font-bold text-[var(--brand-ink)] hover:bg-black/[0.04]"
+                              className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
                             >
-                              <CalendarIcon className="h-3.5 w-3.5 text-purple-700" />
+                              <CalendarIcon className="h-3.5 w-3.5 text-ink" />
                               <span>{s.consultationStatus === "SCHEDULED" ? "Evidentiraj ishod" : "Zakaži konsultacije"}</span>
                             </button>
                           </div>
                         </div>
 
                         {/* KORAK 3: Selekciona odluka (Readiness Gate za Fazu 1) */}
-                        <div className="rounded-xl border border-black/10 bg-white p-3 shadow-2xs flex flex-col justify-between">
+                        <div className="rounded-xl border border-line bg-white p-3 flex flex-col justify-between">
                           <div>
                             <div className="flex items-center justify-between gap-1 mb-1.5">
-                              <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--brand-ink)]/50">
+                              <span className="text-xs font-semibold text-ink-3">
                                 3. Odluka (Gate u Fazu 1)
                               </span>
                               {s.selectionDecision === "QUALIFIED" || Boolean(s.activationCode) ? (
@@ -886,55 +884,55 @@ export default function UsersSection() {
                             {s.selectionDecision === "QUALIFIED" || Boolean(s.activationCode) ? (
                               <div className="space-y-1">
                                 <div className="flex items-center gap-2">
-                                  <span className="font-mono text-xs font-black tracking-wider text-[var(--brand-ink)]">
+                                  <span className="tabular-nums text-xs font-bold tracking-wider text-ink">
                                     {s.activationCode || "KOD GENERISAN"}
                                   </span>
                                   {s.activationCode && (
                                     <button
                                       type="button"
                                       onClick={() => copyInvitationCode(s.activationCode)}
-                                      className="text-[10px] font-bold text-blue-700 hover:underline"
+                                      className="text-2xs font-semibold text-ink hover:underline"
                                     >
                                       {copiedCode === s.activationCode ? "✓ Kopirano" : "Kopiraj"}
                                     </button>
                                   )}
                                 </div>
                                 {s.registeredAt || s.isRegistered || s.status === "review" ? (
-                                  <p className="text-[10px] text-emerald-800 font-bold">
+                                  <p className="text-2xs text-emerald-800 font-semibold">
                                     ✓ Prešao u Fazu 1 ({s.packageName || "Program"})
                                   </p>
                                 ) : (
-                                  <p className="text-[10px] text-amber-800 font-medium">
+                                  <p className="text-2xs text-amber-800 font-medium">
                                     Čeka aktivaciju naloga ({s.packageName || "Program"})
                                   </p>
                                 )}
                               </div>
                             ) : s.selectionDecision === "REJECTED" || s.status === "rejected" ? (
-                              <p className="text-[11px] text-red-900 font-medium line-clamp-2">
+                              <p className="text-xs text-red-900 font-medium line-clamp-2">
                                 {s.decisionNote || "Prijava nije odobrena"}
                               </p>
                             ) : (
-                              <p className="text-[11px] text-[var(--brand-ink)]/60">
+                              <p className="text-xs text-ink-3">
                                 Nakon obavljenih konsultacija, donesite selekcionu odluku i izdajte registracioni kod.
                               </p>
                             )}
                           </div>
-                          <div className="mt-2.5 pt-2 border-t border-black/5 flex flex-wrap items-center justify-between gap-1.5">
+                          <div className="mt-2.5 pt-2 border-t border-line flex flex-wrap items-center justify-between gap-1.5">
                             {s.selectionDecision !== "QUALIFIED" && !s.activationCode && s.status !== "rejected" ? (
                               <>
                                 <button
                                   type="button"
                                   onClick={() => setSelectedQualifyCandidate(s)}
-                                  className="inline-flex items-center gap-1 rounded-md bg-[var(--brand-ink)] px-2.5 py-1 text-xs font-bold text-white shadow-xs hover:bg-black active:scale-95"
+                                  className="inline-flex items-center gap-1 rounded-full bg-ink px-2.5 py-1 text-xs font-semibold text-white hover:bg-neutral-950"
                                   title="Obavi selekciju kandidata"
                                 >
-                                  <UserCheckIcon className="h-3.5 w-3.5 text-[var(--brand-yellow)]" />
+                                  <UserCheckIcon className="h-3.5 w-3.5 text-brand" />
                                   <span>Selekcija</span>
                                 </button>
                                 <button
                                   type="button"
                                   onClick={() => setSelectedRejectCandidate(s)}
-                                  className="inline-flex items-center gap-1 rounded-md border border-red-300 bg-red-50 px-2 py-1 text-xs font-bold text-red-800 hover:bg-red-100"
+                                  className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-800 hover:bg-red-100"
                                   title="Odbij prijavu kandidata"
                                 >
                                   <UserXIcon className="h-3.5 w-3.5 text-red-700" />
@@ -946,7 +944,7 @@ export default function UsersSection() {
                                 <button
                                   type="button"
                                   onClick={() => setSelectedReadinessCandidate(s)}
-                                  className="inline-flex flex-1 items-center justify-center gap-1 rounded-md bg-amber-500 px-2.5 py-1 text-xs font-bold text-white shadow-xs hover:bg-amber-600 active:scale-95"
+                                  className="inline-flex flex-1 items-center justify-center gap-1 rounded-full bg-amber-500 px-2.5 py-1 text-xs font-semibold text-white hover:bg-amber-600"
                                   title="Preduslovi za kreiranje profila"
                                 >
                                   <UserCheckIcon className="h-3.5 w-3.5 text-white" />
@@ -955,7 +953,7 @@ export default function UsersSection() {
                                 <button
                                   type="button"
                                   onClick={() => setSelectedQualifyCandidate(s)}
-                                  className="inline-flex items-center gap-1 rounded-md border border-black/15 bg-white px-2 py-1 text-[11px] font-bold text-[var(--brand-ink)] hover:bg-black/[0.04]"
+                                  className="inline-flex items-center gap-1 rounded-full border border-line-strong bg-white px-2 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
                                   title="Izmeni selekcionu odluku"
                                 >
                                   Izmeni
@@ -965,14 +963,14 @@ export default function UsersSection() {
                               <button
                                 type="button"
                                 onClick={() => handleActivateCandidate(s)}
-                                className="inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-emerald-600 px-2.5 py-1.5 text-xs font-extrabold text-white shadow-xs hover:bg-emerald-700 active:scale-95 transition-all cursor-pointer"
+                                className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-emerald-600 px-2.5 py-1.5 text-xs font-bold text-white hover:bg-emerald-700 transition-all cursor-pointer"
                                 title="Aktiviraj nalog odmah i prebaci kandidata u Fazu 1 (Aktivni kandidati)"
                               >
                                 <CheckIcon className="h-3.5 w-3.5 text-white" />
                                 <span>Aktiviraj nalog (Prebaci u Fazu 1)</span>
                               </button>
                             ) : (
-                              <span className="text-[10px] text-[var(--brand-ink)]/50">
+                              <span className="text-2xs text-ink-3">
                                 Odluka doneta: {s.decidedAt ? new Date(s.decidedAt).toLocaleDateString() : "Danas"}
                               </span>
                             )}
@@ -982,12 +980,12 @@ export default function UsersSection() {
                     </div>
 
                     {/* Footer kartice sa zabeleškama i brisanjem */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-black/[0.04] text-[11px] text-[var(--brand-ink)]/60">
+                    <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-line text-xs text-ink-3">
                       <div>
                         <span>Podneto: {s.createdAt ? new Date(s.createdAt).toLocaleDateString("sr-RS") : "Danas"}</span>
                         {s.notes && (
                           <span className="ml-3 italic truncate max-w-md inline-block align-bottom">
-                            📝 {s.notes.split("\n").pop()}
+                            {s.notes.split("\n").pop()}
                           </span>
                         )}
                       </div>
@@ -995,7 +993,7 @@ export default function UsersSection() {
                         <button
                           type="button"
                           onClick={() => setSelectedCandidate(s)}
-                          className="text-[11px] font-bold text-blue-800 hover:underline"
+                          className="text-xs font-semibold text-ink hover:underline"
                         >
                           Prikaži pun dosije kandidata &rarr;
                         </button>
@@ -1021,21 +1019,21 @@ export default function UsersSection() {
       {/* ================================================================ */}
       {activeTab === "invitations" && (
         <Card className="overflow-hidden">
-          <div className="border-b border-black/[0.06] bg-black/[0.02] px-5 py-3 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/50">
+          <div className="border-b border-line bg-surface px-5 py-3 text-[13px] font-semibold text-ink-3">
             Aktivni verifikacioni kodovi za registraciju naloga
           </div>
-          <ul className="divide-y divide-black/[0.06]">
+          <ul className="divide-y divide-line">
             {invitations.map((inv) => (
-              <li key={inv.code} className="flex flex-wrap items-center justify-between gap-4 p-5 hover:bg-black/[0.02]">
+              <li key={inv.code} className="flex flex-wrap items-center justify-between gap-4 p-5 hover:bg-surface">
                 <div>
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-base font-black tracking-wider text-[var(--brand-ink)]">
+                    <span className="tabular-nums text-base font-bold tracking-wider text-ink">
                       {inv.code}
                     </span>
                     <button
                       type="button"
                       onClick={() => copyInvitationCode(inv.code)}
-                      className="rounded-md border border-black/15 bg-white px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-[var(--brand-ink)] transition-colors hover:bg-black/[0.04]"
+                      className="rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
                     >
                       {copiedCode === inv.code ? "✓ Kopirano" : "Kopiraj kod"}
                     </button>
@@ -1060,37 +1058,37 @@ export default function UsersSection() {
                             });
                           }
                         }}
-                        className="rounded-md border border-emerald-300 bg-emerald-50 px-2 py-1 text-[0.65rem] font-bold text-emerald-900 transition-colors hover:bg-emerald-100"
+                        className="rounded-full bg-emerald-50 px-2 py-1 text-2xs font-semibold text-emerald-900 transition-colors hover:bg-emerald-100"
                         title="Aktiviraj nalog odmah i prebaci kandidata u aktivne kandidate (Faze 1-3)"
                       >
-                        ⚡ Aktiviraj odmah
+                        Aktiviraj odmah
                       </button>
                     )}
                     <button
                       type="button"
                       onClick={() => handleResetInvitation(inv.code)}
-                      className="rounded-md border border-amber-300 bg-amber-50 px-2 py-1 text-[0.65rem] font-bold text-amber-900 transition-colors hover:bg-amber-100"
+                      className="rounded-full bg-amber-50 px-2 py-1 text-2xs font-semibold text-amber-900 transition-colors hover:bg-amber-100"
                       title="Resetuj kod na 'Čeka registraciju' i omogući ponovnu aktivaciju"
                     >
                       ↻ Resetuj kod
                     </button>
                   </div>
-                  <p className="mt-1 text-sm font-semibold text-[var(--brand-ink)]">
+                  <p className="mt-1 text-sm font-semibold text-ink">
                     {inv.candidateName ? `${inv.candidateName} · ` : ""}{inv.email}
                   </p>
-                  <p className="text-xs text-[var(--brand-ink)]/60">
+                  <p className="text-xs text-ink-3">
                     Paket: {inv.packageName}
                   </p>
                 </div>
 
                 <div className="text-right">
-                  <p className="text-sm font-bold text-[var(--brand-ink)]">{inv.finalPrice} €</p>
+                  <p className="text-sm font-semibold text-ink">{inv.finalPrice} €</p>
                   {inv.discount > 0 && (
-                    <p className="text-xs font-medium text-green-700">
+                    <p className="text-xs font-medium text-emerald-700">
                       Popust: -{inv.discount} € {inv.discountNote ? `(${inv.discountNote})` : ""}
                     </p>
                   )}
-                  <p className="text-[0.65rem] text-[var(--brand-ink)]/40 mt-1">
+                  <p className="text-2xs text-ink-3 mt-1">
                     Kreirano: {new Date(inv.createdAt).toLocaleDateString()}
                   </p>
                 </div>
@@ -1108,7 +1106,7 @@ export default function UsersSection() {
           {/* Pretraga + filteri */}
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="relative sm:max-w-xs sm:flex-1">
-              <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--brand-ink)]/40" />
+              <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-3" />
               <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Pretraga po imenu, emailu..." className={inputCls} />
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -1118,7 +1116,7 @@ export default function UsersSection() {
                   type="button"
                   onClick={() => setFilter(id)}
                   className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors duration-150 ${
-                    filter === id ? "bg-[var(--brand-ink)] text-white" : "bg-black/[0.05] text-[var(--brand-ink)]/65 hover:bg-black/[0.08]"
+                    filter === id ? "bg-ink text-white" : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
                   }`}
                 >
                   {label}
@@ -1132,37 +1130,37 @@ export default function UsersSection() {
           ) : (
             <Card className="overflow-hidden">
               {/* Zaglavlje tabele */}
-              <div className="hidden grid-cols-[1.8fr_1.2fr_1.4fr_auto] gap-4 border-b border-black/[0.06] px-5 py-3 text-xs font-bold uppercase tracking-wide text-[var(--brand-ink)]/45 md:grid items-center">
+              <div className="hidden grid-cols-[1.8fr_1.2fr_1.4fr_auto] gap-4 border-b border-line px-5 py-3 text-[13px] font-semibold text-ink-3 md:grid items-center">
                 <span>{t("admin.colStudent")}</span>
                 <span>{t("admin.colProgram")}</span>
                 <span>Trenutni korak</span>
                 <span className="text-right">Akcije</span>
               </div>
-              <ul className="divide-y divide-black/[0.06]">
+              <ul className="divide-y divide-line">
                 {rows.map((s) => {
                   const stepInfo = getCandidateStepInfo(s);
                   return (
                   <li
                     key={s.id}
-                    className="grid grid-cols-1 gap-3 px-5 py-4 transition-colors hover:bg-black/[0.02] md:grid-cols-[1.8fr_1.2fr_1.4fr_auto] md:items-center md:gap-4"
+                    className="grid grid-cols-1 gap-3 px-5 py-4 transition-colors hover:bg-surface md:grid-cols-[1.8fr_1.2fr_1.4fr_auto] md:items-center md:gap-4"
                   >
                     <div
                       onClick={() => setSelectedCandidate(s)}
                       className="flex cursor-pointer items-center gap-3 min-w-0"
                     >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--brand-yellow)]/30 text-xs font-bold text-[var(--brand-ink)]">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand/30 text-xs font-semibold text-ink">
                         {s.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                       </span>
                       <span className="min-w-0">
-                        <span className="block truncate text-sm font-semibold text-[var(--brand-ink)]">{s.name}</span>
+                        <span className="block truncate text-sm font-semibold text-ink">{s.name}</span>
                         <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
-                          <span className="truncate text-xs text-[var(--brand-ink)]/50">{s.email}</span>
+                          <span className="truncate text-xs text-ink-3">{s.email}</span>
                           {Boolean(s.signedContractFileName || s.contractSigned) ? (
-                            <span className="inline-flex items-center rounded-sm bg-emerald-100 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800" title={`Ugovor: ${s.signedContractFileName || "Potpisan"}`}>
+                            <span className="inline-flex items-center rounded-sm bg-emerald-100 px-1.5 py-0.2 text-2xs font-semibold text-emerald-800" title={`Ugovor: ${s.signedContractFileName || "Potpisan"}`}>
                               ✓ Ugovor
                             </span>
                           ) : (
-                            <span className="inline-flex items-center rounded-sm bg-amber-100 px-1.5 py-0.2 text-[9px] font-bold text-amber-900" title="Ugovor nije okačen (uplate blokirane)">
+                            <span className="inline-flex items-center rounded-sm bg-amber-100 px-1.5 py-0.2 text-2xs font-semibold text-amber-800" title="Ugovor nije okačen (uplate blokirane)">
                               Bez ugovora
                             </span>
                           )}
@@ -1172,7 +1170,7 @@ export default function UsersSection() {
 
                     <span
                       onClick={() => setSelectedCandidate(s)}
-                      className="cursor-pointer truncate text-sm text-[var(--brand-ink)]/70"
+                      className="cursor-pointer truncate text-sm text-ink-2"
                     >
                       {s.program}
                     </span>
@@ -1181,11 +1179,11 @@ export default function UsersSection() {
                       onClick={() => setSelectedCandidate(s)}
                       className="flex cursor-pointer flex-col gap-1 min-w-0"
                     >
-                      <span className={`inline-flex w-fit items-center gap-1.5 rounded-md border px-2 py-0.5 text-[11px] font-bold ${stepInfo.badgeCls}`}>
+                      <span className={`inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${stepInfo.badgeCls}`}>
                         <span className={`h-1.5 w-1.5 rounded-full ${stepInfo.dotCls}`} />
                         {stepInfo.stepTitle}
                       </span>
-                      <span className="truncate text-[11px] font-medium text-[var(--brand-ink)]/65" title={stepInfo.subLabel}>
+                      <span className="truncate text-xs font-medium text-ink-2" title={stepInfo.subLabel}>
                         {stepInfo.subLabel}
                       </span>
                     </div>
@@ -1195,7 +1193,7 @@ export default function UsersSection() {
                       <button
                         type="button"
                         onClick={() => setSelectedCandidate(s)}
-                        className="inline-flex items-center gap-1 rounded-lg border border-black/10 bg-white px-2.5 py-1.5 text-xs font-bold text-[var(--brand-ink)] transition-colors hover:bg-black/[0.04]"
+                        className="inline-flex items-center gap-1 rounded-full border border-line bg-white px-2.5 py-1.5 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
                         title="Izmeni podatke aplikacije"
                       >
                         <EditIcon className="h-3.5 w-3.5" />

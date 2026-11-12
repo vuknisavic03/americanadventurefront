@@ -1,7 +1,8 @@
 // front/src/data/candidateStore/preApplications.js
 // Faza 0: Online prijave, trijaža, pozivi, konsultacije i selekcioni gate
 
-import { getCandidates, saveCandidate } from "./candidates.js";
+import { saveCandidate } from "./candidates.js";
+import { getCandidates } from "./session.js";
 import { PROGRAM_PACKAGES } from "./mockSeed.js";
 import { createInvitation } from "./invitations.js";
 
