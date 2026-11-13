@@ -31,7 +31,7 @@ export default function Discounts({
 
   return (
     <>
-      <PageHeader title={t("disc.title")} lead={t("disc.subtitle")} />
+      <PageHeader crumb="Akcije" title={t("disc.title")} lead={t("disc.subtitle")} />
 
       {/* Garancija — važi za sve, nije deo izbora popusta */}
       <section className="bg-white pt-14 sm:pt-20">

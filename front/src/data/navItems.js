@@ -13,7 +13,7 @@ const navItems = [
   { key: "nav.programi", label: "Programi", href: "/programi", children: programItems },
   { key: "nav.akcije", label: "Akcije", href: "/akcije" },
   { key: "nav.novosti", label: "Novosti", href: "/novosti" },
-  { key: "nav.saradnja", label: "Saradnja", href: "/saradnja", children: cooperationItems },
+  { key: "nav.saradnja", label: "Saradnja", href: "/saradnja" },
   { key: "nav.iskustva", label: "Iskustva", href: "/iskustva" },
   { key: "nav.kontakt", label: "Kontakt", href: "/kontakt" },
 ];

@@ -41,6 +41,16 @@ export default function Header({
   const searchInputRef = useRef(null);
 
   const activePath = pathOf(activeHref);
+
+  // Na početnoj zaglavlje je providno preko videa, dok se ne skroluje.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const overlay = activePath === "/" && !scrolled && !menuOpen && !searchOpen;
   const isActive = (item) =>
     pathOf(item.href) === activePath || Boolean(item.children?.some((c) => c.href === activeHref));
 
@@ -87,13 +97,13 @@ export default function Header({
   const label = (item) => (item.key ? t(item.key) : item.label);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-line bg-white">
+    <header className={cx("sticky top-0 z-50 w-full border-b transition-colors duration-200", overlay ? "border-white/15 bg-transparent text-white" : "border-line bg-white text-ink")}>
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-5 sm:px-8 lg:h-[72px]">
         <a
           href={logoHref}
           onClick={(e) => handleNav(e, logoHref)}
           aria-label={t("a11y.home")}
-          className="flex shrink-0 items-center text-ink"
+          className="flex shrink-0 items-center"
         >
           <Logo className="h-11 w-auto lg:h-12" />
         </a>
@@ -104,7 +114,7 @@ export default function Header({
             const active = isActive(item);
             const linkCls = cx(
               "relative flex h-full items-center gap-1 text-[15px] font-medium transition-colors duration-150",
-              active ? "text-ink" : "text-ink-2 hover:text-ink"
+              overlay ? (active ? "text-white" : "text-white/80 hover:text-white") : active ? "text-ink" : "text-ink-2 hover:text-ink"
             );
             const indicator = (
               <span
@@ -178,7 +188,7 @@ export default function Header({
             }}
             aria-label={searchOpen ? t("a11y.closeSearch") : t("a11y.search")}
             aria-expanded={searchOpen}
-            className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors duration-150 hover:bg-ink/5"
+            className={cx("flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-150", overlay ? "text-white hover:bg-white/10" : "text-ink hover:bg-ink/5")}
           >
             {searchOpen ? <CloseIcon className="h-[18px] w-[18px]" /> : <SearchIcon className="h-[18px] w-[18px]" />}
           </button>
@@ -190,7 +200,7 @@ export default function Header({
               </Button>
             ) : (
               <>
-                <Button variant="ghost" onClick={onLogin}>
+                <Button variant={overlay ? "ghostInverse" : "ghost"} onClick={onLogin}>
                   {t("header.account")}
                 </Button>
                 <Button onClick={onApply}>{t("header.apply")}</Button>
@@ -207,7 +217,7 @@ export default function Header({
             aria-label={menuOpen ? t("a11y.closeMenu") : t("a11y.openMenu")}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            className="flex h-10 w-10 items-center justify-center rounded-full text-ink transition-colors duration-150 hover:bg-ink/5 lg:hidden"
+            className={cx("flex h-10 w-10 items-center justify-center rounded-full transition-colors duration-150 lg:hidden", overlay ? "text-white hover:bg-white/10" : "text-ink hover:bg-ink/5")}
           >
             {menuOpen ? <CloseIcon /> : <MenuIcon />}
           </button>

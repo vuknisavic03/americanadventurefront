@@ -413,7 +413,7 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
 
   return (
     <div className="bg-white">
-      <PageHeader
+      <PageHeader crumb="Programi"
         title={tr("prog.title", "Programi i usluge")}
         lead={tr(
           "prog.subtitle",

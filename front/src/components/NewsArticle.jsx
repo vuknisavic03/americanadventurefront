@@ -3,7 +3,7 @@ import { useTranslation } from "../i18n/LanguageContext";
 import NewsImage from "./NewsImage";
 import newsData from "../data/news";
 import CtaBand from "./CtaBand";
-import { Button } from "./ui";
+import { Button, PlaneIcon } from "./ui";
 
 // „Nazad na vesti" po jeziku (kratko, drži se ovde).
 const BACK_LABEL = {
@@ -49,6 +49,8 @@ export default function NewsArticle({ slug, items = newsData, onNavigate = () =>
     );
   }
 
+  const related = items.filter((n) => n.slug !== item.slug && n.category === item.category).slice(0, 3);
+
   const paragraphs = Array.isArray(item.body?.[lang])
     ? item.body[lang]
     : Array.isArray(item.body?.SR)
@@ -59,13 +61,15 @@ export default function NewsArticle({ slug, items = newsData, onNavigate = () =>
     <article className="bg-white">
       <header className="bg-brand pb-40 sm:pb-56">
         <div className="mx-auto max-w-4xl px-5 pt-10 sm:px-8 sm:pt-14">
-          <a href={backHref} onClick={goBack} className="text-[15px] font-semibold text-ink underline decoration-2 decoration-ink/30 underline-offset-[5px] hover:decoration-ink">
-            {backLabel}
-          </a>
-          <p className="mt-10 flex flex-wrap items-center gap-x-3 text-sm">
-            <span className="rounded-full bg-ink px-2.5 py-0.5 text-xs font-semibold text-brand">{item.category}</span>
-            <time className="font-sign text-[15px] font-semibold text-ink/70">{item.date}</time>
+          <p className="font-sign flex max-w-sm items-center gap-3 text-base font-bold text-ink">
+            <a href={backHref} onClick={goBack} aria-label={backLabel} className="hover:underline hover:decoration-2 hover:underline-offset-4">
+              Novosti
+            </a>
+            <span className="perforation flex-1 text-ink/35" aria-hidden="true" />
+            <PlaneIcon className="h-4 w-4" />
+            <span>{item.category}</span>
           </p>
+          <time className="font-sign mt-10 block text-[15px] font-semibold text-ink/70">{item.date}</time>
           <h1 className="font-display mt-5 text-[clamp(2.3rem,5.4vw,4.4rem)] font-extrabold leading-[0.96] text-ink">{tr(item.title)}</h1>
         </div>
       </header>
@@ -90,6 +94,34 @@ export default function NewsArticle({ slug, items = newsData, onNavigate = () =>
           )
         )}
       </div>
+
+      {related.length > 0 && (
+        <section className="mx-auto mt-24 max-w-7xl px-5 sm:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-4 border-t-2 border-ink pt-10">
+            <h2 className="font-display text-[clamp(1.8rem,3.2vw,2.5rem)] font-extrabold leading-none text-ink">Još iz rubrike {item.category}</h2>
+            <a href={backHref} onClick={goBack} className="text-[15px] font-semibold text-ink underline decoration-2 decoration-ink/30 underline-offset-[5px] hover:decoration-ink">
+              Sve vesti
+            </a>
+          </div>
+          <div className="mt-10 grid gap-x-8 gap-y-12 md:grid-cols-3">
+            {related.map((r) => {
+              const href = `/novosti/${r.slug}`;
+              return (
+                <article key={r.slug}>
+                  <a href={href} onClick={(e) => onNavigate(e, href)} tabIndex={-1} aria-hidden="true" className="block">
+                    <NewsImage src={r.image} theme={r.theme} alt="" className="aspect-[16/10] w-full rounded-[1.25rem]" />
+                  </a>
+                  <h3 className="font-display mt-4 text-[1.3rem] font-extrabold leading-[1.12] text-ink">
+                    <a href={href} onClick={(e) => onNavigate(e, href)} className="hover:underline hover:decoration-brand hover:decoration-4 hover:underline-offset-4">
+                      {tr(r.title)}
+                    </a>
+                  </h3>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       <CtaBand className="mt-24" onNavigate={onNavigate} />
     </article>

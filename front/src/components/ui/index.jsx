@@ -22,6 +22,7 @@ const BTN_VARIANT = {
   dark: "bg-ink text-white hover:bg-neutral-950",
   outline: "border border-line-strong bg-white text-ink hover:bg-surface",
   ghost: "text-ink hover:bg-ink/5",
+  ghostInverse: "text-white hover:bg-white/10",
   inverse: "border border-white/40 text-white hover:bg-white/10",
   danger: "bg-red-600 text-white hover:bg-red-700",
 };
@@ -103,11 +104,20 @@ export function SectionHeading({ as: Tag = "h2", title, lead, action, className 
  * PageHeader — zaglavlje unutrašnjih stranica: žuto polje kao putokaz, veliki naslov levo.
  * children (npr. tabovi, filteri) idu ispod naslova, i dalje na žutom.
  */
-export function PageHeader({ title, lead, children }) {
+export function PageHeader({ title, lead, crumb, children }) {
   return (
     <header className="bg-brand">
-      <Container className="pb-12 pt-14 sm:pb-16 sm:pt-20">
-        <h1 className="font-display max-w-5xl text-[clamp(2.6rem,6.4vw,5.4rem)] font-extrabold leading-[0.92] text-ink">{title}</h1>
+      <Container className="pb-12 pt-10 sm:pb-16 sm:pt-14">
+        {/* Ruta od početne do ove strane — ista oznaka kao u heroju */}
+        <p className="font-sign flex max-w-sm items-center gap-3 text-base font-bold text-ink">
+          <a href="/" className="hover:underline hover:decoration-2 hover:underline-offset-4">
+            Početna
+          </a>
+          <span className="perforation flex-1 text-ink/35" aria-hidden="true" />
+          <PlaneIcon className="h-4 w-4" />
+          <span className="truncate">{crumb || title}</span>
+        </p>
+        <h1 className="font-display mt-8 max-w-5xl text-[clamp(2.6rem,6.4vw,5.4rem)] font-extrabold leading-[0.92] text-ink">{title}</h1>
         {lead && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/80 sm:text-xl">{lead}</p>}
         {children}
       </Container>

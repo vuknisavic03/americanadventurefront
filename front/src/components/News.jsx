@@ -38,7 +38,7 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
 
   return (
     <>
-      <PageHeader title={t("news.heading")} lead={t("news.subtitle")} />
+      <PageHeader crumb="Novosti" title={t("news.heading")} lead={t("news.subtitle")} />
       <SubNav
         label="Rubrike"
         items={cats.map((c) => ({

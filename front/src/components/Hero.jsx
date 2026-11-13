@@ -15,7 +15,7 @@ export default function Hero({ applyHref = "/prijava-online?program=work-and-tra
   const go = (href) => (e) => onNavigate(e, href);
 
   return (
-    <section className="relative isolate overflow-hidden bg-ink">
+    <section className="relative isolate -mt-16 overflow-hidden bg-ink lg:-mt-[72px]">
       <video
         className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover motion-reduce:hidden"
         poster={poster}
@@ -34,8 +34,9 @@ export default function Hero({ applyHref = "/prijava-online?program=work-and-tra
       {/* Preliv za čitljivost: tamnije levo i dole, nebo desno ostaje živo */}
       <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-r from-ink/85 via-ink/55 to-ink/20" aria-hidden="true" />
       <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-t from-ink via-transparent to-transparent" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 bg-linear-to-b from-ink/60 to-transparent" aria-hidden="true" />
 
-      <div className="mx-auto grid w-full max-w-7xl gap-12 px-5 pb-14 pt-10 sm:px-8 sm:pb-16 sm:pt-14 lg:grid-cols-12 lg:items-center lg:gap-10 lg:pb-20 lg:pt-16">
+      <div className="mx-auto grid w-full max-w-7xl gap-12 px-5 pb-14 pt-26 sm:px-8 sm:pb-16 sm:pt-32 lg:grid-cols-12 lg:items-center lg:gap-10 lg:pb-20 lg:pt-36">
         <div className="lg:col-span-7">
           {/* Ruta */}
           <p className="font-sign flex max-w-md items-center gap-3 text-lg font-bold text-white">
@@ -46,7 +47,7 @@ export default function Hero({ applyHref = "/prijava-online?program=work-and-tra
             <span>Amerika</span>
           </p>
 
-          <h1 className="font-display mt-7 text-[clamp(2.9rem,7.4vw,6.6rem)] font-extrabold leading-[0.9] text-white">{t("hero.title")}</h1>
+          <h1 className="font-display mt-7 text-[clamp(2.9rem,6.6vw,6rem)] font-extrabold leading-[0.9] text-white">{t("hero.title")}</h1>
           <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl">{t("hero.subtitle")}</p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">

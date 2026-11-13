@@ -32,7 +32,7 @@ export default function ExperiencesPage({ items = experiencesData, onNavigate = 
 
   return (
     <>
-      <PageHeader title={t("exp.heading")} lead={t("exp.subtitle")} />
+      <PageHeader crumb="Iskustva" title={t("exp.heading")} lead={t("exp.subtitle")} />
 
       <section className="bg-white py-14 sm:py-20">
         <Container>

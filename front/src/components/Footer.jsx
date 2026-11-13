@@ -187,7 +187,7 @@ export default function Footer({
                     onClick={go(item.href)}
                     className="text-sm text-white/85 transition-colors duration-150 hover:text-brand"
                   >
-                    {item.label}
+                    {item.key ? t(item.key) : item.label}
                   </a>
                 </li>
               ))}

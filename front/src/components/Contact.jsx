@@ -69,7 +69,7 @@ export default function Contact({ programs = programItems, contact = DEFAULT_CON
 
   return (
     <>
-    <PageHeader
+    <PageHeader crumb="Kontakt"
       title={t("contact.title") || "Stupite u kontakt sa nama"}
       lead={
         t("contact.subtitle") ||

@@ -96,7 +96,7 @@ export default function Cooperation({
 
   return (
     <div className="bg-white">
-      <PageHeader
+      <PageHeader crumb="Saradnja"
         title={t("coop.title") || "Saradnja sa American Adventure"}
         lead={
           t("coop.subtitle") ||
