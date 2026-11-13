@@ -368,7 +368,7 @@ export function Field({ label, children }) {
   );
 }
 
-export function Modal({ title, onClose, children, footer, wide = false, extraWide = false }) {
+export function Modal({ title, onClose, children, footer, wide = false, extraWide = false, panel = false, header = null, bodyClassName = "" }) {
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
@@ -379,28 +379,30 @@ export function Modal({ title, onClose, children, footer, wide = false, extraWid
     };
   }, [onClose]);
 
-  const widthClass = extraWide
+  const widthClass = panel
+    ? "max-w-[1320px]"
+    : extraWide
     ? "max-w-5xl xl:max-w-6xl 2xl:max-w-[1380px]"
     : wide
     ? "max-w-2xl lg:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl"
     : "max-w-xl lg:max-w-2xl xl:max-w-3xl";
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-5 lg:p-8">
+    <div className={`fixed inset-0 z-[80] flex justify-center ${panel ? "items-stretch p-0 sm:p-4 lg:p-6" : "items-center p-3 sm:p-5 lg:p-8"}`}>
       <div className="absolute inset-0 bg-black/50 backdrop-blur-xs" onClick={onClose} aria-hidden="true" />
       <div
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className={`relative flex max-h-[92vh] w-full flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-2xl transition-all ${widthClass}`}
+        className={`relative flex w-full flex-col overflow-hidden bg-white shadow-2xl transition-all ${panel ? "h-full sm:rounded-2xl" : "max-h-[92vh] rounded-2xl border border-line"} ${widthClass}`}
       >
-        <div className="flex shrink-0 items-center justify-between gap-4 border-b border-line px-6 py-4 sm:px-8">
-          <h2 className="text-lg font-semibold leading-snug text-ink">{title}</h2>
+        <div className="flex shrink-0 items-start justify-between gap-4 border-b border-line px-6 py-4 sm:px-8">
+          {header || <h2 className="text-lg font-semibold leading-snug text-ink">{title}</h2>}
           <GhostIconButton label="Zatvori" onClick={onClose}><XIcon /></GhostIconButton>
         </div>
-        <div className="flex-1 overflow-y-auto p-6 sm:p-8">{children}</div>
+        <div className={bodyClassName || "flex-1 overflow-y-auto p-6 sm:p-8"}>{children}</div>
         {footer && (
-          <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-line px-6 py-4 sm:px-8">
+          <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-line bg-white px-6 py-4 sm:px-8">
             {footer}
           </div>
         )}

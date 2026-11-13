@@ -35,6 +35,7 @@ import {
   MailIcon,
   UserCheckIcon,
   UserXIcon,
+  XIcon,
   PageHeader,
   PrimaryButton,
   SecondaryButton,
@@ -238,8 +239,8 @@ export default function UsersSection() {
     if (updated) {
       setStudents((prev) => prev.map((s) => (s.id === updated.id ? { ...s, ...updated } : s)));
       const msg = eligible
-        ? `✓ Kandidat ${updated.firstName || updated.name} je označen kao ISPUNJAVA USLOVE. Dokumentacija poslata.`
-        : `✕ Kandidat ${updated.firstName || updated.name} je označen kao NE ISPUNJAVA USLOVE.`;
+        ? `${updated.firstName || updated.name} ispunjava uslove. Dokumentacija je poslata.`
+        : `${updated.firstName || updated.name} ne ispunjava uslove.`;
       setSuccessToast(msg);
       setTimeout(() => setSuccessToast(""), 5000);
     }
@@ -258,7 +259,7 @@ export default function UsersSection() {
     if (res?.candidate) {
       setStudents(mapCandidatesToRows(getCandidates()));
       setInvitations(getInvitations());
-      setSuccessToast(`✓ Preduslovi odobreni! Generisan verifikacioni kod ${res.invitation.code} za ${res.candidate.name}`);
+      setSuccessToast(`Preduslovi su odobreni. Kod ${res.invitation.code} je generisan za ${res.candidate.name}.`);
       setTimeout(() => setSuccessToast(""), 6000);
       return res;
     }
@@ -305,7 +306,7 @@ export default function UsersSection() {
     if (updated) {
       setStudents(mapCandidatesToRows(getCandidates()));
       setInvitations(getInvitations());
-      setSuccessToast(`✓ Nalog za ${updated.firstName} ${updated.lastName} je uspešno aktiviran i prebačen u aktivne kandidate (Faze 1-3)!`);
+      setSuccessToast(`Nalog za ${updated.firstName} ${updated.lastName} je aktiviran. Kandidat je sada u programu.`);
       setTimeout(() => setSuccessToast(""), 5000);
     }
   };
@@ -548,133 +549,54 @@ export default function UsersSection() {
     <>
       <PageHeader
         title={t("admin.usersTitle")}
-        subtitle="Upravljanje celokupnim putem kandidata — od početne trijaže, konsultacija i selekcije (Faza 0), do ugovora, posla i vize (Faze 1-3)."
+        subtitle="Prijave, kandidati u programu i verifikacioni kodovi na jednom mestu."
         action={
-          <div className="flex flex-wrap items-center gap-2">
-            {activeTab === "preApplications" ? (
-              <>
-                <button
-                  type="button"
-                  onClick={() => downloadPreApplicationsExcel(preAppsList)}
-                  className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
-                  title="Preuzmi sve prijave, trijažne i selekcione podatke u Excel (.xlsx / UTF-8 CSV) tabeli"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-emerald-700">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  <span>Izvezi prijave u Excel (.xlsx)</span>
-                </button>
-                <SecondaryButton
-                  onClick={() => setShowNewPreAppModal(true)}
-                  className="inline-flex items-center gap-2"
-                >
-                  <PlusIcon /> Ručni unos nove prijave
-                </SecondaryButton>
-                <PrimaryButton onClick={() => setShowCodeModal(true)}>
-                  <PlusIcon /> {t("admin.generateCodeBtn")}
-                </PrimaryButton>
-              </>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  onClick={downloadEmbassyExport}
-                  className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
-                  title="Preuzmi zvaničnu tabelu kandidata za Ambasadu SAD i US sponzore (Tabela za Ambasadu.xlsx)"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-emerald-700">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </svg>
-                  <span>Izvezi tabelu za Ambasadu (.xlsx)</span>
-                </button>
-                <PrimaryButton onClick={() => setShowCodeModal(true)}>
-                  <PlusIcon /> {t("admin.generateCodeBtn")}
-                </PrimaryButton>
-              </>
-            )}
-          </div>
+          <PrimaryButton onClick={() => setShowCodeModal(true)}>
+            <PlusIcon /> {t("admin.generateCodeBtn")}
+          </PrimaryButton>
         }
       />
 
       {successToast && (
-        <div className="mb-6 flex items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-xs font-semibold text-emerald-900">
-          <span>✓ {successToast}</span>
-          <button type="button" onClick={() => setSuccessToast("")} className="text-emerald-800 hover:text-emerald-950 font-bold">
-            ✕
+        <div role="status" className="mb-6 flex items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900">
+          <span>{successToast}</span>
+          <button type="button" onClick={() => setSuccessToast("")} aria-label="Zatvori obaveštenje" className="rounded p-1 text-emerald-800 hover:bg-emerald-100">
+            <XIcon className="h-4 w-4" />
           </button>
         </div>
       )}
 
-      {/* KPI Kartice */}
-      <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {(activeTab === "preApplications" ? preAppKpis : candidateKpis).map((k) => (
-          <StatCard key={k.label} label={k.label} value={k.value} accent={k.accent} />
+      {/* Tabovi sekcije */}
+      <div role="tablist" aria-label="Korisnici" className="no-scrollbar mb-6 flex gap-6 overflow-x-auto border-b border-line">
+        {[
+          ["preApplications", "Prijave i selekcija", preAppsList.length],
+          ["candidates", "Kandidati u programu", activeProgramCandidates.length],
+          ["invitations", t("admin.pendingInvitations"), invitations.length],
+        ].map(([id, label, count]) => (
+          <button
+            key={id}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === id}
+            onClick={() => setActiveTab(id)}
+            className={`-mb-px flex shrink-0 items-center gap-2 border-b-2 pb-3 pt-1 text-sm font-semibold transition-colors ${
+              activeTab === id ? "border-ink text-ink" : "border-transparent text-ink-3 hover:text-ink"
+            }`}
+          >
+            {label}
+            <span className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${activeTab === id ? "bg-brand text-ink" : "bg-surface-2 text-ink-2"}`}>{count}</span>
+          </button>
         ))}
       </div>
 
-      {/* Tabovi: Faza 0 (Prijave & Selekcija) vs Faze 1-3 (Aktivni kandidati) vs Pozivnice */}
-      <div className="mb-5 flex flex-wrap gap-2 border-b border-line pb-3">
-        <button
-          type="button"
-          onClick={() => setActiveTab("preApplications")}
-          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
-            activeTab === "preApplications"
-              ? "bg-ink text-white"
-              : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
-          }`}
-        >
-          <span>Prijave i Selekcija</span>
-          <span className={`rounded-full px-3 py-1 text-xs font-medium ${
-            activeTab === "preApplications"
-              ? "bg-brand text-ink"
-              : "bg-neutral-200 text-ink"
-          }`}>
-            {preAppsList.length}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab("candidates")}
-          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
-            activeTab === "candidates"
-              ? "bg-ink text-white"
-              : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
-          }`}
-        >
-          <span>Aktivni kandidati</span>
-          <span className={`rounded-full px-3 py-1 text-xs font-medium ${
-            activeTab === "candidates"
-              ? "bg-brand text-ink"
-              : "bg-neutral-200 text-ink"
-          }`}>
-            {activeProgramCandidates.length}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab("invitations")}
-          className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
-            activeTab === "invitations"
-              ? "bg-ink text-white"
-              : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
-          }`}
-        >
-          <span>{t("admin.pendingInvitations")}</span>
-          <span className={`rounded-full px-3 py-1 text-xs font-medium ${
-            activeTab === "invitations"
-              ? "bg-brand text-ink"
-              : "bg-neutral-200 text-ink"
-          }`}>
-            {invitations.length}
-          </span>
-        </button>
-      </div>
+      {/* Brojke za izabrani tab */}
+      {activeTab !== "invitations" && (
+        <div className="mb-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {(activeTab === "preApplications" ? preAppKpis : candidateKpis).map((k) => (
+            <StatCard key={k.label} label={k.label} value={k.value} accent={k.accent} />
+          ))}
+        </div>
+      )}
 
       {/* ================================================================ */}
       {/* 1. PRIKAZ TAB-A: FAZA 0 — PRIJAVE, TRIJAŽA, KONSULTACIJE & GATE */}
@@ -682,15 +604,34 @@ export default function UsersSection() {
       {activeTab === "preApplications" && (
         <>
           {/* Pretraga i filteri po fazama trijaže */}
-          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="relative sm:max-w-xs sm:flex-1">
-              <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-3" />
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Pretraga prijava po imenu, fakultetu, telefonu..."
-                className={inputCls}
-              />
+          <div className="mb-5 flex flex-col gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="relative mr-auto min-w-[220px] flex-1 sm:max-w-sm">
+                <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-3" />
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Ime, fakultet ili telefon"
+                  aria-label="Pretraga prijava"
+                  className={inputCls}
+                />
+              </div>
+              <SecondaryButton onClick={() => setShowNewPreAppModal(true)} className="inline-flex items-center gap-2">
+                <PlusIcon /> Nova prijava
+              </SecondaryButton>
+              <button
+                type="button"
+                onClick={() => downloadPreApplicationsExcel(preAppsList)}
+                className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
+                title="Preuzmi sve prijave, trijažne i selekcione podatke u Excel tabeli"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-emerald-700">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                Excel
+              </button>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {preAppFilters.map(([id, label]) => (
@@ -714,18 +655,15 @@ export default function UsersSection() {
             <EmptyState>Nema prijava u ovoj kategoriji pretrage.</EmptyState>
           ) : (
             <Card className="overflow-hidden">
-              <div className="border-b border-line bg-surface px-5 py-3 text-[13px] font-semibold text-ink-3">
-                Evidencija prijava, trijaže, konsultacija i kvalifikacionog praga (Faza 0)
-              </div>
               <ul className="divide-y divide-line">
                 {preAppRows.map((s) => (
                   <li
                     key={s.id}
-                    className="flex flex-col gap-4 p-5 transition-colors hover:bg-surface"
+                    className="flex flex-col gap-4 p-5"
                   >
-                    <div className="flex flex-wrap items-start justify-between gap-4">
+                    <div className="grid gap-4 2xl:grid-cols-[320px_1fr]">
                       {/* Student info */}
-                      <div className="flex items-start gap-3.5 min-w-[280px] max-w-sm">
+                      <div className="flex items-start gap-3.5">
                         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand text-sm font-bold text-ink">
                           {s.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                         </span>
@@ -733,8 +671,8 @@ export default function UsersSection() {
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-sm text-ink truncate">{s.name}</span>
                             {s.isNew && (
-                              <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-700">
-                                NOVO
+                              <span className="rounded-full bg-brand px-2 py-0.5 text-xs font-semibold text-ink">
+                                Novo
                               </span>
                             )}
                           </div>
@@ -759,13 +697,13 @@ export default function UsersSection() {
                       </div>
 
                       {/* 3 Faze obrade u karticama: 1. Poziv, 2. Konsultacije, 3. Selekcija */}
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1 min-w-[320px]">
+                      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                         {/* KORAK 1: Trijaža & Poziv */}
-                        <div className="rounded-xl border border-line bg-white p-3 flex flex-col justify-between">
+                        <div className="flex flex-col justify-between rounded-xl bg-surface p-3.5">
                           <div>
                             <div className="flex items-center justify-between gap-1 mb-1.5">
                               <span className="text-xs font-semibold text-ink-3">
-                                1. Poziv & Trijaža
+                                1. Poziv
                               </span>
                               {s.contactStatus === "REACHED" || s.latestContactOutcome === "REACHED" ? (
                                 <Badge tone="green">Ostvaren kontakt</Badge>
@@ -786,11 +724,11 @@ export default function UsersSection() {
                             )}
                             {s.nextContactAt && (
                               <p className="mt-1 text-2xs font-semibold text-amber-800">
-                                ⏰ Sledeći kontakt: {new Date(s.nextContactAt).toLocaleString("sr-RS", { dateStyle: "short", timeStyle: "short" })}
+                                Sledeći kontakt: {new Date(s.nextContactAt).toLocaleString("sr-RS", { dateStyle: "short", timeStyle: "short" })}
                               </p>
                             )}
                           </div>
-                          <div className="mt-2.5 pt-2 border-t border-line flex items-center justify-between">
+                          <div className="mt-3 flex items-center justify-between">
                             <button
                               type="button"
                               onClick={() => setSelectedCallCandidate(s)}
@@ -801,7 +739,7 @@ export default function UsersSection() {
                             </button>
                             {s.infoMaterialsSent ? (
                               <span className="text-2xs font-semibold text-emerald-700 flex items-center gap-0.5" title={`Poslato: ${s.infoMaterialsSentAt ? new Date(s.infoMaterialsSentAt).toLocaleDateString() : "Da"}`}>
-                                ✓ Info paket
+                                Info paket poslat
                               </span>
                             ) : (
                               <button
@@ -818,18 +756,18 @@ export default function UsersSection() {
                         </div>
 
                         {/* KORAK 2: Konsultacije (1-na-1) */}
-                        <div className="rounded-xl border border-line bg-white p-3 flex flex-col justify-between">
+                        <div className="flex flex-col justify-between rounded-xl bg-surface p-3.5">
                           <div>
                             <div className="flex items-center justify-between gap-1 mb-1.5">
                               <span className="text-xs font-semibold text-ink-3">
-                                2. Info Konsultacije
+                                2. Konsultacije
                               </span>
                               {s.consultationStatus === "ATTENDED" ? (
-                                <Badge tone="green">✓ Održane</Badge>
+                                <Badge tone="green">Održane</Badge>
                               ) : s.consultationStatus === "SCHEDULED" ? (
                                 <Badge tone="blue">Zakazane</Badge>
                               ) : s.consultationStatus === "NO_SHOW" ? (
-                                <Badge tone="red">✕ Nije došao</Badge>
+                                <Badge tone="red">Nije došao</Badge>
                               ) : (
                                 <Badge tone="slate">Nisu zakazane</Badge>
                               )}
@@ -850,7 +788,7 @@ export default function UsersSection() {
                               </p>
                             )}
                           </div>
-                          <div className="mt-2.5 pt-2 border-t border-line">
+                          <div className="mt-3">
                             <button
                               type="button"
                               onClick={() => setSelectedConsultationCandidate(s)}
@@ -863,20 +801,20 @@ export default function UsersSection() {
                         </div>
 
                         {/* KORAK 3: Selekciona odluka (Readiness Gate za Fazu 1) */}
-                        <div className="rounded-xl border border-line bg-white p-3 flex flex-col justify-between">
+                        <div className="flex flex-col justify-between rounded-xl bg-surface p-3.5">
                           <div>
                             <div className="flex items-center justify-between gap-1 mb-1.5">
                               <span className="text-xs font-semibold text-ink-3">
-                                3. Odluka (Gate u Fazu 1)
+                                3. Odluka
                               </span>
                               {s.selectionDecision === "QUALIFIED" || Boolean(s.activationCode) ? (
                                 s.registeredAt || s.isRegistered || s.status === "review" ? (
-                                  <Badge tone="green">✓ Aktiviran nalog</Badge>
+                                  <Badge tone="green">Nalog aktiviran</Badge>
                                 ) : (
                                   <Badge tone="amber">Čeka aktivaciju</Badge>
                                 )
                               ) : s.selectionDecision === "REJECTED" || s.status === "rejected" ? (
-                                <Badge tone="red">✕ Odbijen</Badge>
+                                <Badge tone="red">Odbijen</Badge>
                               ) : (
                                 <Badge tone="amber">U obradi</Badge>
                               )}
@@ -893,13 +831,13 @@ export default function UsersSection() {
                                       onClick={() => copyInvitationCode(s.activationCode)}
                                       className="text-2xs font-semibold text-ink hover:underline"
                                     >
-                                      {copiedCode === s.activationCode ? "✓ Kopirano" : "Kopiraj"}
+                                      {copiedCode === s.activationCode ? "Kopirano" : "Kopiraj"}
                                     </button>
                                   )}
                                 </div>
                                 {s.registeredAt || s.isRegistered || s.status === "review" ? (
                                   <p className="text-2xs text-emerald-800 font-semibold">
-                                    ✓ Prešao u Fazu 1 ({s.packageName || "Program"})
+                                    Prešao u Fazu 1 ({s.packageName || "Program"})
                                   </p>
                                 ) : (
                                   <p className="text-2xs text-amber-800 font-medium">
@@ -917,7 +855,7 @@ export default function UsersSection() {
                               </p>
                             )}
                           </div>
-                          <div className="mt-2.5 pt-2 border-t border-line flex flex-wrap items-center justify-between gap-1.5">
+                          <div className="mt-3 flex flex-wrap items-center justify-between gap-1.5">
                             {s.selectionDecision !== "QUALIFIED" && !s.activationCode && s.status !== "rejected" ? (
                               <>
                                 <button
@@ -980,7 +918,7 @@ export default function UsersSection() {
                     </div>
 
                     {/* Footer kartice sa zabeleškama i brisanjem */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-line text-xs text-ink-3">
+                    <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-ink-3">
                       <div>
                         <span>Podneto: {s.createdAt ? new Date(s.createdAt).toLocaleDateString("sr-RS") : "Danas"}</span>
                         {s.notes && (
@@ -993,9 +931,9 @@ export default function UsersSection() {
                         <button
                           type="button"
                           onClick={() => setSelectedCandidate(s)}
-                          className="text-xs font-semibold text-ink hover:underline"
+                          className="inline-flex items-center rounded-full border border-line-strong bg-white px-3 py-1.5 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
                         >
-                          Prikaži pun dosije kandidata &rarr;
+                          Otvori dosije
                         </button>
                         <GhostIconButton
                           label="Obriši"
@@ -1019,12 +957,9 @@ export default function UsersSection() {
       {/* ================================================================ */}
       {activeTab === "invitations" && (
         <Card className="overflow-hidden">
-          <div className="border-b border-line bg-surface px-5 py-3 text-[13px] font-semibold text-ink-3">
-            Aktivni verifikacioni kodovi za registraciju naloga
-          </div>
           <ul className="divide-y divide-line">
             {invitations.map((inv) => (
-              <li key={inv.code} className="flex flex-wrap items-center justify-between gap-4 p-5 hover:bg-surface">
+              <li key={inv.code} className="flex flex-wrap items-center justify-between gap-4 p-5">
                 <div>
                   <div className="flex items-center gap-3">
                     <span className="tabular-nums text-base font-bold tracking-wider text-ink">
@@ -1035,7 +970,7 @@ export default function UsersSection() {
                       onClick={() => copyInvitationCode(inv.code)}
                       className="rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
                     >
-                      {copiedCode === inv.code ? "✓ Kopirano" : "Kopiraj kod"}
+                      {copiedCode === inv.code ? "Kopirano" : "Kopiraj kod"}
                     </button>
                     <Badge tone={inv.status === "registered" ? "green" : "amber"}>
                       {inv.status === "registered" ? "Aktiviran nalog" : "Čeka registraciju"}
@@ -1104,10 +1039,25 @@ export default function UsersSection() {
       {activeTab === "candidates" && (
         <>
           {/* Pretraga + filteri */}
-          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="relative sm:max-w-xs sm:flex-1">
-              <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-3" />
-              <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Pretraga po imenu, emailu..." className={inputCls} />
+          <div className="mb-5 flex flex-col gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="relative mr-auto min-w-[220px] flex-1 sm:max-w-sm">
+                <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-3" />
+                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Ime ili e-mail" aria-label="Pretraga kandidata" className={inputCls} />
+              </div>
+              <button
+                type="button"
+                onClick={downloadEmbassyExport}
+                className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
+                title="Preuzmi tabelu kandidata za ambasadu SAD i sponzore"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-emerald-700">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                Tabela za ambasadu
+              </button>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {filters.map(([id, label]) => (
@@ -1157,7 +1107,7 @@ export default function UsersSection() {
                           <span className="truncate text-xs text-ink-3">{s.email}</span>
                           {Boolean(s.signedContractFileName || s.contractSigned) ? (
                             <span className="inline-flex items-center rounded-sm bg-emerald-100 px-1.5 py-0.2 text-2xs font-semibold text-emerald-800" title={`Ugovor: ${s.signedContractFileName || "Potpisan"}`}>
-                              ✓ Ugovor
+                              Ugovor
                             </span>
                           ) : (
                             <span className="inline-flex items-center rounded-sm bg-amber-100 px-1.5 py-0.2 text-2xs font-semibold text-amber-800" title="Ugovor nije okačen (uplate blokirane)">
@@ -1197,7 +1147,7 @@ export default function UsersSection() {
                         title="Izmeni podatke aplikacije"
                       >
                         <EditIcon className="h-3.5 w-3.5" />
-                        <span className="hidden lg:inline">Detalji</span>
+                        <span className="hidden lg:inline">Dosije</span>
                       </button>
                       <GhostIconButton
                         label="Obriši"

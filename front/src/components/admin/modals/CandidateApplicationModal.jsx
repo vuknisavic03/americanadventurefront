@@ -31,6 +31,7 @@ import {
   PIPELINE_STEPS,
   CheckIcon,
   PlusIcon,
+  XIcon,
   Modal,
   Field,
   PrimaryButton,
@@ -748,16 +749,19 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
 
   const remainingRsd = Math.round(remainingEur * currentNbsRate * 100) / 100;
 
+  // Navigacija dosijea: prvo put kandidata (koraci), pa trajni podaci dosijea.
   const tabs = [
     {
+      group: "Put kandidata",
       id: "registration",
-      label: "1. Registracija & Ugovor",
+      label: "Ugovor i uplata",
       done: Boolean(contractApproved && firstInstallmentApproved),
       alert: Boolean((contractSigned && !contractApproved) || firstInstallmentStatus === "pending"),
     },
     {
+      group: "Put kandidata",
       id: "step1_docs",
-      label: "2. Korak 1: Dokumenta",
+      label: "Dokumenta",
       done: Boolean(documentsApproved),
       alert: Boolean(
         !documentsApproved &&
@@ -767,8 +771,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
       ),
     },
     {
+      group: "Put kandidata",
       id: "step2_job",
-      label: "3. Korak 2: Posao & Ponuda",
+      label: "Posao i ponuda",
       done: Boolean((hasJob || selectedJobEmployer) && secondInstallmentPaid),
       alert: Boolean(
         interviewPrepStatus === "SCHEDULED" ||
@@ -776,41 +781,110 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
       ),
     },
     {
+      group: "Put kandidata",
       id: "step3_visa",
-      label: "4. Korak 3: Viza & Polazak",
+      label: "Viza i polazak",
       done: Boolean(hasVisa),
       alert: Boolean(thirdInstallmentStatus === "pending" && !thirdInstallmentPaid),
     },
+    { group: "Dosije", id: "profile", label: "Lični podaci i paket", done: false, alert: false },
     {
+      group: "Dosije",
       id: "finances",
-      label: `5. Finansije & KIR (${candidateInvoices.length})`,
+      label: "Finansije i KIR",
+      count: candidateInvoices.length,
       done: remainingEur === 0,
       alert: false,
     },
-    {
-      id: "history",
-      label: "6. Selekcija & Beleške",
-      done: false,
-      alert: false,
-    },
+    { group: "Dosije", id: "history", label: "Selekcija i beleške", done: false, alert: false },
   ];
+  const activeTabInfo = tabs.find((x) => x.id === activeTab) || tabs[0];
+  const currentStepIdx = Math.max(0, PIPELINE_STEPS.findIndex((x) => x.id === status));
+
+  const initials = (firstName[0] || "") + (lastName[0] || "") || "AA";
 
   return (
     <Modal
       title={`Dosije kandidata: ${firstName} ${lastName}`.trim()}
       onClose={onClose}
-      extraWide
+      panel
+      bodyClassName="flex min-h-0 flex-1 flex-col lg:flex-row"
+      header={
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-ink">{initials}</span>
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h2 className="truncate text-lg font-bold leading-tight text-ink">
+                    {firstName} {lastName}
+                  </h2>
+                  {candidate.activationCode && (
+                    <span className="rounded-md bg-surface-2 px-2 py-0.5 text-xs font-semibold tabular-nums text-ink-2">{candidate.activationCode}</span>
+                  )}
+                </div>
+                <p className="mt-0.5 truncate text-[13px] text-ink-3">
+                  {[email, phone, faculty].filter(Boolean).join(", ")}
+                </p>
+              </div>
+            </div>
+
+            <div className="ml-auto flex items-center gap-3">
+              {currentFlow?.nextId ? (
+                <button
+                  type="button"
+                  onClick={() => handleSelectStep(currentFlow.nextId)}
+                  className="inline-flex h-9 items-center rounded-full bg-ink px-4 text-[13px] font-semibold text-white transition-colors hover:bg-neutral-950"
+                >
+                  {currentFlow.nextLabel}
+                </button>
+              ) : (
+                <span className="inline-flex h-9 items-center gap-1.5 rounded-full bg-emerald-100 px-4 text-[13px] font-semibold text-emerald-800">
+                  <CheckIcon className="h-4 w-4" /> Viza odobrena, spreman za polazak
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Status kandidata: pet koraka kao jedna linija; klik pomera kandidata na taj korak */}
+          <ol className="mt-4 flex items-center gap-1 overflow-x-auto pb-1" aria-label="Korak kandidata">
+            {PIPELINE_STEPS.map((step, idx) => {
+              const isCurrent = idx === currentStepIdx;
+              const isPassed = idx < currentStepIdx;
+              return (
+                <li key={step.id} className="flex shrink-0 items-center gap-1">
+                  {idx > 0 && <span className={`h-px w-4 sm:w-8 ${isPassed || isCurrent ? "bg-ink" : "bg-line-strong"}`} aria-hidden="true" />}
+                  <button
+                    type="button"
+                    onClick={() => handleSelectStep(step.id)}
+                    aria-current={isCurrent ? "step" : undefined}
+                    title="Postavi kandidata na ovaj korak"
+                    className={`inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-semibold transition-colors ${
+                      isCurrent
+                        ? "bg-brand text-ink"
+                        : isPassed
+                        ? "text-ink hover:bg-surface"
+                        : "text-ink-3 hover:bg-surface hover:text-ink"
+                    }`}
+                  >
+                    {isPassed ? (
+                      <CheckIcon className="h-3.5 w-3.5 text-emerald-600" />
+                    ) : (
+                      <span className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] ${isCurrent ? "bg-ink text-brand" : "bg-surface-2 text-ink-3"}`}>{idx + 1}</span>
+                    )}
+                    {step.label}
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      }
       footer={
         <>
-          <div className="flex flex-wrap items-center gap-2">
-            <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${stepInfo.badgeCls}`}>
-              <span className={`h-2 w-2 rounded-full ${stepInfo.dotCls}`} />
-              {stepInfo.stepTitle}
-            </span>
-            <span className="text-xs font-medium text-ink-3">
-              {stepInfo.subLabel}
-            </span>
-          </div>
+          <p className="text-[13px] text-ink-2">
+            <span className="font-semibold text-ink">{stepInfo.stepTitle}:</span> {stepInfo.subLabel}
+          </p>
           <div className="flex items-center gap-2">
             <SecondaryButton onClick={onClose}>{t("admin.modalCancel")}</SecondaryButton>
             <PrimaryButton onClick={handleSubmit}>Sačuvaj sve izmene</PrimaryButton>
@@ -818,125 +892,59 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
         </>
       }
     >
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* GORNJA KARTICA IDENTITETA I KORAKA (BEZ PROCENATA) */}
-        <div className="rounded-2xl border border-line bg-surface p-5 sm:p-6 space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand text-base font-bold text-ink">
-                {(firstName[0] || "") + (lastName[0] || "") || "AA"}
-              </span>
-              <div>
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <p className="text-lg font-bold text-ink">
-                    {firstName} {lastName}
-                  </p>
-                  <span className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${stepInfo.badgeCls}`}>
-                    <span className={`h-2 w-2 rounded-full ${stepInfo.dotCls}`} />
-                    {stepInfo.stepTitle}
-                  </span>
-                  {candidate.activationCode && (
-                    <span className="rounded-md bg-surface-2 px-2.5 py-1 tabular-nums text-xs font-semibold text-ink">
-                      Kod: {candidate.activationCode}
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs sm:text-sm text-ink-2 mt-0.5">
-                  {email} {phone ? `• ${phone}` : ""} {faculty ? `• ${faculty}` : ""}
-                </p>
-              </div>
-            </div>
-
-            {/* Brzi prelazak na sledeći korak */}
-            {currentFlow?.nextId ? (
-              <button
-                type="button"
-                onClick={() => handleSelectStep(currentFlow.nextId)}
-                className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2.5 text-xs sm:text-sm font-bold text-ink transition-colors hover:bg-brand-strong"
-              >
-                <span>{currentFlow.nextLabel}</span>
-                <span aria-hidden="true">&rarr;</span>
-              </button>
-            ) : (
-              <span className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-100 px-3.5 py-2 text-xs sm:text-sm font-bold text-emerald-800">
-                <CheckIcon className="h-4 w-4 text-emerald-700" />
-                Viza odobrena • Spreman za polazak
-              </span>
-            )}
-          </div>
-
-          {/* Vizuelna traka koraka (5 koraka, bez procenata) */}
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
-            {PIPELINE_STEPS.map((step, idx) => {
-              const isCurrent = status === step.id;
-              const currentIdx = PIPELINE_STEPS.findIndex((s) => s.id === status);
-              const isPassed = currentIdx > idx;
-              return (
+      {/* Leva navigacija dosijea */}
+      <nav aria-label="Delovi dosijea" className="shrink-0 border-b border-line bg-surface lg:w-60 lg:overflow-y-auto lg:border-b-0 lg:border-r">
+        <div className="no-scrollbar flex gap-1 overflow-x-auto p-2 lg:flex-col lg:gap-0 lg:p-3">
+          {tabs.map((tab, i) => {
+            const isActive = activeTab === tab.id;
+            const newGroup = i === 0 || tabs[i - 1].group !== tab.group;
+            return (
+              <div key={tab.id} className="contents">
+                {newGroup && (
+                  <p className={`hidden px-3 pb-1.5 text-xs font-medium text-ink-3 lg:block ${i === 0 ? "pt-2" : "pt-5"}`}>{tab.group}</p>
+                )}
                 <button
-                  key={step.id}
                   type="button"
-                  onClick={() => handleSelectStep(step.id)}
-                  className={`flex items-center justify-between rounded-xl border px-3.5 py-2.5 text-left text-xs sm:text-sm font-semibold transition-all ${
-                    isCurrent
-                      ? "border-ink bg-ink text-white"
-                      : isPassed
-                      ? "bg-emerald-50 text-emerald-900 hover:bg-emerald-100"
-                      : "border-line bg-white text-ink-2 hover:border-line-strong hover:text-ink"
+                  onClick={() => setActiveTab(tab.id)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`flex shrink-0 items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${
+                    isActive ? "bg-white font-semibold text-ink shadow-sm ring-1 ring-line" : "font-medium text-ink-2 hover:bg-white/70 hover:text-ink"
                   }`}
                 >
-                  <span className="truncate">{step.label}</span>
-                  {isPassed && <CheckIcon className="h-4 w-4 shrink-0 text-emerald-600" />}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {adminToast && (
-          <div className="flex items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-xs sm:text-sm font-semibold text-emerald-900">
-            <span>{adminToast}</span>
-            <button type="button" onClick={() => setAdminToast("")} className="ml-3 font-bold text-emerald-800">
-              
-            </button>
-          </div>
-        )}
-
-        {/* NAVIGACIJA TABOVA (Ujednačena mreža od 6 kolona na većim ekranima) */}
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6 border-b border-line pb-4">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center justify-between gap-2 rounded-xl px-3.5 py-2.5 text-left text-xs sm:text-[13px] font-semibold transition-all ${
-                  isActive
-                    ? "bg-ink text-white"
-                    : "border border-line bg-surface text-ink-2 hover:bg-surface-2 hover:text-ink"
-                }`}
-              >
-                <span className="truncate">{tab.label}</span>
-                {tab.done && (
-                  <span
-                    className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full text-2xs font-bold ${
-                      isActive ? "bg-emerald-400 text-ink" : "bg-emerald-100 text-emerald-800"
-                    }`}
-                    title="Korak kompletiran"
-                  >
-                    
+                  <span className="whitespace-nowrap">
+                    {tab.label}
+                    {tab.count > 0 && <span className="ml-1.5 text-ink-3">{tab.count}</span>}
                   </span>
-                )}
-                {!tab.done && tab.alert && (
-                  <span
-                    className="h-2.5 w-2.5 shrink-0 rounded-full bg-amber-500"
-                    title="Čeka akciju administratora"
-                  />
-                )}
-              </button>
+                  {tab.done ? (
+                    <CheckIcon className="h-4 w-4 shrink-0 text-emerald-600" />
+                  ) : tab.alert ? (
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-amber-500" title="Čeka tvoju akciju" />
+                  ) : null}
+                </button>
+              </div>
             );
           })}
         </div>
+      </nav>
+
+      <form onSubmit={handleSubmit} className="min-h-0 flex-1 space-y-6 overflow-y-auto px-5 py-6 sm:px-8 sm:py-8">
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <h3 className="text-xl font-bold text-ink">{activeTabInfo.label}</h3>
+          {activeTabInfo.alert && !activeTabInfo.done && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-500" /> Čeka tvoju akciju
+            </span>
+          )}
+        </div>
+
+        {adminToast && (
+          <div role="status" className="flex items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900">
+            <span>{adminToast}</span>
+            <button type="button" onClick={() => setAdminToast("")} aria-label="Zatvori obaveštenje" className="ml-3 rounded p-1 text-emerald-800 hover:bg-emerald-100">
+              <XIcon />
+            </button>
+          </div>
+        )}
 
         {/* ================================================================ */}
         {/* TAB 1: REGISTRACIJA & UGOVOR (Ugovor, Izjava, Pasoš, I rata)     */}
@@ -1146,6 +1154,14 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               </div>
             </div>
 
+          </div>
+        )}
+
+        {/* ================================================================ */}
+        {/* TAB: LIČNI PODACI, PASOŠ, PAKET I JEMAC                         */}
+        {/* ================================================================ */}
+        {activeTab === "profile" && (
+          <div className="space-y-5">
             {/* 2. Lični podaci i Pasoš */}
             <div className="rounded-xl border border-line bg-white p-4 space-y-4">
               <h4 className="text-[13px] font-bold text-ink-3">
