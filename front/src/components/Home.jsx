@@ -277,7 +277,7 @@ export function HomeEligibility({ onNavigate }) {
 const OFFERS = [
   { tag: "Ograničen broj mesta", title: "Platiš kad zaradiš", text: "Pre polaska plaćaš manji deo programa, a veći deo po povratku, od onoga što zaradiš.", href: "/novosti/platis-kad-zaradis-kako-funkcionise" },
   { tag: "Do popune kvote", title: "Lifeguard −$300", text: "Spasilački paket za $1.775 umesto $2.075, uz bonus do $500 za ceo ugovor.", href: "/novosti/lifeguard-2027-satnice-lokacije-smestaj" },
-  { tag: "Uvek važi", title: "Novac nazad", text: "Ako ispunjavaš uslove iz ugovora, a ambasada odbije vizu, vraćamo sav uplaćeni novac za program.", href: "/novosti/novac-nazad-ako-viza-ne-bude-odobrena" },
+  { tag: "Garancija", title: "Novac nazad", text: "Ako ispunjavaš uslove iz ugovora, a ambasada odbije vizu, vraćamo sav uplaćeni novac za program.", href: "/novosti/novac-nazad-ako-viza-ne-bude-odobrena" },
 ];
 
 export function HomeOffers({ onNavigate }) {

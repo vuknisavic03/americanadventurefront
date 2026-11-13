@@ -1,8 +1,8 @@
 // Discounts.jsx
 import Logo from "./Logo";
 import { useTranslation } from "../i18n/LanguageContext";
-import { discountGroups as defaultGroups, earlyReasons as defaultReasons } from "../data/discounts";
-import { Badge, Button, Container, PageHeader } from "./ui";
+import { discountGroups as defaultGroups, earlyReasons as defaultReasons, VISA_GUARANTEE } from "../data/discounts";
+import { Badge, Button, CheckIcon, Container, PageHeader } from "./ui";
 import CtaBand from "./CtaBand";
 
 /**
@@ -32,6 +32,22 @@ export default function Discounts({
   return (
     <>
       <PageHeader title={t("disc.title")} lead={t("disc.subtitle")} />
+
+      {/* Garancija — važi za sve, nije deo izbora popusta */}
+      <section className="bg-white pt-14 sm:pt-20">
+        <Container>
+          <div className="flex flex-col gap-5 rounded-3xl bg-ink p-7 text-white sm:flex-row sm:items-center sm:gap-8 sm:p-10">
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand text-ink">
+              <CheckIcon className="h-7 w-7" strokeWidth={3} />
+            </span>
+            <div>
+              <p className="text-[13px] font-semibold uppercase tracking-wide text-brand">Garancija za sve kandidate</p>
+              <h2 className="font-display mt-1 text-2xl font-bold sm:text-3xl">{VISA_GUARANTEE.title}</h2>
+              <p className="mt-2 max-w-3xl text-[15px] leading-relaxed text-white/75">{VISA_GUARANTEE.text} Garancija se ne računa kao popust i važi uz bilo koju izabranu pogodnost.</p>
+            </div>
+          </div>
+        </Container>
+      </section>
 
       {/* Grupe popusta */}
       <section className="bg-white py-14 sm:py-20">

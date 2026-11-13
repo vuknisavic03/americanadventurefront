@@ -2,7 +2,7 @@
 // Promocije, popusti, afilijati (cashback) i grupni popusti (5+ uslov)
 
 import { PROMOTIONS_KEY, loadData, saveData } from "./storage.js";
-import { DEFAULT_PROMOTIONS } from "../discounts.js";
+import { DEFAULT_PROMOTIONS, RETIRED_PROMOTION_IDS } from "../discounts.js";
 import { saveCandidate } from "./candidates.js";
 import { getCandidates } from "./session.js";
 
@@ -12,7 +12,7 @@ export function getPromotions() {
     saveData(PROMOTIONS_KEY, DEFAULT_PROMOTIONS);
     return DEFAULT_PROMOTIONS;
   }
-  return loaded;
+  return loaded.filter((p) => !RETIRED_PROMOTION_IDS.includes(p.id));
 }
 
 export function savePromotions(promotions) {

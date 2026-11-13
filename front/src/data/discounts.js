@@ -6,6 +6,15 @@
 // 3. Afilijate: popust za svakog dovedenog se dobija samo ako on prođe viziranje i dobije posao
 // 4. Grupni popust: dobija se samo ako preko 5+ članova grupe dobije vizu i posao
 
+// Garancija nije promocija: važi za svakog kandidata, ne bira se i ne isključuje popuste.
+export const VISA_GUARANTEE = {
+  title: "Novac nazad ako ne dobiješ vizu",
+  text: "Ako ispunjavaš sve uslove programa predviđene ugovorom, a ambasada odbije vizu, vraćamo ti sav uplaćeni novac za program.",
+};
+
+// Uklonjeni id-jevi (stari podaci u bazi ili localStorage-u ih mogu još sadržati).
+export const RETIRED_PROMOTION_IDS = ["money_back_guarantee"];
+
 export const DEFAULT_PROMOTIONS = [
   {
     id: "family",
@@ -94,25 +103,8 @@ export const DEFAULT_PROMOTIONS = [
     isCustom: false,
   },
   {
-    id: "money_back_guarantee",
-    number: 6,
-    code: "REFUND-100",
-    name: "Garancija povraćaja novca u slučaju odbijanja vize",
-    title: "Novac nazad ako ne dobiješ vizu",
-    amount: 0,
-    currency: "USD",
-    timing: "immediate",
-    timingLabel: "Obračunava se odmah / Garancija",
-    description:
-      "Ukoliko kandidat ispunjava sve uslove programa predviđenim Ugovorom a bude odbijen za vizu - refundiramo sav uplaćeni novac u celosti.",
-    conditionType: "none",
-    conditionText: "100% refundacija uplaćenog novca ako viza bude odbijena",
-    active: true,
-    isCustom: false,
-  },
-  {
     id: "pay_when_earn",
-    number: 7,
+    number: 6,
     code: "PLATI-KAD-ZARADIS",
     name: "Platiš kad zaradiš",
     title: "Platiš kad zaradiš",
@@ -129,7 +121,7 @@ export const DEFAULT_PROMOTIONS = [
   },
   {
     id: "pay_in_full_300",
-    number: 8,
+    number: 7,
     code: "CELOST-300",
     name: "Isplati program odmah i osiguraj popust ($300)",
     title: "Isplati odmah, uštedi $300",
@@ -146,7 +138,7 @@ export const DEFAULT_PROMOTIONS = [
   },
   {
     id: "lifeguard_early_bird",
-    number: 9,
+    number: 8,
     code: "LIFEGUARD-300",
     name: "Lifeguard Early Bird popust ($300)",
     title: "Lifeguard Early Bird",
