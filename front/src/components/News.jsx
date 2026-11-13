@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "../i18n/LanguageContext";
 import NewsImage from "./NewsImage";
 import newsData from "../data/news";
-import { Button, Container, PageHeader } from "./ui";
+import { Button, Container, PageHeader, SubNav } from "./ui";
 
 /**
  * News — stranica „Vesti".
@@ -38,28 +38,19 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
 
   return (
     <>
-      <PageHeader title={t("news.heading")} lead={t("news.subtitle")}>
-        {/* Rubrike */}
-        <div className="no-scrollbar -mx-5 mt-10 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:px-0">
-          {cats.map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => {
-                setCat(c);
-                setShown(12);
-              }}
-              aria-pressed={cat === c}
-              className={`shrink-0 rounded-full border-2 border-ink px-4 py-2 text-sm font-semibold transition-colors ${
-                cat === c ? "bg-ink text-brand" : "text-ink hover:bg-ink/10"
-              }`}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-
-      </PageHeader>
+      <PageHeader title={t("news.heading")} lead={t("news.subtitle")} />
+      <SubNav
+        label="Rubrike"
+        items={cats.map((c) => ({
+          key: c,
+          label: c,
+          active: cat === c,
+          onClick: () => {
+            setCat(c);
+            setShown(12);
+          },
+        }))}
+      />
 
       <section className="bg-white py-14 sm:py-20">
         <Container>

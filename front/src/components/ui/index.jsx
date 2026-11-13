@@ -205,3 +205,33 @@ export function PlusMark({ className = "" }) {
 export function BlockTitle({ children, className = "" }) {
   return <h2 className={cx("font-display text-[clamp(1.8rem,3.2vw,2.5rem)] font-extrabold leading-[1] text-ink", className)}>{children}</h2>;
 }
+
+/**
+ * SubNav — bela traka sa izborom (rubrike, programi, delovi strane) odmah ispod žutog zaglavlja.
+ * Lepi se ispod glavnog menija dok se skroluje. items: [{ key, label, active, onClick?, href? }]
+ */
+export function SubNav({ label, items }) {
+  return (
+    <nav aria-label={label} className="sticky top-16 z-20 border-b border-line bg-white lg:top-[72px]">
+      <Container>
+        <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 py-3 sm:mx-0 sm:px-0">
+          {items.map((it) => {
+            const cls = cx(
+              "shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-150",
+              it.active ? "bg-ink text-white" : "border border-line-strong text-ink hover:border-ink"
+            );
+            return it.href ? (
+              <a key={it.key} href={it.href} onClick={it.onClick} className={cls}>
+                {it.label}
+              </a>
+            ) : (
+              <button key={it.key} type="button" aria-pressed={it.active} onClick={it.onClick} className={cls}>
+                {it.label}
+              </button>
+            );
+          })}
+        </div>
+      </Container>
+    </nav>
+  );
+}

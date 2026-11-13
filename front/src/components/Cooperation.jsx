@@ -1,6 +1,6 @@
 // Cooperation.jsx
 import { useTranslation } from "../i18n/LanguageContext";
-import { Button, CheckIcon, Container, PageHeader } from "./ui";
+import { Button, CheckIcon, Container, PageHeader, SubNav } from "./ui";
 
 const DEFAULT_UNIVERSITIES = [
   "Univerzitet u Beogradu (Ekonomski, FON, Filološki, Pravni, FPN, Arhitektonski)",
@@ -91,7 +91,7 @@ export default function Cooperation({
   universities = DEFAULT_UNIVERSITIES,
 }) {
   const { t } = useTranslation();
-  const sectionCls = "scroll-mt-24 py-16 sm:py-24";
+  const sectionCls = "scroll-mt-36 py-16 sm:py-24";
   const gridCls = "grid gap-10 lg:grid-cols-2 lg:gap-16";
 
   return (
@@ -102,19 +102,8 @@ export default function Cooperation({
           t("coop.subtitle") ||
           "Gradimo dugoročna partnerstva sa američkim poslodavcima, studentima ambasadorima, preduzetnicima kroz franšizni model i vodećim univerzitetima."
         }
-      >
-        <nav aria-label="Celine na strani" className="mt-8 flex flex-wrap gap-2">
-          {ANCHORS.map((a) => (
-            <a
-              key={a.href}
-              href={a.href}
-              className="rounded-full border-2 border-ink px-4 py-2 text-sm font-semibold text-ink transition-colors duration-150 hover:bg-ink hover:text-brand"
-            >
-              {a.label}
-            </a>
-          ))}
-        </nav>
-      </PageHeader>
+      />
+      <SubNav label="Celine na strani" items={ANCHORS.map((x) => ({ key: x.href, label: x.label, href: x.href, active: false }))} />
 
       {/* 1. Kompanije iz USA */}
       <section id="kompanije-usa" className={sectionCls}>

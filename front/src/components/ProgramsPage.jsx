@@ -5,7 +5,7 @@ import jobItems from "../data/jobItems";
 import { SWT_FAQS } from "../data/faq";
 import CtaBand from "./CtaBand";
 import { DEMO_MODE } from "../config";
-import { Badge, Button, CheckIcon, Container, PageHeader, cx, inputSmCls, PlusMark, BlockTitle } from "./ui";
+import { Badge, Button, CheckIcon, Container, PageHeader, cx, inputSmCls, PlusMark, BlockTitle, SubNav } from "./ui";
 
 // Podaci su usklađeni sa workandtravel.rs (stanje: novembar 2026). Cene su u USD osim gde piše drugačije.
 const ALL_PROGRAMS = [
@@ -422,29 +422,10 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
       />
 
       {/* Izbor programa */}
-      <nav aria-label="Programi" className="sticky top-16 z-20 bg-ink lg:top-[72px]">
-        <Container>
-          <div className="no-scrollbar -mx-2 flex gap-1 overflow-x-auto py-3">
-            {ALL_PROGRAMS.map((prog) => {
-              const active = prog.id === selectedId;
-              return (
-                <button
-                  key={prog.id}
-                  type="button"
-                  aria-pressed={active}
-                  onClick={() => setSelectedId(prog.id)}
-                  className={cx(
-                    "whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-150",
-                    active ? "bg-brand text-ink" : "text-white/75 hover:bg-white/10 hover:text-white"
-                  )}
-                >
-                  {tabLabel(prog.title)}
-                </button>
-              );
-            })}
-          </div>
-        </Container>
-      </nav>
+      <SubNav
+        label="Programi"
+        items={ALL_PROGRAMS.map((prog) => ({ key: prog.id, label: tabLabel(prog.title), active: prog.id === selectedId, onClick: () => setSelectedId(prog.id) }))}
+      />
 
       <Container className="py-14 sm:py-20">
         {/* Izabrani program */}
