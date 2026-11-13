@@ -108,7 +108,7 @@ export default function Cooperation({
             <a
               key={a.href}
               href={a.href}
-              className="rounded-full border border-line-strong px-4 py-2 text-sm font-medium text-ink transition-colors duration-150 hover:bg-surface"
+              className="rounded-full border-2 border-ink px-4 py-2 text-sm font-semibold text-ink transition-colors duration-150 hover:bg-ink hover:text-brand"
             >
               {a.label}
             </a>
@@ -120,7 +120,7 @@ export default function Cooperation({
       <section id="kompanije-usa" className={sectionCls}>
         <Container className={gridCls}>
           <div>
-            <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">Kompanije iz USA</h2>
+            <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1] text-ink">Kompanije iz USA</h2>
             <p className="mt-5 text-lg leading-relaxed text-ink-2">
               Da li ste američki poslodavac, hotelski lanac, akva park ili nacionalni park u potrazi za pouzdanom i marljivom
               sezonskom radnom snagom?
@@ -134,14 +134,14 @@ export default function Cooperation({
           </div>
 
           <div className="rounded-3xl bg-surface p-7 sm:p-10">
-            <h3 className="text-xl font-semibold text-ink">Zapošljavanje J-1 studenata</h3>
+            <h3 className="font-display text-xl font-extrabold text-ink">Zapošljavanje J-1 studenata</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-ink-2">
               Naši studenti rade kod poslodavaca širom SAD — od obale Atlantika do Pacifika i Aljaske.
             </p>
             <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8">
               {EMPLOYER_STATS.map((stat) => (
                 <div key={stat.label} className="border-t border-line-strong pt-4">
-                  <dd className="font-display text-3xl font-bold tabular-nums text-ink">{stat.value}</dd>
+                  <dd className="font-sign text-6xl font-extrabold leading-none text-ink">{stat.value}</dd>
                   <dt className="mt-1 text-sm text-ink-2">{stat.label}</dt>
                 </div>
               ))}
@@ -154,7 +154,7 @@ export default function Cooperation({
       <section id="brand-ambasadori" className={`${sectionCls} bg-brand text-ink`}>
         <Container className={gridCls}>
           <div>
-            <h2 className="font-display text-3xl font-bold sm:text-4xl">{t("coop.ambTitle") || "Postani Brand Ambasador"}</h2>
+            <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1]">{t("coop.ambTitle") || "Postani Brand Ambasador"}</h2>
             <p className="mt-5 text-lg leading-relaxed">
               {t("coop.ambBody") ||
                 "Već si bio na Work and Travel programu i želiš da pomogneš kolegama sa fakulteta da dožive isto? Postani zvanični ambasador American Adventure agencije na svom univerzitetu!"}
@@ -165,7 +165,7 @@ export default function Cooperation({
           </div>
 
           <div>
-            <p className="font-display text-2xl font-bold leading-snug sm:text-3xl">
+            <p className="font-display text-2xl font-extrabold leading-snug sm:text-3xl">
               {t("coop.ambNote") || "Budi deo najuspešnijeg studentskog tima u Srbiji"}
             </p>
             <ul className="mt-8 divide-y divide-ink/20 border-y border-ink/20">
@@ -183,7 +183,7 @@ export default function Cooperation({
       <section id="fransiza" className={sectionCls}>
         <Container className={gridCls}>
           <div>
-            <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">Otvori American Adventure kancelariju</h2>
+            <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1] text-ink">Otvori American Adventure kancelariju</h2>
             <p className="mt-5 text-lg leading-relaxed text-ink-2">
               Širimo mrežu i tražimo partnere za otvaranje novih centara u univerzitetskim gradovima Srbije (Novi Sad, Niš,
               Kragujevac, Subotica) i u regionu (Banja Luka, Podgorica, Skoplje, Sarajevo).
@@ -198,7 +198,7 @@ export default function Cooperation({
           </div>
 
           <div className="rounded-3xl bg-surface p-7 sm:p-10">
-            <h3 className="text-xl font-semibold text-ink">Franšizni paket American Adventure</h3>
+            <h3 className="font-display text-xl font-extrabold text-ink">Franšizni paket American Adventure</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-ink-2">
               Kompletan operativni i tehnički ekosistem za uspešno poslovanje:
             </p>
@@ -213,7 +213,7 @@ export default function Cooperation({
       <section id="univerziteti" className={`${sectionCls} border-t border-line`}>
         <Container className={gridCls}>
           <div>
-            <h2 className="font-display text-3xl font-bold text-ink sm:text-4xl">{t("coop.uniTitle") || "Saradnja sa univerzitetima"}</h2>
+            <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1] text-ink">{t("coop.uniTitle") || "Saradnja sa univerzitetima"}</h2>
             <p className="mt-5 text-lg leading-relaxed text-ink-2">
               {t("coop.uniBody") ||
                 "Ponosni smo na zvanične sporazume i saradnju sa visokoškolskim ustanovama u Srbiji, omogućavajući studentima usklađivanje ispitnih rokova sa letnjom praksom u SAD."}

@@ -30,49 +30,50 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
   const rest = others.slice(0, shown);
 
   const Meta = ({ item }) => (
-    <p className="flex flex-wrap gap-x-3 text-sm">
-      <span className="font-medium text-ink">{item.category}</span>
-      <time className="tabular-nums text-ink-3">{item.date}</time>
+    <p className="flex flex-wrap items-center gap-x-3 text-sm">
+      <span className="rounded-full bg-brand px-2.5 py-0.5 text-xs font-semibold text-ink">{item.category}</span>
+      <time className="font-sign text-[15px] font-semibold text-ink-3">{item.date}</time>
     </p>
   );
 
   return (
     <>
-      <PageHeader title={t("news.heading")} lead={t("news.subtitle")} />
+      <PageHeader title={t("news.heading")} lead={t("news.subtitle")}>
+        {/* Rubrike */}
+        <div className="no-scrollbar -mx-5 mt-10 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:px-0">
+          {cats.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => {
+                setCat(c);
+                setShown(12);
+              }}
+              aria-pressed={cat === c}
+              className={`shrink-0 rounded-full border-2 border-ink px-4 py-2 text-sm font-semibold transition-colors ${
+                cat === c ? "bg-ink text-brand" : "text-ink hover:bg-ink/10"
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
+      </PageHeader>
 
       <section className="bg-white py-14 sm:py-20">
         <Container>
-          {/* Rubrike */}
-          <div className="no-scrollbar -mx-5 mb-10 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:px-0">
-            {cats.map((c) => (
-              <button
-                key={c}
-                type="button"
-                onClick={() => {
-                  setCat(c);
-                  setShown(12);
-                }}
-                aria-pressed={cat === c}
-                className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                  cat === c ? "bg-ink text-white" : "border border-line-strong text-ink hover:border-ink/50"
-                }`}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-
           {items.length === 0 && <p className="text-base text-ink-2">Trenutno nema objavljenih novosti.</p>}
 
           {/* Istaknuta vest */}
           {featured && (
-            <article className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
-              <a href={hrefOf(featured)} onClick={go(hrefOf(featured))} tabIndex={-1} aria-hidden="true" className="block">
-                <NewsImage src={featured.image} theme={featured.theme} alt="" className="aspect-[16/10] w-full rounded-2xl" />
+            <article className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
+              <a href={hrefOf(featured)} onClick={go(hrefOf(featured))} tabIndex={-1} aria-hidden="true" className="block lg:col-span-7">
+                <NewsImage src={featured.image} theme={featured.theme} alt="" className="aspect-[16/10] w-full rounded-[1.25rem]" />
               </a>
-              <div>
+              <div className="lg:col-span-5">
                 <Meta item={featured} />
-                <h2 className="font-display mt-4 text-3xl font-bold leading-[1.1] text-ink sm:text-4xl">
+                <h2 className="font-display mt-5 text-[clamp(2rem,3.6vw,2.9rem)] font-extrabold leading-[1] text-ink">
                   <a href={hrefOf(featured)} onClick={go(hrefOf(featured))} className="hover:underline hover:decoration-brand hover:decoration-4 hover:underline-offset-4">
                     {tr(featured.title)}
                   </a>
@@ -91,15 +92,15 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
 
           {/* Ostale vesti */}
           {rest.length > 0 && (
-            <div className="mt-16 grid gap-x-8 gap-y-12 border-t border-line pt-16 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-20 grid gap-x-8 gap-y-14 border-t-2 border-ink pt-14 md:grid-cols-2 lg:grid-cols-3">
               {rest.map((item) => (
                 <article key={item.slug}>
                   <a href={hrefOf(item)} onClick={go(hrefOf(item))} tabIndex={-1} aria-hidden="true" className="block">
-                    <NewsImage src={item.image} theme={item.theme} alt="" className="aspect-[16/10] w-full rounded-2xl" />
+                    <NewsImage src={item.image} theme={item.theme} alt="" className="aspect-[16/10] w-full rounded-[1.25rem]" />
                   </a>
                   <div className="mt-5">
                     <Meta item={item} />
-                    <h3 className="mt-2 text-xl font-semibold leading-snug text-ink">
+                    <h3 className="font-display mt-3 text-[1.35rem] font-extrabold leading-[1.12] text-ink">
                       <a href={hrefOf(item)} onClick={go(hrefOf(item))} className="hover:underline hover:decoration-brand hover:decoration-2 hover:underline-offset-4">
                         {tr(item.title)}
                       </a>
@@ -113,7 +114,7 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
 
           {others.length > shown && (
             <div className="mt-14 flex justify-center">
-              <Button variant="outline" onClick={() => setShown((n) => n + 12)}>
+              <Button variant="dark" size="lg" onClick={() => setShown((n) => n + 12)}>
                 Prikaži još ({others.length - shown})
               </Button>
             </div>

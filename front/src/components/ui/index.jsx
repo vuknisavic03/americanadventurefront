@@ -66,7 +66,7 @@ export const inputSmCls =
 /* ---------- Raspored ---------- */
 export function Container({ className = "", children, ...props }) {
   return (
-    <div className={cx("mx-auto w-full max-w-6xl px-5 sm:px-8", className)} {...props}>
+    <div className={cx("mx-auto w-full max-w-7xl px-5 sm:px-8", className)} {...props}>
       {children}
     </div>
   );
@@ -83,8 +83,8 @@ export function SectionHeading({ as: Tag = "h2", title, lead, action, className 
       <div className="max-w-2xl">
         <Tag
           className={cx(
-            "font-display font-bold leading-[1.08]",
-            Tag === "h1" ? "text-4xl sm:text-5xl" : "text-3xl sm:text-4xl",
+            "font-display font-extrabold leading-[0.98]",
+            Tag === "h1" ? "text-[clamp(2.6rem,6vw,5rem)]" : "text-[clamp(2rem,4.2vw,3.2rem)]",
             dark ? "text-white" : "text-ink"
           )}
         >
@@ -99,12 +99,16 @@ export function SectionHeading({ as: Tag = "h2", title, lead, action, className 
   );
 }
 
-/** PageHeader — zaglavlje unutrašnjih stranica (Programi, Akcije, Novosti…). */
+/**
+ * PageHeader — zaglavlje unutrašnjih stranica: žuto polje kao putokaz, veliki naslov levo.
+ * children (npr. tabovi, filteri) idu ispod naslova, i dalje na žutom.
+ */
 export function PageHeader({ title, lead, children }) {
   return (
-    <header className="border-b border-line bg-white">
-      <Container className="py-12 sm:py-16">
-        <SectionHeading as="h1" title={title} lead={lead} />
+    <header className="bg-brand">
+      <Container className="pb-12 pt-14 sm:pb-16 sm:pt-20">
+        <h1 className="font-display max-w-5xl text-[clamp(2.6rem,6.4vw,5.4rem)] font-extrabold leading-[0.92] text-ink">{title}</h1>
+        {lead && <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink/80 sm:text-xl">{lead}</p>}
         {children}
       </Container>
     </header>
@@ -181,3 +185,23 @@ export const MoonIcon = (p) => (
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
   </Svg>
 );
+export const PlaneIcon = ({ className = "h-5 w-5" }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+    <path d="M21.5 12.2c0-.6-.5-1-1.1-1H15L10.3 3.6a.8.8 0 0 0-.7-.4H8.4a.5.5 0 0 0-.5.6l2.2 7.4H5.6L3.9 8.9a.6.6 0 0 0-.5-.3H2.5a.4.4 0 0 0-.4.5l1 3.1-1 3.1a.4.4 0 0 0 .4.5h.9c.2 0 .4-.1.5-.3l1.7-2.3h4.5l-2.2 7.4a.5.5 0 0 0 .5.6h1.2c.3 0 .5-.1.7-.4L15 13.2h5.4c.6 0 1.1-.4 1.1-1z" />
+  </svg>
+);
+
+/** Plus u žutom krugu — oznaka za otvaranje (pretvara se u minus kad je <details> otvoren; roditelj mora imati klasu `group`). */
+export function PlusMark({ className = "" }) {
+  return (
+    <span className={cx("relative h-6 w-6 shrink-0 rounded-full bg-brand", className)} aria-hidden="true">
+      <span className="absolute left-1/2 top-1/2 h-0.5 w-2.5 -translate-x-1/2 -translate-y-1/2 bg-ink" />
+      <span className="absolute left-1/2 top-1/2 h-2.5 w-0.5 -translate-x-1/2 -translate-y-1/2 bg-ink transition-transform group-open:scale-y-0" />
+    </span>
+  );
+}
+
+/** Naslov bloka unutar stranice (manji od SectionHeading, isti glas). */
+export function BlockTitle({ children, className = "" }) {
+  return <h2 className={cx("font-display text-[clamp(1.8rem,3.2vw,2.5rem)] font-extrabold leading-[1] text-ink", className)}>{children}</h2>;
+}

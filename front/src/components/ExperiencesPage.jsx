@@ -36,7 +36,7 @@ export default function ExperiencesPage({ items = experiencesData, onNavigate = 
 
       <section className="bg-white py-14 sm:py-20">
         <Container>
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="gap-10 md:columns-2 lg:columns-3">
             {items.slice(0, shown).map((item) => {
               const facts = [
                 item.wage && `Satnica: ${item.wage}`,
@@ -44,16 +44,16 @@ export default function ExperiencesPage({ items = experiencesData, onNavigate = 
                 item.tips && `Napojnice: ${item.tips}`,
               ].filter(Boolean);
               return (
-                <figure key={item.slug} className="flex flex-col rounded-2xl border border-line p-6 sm:p-7">
+                <figure key={item.slug} className="mb-12 flex break-inside-avoid flex-col border-t-2 border-ink pt-5">
                   <figcaption className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
                     <div>
                       <p className="text-base font-semibold text-ink">{item.name}</p>
-                      <p className="mt-0.5 text-sm text-ink-3">{[item.place, item.year].filter(Boolean).join(" · ")}</p>
+                      <p className="mt-0.5 text-sm text-ink-3">{[item.place, item.year].filter(Boolean).join(", ")}</p>
                     </div>
                     <Rating label="Agencija" value={item.agencyRating} />
                   </figcaption>
 
-                  {item.quote && <blockquote className="mt-5 text-[17px] leading-relaxed text-ink">„{tr(item.quote)}“</blockquote>}
+                  {item.quote && <blockquote className="mt-4 text-[18px] leading-relaxed text-ink">„{tr(item.quote)}“</blockquote>}
 
                   {(item.job || item.employerNote || item.extraJob) && (
                     <details className="group mt-5 border-t border-line pt-4">
@@ -68,7 +68,7 @@ export default function ExperiencesPage({ items = experiencesData, onNavigate = 
                             {tr(item.job)}
                           </p>
                         )}
-                        {facts.length > 0 && <p className="text-sm text-ink-3">{facts.join(" · ")}</p>}
+                        {facts.length > 0 && <p className="text-sm text-ink-3">{facts.join(". ")}.</p>}
                         {item.employerNote && (
                           <div>
                             <Rating label="Poslodavac" value={item.employerRating} />
@@ -91,7 +91,7 @@ export default function ExperiencesPage({ items = experiencesData, onNavigate = 
 
           {items.length > shown && (
             <div className="mt-12 flex justify-center">
-              <Button variant="outline" onClick={() => setShown((n) => n + 12)}>
+              <Button variant="dark" size="lg" onClick={() => setShown((n) => n + 12)}>
                 Prikaži još ({items.length - shown})
               </Button>
             </div>

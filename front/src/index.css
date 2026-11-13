@@ -118,10 +118,36 @@
   }
 }
 
-/* Naslovni rez: isti Archivo, proširen (kao slova u logotipu). */
+/* Tri glasa jednog fonta (Archivo, osa širine 62–125 %):
+   font-display  prošireni, težak — naslovi (kao slova u logotipu)
+   font-sign     sužen — brojke, cene, polja na karti, kao putokazi i aerodromske table
+   (telo teksta ostaje normalne širine) */
 @utility font-display {
-  font-stretch: 122%;
-  letter-spacing: -0.02em;
+  font-stretch: 125%;
+  letter-spacing: -0.035em;
+}
+@utility font-sign {
+  font-stretch: 66%;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Perforacija karte: polukružni useci na levoj i desnoj ivici, na visini --cut (default 50%). */
+@utility ticket-notch {
+  --notch: 14px;
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 var(--cut, 50%), #0000 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% var(--cut, 50%), #0000 98%, #000) right / 51% 100% no-repeat;
+  mask:
+    radial-gradient(circle var(--notch) at 0 var(--cut, 50%), #0000 98%, #000) left / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% var(--cut, 50%), #0000 98%, #000) right / 51% 100% no-repeat;
+}
+/* Isprekidana linija perforacije (vodoravna). */
+@utility perforation {
+  background-image: linear-gradient(to right, currentColor 50%, transparent 0);
+  background-size: 10px 2px;
+  background-repeat: repeat-x;
+  height: 2px;
 }
 
 /* Brend „marker" — žuta podloga iza ključne fraze (jedini dekorativni akcent). */
@@ -168,8 +194,8 @@
 
   h1,
   h2 {
-    font-stretch: 112%;
-    letter-spacing: -0.015em;
+    font-stretch: 118%;
+    letter-spacing: -0.025em;
     text-wrap: balance;
   }
 

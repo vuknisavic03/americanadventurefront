@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect, useState } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import { HomePrograms, HomeSteps, HomePricing, HomeVoices, HomeFaq, HomeEligibility, HomeOffers, HomeEarnings, HomeDestinations, HomeObjections, StickyApply } from "./components/Home";
+import { HomePrograms, HomeSteps, HomePricing, HomeVoices, HomeFaq, HomeOffers, HomeEarnings, HomeDestinations, HomeObjections, StickyApply } from "./components/Home";
 import CtaBand from "./components/CtaBand";
 import Footer from "./components/Footer";
 import navItems from "./data/navItems";
@@ -298,7 +298,6 @@ export default function App() {
         return (
           <>
             <Hero onNavigate={handleNavigate} />
-            <HomeEligibility onNavigate={handleNavigate} />
             <HomeOffers onNavigate={handleNavigate} />
             <HomeEarnings onNavigate={handleNavigate} />
             <HomeDestinations onNavigate={handleNavigate} />

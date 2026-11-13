@@ -108,7 +108,21 @@ export default function Footer({
 
   return (
     <footer className="bg-ink text-white">
-      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+      {/* Najkraći put do nas */}
+      <div className="mx-auto max-w-7xl px-5 pt-16 sm:px-8 sm:pt-20">
+        <div className="flex flex-col gap-6 border-b border-white/15 pb-12 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="text-[15px] text-white/60">Imaš pitanje? Pozovi, radnim danima od 9 do 17.</p>
+            <a href={telHref(contact.phones[1] || contact.phones[0])} className="font-sign mt-2 block text-[clamp(3rem,8vw,6rem)] font-extrabold leading-none text-brand hover:underline hover:decoration-4 hover:underline-offset-8">
+              {contact.phones[1] || contact.phones[0]}
+            </a>
+          </div>
+          <a href={`mailto:${contact.email}`} className="text-lg font-semibold text-white underline decoration-white/30 decoration-2 underline-offset-[6px] hover:decoration-brand">
+            {contact.email}
+          </a>
+        </div>
+      </div>
+      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-10">
           {/* Brend + social */}
           <div className="lg:col-span-4">
@@ -214,7 +228,7 @@ export default function Footer({
 
       {/* Donja linija */}
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-2 px-5 py-6 text-[13px] text-white/55 sm:flex-row sm:items-center sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-2 px-5 py-6 text-[13px] text-white/55 sm:flex-row sm:items-center sm:px-8">
           <p>
             © {year} American Adventure DOO. {t("footer.rights")}
           </p>

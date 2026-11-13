@@ -189,7 +189,7 @@ export default function OnlinePrijava({
   const req = <span className="text-red-600" aria-hidden="true"> *</span>;
 
   return (
-    <section className="bg-surface px-5 py-14 sm:py-20">
+    <section className="bg-brand px-5 py-14 sm:py-20">
       <div className="mx-auto w-full max-w-2xl">
         {/* Koraci selekcije (Prilog 1A) */}
         {step !== "done" && (
@@ -198,10 +198,10 @@ export default function OnlinePrijava({
               <li
                 key={label}
                 aria-current={i === 0 ? "step" : undefined}
-                className={`border-t-2 pt-2.5 ${i === 0 ? "border-ink" : "border-line-strong"}`}
+                className={`border-t-2 pt-2.5 ${i === 0 ? "border-ink" : "border-ink/25"}`}
               >
-                <span className={`block text-xs tabular-nums ${i === 0 ? "text-ink" : "text-ink-3"}`}>{i + 1}</span>
-                <span className={`mt-0.5 hidden text-[13px] leading-snug sm:block ${i === 0 ? "font-semibold text-ink" : "text-ink-3"}`}>
+                <span className={`block text-xs tabular-nums ${i === 0 ? "text-ink" : "text-ink/70"}`}>{i + 1}</span>
+                <span className={`mt-0.5 hidden text-[13px] leading-snug sm:block ${i === 0 ? "font-semibold text-ink" : "text-ink/70"}`}>
                   {label}
                 </span>
               </li>
@@ -209,11 +209,11 @@ export default function OnlinePrijava({
           </ol>
         )}
 
-        <div className={`rounded-3xl border border-line bg-white p-7 sm:p-10 ${step !== "done" ? "mt-8" : ""}`}>
+        <div className={`rounded-[1.75rem] bg-white p-7 sm:p-10 ${step !== "done" ? "mt-8" : ""}`}>
           {/* KORAK 1: IZBOR PROGRAMA */}
           {step === "program" && (
             <>
-              <h1 className="font-display text-3xl font-bold leading-[1.1] text-ink">
+              <h1 className="font-display text-[2.2rem] font-extrabold leading-[1] text-ink">
                 Izaberite program za prijavu
               </h1>
               <p className="mt-2 text-sm text-ink-2">
@@ -270,7 +270,7 @@ export default function OnlinePrijava({
               </div>
 
               <div className="mt-4">
-                <h1 className="font-display text-3xl font-bold leading-[1.1] text-ink">Prijavni formular</h1>
+                <h1 className="font-display text-[2.2rem] font-extrabold leading-[1] text-ink">Prijavni formular</h1>
                 <p className="mt-2 text-sm text-ink-2">
                   Prijava stiže direktno timu agencije. Javljamo se na e-mail i telefon koje navedeš.
                 </p>
@@ -544,7 +544,7 @@ export default function OnlinePrijava({
               <span className="bg-brand text-ink flex h-16 w-16 items-center justify-center rounded-full">
                 <CheckCircleIcon className="h-9 w-9" />
               </span>
-              <h1 className="mt-6 font-display text-3xl font-bold leading-[1.1] text-ink">Prijava je poslata</h1>
+              <h1 className="mt-6 font-display text-[2.2rem] font-extrabold leading-[1] text-ink">Prijava je poslata</h1>
               <p className="mt-3 max-w-md text-base text-ink-2">
                 Hvala na prijavi za <strong className="font-semibold text-ink">{destInfo.label}</strong>. Podaci su evidentirani i naš tim ih je dobio.
               </p>

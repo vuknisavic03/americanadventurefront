@@ -2,7 +2,7 @@
 import Logo from "./Logo";
 import { useTranslation } from "../i18n/LanguageContext";
 import { discountGroups as defaultGroups, earlyReasons as defaultReasons, VISA_GUARANTEE } from "../data/discounts";
-import { Badge, Button, CheckIcon, Container, PageHeader } from "./ui";
+import { Badge, BlockTitle, Button, CheckIcon, Container, PageHeader } from "./ui";
 import CtaBand from "./CtaBand";
 
 /**
@@ -41,8 +41,8 @@ export default function Discounts({
               <CheckIcon className="h-7 w-7" strokeWidth={3} />
             </span>
             <div>
-              <p className="text-[13px] font-semibold uppercase tracking-wide text-brand">Garancija za sve kandidate</p>
-              <h2 className="font-display mt-1 text-2xl font-bold sm:text-3xl">{VISA_GUARANTEE.title}</h2>
+              <p className="text-[15px] font-semibold text-brand">Garancija za sve kandidate</p>
+              <h2 className="font-display mt-1 text-[clamp(1.7rem,3vw,2.4rem)] font-extrabold leading-tight">{VISA_GUARANTEE.title}</h2>
               <p className="mt-2 max-w-3xl text-[15px] leading-relaxed text-white/75">{VISA_GUARANTEE.text} Garancija se ne računa kao popust i važi uz bilo koju izabranu pogodnost.</p>
             </div>
           </div>
@@ -50,33 +50,27 @@ export default function Discounts({
       </section>
 
       {/* Grupe popusta */}
-      <section className="bg-white py-14 sm:py-20">
-        <Container className="space-y-16">
+      <section className="bg-white py-16 sm:py-24">
+        <Container className="space-y-20">
           {groups.map((group) => (
             <div key={group.program}>
-              <h2 className="font-display text-2xl font-bold text-ink sm:text-3xl">{group.program}</h2>
+              <BlockTitle>{group.program}</BlockTitle>
 
               {group.notice && (
-                <p className="mt-5 max-w-3xl rounded-xl bg-brand-soft px-5 py-4 text-sm leading-relaxed text-ink">
-                  <strong className="font-semibold">Važna napomena:</strong> {group.notice}
-                </p>
+                <p className="mt-5 max-w-3xl border-l-4 border-brand pl-5 text-[15px] leading-relaxed text-ink-2">{group.notice}</p>
               )}
 
-              <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-10 grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
                 {group.items.map((item) => (
-                  <article key={item.title} className="flex flex-col rounded-2xl border border-line p-6">
+                  <article key={item.title} className="flex flex-col border-t-2 border-ink pt-5">
                     {item.timing && (
-                      <Badge tone={item.timing === "immediate" ? "success" : "neutral"} className="mb-4 self-start">
+                      <Badge tone={item.timing === "immediate" ? "brand" : "neutral"} className="self-start">
                         {item.timingLabel || (item.timing === "immediate" ? "Odmah" : "Na kraju")}
                       </Badge>
                     )}
-                    <h3 className="text-lg font-semibold leading-snug text-ink">{item.title}</h3>
-                    <p className="mt-2 flex-1 text-[15px] leading-relaxed text-ink-2">{item.text}</p>
-                    {item.conditionText && (
-                      <p className="mt-5 border-t border-line pt-4 text-sm text-ink-2">
-                        <span className="text-ink-3">Uslov:</span> {item.conditionText}
-                      </p>
-                    )}
+                    <h3 className="font-display mt-4 text-[1.45rem] font-extrabold leading-[1.08] text-ink">{item.title}</h3>
+                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-ink-2">{item.text}</p>
+                    {item.conditionText && <p className="mt-5 rounded-xl bg-surface px-4 py-3 text-sm text-ink">Uslov: {item.conditionText}</p>}
                   </article>
                 ))}
               </div>
@@ -88,11 +82,11 @@ export default function Discounts({
       {/* Razlozi za raniju prijavu */}
       <section className="bg-surface py-16 sm:py-24">
         <Container>
-          <h2 className="font-display max-w-2xl text-3xl font-bold text-ink sm:text-4xl">{t("disc.reasonsTitle")}</h2>
+          <BlockTitle className="max-w-2xl">{t("disc.reasonsTitle")}</BlockTitle>
           <ol className="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
             {reasons.map((reason, i) => (
               <li key={reason} className="border-t-2 border-ink pt-4">
-                <span className="font-display text-2xl font-bold tabular-nums text-ink">{i + 1}</span>
+                <span className="font-sign text-5xl font-extrabold leading-none text-ink">{i + 1}</span>
                 <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{reason}</p>
               </li>
             ))}
@@ -119,7 +113,7 @@ export default function Discounts({
             </div>
 
             <div>
-              <h2 className="font-display text-3xl font-bold text-white sm:text-4xl">{t("disc.clubTitle")}</h2>
+              <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1] text-white">{t("disc.clubTitle")}</h2>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">{t("disc.clubBody")}</p>
               <Button size="lg" className="mt-8" href="/kontakt" onClick={go("/kontakt")}>
                 {t("hero.ctaSecondary")}

@@ -190,8 +190,8 @@ export default function UsaHighlights({ onNavigate = () => {} }) {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {USA_FACTS.map((fact) => (
               <article key={fact.id} className="rounded-2xl bg-white p-7">
-                <p className="text-[13px] text-ink-3">{fact.tag}</p>
-                <h3 className="mt-2 text-xl font-semibold leading-snug text-ink">{fact.title}</h3>
+                <p className="text-[13px] font-semibold text-ink-2">{fact.tag}</p>
+                <h3 className="font-display mt-2 text-xl font-extrabold leading-snug text-ink">{fact.title}</h3>
                 <p className="mt-3 text-[15px] leading-relaxed text-ink">{fact.summary}</p>
                 <p className="mt-3 text-sm leading-relaxed text-ink-2">{fact.text}</p>
               </article>
@@ -202,7 +202,7 @@ export default function UsaHighlights({ onNavigate = () => {} }) {
             {US_STATES.map((state) => (
               <article key={state.id} className="flex flex-col rounded-2xl bg-white p-6">
                 <div className="flex items-baseline justify-between gap-3">
-                  <span className="font-display text-3xl font-bold text-ink">{state.abbr}</span>
+                  <span className="font-sign rounded-lg bg-brand px-2.5 py-1 text-3xl font-extrabold leading-none text-ink">{state.abbr}</span>
                   <span className="text-right text-[13px] text-ink-3">{state.type}</span>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-ink">{state.name}</h3>

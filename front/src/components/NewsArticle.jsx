@@ -57,38 +57,41 @@ export default function NewsArticle({ slug, items = newsData, onNavigate = () =>
 
   return (
     <article className="bg-white">
-      <div className="mx-auto max-w-3xl px-5 pt-10 sm:px-8 sm:pt-14">
-        <a href={backHref} onClick={goBack} className="text-sm text-ink-2 underline-offset-4 hover:text-ink hover:underline">
-          ← {backLabel}
-        </a>
+      <header className="bg-brand pb-40 sm:pb-56">
+        <div className="mx-auto max-w-4xl px-5 pt-10 sm:px-8 sm:pt-14">
+          <a href={backHref} onClick={goBack} className="text-[15px] font-semibold text-ink underline decoration-2 decoration-ink/30 underline-offset-[5px] hover:decoration-ink">
+            {backLabel}
+          </a>
+          <p className="mt-10 flex flex-wrap items-center gap-x-3 text-sm">
+            <span className="rounded-full bg-ink px-2.5 py-0.5 text-xs font-semibold text-brand">{item.category}</span>
+            <time className="font-sign text-[15px] font-semibold text-ink/70">{item.date}</time>
+          </p>
+          <h1 className="font-display mt-5 text-[clamp(2.3rem,5.4vw,4.4rem)] font-extrabold leading-[0.96] text-ink">{tr(item.title)}</h1>
+        </div>
+      </header>
 
-        <p className="mt-10 flex flex-wrap gap-x-3 text-sm">
-          <span className="font-medium text-ink">{item.category}</span>
-          <time className="tabular-nums text-ink-3">{item.date}</time>
-        </p>
-        <h1 className="font-display mt-4 text-3xl font-bold leading-[1.1] text-ink sm:text-5xl">{tr(item.title)}</h1>
+      <div className="mx-auto -mt-32 max-w-5xl px-5 sm:-mt-44 sm:px-8">
+        <NewsImage src={item.image} theme={item.theme} alt={tr(item.title)} className="aspect-[16/9] w-full rounded-[1.5rem]" />
       </div>
 
-      <div className="mx-auto mt-10 max-w-4xl px-5 sm:px-8">
-        <NewsImage src={item.image} theme={item.theme} alt={tr(item.title)} className="aspect-[16/9] w-full rounded-2xl" />
-      </div>
-
-      <div className="mx-auto mt-10 max-w-2xl space-y-5 px-5 text-[17px] leading-relaxed text-ink sm:px-8">
+      <div className="mx-auto mt-14 max-w-2xl space-y-5 px-5 text-[18px] leading-[1.7] text-ink sm:px-8">
         {paragraphs.map((p, i) =>
           p.startsWith("## ") ? (
-            <h2 key={i} className="pt-4 text-xl font-semibold leading-snug text-ink">{p.slice(3)}</h2>
+            <h2 key={i} className="font-display pt-6 text-[1.6rem] font-extrabold leading-tight text-ink">{p.slice(3)}</h2>
           ) : p.startsWith("• ") ? (
-            <p key={i} className="flex gap-3">
-              <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-ink-3" aria-hidden="true" />
+            <p key={i} className="flex gap-4">
+              <span className="mt-[12px] h-2 w-2 shrink-0 bg-brand ring-2 ring-ink" aria-hidden="true" />
               <span>{p.slice(2)}</span>
             </p>
+          ) : i === 0 ? (
+            <p key={i} className="text-[21px] leading-[1.55] text-ink">{p}</p>
           ) : (
-            <p key={i}>{p}</p>
+            <p key={i} className="text-ink/85">{p}</p>
           )
         )}
       </div>
 
-      <CtaBand className="mt-20" onNavigate={onNavigate} />
+      <CtaBand className="mt-24" onNavigate={onNavigate} />
     </article>
   );
 }

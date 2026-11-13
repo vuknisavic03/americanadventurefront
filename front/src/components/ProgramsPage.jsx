@@ -5,7 +5,7 @@ import jobItems from "../data/jobItems";
 import { SWT_FAQS } from "../data/faq";
 import CtaBand from "./CtaBand";
 import { DEMO_MODE } from "../config";
-import { Badge, Button, CheckIcon, ChevronDownIcon, Container, PageHeader, cx, inputSmCls } from "./ui";
+import { Badge, Button, CheckIcon, Container, PageHeader, cx, inputSmCls, PlusMark, BlockTitle } from "./ui";
 
 // Podaci su usklađeni sa workandtravel.rs (stanje: novembar 2026). Cene su u USD osim gde piše drugačije.
 const ALL_PROGRAMS = [
@@ -248,12 +248,12 @@ const JOB_PLACES = ["Cape Cod", "Ocean City", "Myrtle Beach", "Wildwood", "Block
 
 /** Vrste poslova i mesta (izvor: workandtravel.rs) — bez pojedinačnih ponuda dok ih backend ne servira. */
 function JobTypes() {
-  const chip = "rounded-full border border-line px-3.5 py-1.5 text-sm text-ink";
+  const chip = "rounded-full bg-surface px-4 py-2 text-[15px] font-medium text-ink";
   return (
-    <section id="baza-poslova" className="mt-20 scroll-mt-36 border-t border-line pt-16">
+    <section id="baza-poslova" className="mt-20 scroll-mt-36 border-t-2 border-ink pt-14">
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-4">
-          <h2 className="font-display text-3xl font-bold text-ink">Poslovi i mesta</h2>
+          <BlockTitle>Poslovi i mesta</BlockTitle>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-2">
             Poslovi su sezonski, u turističkim mestima. Konkretne ponude sa satnicom i smeštajem dobijaš posle prijave.
           </p>
@@ -295,10 +295,10 @@ function ProgramDetails({ programId }) {
   if (sections.length === 0) return null;
 
   return (
-    <section id="detalji" className="mt-20 scroll-mt-36 border-t border-line pt-16">
+    <section id="detalji" className="mt-20 scroll-mt-36 border-t-2 border-ink pt-14">
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-4">
-          <h2 className="font-display text-3xl font-bold text-ink">Sve o programu</h2>
+          <BlockTitle>Sve o programu</BlockTitle>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-2">Uslovi, cene, koraci i pravila programa, u celosti.</p>
           {files.length > 0 && (
             <ul className="mt-6 space-y-2 text-sm">
@@ -312,12 +312,12 @@ function ProgramDetails({ programId }) {
             </ul>
           )}
         </div>
-        <div className="divide-y divide-line border-y border-line lg:col-span-8">
+        <div className="divide-y divide-line border-y border-line border-t-2 border-t-ink lg:col-span-8">
           {sections.map((sec, i) => (
             <details key={`${sec.title}-${i}`} className="group">
-              <summary className="flex list-none items-center justify-between gap-6 py-5 text-base font-semibold text-ink [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[17px] font-semibold text-ink [&::-webkit-details-marker]:hidden">
                 {sec.title}
-                <ChevronDownIcon className="h-4 w-4 shrink-0 text-ink-3 transition-transform duration-150 group-open:rotate-180" />
+                <PlusMark />
               </summary>
               <div className="max-w-2xl space-y-3 pb-6 text-[15px] leading-relaxed text-ink-2">
                 {sec.blocks.map((b, j) =>
@@ -422,7 +422,7 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
       />
 
       {/* Izbor programa */}
-      <nav aria-label="Programi" className="sticky top-16 z-20 border-b border-line bg-white lg:top-[72px]">
+      <nav aria-label="Programi" className="sticky top-16 z-20 bg-ink lg:top-[72px]">
         <Container>
           <div className="no-scrollbar -mx-2 flex gap-1 overflow-x-auto py-3">
             {ALL_PROGRAMS.map((prog) => {
@@ -434,8 +434,8 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
                   aria-pressed={active}
                   onClick={() => setSelectedId(prog.id)}
                   className={cx(
-                    "whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors duration-150",
-                    active ? "bg-ink text-white" : "text-ink-2 hover:bg-ink/5 hover:text-ink"
+                    "whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-150",
+                    active ? "bg-brand text-ink" : "text-white/75 hover:bg-white/10 hover:text-white"
                   )}
                 >
                   {tabLabel(prog.title)}
@@ -454,16 +454,16 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
               {program.badge && <Badge tone="brand">{program.badge}</Badge>}
               <span className="text-sm text-ink-3">{program.category}</span>
             </div>
-            <h2 className="font-display mt-4 text-3xl font-bold leading-[1.08] text-ink sm:text-4xl">{program.title}</h2>
+            <h2 className="font-display mt-5 text-[clamp(2.2rem,4.6vw,3.6rem)] font-extrabold leading-[0.98] text-ink">{program.title}</h2>
             <p className="mt-4 text-lg leading-relaxed text-ink-2 sm:text-xl">{program.tagline}</p>
 
             <p className="mt-8 text-base leading-relaxed text-ink">{program.description}</p>
 
-            <h3 className="mt-10 text-base font-semibold text-ink">Ključne prednosti i uslovi</h3>
-            <ul className="mt-4 space-y-3">
+            <h3 className="font-display mt-12 text-xl font-extrabold text-ink">Ključne prednosti i uslovi</h3>
+            <ul className="mt-5 border-t-2 border-ink">
               {program.highlights.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-ink">
+                <li key={item} className="flex items-start gap-4 border-b border-line py-4 text-[16px] leading-relaxed text-ink">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand text-ink">
                     <CheckIcon className="h-3 w-3" strokeWidth={3} />
                   </span>
                   {item}
@@ -473,20 +473,29 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
           </div>
 
           <aside className="lg:col-span-5">
-            <div className="rounded-3xl bg-surface p-7 sm:p-8 lg:sticky lg:top-40">
-              <dl className="divide-y divide-line">
-                {facts.map((fact) => (
-                  <div key={fact.label} className="py-4 first:pt-0">
-                    <dt className="text-sm text-ink-3">{fact.label}</dt>
-                    <dd className="mt-1 text-base font-medium leading-snug text-ink">{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
-              {/* Glavna akcija strane (Prilog 1B, tačka 5) */}
-              <Button size="lg" block className="mt-4" href={applyHref} onClick={(e) => onNavigate(e, applyHref)}>
-                Prijavi se za ovaj program
-              </Button>
-              <p className="mt-3 text-center text-[13px] text-ink-3">Prijava je besplatna i ne obavezuje.</p>
+            <div className="ticket-notch rounded-[1.75rem] bg-ink text-white lg:sticky lg:top-40" style={{ "--cut": "calc(100% - 128px)" }}>
+              <div className="px-7 pb-6 pt-7 sm:px-8">
+                <p className="text-[13px] text-white/60">Karta programa</p>
+                <p className="font-display mt-1 text-2xl font-extrabold leading-tight">{tabLabel(program.title)}</p>
+                <dl className="mt-6 space-y-5">
+                  {facts.map((fact) => (
+                    <div key={fact.label}>
+                      <dt className="text-[13px] text-white/55">{fact.label}</dt>
+                      <dd className={cx("mt-1 leading-snug", fact.label === "Cena" ? "font-sign text-2xl font-bold text-brand" : "text-[16px] text-white")}>
+                        {fact.label === "Cena" ? fact.value.split(" · ").map((x) => <span key={x} className="block">{x}</span>) : fact.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+              <div className="perforation mx-7 text-white/25 sm:mx-8" aria-hidden="true" />
+              <div className="flex h-[126px] flex-col justify-center px-7 sm:px-8">
+                {/* Glavna akcija strane (Prilog 1B, tačka 5) */}
+                <Button size="lg" block href={applyHref} onClick={(e) => onNavigate(e, applyHref)}>
+                  Prijavi se za ovaj program
+                </Button>
+                <p className="mt-3 text-center text-[13px] text-white/60">Prijava je besplatna i ne obavezuje.</p>
+              </div>
             </div>
           </aside>
         </article>
@@ -496,10 +505,10 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
 
         {/* Katalog poslova je za sada demo (lokalni podaci) — javno se prikazuje samo u demo režimu. */}
         {program.hasJobs && DEMO_MODE && (
-          <section id="baza-poslova" className="mt-20 scroll-mt-36 border-t border-line pt-16">
+          <section id="baza-poslova" className="mt-20 scroll-mt-36 border-t-2 border-ink pt-14">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div className="max-w-xl">
-                <h2 className="font-display text-3xl font-bold text-ink">Baza poslova u SAD</h2>
+                <BlockTitle>Baza poslova u SAD</BlockTitle>
                 <p className="mt-2 inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800">Demo podaci — nisu stvarne ponude</p>
                 <p className="mt-3 text-base leading-relaxed text-ink-2">
                   Ponuda proverenih poslodavaca sa obezbeđenim smeštajem i odličnim satnicama.
@@ -550,7 +559,7 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
                   {visibleJobs.map((job) => {
                     const jobHref = `/prijava-online?program=work-and-travel&job=${job.id}`;
                     return (
-                      <article key={job.id} className="flex flex-col rounded-2xl border border-line p-6">
+                      <article key={job.id} className="flex flex-col border-t-2 border-ink pt-5">
                         <h3 className="text-lg font-semibold leading-snug text-ink">{job.title}</h3>
                         <p className="mt-1 text-sm text-ink-3">
                           {job.employer}, {job.city}
@@ -588,15 +597,15 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
 
         {/* Česta pitanja (Prilog 1B, tačka 2) */}
         {program.hasFaq && (
-          <section id="faq" className="mt-20 scroll-mt-36 border-t border-line pt-16">
+          <section id="faq" className="mt-20 scroll-mt-36 border-t-2 border-ink pt-14">
             <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
-              <h2 className="font-display text-3xl font-bold text-ink lg:col-span-4">Česta pitanja</h2>
-              <div className="divide-y divide-line border-y border-line lg:col-span-8">
+              <BlockTitle className="lg:col-span-4">Česta pitanja</BlockTitle>
+              <div className="divide-y divide-line border-y border-line border-t-2 border-t-ink lg:col-span-8">
                 {SWT_FAQS.map((faq) => (
                   <details key={faq.q} className="group">
-                    <summary className="flex list-none items-center justify-between gap-6 py-5 text-base font-semibold text-ink [&::-webkit-details-marker]:hidden">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[17px] font-semibold text-ink [&::-webkit-details-marker]:hidden">
                       {faq.q}
-                      <ChevronDownIcon className="h-4 w-4 shrink-0 text-ink-3 transition-transform duration-150 group-open:rotate-180" />
+                      <PlusMark />
                     </summary>
                     <p className="max-w-2xl pb-6 text-[15px] leading-relaxed text-ink-2">{faq.a}</p>
                   </details>

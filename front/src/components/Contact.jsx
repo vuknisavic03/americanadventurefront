@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useTranslation } from "../i18n/LanguageContext";
 import programItems from "../data/programItems";
-import { Button, Container, SectionHeading, inputCls, labelCls } from "./ui";
+import { Button, Container, PageHeader, inputCls, labelCls } from "./ui";
 
 const DEFAULT_CONTACT = {
   agencyName: "American Adventure DOO",
@@ -68,23 +68,22 @@ export default function Contact({ programs = programItems, contact = DEFAULT_CON
   const done = status === "sent" || status === "mail";
 
   return (
-    <section className="bg-white py-12 sm:py-16">
+    <>
+    <PageHeader
+      title={t("contact.title") || "Stupite u kontakt sa nama"}
+      lead={
+        t("contact.subtitle") ||
+        "Naš tim je tu da odgovori na sva vaša pitanja u vezi sa programima, prijavama, terminima vize i poslovima u SAD."
+      }
+    />
+    <section className="bg-white py-14 sm:py-20">
       <Container>
-        <SectionHeading
-          as="h1"
-          title={t("contact.title") || "Stupite u kontakt sa nama"}
-          lead={
-            t("contact.subtitle") ||
-            "Naš tim je tu da odgovori na sva vaša pitanja u vezi sa programima, prijavama, terminima vize i poslovima u SAD."
-          }
-        />
-
-        <div className="mt-12 grid gap-10 lg:grid-cols-5 lg:gap-16">
+        <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
           {/* Forma */}
           <div className="lg:col-span-3">
             {done ? (
               <div role="status" className="rounded-3xl bg-brand-soft p-8 sm:p-10">
-                <h2 className="font-display text-2xl font-bold text-ink">
+                <h2 className="font-display text-2xl font-extrabold text-ink">
                   {status === "sent" ? "Poruka je poslata" : "Poruka je pripremljena u vašem e-mail programu"}
                 </h2>
                 <p className="mt-3 max-w-lg text-base leading-relaxed text-ink-2">
@@ -158,7 +157,7 @@ export default function Contact({ programs = programItems, contact = DEFAULT_CON
 
           {/* Kontakt podaci */}
           <aside className="lg:col-span-2">
-            <dl className="divide-y divide-line border-y border-line text-[15px]">
+            <dl className="divide-y divide-line border-b border-line border-t-2 border-t-ink text-[15px]">
               <div className="py-5">
                 <dt className="text-sm text-ink-3">{t("contact.infoTitle") || "Kancelarija u Beogradu"}</dt>
                 <dd className="mt-1 text-ink">
@@ -174,7 +173,7 @@ export default function Contact({ programs = programItems, contact = DEFAULT_CON
                 <dt className="text-sm text-ink-3">Telefoni</dt>
                 <dd className="mt-1 flex flex-col gap-1">
                   {contact.phones.map((phone) => (
-                    <a key={phone} href={telHref(phone)} className="font-medium tabular-nums text-ink underline-offset-4 hover:underline">
+                    <a key={phone} href={telHref(phone)} className="font-sign text-2xl font-bold text-ink underline-offset-4 hover:underline">
                       {phone}
                     </a>
                   ))}
@@ -209,5 +208,6 @@ export default function Contact({ programs = programItems, contact = DEFAULT_CON
         </div>
       </Container>
     </section>
+    </>
   );
 }
