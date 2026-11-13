@@ -16,7 +16,7 @@ const ALL_PROGRAMS = [
     category: "Redovni studenti, 19–26 godina",
     duration: "Do 4 meseca rada (21. maj – 10. oktobar) + 30 dana putovanja",
     destination: "Turistička mesta širom SAD: Cape Cod, Ocean City, Myrtle Beach, Park City, Aljaska, Havaji",
-    earnings: "$10–20 po satu; prekovremeni rad se plaća 150%",
+    earnings: "$10–20 po satu, a prekovremeni rad 50% više",
     price: "Self od $1.875 · Full od $2.275 · Lifeguard od $2.075",
     badge: "Najpopularnije",
     description:
@@ -25,7 +25,7 @@ const ALL_PROGRAMS = [
       "DS-2019 obrazac, SEVIS taksa i zdravstveno osiguranje su u ceni",
       "Priprema za intervju sa poslodavcem i za razgovor u ambasadi",
       "Besplatan prevod dokumentacije i obavezna orijentacija pred put",
-      "Plaćanje na rate; poslednja rata najkasnije do 1. maja",
+      "Plaćanje na rate, poslednja najkasnije do 1. maja",
       "Viza ($185), avio karta i smeštaj plaćaju se posebno",
     ],
     hasJobs: true,
@@ -36,9 +36,9 @@ const ALL_PROGRAMS = [
     title: "Internship & Training USA",
     tagline: "Plaćena stručna praksa i usavršavanje u struci",
     category: "Studenti završnih godina i diplomci",
-    duration: "Internship do 12 meseci · Training do 18 meseci",
+    duration: "Internship do 12 meseci, Training do 18 meseci",
     destination: "San Francisko, Majami, Vašington, Čikago i drugi gradovi",
-    earnings: "Plaćena praksa; otvorene pozicije od $10 do $16 po satu",
+    earnings: "Plaćena praksa, na primer od $10 do $16 po satu",
     price: "Na upit · viza $185 i SEVIS $220 plaćaju se posebno",
     badge: "Karijera",
     description:
@@ -76,7 +76,7 @@ const ALL_PROGRAMS = [
   },
   {
     id: "dual-diploma",
-    title: "Dual Diploma — online",
+    title: "Dual Diploma online",
     tagline: "Američka srednjoškolska diploma uz školu u Srbiji",
     category: "Srednjoškolci mlađi od 20 godina",
     duration: "Od 1 do 4 godine, najčešće 2–3",

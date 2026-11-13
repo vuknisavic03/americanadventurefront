@@ -59,14 +59,14 @@ function BackIcon({ className = "h-4 w-4" }) {
 // Mapiranje zvaničnih destinacija prijava prema specifikaciji PRILOG 1B (Sekcija 4)
 const PROGRAM_DESTINATIONS = {
   "work-and-travel": { email: "beograd@workandtravel.rs", label: "Work and Travel USA" },
-  "internship": { email: "internship@workandtravel.rs", label: "Internship & Training Program" },
+  "internship": { email: "internship@workandtravel.rs", label: "Internship i Training" },
   "high-school": { email: "office.americanadventure@gmail.com", label: "High School USA" },
   "au-pair": { email: "aupair@workandtravel.rs", label: "Au Pair USA" },
-  "h2b": { email: "office.americanadventure@gmail.com", label: "H-2B Program u Americi" },
-  "australia": { email: "australia@workandtravel.rs", label: "Australia Work Program" },
-  "avio-karte": { email: "aviokarte@workandtravel.rs", label: "Avio Karte" },
-  "povracaj-poreza": { email: "office.americanadventure@gmail.com", label: "Povraćaj Poreza iz USA" },
-  "viza-servis": { email: "office.americanadventure@gmail.com", label: "Viza Servis – SAD" },
+  "h2b": { email: "office.americanadventure@gmail.com", label: "H-2B program u Americi" },
+  "australia": { email: "australia@workandtravel.rs", label: "Australia Training Program" },
+  "avio-karte": { email: "aviokarte@workandtravel.rs", label: "Avio karte" },
+  "povracaj-poreza": { email: "office.americanadventure@gmail.com", label: "Povraćaj poreza iz SAD" },
+  "viza-servis": { email: "office.americanadventure@gmail.com", label: "Viza servis za SAD" },
 };
 
 export default function OnlinePrijava({
@@ -214,7 +214,7 @@ export default function OnlinePrijava({
           {step === "program" && (
             <>
               <h1 className="font-display text-[2.2rem] font-extrabold leading-[1] text-ink">
-                Izaberite program za prijavu
+                Izaberi program
               </h1>
               <p className="mt-2 text-sm text-ink-2">
                 Prijavna forma se automatski prilagođava zahtevima izabranog programa.
@@ -333,7 +333,7 @@ export default function OnlinePrijava({
                       <div>
                         <label htmlFor="university" className={labelCls}>Univerzitet{req}</label>
                         <select id="university" required value={form.studyUniversity} onChange={upd("studyUniversity")} className={inputCls}>
-                          <option value="">Izaberite univerzitet</option>
+                          <option value="">Izaberi univerzitet</option>
                           <optgroup label="Državni univerziteti">
                             {PUBLIC_UNIVERSITIES.map((university) => (
                               <option key={university.name} value={university.name}>
@@ -488,7 +488,7 @@ export default function OnlinePrijava({
                     value={form.note}
                     onChange={upd("note")}
                     className={`${inputCls} resize-none`}
-                    placeholder="Unesite bilo kakvu dodatnu napomenu, željenu lokaciju ili pitanje..."
+                    placeholder="Željena lokacija, pitanje ili bilo šta što treba da znamo"
                   />
                 </div>
 
@@ -554,15 +554,15 @@ export default function OnlinePrijava({
                 <ol className="mt-4 space-y-3 text-sm leading-relaxed text-ink-2">
                   <li className="flex items-start gap-2.5">
                     <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">1</span>
-                    <span>Naš koordinator će vas kontaktirati telefonom ili putem emaila radi inicijalnog razgovora.</span>
+                    <span>Koordinator te zove ili ti piše radi kratkog razgovora.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">2</span>
-                    <span>Zakazujemo besplatne informativne konsultacije (uživo u kancelariji ili online preko video poziva).</span>
+                    <span>Zakazujemo besplatne konsultacije, u kancelariji ili preko video poziva.</span>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">3</span>
-                    <span>Nakon odobrenja aktiviramo vaš lični nalog na portalu za unos kompletne dokumentacije i izbor posla.</span>
+                    <span>Kad te odobrimo, otvaramo ti nalog na portalu, gde predaješ dokumenta i biraš posao.</span>
                   </li>
                 </ol>
               </div>

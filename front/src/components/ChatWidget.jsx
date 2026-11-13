@@ -154,7 +154,7 @@ export default function ChatWidget({ getReply }) {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? t("chat.close") : t("chat.open")}
         aria-expanded={open}
-        className="fixed bottom-5 right-4 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-ink text-brand shadow-lg ring-2 ring-brand transition-colors duration-150 hover:bg-neutral-950 sm:right-6"
+        className="chat-fab fixed bottom-5 right-4 z-[60] flex h-14 w-14 items-center justify-center rounded-full bg-ink text-brand shadow-lg ring-2 ring-brand transition-colors duration-150 hover:bg-neutral-950 sm:right-6"
       >
         {open ? <CloseIcon className="h-6 w-6" /> : <ChatIcon className="h-6 w-6" />}
       </button>

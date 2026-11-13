@@ -26,10 +26,9 @@ export const DEFAULT_PROMOTIONS = [
     currency: "USD",
     timing: "end", // 'immediate' | 'end'
     timingLabel: "Obračunava se na kraju (poslednja rata)",
-    description:
-      "Kandidati koji dolaze iz iste porodice i finansiraju se iz istog budžeta, što podrazumeva da su krvni srodnici prvog kolena, mogu ostvariti Family Discount. Popust od $50 po Naručiocu usluga na poslednju ratu.",
+    description: "Za braću i sestre, odnosno srodnike prvog kolena koji se finansiraju iz istog budžeta. Svako dobija 50 dolara popusta na poslednjoj rati.",
     conditionType: "family",
-    conditionText: "Krvni srodnici prvog kolena iz istog budžeta",
+    conditionText: "Srodnici prvog kolena, isti budžet",
     active: true,
     isCustom: false,
   },
@@ -43,11 +42,10 @@ export const DEFAULT_PROMOTIONS = [
     currency: "USD",
     timing: "end",
     timingLabel: "Obračunava se na kraju (poslednja rata)",
-    description:
-      "Za grupnu prijavu od najmanje 5 kandidata, grupa ostvaruje popust od $100 po prijavljenom kandidatu. Grupa se treba prijaviti istog dana. Popust se ostvaruje samo ako najmanje 5 članova grupe uspešno dobije vizu i posao.",
+    description: "Za grupu od najmanje pet kandidata koji se prijave istog dana. Svako dobija 100 dolara popusta, ako najmanje pet članova grupe dobije vizu i posao.",
     conditionType: "group",
     minMembers: 5,
-    conditionText: "Najmanje 5 članova grupe mora dobiti vizu i posao",
+    conditionText: "Najmanje pet članova grupe dobije vizu i posao",
     active: true,
     isCustom: false,
   },
@@ -61,10 +59,9 @@ export const DEFAULT_PROMOTIONS = [
     currency: "USD",
     timing: "end",
     timingLabel: "Obračunava se na kraju (poslednja rata)",
-    description:
-      "Svaki nosilac kartice, raniji učesnik SWT programa American Adventure agencije, ostvaruje popust od $100 na Work and Travel program 2027 i taj popust se ostvaruje prilikom plaćanja poslednje rate.",
+    description: "Za nosioce Adventure Club kartice, odnosno ranije učesnike Work and Travel programa preko naše agencije. Popust od 100 dolara na program 2027, na poslednjoj rati.",
     conditionType: "club_card",
-    conditionText: "Nosilac Adventure Club kartice (raniji učesnik SWT)",
+    conditionText: "Nosilac Adventure Club kartice",
     active: true,
     isCustom: false,
   },
@@ -78,10 +75,9 @@ export const DEFAULT_PROMOTIONS = [
     currency: "USD",
     timing: "end",
     timingLabel: "Obračunava se na kraju (poslednja rata)",
-    description:
-      "Ukoliko prijavljeni kandidat prijavi svog prijatelja na program, cena programa će mu se umanjiti za $100 po prijatelju i taj popust se ostvaruje prilikom plaćanja poslednje rate. Popust se dobija samo ako dovedeni kandidat prođe viziranje i dobije posao.",
+    description: "Za svakog prijatelja kog prijaviš, tvoj program je jeftiniji za 100 dolara. Popust se obračunava na poslednjoj rati, kad prijatelj dobije vizu i posao.",
     conditionType: "affiliate",
-    conditionText: "$100 po prijatelju koji dobije vizu i posao",
+    conditionText: "100 dolara po prijatelju koji dobije vizu i posao",
     active: true,
     isCustom: false,
   },
@@ -95,10 +91,9 @@ export const DEFAULT_PROMOTIONS = [
     currency: "USD",
     timing: "end",
     timingLabel: "Model plaćanja (posle viziranja)",
-    description:
-      "Ova ponuda je aktuelna do popunjavanja mesta. Kandidat potpisuje Ugovor i uplaćuje 20% od cene odabranog programa. Izaberi opciju A plaćanja programa.",
+    description: "Potpisuješ ugovor i uplaćuješ 20% cene paketa, a ostatak tek posle vize. U ugovoru biraš opciju A. Važi do popune mesta.",
     conditionType: "none",
-    conditionText: "Uplata 20% do vize, preostalih 80% nakon dobijanja vize",
+    conditionText: "20% do vize, 80% posle",
     active: true,
     isCustom: false,
   },
@@ -112,10 +107,9 @@ export const DEFAULT_PROMOTIONS = [
     currency: "USD",
     timing: "end",
     timingLabel: "Obračunava se na kraju (po povratku)",
-    description:
-      "Ograničenom broju kandidata se odobrava da manji deo troškova programa plati pre odlaska na program, dok se veći deo plaća po dolasku sa programa a najkasnije do 12.10.2027. godine.",
+    description: "Ograničenom broju kandidata odobravamo da pre polaska plate manji deo programa, a veći deo po povratku, najkasnije do 12. 10. 2027.",
     conditionType: "none",
-    conditionText: "Veći deo troškova programa se plaća po povratku sa programa",
+    conditionText: "Veći deo programa plaća se po povratku",
     active: true,
     isCustom: false,
   },
@@ -129,10 +123,9 @@ export const DEFAULT_PROMOTIONS = [
     currency: "USD",
     timing: "immediate",
     timingLabel: "Obračunava se odmah",
-    description:
-      "Isplatom troškova programa u celosti ostvarujete dodatni popust od $300. Odaberi opciju B za isplatu programa u Ugovoru o pružanju usluga.",
+    description: "Ako ceo program platiš odjednom, dobijaš 300 dolara popusta. U ugovoru biraš opciju B.",
     conditionType: "none",
-    conditionText: "Uplata celokupnog iznosa programa odjednom (Opcija B)",
+    conditionText: "Uplata celog iznosa odjednom",
     active: true,
     isCustom: false,
   },
@@ -146,10 +139,9 @@ export const DEFAULT_PROMOTIONS = [
     currency: "USD",
     timing: "immediate",
     timingLabel: "Obračunava se odmah",
-    description:
-      "Studenti koji se prijave i dobiju posao u toku trajanja akcije ili do popunjavanja kvote, ostvaruju pravo na popust u iznosu od $300.",
+    description: "Za studente koji se prijave i dobiju posao spasioca dok akcija traje, odnosno do popune kvote.",
     conditionType: "none",
-    conditionText: "Prijava i obezbeđen posao spasioca u toku trajanja akcije",
+    conditionText: "Posao spasioca dobijen tokom akcije",
     active: true,
     isCustom: false,
   },
@@ -157,9 +149,9 @@ export const DEFAULT_PROMOTIONS = [
 
 export const discountGroups = [
   {
-    program: "Promocije Work and Travel 2027",
+    program: "Work and Travel 2027",
     notice:
-      "Naručilac usluge može iskoristiti jednu od ponuđenih promocija i ne postoji opcija da se više promocija kombinuju. Može se koristiti samo jedan popust, a izabrani popust možete promeniti u bilo kom trenutku pre konačnog obračuna.",
+      "Koristiš jednu pogodnost po prijavi. Pogodnosti se ne sabiraju, a izbor možeš da promeniš do konačnog obračuna.",
     items: DEFAULT_PROMOTIONS.map((promo) => ({
       id: promo.id,
       title: promo.title,
@@ -171,38 +163,31 @@ export const discountGroups = [
     })),
   },
   {
-    program: "High School USA Program",
+    program: "High School USA",
     items: [
       {
-        id: "hs-early",
-        title: "Early Bird popust — $300",
-        text: "Đaci koji su se prijavili do 1.10.2026. dobijaju $300 popusta na cenu programa.",
-        timing: "immediate",
-        timingLabel: "Obračunava se odmah",
-      },
-      {
         id: "hs-installments",
-        title: "Jednake mesečne rate do avgusta 2027",
-        text: "Plaćanje na jednake mesečne rate — ranija prijava znači više rata.",
+        title: "Mesečne rate do avgusta 2027",
+        text: "Program se plaća u jednakim mesečnim ratama. Što se ranije prijaviš, rate su manje.",
         timing: "end",
         timingLabel: "Model plaćanja na rate",
       },
     ],
   },
   {
-    program: "Internship & Training USA Program",
+    program: "Internship i Training",
     items: [
       {
         id: "intern-250",
         title: "Uplati samo $250 do viziranja",
-        text: "Specijalan plan otplate za kandidate iz oblasti kulinarstva.",
+        text: "Za kandidate iz kulinarstva: do vize uplaćuješ samo 250 dolara.",
         timing: "end",
         timingLabel: "Model plaćanja posle vize",
       },
       {
         id: "intern-50-50",
         title: "50/50 akcija",
-        text: "Za Food & Beverage i Front Desk kandidate: pola troškova programa iz Srbije, pola iz USA.",
+        text: "Za pozicije u restoranu i na recepciji: pola troškova plaćaš iz Srbije, pola iz Amerike.",
         timing: "end",
         timingLabel: "Podela troškova",
       },
@@ -212,12 +197,12 @@ export const discountGroups = [
 
 // „8 razloga da se prijaviš ranije" (srpski).
 export const earlyReasons = [
-  "Ranijom prijavom ostvaruješ razne popuste.",
-  "Više vremena za prikupljanje potrebne dokumentacije.",
-  "Veći izbor poslova.",
-  "Mogućnost plaćanja programa na rate.",
-  "Ranija kupovina avio-karte — ušteda do 200 EUR, zavisno od lokacije u USA.",
-  "Vremena da usavršiš engleski pre početka programa.",
-  "Na vreme obezbeđuješ termin za intervju u Ambasadi SAD u Beogradu.",
-  "Osiguravaš učešće — broj mesta na svetskom nivou je ograničen.",
-];
+  "Ranija prijava donosi više pogodnosti.",
+  "Imaš više vremena za dokumenta.",
+  "Biraš između više poslova.",
+  "Program plaćaš u više rata.",
+  "Ranije kupljena avio karta je jeftinija, i do 200 evra.",
+  "Imaš vremena da popraviš engleski.",
+  "Na vreme dobijaš termin u ambasadi.",
+  "Sigurno mesto, jer je broj učesnika ograničen na nivou celog sveta.",
+]

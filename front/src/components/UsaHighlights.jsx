@@ -6,45 +6,45 @@ import { Container, SectionHeading, cx } from "./ui";
 const USA_FACTS = [
   {
     id: "tipping",
-    title: "Kultura napojnica (Tipping)",
-    summary: "Napojnica u SAD iznosi 15–20% i predstavlja ključan deo zarade u ugostiteljstvu.",
-    text: "U američkoj kulturi bakšiš nije samo nagrada za izvanrednu uslugu, već osnovni izvor prihoda za konobare, food runnere i barmene. Studenti na server pozicijama često ostvaruju više stotina dolara nedeljno samo od napojnica.",
-    tag: "Finansije & Posao",
+    title: "Napojnice su deo plate",
+    summary: "U restoranima se ostavlja 15 do 20% računa, i to je veliki deo zarade konobara i barmena.",
+    text: "Zato je osnovna satnica na pozicijama sa gostima često niža, a ukupna zarada veća nego na kasi ili u kuhinji.",
+    tag: "Novac i posao",
   },
   {
     id: "national-parks",
-    title: "Nacionalni parkovi i prostranstva",
-    summary: "SAD ima 63 spektakularna nacionalna parka — od Yellowstone-a do Grand Canyon-a.",
-    text: "Septembar je mesec putovanja (grace period). Studenti koriste zaradu da obiđu čuvene nacionalne parkove: Yosemite, Zion, Grand Canyon, Yellowstone i Rocky Mountains. Godišnja karta 'America the Beautiful' omogućava neograničen ulaz u sve parkove.",
+    title: "63 nacionalna parka",
+    summary: "Od Jeloustona do Velikog kanjona, a posle posla imaš 30 dana za putovanje.",
+    text: "Godišnja karta America the Beautiful važi za ulaz u sve nacionalne parkove, pa se isplati ako planiraš više od dva.",
     tag: "Putovanja",
   },
   {
     id: "ssn",
-    title: "Social Security Number (SSN)",
-    summary: "Vaš doživotni američki matični broj koji ostaje važeći zauvek.",
-    text: "Svaki učesnik Work and Travel programa u prvim nedeljama dobija svoj SSN. Ovaj broj je trajan — ako se ikada vratite u SAD na praksu, master ili turistički, vaš SSN ostaje isti i služi za legalan rad i povraćaj poreza.",
+    title: "SSN ostaje tvoj",
+    summary: "Broj socijalnog osiguranja dobijaš u prvim nedeljama programa.",
+    text: "Ako se jednom vratiš u Ameriku na praksu ili studije, koristiš isti broj. Treba ti i za povraćaj poreza.",
     tag: "Dokumenta",
   },
   {
     id: "shopping",
-    title: "Outleti i praznični popusti",
-    summary: "Premium Outlets nude popuste do 70%, naročito za 4th of July i Labor Day.",
-    text: "Kupovina tehnike, brendirane garderobe i sportske opreme u SAD je znatno povoljnija nego u Evropi. Tokom velikih praznika poput 4. jula i Labor Day-a (prvi vikend septembra), popusti dostižu vrhunac.",
-    tag: "Šoping",
+    title: "Outleti i rasprodaje",
+    summary: "Garderoba, patike i tehnika su u Americi često jeftiniji nego kod nas.",
+    text: "Najveće rasprodaje su oko 4. jula i Praznika rada (Labor Day), prvog ponedeljka u septembru.",
+    tag: "Kupovina",
   },
   {
     id: "roadtrip",
-    title: "Američki Road Trip & Route 66",
-    summary: "Vožnja kroz beskrajne autoputeve je suština američkog načina života.",
-    text: "Iznajmljivanje automobila sa kolegama studentima najpopularniji je način istraživanja. Od kultne rute Route 66 do Pacific Coast Highway-a u Kaliforniji, putevi su široki, gorivo povoljno, a pejzaži filmski.",
-    tag: "Avantura",
+    title: "Put kolima",
+    summary: "Auto sa kolegama je najčešći način da se vidi više za manje para.",
+    text: "Route 66 i Pacific Coast Highway su klasici. Proveri uslove agencija za iznajmljivanje: mnoge traže 21 ili 25 godina i naplaćuju doplatu mlađim vozačima.",
+    tag: "Putovanja",
   },
   {
     id: "connectivity",
-    title: "Otključane mreže i SIM kartice",
-    summary: "Za boravak u SAD potreban je telefon sa otključanom mrežom i eSIM/nano-SIM podrškom.",
-    text: "Pre polaska proverite da li je vaš telefon SIM-free. Po dolasku se aktiviraju J-1 studentski paketi kod provajdera poput T-Mobile, Mint Mobile ili AT&T sa neograničenim internetom i pozivima unutar SAD.",
-    tag: "Komunikacija",
+    title: "Telefon i internet",
+    summary: "Ponesi telefon otključan za sve mreže, a američki broj uzmi na licu mesta.",
+    text: "Po dolasku se kupuje SIM ili eSIM kartica, sa paketom koji uključuje internet i pozive unutar SAD.",
+    tag: "Telefon",
   },
 ];
 
@@ -54,9 +54,9 @@ const US_STATES = [
     name: "Kalifornija (California)",
     abbr: "CA",
     cities: "Lake Tahoe, San Francisco, San Diego, Santa Cruz",
-    type: "Zapadna obala / Pacifik",
-    wageRange: "$16.50 – $21.00 / sat",
-    highlights: "Jezero Tahoe, surfovanje, nacionalni parkovi, sunčano vreme i visoke satnice.",
+    type: "Zapadna obala",
+    wageRange: "$16,50–21 na sat",
+    highlights: "Jezero Tahoe, surfovanje, nacionalni parkovi i više satnice od proseka.",
     imageSeed: "california-tahoe",
   },
   {
@@ -64,9 +64,9 @@ const US_STATES = [
     name: "Florida (Sunshine State)",
     abbr: "FL",
     cities: "Destin, Panama City Beach, Orlando, Key West",
-    type: "Jugoistok / Atlantik & Zaliv",
-    wageRange: "$14.00 – $18.00 / sat + bakšiš",
-    highlights: "Plaže sa belim peskom, luksuzni rizorti, golf tereni, topla klima bez zime.",
+    type: "Jugoistok, Atlantik i Zaliv",
+    wageRange: "$14–18 na sat i napojnice",
+    highlights: "Plaže sa belim peskom, veliki hoteli i zabavni parkovi.",
     imageSeed: "florida-beach",
   },
   {
@@ -74,9 +74,9 @@ const US_STATES = [
     name: "Aljaska (Alaska)",
     abbr: "AK",
     cities: "Anchorage, Denali, Seward, Skagway",
-    type: "Sever / Divljina",
-    wageRange: "$17.00 – $22.00 / sat + prekovremeni",
-    highlights: "Netaknuta priroda, glečeri, polarni dani, ogroman potencijal za prekovremeni rad (overtime).",
+    type: "Krajnji sever",
+    wageRange: "$17–22 na sat i prekovremeni",
+    highlights: "Glečeri, divljina i dugi dani, uz mnogo prekovremenog rada.",
     imageSeed: "alaska-glacier",
   },
   {
@@ -84,19 +84,19 @@ const US_STATES = [
     name: "Kolorado (Colorado)",
     abbr: "CO",
     cities: "Vail, Aspen, Estes Park, Breckenridge",
-    type: "Planinska regija / Rocky Mountains",
-    wageRange: "$16.00 – $20.00 / sat",
-    highlights: "Elitni planinski turizam, svež vazduh, planinarenje, rafting i visoki standard života.",
+    type: "Stenovite planine",
+    wageRange: "$16–20 na sat",
+    highlights: "Planinska skijališta koja leti postaju centri za planinarenje i rafting.",
     imageSeed: "colorado-mountains",
   },
   {
     id: "maine",
-    name: "Mejn & Nova Engleska (Maine)",
+    name: "Mejn i Nova Engleska (Maine)",
     abbr: "ME",
     cities: "Ogunquit, Bar Harbor, Kennebunkport",
-    type: "Severoistok / Nova Engleska",
-    wageRange: "$15.00 – $18.50 / sat + visoki bakšiši",
-    highlights: "Istorijski primorski gradići, jastozi, Acadia National Park, ekskluzivni turisti sa istočne obale.",
+    type: "Nova Engleska",
+    wageRange: "$15–18,50 na sat i napojnice",
+    highlights: "Stari primorski gradići, jastozi i nacionalni park Akadija.",
     imageSeed: "maine-coast",
   },
   {
@@ -105,8 +105,8 @@ const US_STATES = [
     abbr: "WI",
     cities: "Wisconsin Dells, Lake Geneva",
     type: "Srednji zapad",
-    wageRange: "$14.50 – $17.50 / sat",
-    highlights: "Svetska prestonica vodenih parkova, povoljan smeštaj, izuzetno druželjubiva J-1 zajednica.",
+    wageRange: "$14,50–17,50 na sat",
+    highlights: "Svetska prestonica vodenih parkova i mnogo studenata iz celog sveta.",
     imageSeed: "wisconsin-dells",
   },
   {
@@ -115,8 +115,8 @@ const US_STATES = [
     abbr: "MD",
     cities: "Ocean City",
     type: "Istočna obala",
-    wageRange: "$15.00 – $17.00 / sat",
-    highlights: "15 km peščanih plaža, čuveni Boardwalk, stotine restorana i hotela za drugi posao.",
+    wageRange: "$15–17 na sat",
+    highlights: "16 kilometara plaže, čuveni boardwalk i više od 200 restorana, pa se drugi posao lako nalazi.",
     imageSeed: "ocean-city-beach",
   },
   {
@@ -124,16 +124,16 @@ const US_STATES = [
     name: "Teksas (Texas)",
     abbr: "TX",
     cities: "Galveston, San Antonio, Austin",
-    type: "Jug / Meksički zaliv",
-    wageRange: "$14.00 – $18.00 / sat",
-    highlights: "Niski troškovi života, autentična američka kultura, toplo more i gostoprimstvo.",
+    type: "Meksički zaliv",
+    wageRange: "$14–18 na sat",
+    highlights: "Niži troškovi života, toplo more i pravi američki jug.",
     imageSeed: "texas-coast",
   },
 ];
 
 const TABS = [
   { id: "facts", key: "usa.tabFacts", fallback: "Zanimljivosti" },
-  { id: "states", key: "usa.tabStates", fallback: "Države SAD" },
+  { id: "states", key: "usa.tabStates", fallback: "Države" },
 ];
 
 /**
@@ -156,11 +156,11 @@ export default function UsaHighlights({ onNavigate = () => {} }) {
     <section className="bg-surface py-20 sm:py-28">
       <Container>
         <SectionHeading
-          title={facts ? tr("usa.factsTitle", "Zanimljivosti o USA") : tr("usa.statesTitle", "Popularne države u SAD")}
+          title={facts ? tr("usa.factsTitle", "Dobro je da znaš") : tr("usa.statesTitle", "Države u kojima studenti rade")}
           lead={
             facts
-              ? tr("usa.factsSubtitle", "Praktični saveti, specifičnosti američke svakodnevice i kultura koje treba da znate pre polaska.")
-              : tr("usa.statesSubtitle", "Gde naši studenti najradije rade i borave? Upoznajte najpopularnije savezne države i njihove prilike.")
+              ? tr("usa.factsSubtitle", "Šest stvari o američkoj svakodnevici koje ti olakšavaju prve nedelje.")
+              : tr("usa.statesSubtitle", "Gde su poslovi, okvirne satnice i šta te tamo čeka.")
           }
           action={
             <div role="tablist" aria-label={tr("usa.kicker", "Istražite Ameriku")} className="inline-flex rounded-full bg-surface-2 p-1">
@@ -212,7 +212,7 @@ export default function UsaHighlights({ onNavigate = () => {} }) {
                     <dd className="text-ink">{state.cities}</dd>
                   </div>
                   <div className="flex gap-2">
-                    <dt className="shrink-0 text-ink-3">Satnica</dt>
+                    <dt className="shrink-0 text-ink-3">Okvirno</dt>
                     <dd className="font-semibold tabular-nums text-ink">{state.wageRange}</dd>
                   </div>
                 </dl>

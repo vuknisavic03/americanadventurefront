@@ -476,7 +476,7 @@ export function HomeSteps() {
 const PACKAGES = [
   { name: "Self", price: "$1.875", text: "Posao nalaziš sam, mi vodimo papire i vizu." },
   { name: "Full", price: "$2.275", text: "Posao i smeštaj nalazimo mi.", featured: true },
-  { name: "Lifeguard", price: "$2.075", text: "Spasilac na bazenu kod Vašingtona ili Bostona.", note: "−$300 do popune kvote" },
+  { name: "Lifeguard", price: "$2.075", text: "Spasilac na bazenu kod Vašingtona ili Bostona.", note: "Sada −$300" },
 ];
 const INCLUDED = ["DS-2019 i SEVIS", "Osiguranje", "Priprema za ambasadu", "Prevod dokumenata"];
 

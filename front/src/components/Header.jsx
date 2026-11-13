@@ -57,8 +57,10 @@ export default function Header({
   // Zaključaj skrol dok je mobilni meni otvoren.
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.dataset.menu = menuOpen ? "open" : "";
     return () => {
       document.body.style.overflow = "";
+      document.body.dataset.menu = "";
     };
   }, [menuOpen]);
 
@@ -273,7 +275,7 @@ export default function Header({
           className="absolute inset-x-0 top-full flex h-[calc(100dvh-4rem)] flex-col overflow-y-auto border-t border-line bg-white lg:hidden"
         >
           <nav aria-label="American Adventure" className="flex-1 px-5 py-4 sm:px-8">
-            <ul className="divide-y divide-line">
+            <ul className="divide-y divide-line border-b border-line">
               {navItems.map((item) => {
                 const active = isActive(item);
                 const expanded = openSub === item.href;
@@ -284,7 +286,7 @@ export default function Header({
                         href={item.href}
                         onClick={(e) => handleNav(e, item.href)}
                         aria-current={active ? "page" : undefined}
-                        className={cx("flex-1 py-4 text-lg", active ? "font-semibold text-ink" : "font-medium text-ink")}
+                        className={cx("font-display flex-1 py-4 text-[1.7rem] font-extrabold leading-none", active ? "text-ink underline decoration-brand decoration-4 underline-offset-[6px]" : "text-ink")}
                       >
                         {label(item)}
                       </a>

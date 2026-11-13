@@ -136,11 +136,11 @@ export default function Footer({
             </a>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/70">
               {t("footer.tagline") ||
-                "Vodeća agencija za Work and Travel USA i programe međunarodne razmene sa tradicijom dužom od 15 godina."}
+                "Agencija za Work and Travel i programe kulturne razmene, iz Beograda."}
             </p>
 
             <p className="mt-8 text-sm text-white/55">
-              {t("footer.followTitle") || "Pratite nas na mrežama"}
+              {t("footer.followTitle") || "Prati nas"}
             </p>
             <div className="mt-3 flex gap-2.5">
               {socials.map(({ name, href, Icon }) => (

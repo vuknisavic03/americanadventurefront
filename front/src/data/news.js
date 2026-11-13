@@ -1016,7 +1016,7 @@ const news = [
         "1) Džekson trg – Dizajnirao ga je arhitekta Luj Pili. U pitanju je javni park veličine gradskog bloka, a dobio je ime po predsedniku Endrjuu Džeksonu (generalu u bici kod Nju Orleansa). U centru trga se nalazi statua predsednika Džeksona. Na ovom trgu se nalaze katedrala Svetog Luisa, muzej Kabildo, zgrade baronice Pontalba od crvene cigle, pivara Džeks i još mnogo toga.",
         "2) Ulica Burbon – Ova ulica je poznata po brojnim barovima koji privlače turiste. Među njima su Absint Haus, Pet O Brajen, Napoleon Haus, Džoni Vajts, Burbon pab i mnogi drugi.",
         "3) Restorani – U ovom susedstvu se nalaze brojni restorani, a među najpoznatijima su Arnods, Galatoas, Brusards i Brenans.",
-        "4) Hoteli – Od motela za jednu noć pa sve do luksuznih hotela, u Francuskoj četvrti možete naći sve. Među tradicionalnijim hotelima su Burbon Orleans, Monteleone, Rojal Sonesta, Astor i Omni Rojal Orleans."
+        "4) Hoteli – Od motela za jednu noć pa sve do luksuznih hotela, u Francuskoj četvrti možeš da nađeš sve. Među tradicionalnijim hotelima su Burbon Orleans, Monteleone, Rojal Sonesta, Astor i Omni Rojal Orleans."
       ]
     }
   },
@@ -1051,7 +1051,7 @@ const news = [
         "Glavna mesta na kojima se organizuju luau žurke na Mauiju su Lahaina, Kanapali i Vaileja.",
         "Lahaina je među omiljenim lokacijama jer se pridržava svih autentičnih i tradicionalnih detalja. Svaki gost pri dolasku na luau u Lahaini dobija lej i jedan mai tai koktel.",
         "Kanapali je lokacija koju biraju oni sa manjim budžetom pošto obično pruža najveće popuste, ali to ne utiče na kvalitet žurki.",
-        "Svaka lokacija ima karakterističan raspored dešavanja, pa i karakterističan meni. Tako u Vaileji možete probati čuvenu mahi mahi ribu, terijaki piletinu sa roštilja, salatu od kupusa, ananasa i majoneza itd."
+        "Svaka lokacija ima karakterističan raspored dešavanja, pa i karakterističan meni. Tako u Vaileji možeš da probaš čuvenu mahi mahi ribu, terijaki piletinu sa roštilja, salatu od kupusa, ananasa i majoneza itd."
       ]
     }
   },

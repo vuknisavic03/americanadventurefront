@@ -30,7 +30,7 @@ export default function Contact({ programs = programItems, contact = DEFAULT_CON
   const update = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
   const programLabel = (value) => {
     const p = programs.find((item) => (item.key || item.label) === value);
-    return p ? (p.key ? t(p.key) : p.label) : t("contact.programOther") || "Drugo / Opšti upit";
+    return p ? (p.key ? t(p.key) : p.label) : t("contact.programOther") || "Opšte pitanje";
   };
 
   // Dok backend nema endpoint za kontakt, upit ide kroz e-mail program posetioca — poruka
@@ -70,10 +70,10 @@ export default function Contact({ programs = programItems, contact = DEFAULT_CON
   return (
     <>
     <PageHeader crumb="Kontakt"
-      title={t("contact.title") || "Stupite u kontakt sa nama"}
+      title={t("contact.title") || "Javi nam se"}
       lead={
         t("contact.subtitle") ||
-        "Naš tim je tu da odgovori na sva vaša pitanja u vezi sa programima, prijavama, terminima vize i poslovima u SAD."
+        "Imaš pitanje o programu? Piši nam ili pozovi."
       }
     />
     <section className="bg-white py-14 sm:py-20">
@@ -84,12 +84,12 @@ export default function Contact({ programs = programItems, contact = DEFAULT_CON
             {done ? (
               <div role="status" className="rounded-3xl bg-brand-soft p-8 sm:p-10">
                 <h2 className="font-display text-2xl font-extrabold text-ink">
-                  {status === "sent" ? "Poruka je poslata" : "Poruka je pripremljena u vašem e-mail programu"}
+                  {status === "sent" ? "Poruka je poslata" : "Poruka je spremna u tvom programu za e-poštu"}
                 </h2>
                 <p className="mt-3 max-w-lg text-base leading-relaxed text-ink-2">
                   {status === "sent"
-                    ? t("contact.success") || "Naš tim će vam odgovoriti u najkraćem roku."
-                    : `Pošaljite je odatle da bi stigla do nas. Ako se e-mail program nije otvorio, pišite nam direktno na ${contact.emails[0]?.email}.`}
+                    ? t("contact.success") || "Javljamo se radnim danima od 9 do 17."
+                    : `Pošalji je odatle da bi stigla do nas. Ako se program nije otvorio, piši nam direktno na ${contact.emails[0]?.email}.`}
                 </p>
                 <Button variant="outline" className="mt-6" onClick={reset}>
                   Napiši novu poruku
@@ -129,19 +129,19 @@ export default function Contact({ programs = programItems, contact = DEFAULT_CON
                   </label>
                   <select id="c-program" required value={form.program} onChange={update("program")} className={`${inputCls} mt-2`}>
                     <option value="" disabled>
-                      {t("contact.programPlaceholder") || "Izaberite program sa spiska"}
+                      {t("contact.programPlaceholder") || "Izaberi program"}
                     </option>
                     {programs.map((p) => (
                       <option key={p.href} value={p.key || p.label}>
                         {p.key ? t(p.key) : p.label}
                       </option>
                     ))}
-                    <option value="other">{t("contact.programOther") || "Drugo / Opšti upit"}</option>
+                    <option value="other">{t("contact.programOther") || "Opšte pitanje"}</option>
                   </select>
                 </div>
                 <div className="sm:col-span-2">
                   <label htmlFor="c-message" className={labelCls}>
-                    {t("contact.message") || "Vaša poruka"}
+                    {t("contact.message") || "Poruka"}
                     {req}
                   </label>
                   <textarea id="c-message" required rows={5} value={form.message} onChange={update("message")} className={`${inputCls} mt-2 resize-y`} />

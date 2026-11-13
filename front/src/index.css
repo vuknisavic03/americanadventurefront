@@ -167,6 +167,11 @@
   }
 }
 
+/* Dok je mobilni meni otvoren, dugme za chat se sklanja da ne prekriva akcije menija. */
+body[data-menu="open"] .chat-fab {
+  display: none;
+}
+
 @layer base {
   /* Podrazumevana boja bordera = hairline linija sistema. */
   *,

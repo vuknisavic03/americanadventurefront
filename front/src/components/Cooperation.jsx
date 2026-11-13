@@ -2,50 +2,50 @@
 import { useTranslation } from "../i18n/LanguageContext";
 import { Button, CheckIcon, Container, PageHeader, SubNav } from "./ui";
 
+// Fakulteti sa kojima agencija sarađuje (izvor: workandtravel.rs/saradnja).
 const DEFAULT_UNIVERSITIES = [
-  "Univerzitet u Beogradu (Ekonomski, FON, Filološki, Pravni, FPN, Arhitektonski)",
-  "Univerzitet u Novom Sadu (PMF, FTN, Ekonomski, Filozofski)",
-  "Univerzitet u Nišu (Ekonomski, Pravni, Filozofski, Elektronski)",
-  "Univerzitet u Kragujevcu (Ekonomski, FILUM, FIN)",
-  "Univerzitet Singidunum & Metropolitan u Beogradu",
-  "Fakultet za finansije, ekonomiju i administraciju – FEFA",
+  "Arhitektonski fakultet, Univerzitet u Beogradu",
+  "Fakultet veterinarske medicine, Univerzitet u Beogradu",
+  "Poljoprivredni fakultet, Univerzitet u Beogradu",
+  "Univerzitet Metropolitan",
+  "FEFA, Fakultet za ekonomiju, finansije i administraciju",
   "Univerzitet Union Nikola Tesla",
-  "Fakultet za inženjerski menadžment i poslovno pravo",
-];
+  "Fakultet za inženjerski menadžment",
+]
 
 const ANCHORS = [
-  { href: "#kompanije-usa", label: "Kompanije iz USA" },
+  { href: "#kompanije-usa", label: "Poslodavci iz SAD" },
   { href: "#brand-ambasadori", label: "Brand ambasadori" },
   { href: "#fransiza", label: "Franšiza" },
   { href: "#univerziteti", label: "Univerziteti" },
 ];
 
 const EMPLOYER_POINTS = [
-  { title: "Visoko motivisani studenti", text: "Tečno govore engleski jezik i poseduju radnu etiku." },
-  { title: "Kompletna legalnost", text: "J-1 BridgeUSA vize sponzorisane od strane ovlašćenih State Department partnera." },
-  { title: "Podrška tokom sezone", text: "Podrška studentima i poslodavcima tokom cele sezone." },
+  { title: "Motivisani studenti", text: "Govore engleski i dolaze sa jasnim ciljem: da rade i zarade." },
+  { title: "Legalan rad", text: "J-1 vize preko sponzora koje je ovlastio Stejt department." },
+  { title: "Podrška tokom sezone", text: "Tu smo i za studente i za poslodavce, od intervjua do kraja ugovora." },
 ];
 
 // Brojke su iste kao na početnoj (izvor: workandtravel.rs).
 const EMPLOYER_STATS = [
   { value: "8.123", label: "Učesnika do sada" },
-  { value: "83", label: "Grada u SAD" },
-  { value: "45", label: "Saveznih država" },
-  { value: "4 meseca", label: "Dostupnost (maj–oktobar)" },
+  { value: "83", label: "Grada u Americi" },
+  { value: "45", label: "Američkih država" },
+  { value: "4", label: "Meseca rada, od maja do oktobra" },
 ];
 
 const AMBASSADOR_PERKS = [
   { title: "$100 popusta", text: "na tvoju prijavu ili učešće u programu." },
-  { title: "Provizija / bonus", text: "za svakog upisanog kandidata sa tvojim kodom." },
-  { title: "Brendirani merch paket", text: "(majica, duks, promo materijal)." },
-  { title: "Zvanična preporuka", text: "i sertifikat o marketinškom angažmanu." },
+  { title: "Bonus", text: "za svakog kandidata koji se upiše sa tvojim kodom." },
+  { title: "Paket opreme", text: "majica, duks i promotivni materijal." },
+  { title: "Preporuka", text: "i potvrda o angažmanu, za tvoj CV." },
 ];
 
 const FRANCHISE_POINTS = [
   { title: "Akreditovani ugovori", text: "Ugovori sa američkim sponzorskim organizacijama." },
-  { title: "Jedinstveni IS i CRM", text: "Pristup kompletnoj digitalnoj platformi za vođenje kandidata, plaćanja i ugovora." },
+  { title: "Platforma", text: "Isti sistem za vođenje kandidata, uplata i ugovora koji koristi centrala." },
   { title: "Marketing i brend", text: "Prepoznatljivo ime, sajt i društvene mreže." },
-  { title: "Obuka osoblja", text: "Detaljna edukacija za vizne intervjue, administraciju i klijentski servis." },
+  { title: "Obuka", text: "Priprema kandidata za ambasadu, administracija i rad sa klijentima." },
 ];
 
 function PointList({ items }) {
@@ -109,7 +109,7 @@ export default function Cooperation({
       <section id="kompanije-usa" className={sectionCls}>
         <Container className={gridCls}>
           <div>
-            <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1] text-ink">Kompanije iz USA</h2>
+            <h2 className="font-display text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1] text-ink">Poslodavci iz SAD</h2>
             <p className="mt-5 text-lg leading-relaxed text-ink-2">
               Da li ste američki poslodavac, hotelski lanac, akva park ili nacionalni park u potrazi za pouzdanom i marljivom
               sezonskom radnom snagom?
@@ -130,7 +130,7 @@ export default function Cooperation({
             <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8">
               {EMPLOYER_STATS.map((stat) => (
                 <div key={stat.label} className="border-t border-line-strong pt-4">
-                  <dd className="font-sign text-6xl font-extrabold leading-none text-ink">{stat.value}</dd>
+                  <dd className="font-sign text-5xl font-extrabold leading-none text-ink sm:text-6xl">{stat.value}</dd>
                   <dt className="mt-1 text-sm text-ink-2">{stat.label}</dt>
                 </div>
               ))}
@@ -178,8 +178,7 @@ export default function Cooperation({
               Kragujevac, Subotica) i u regionu (Banja Luka, Podgorica, Skoplje, Sarajevo).
             </p>
             <p className="mt-4 text-[15px] leading-relaxed text-ink-2">
-              Ukoliko posedujete preduzetnički duh, iskustvo u radu sa mladima ili turističku agenciju, franšiza American
-              Adventure pruža dokazan poslovni model sa brzim povraćajem investicije.
+              Ako imate preduzetnički duh, iskustvo u radu sa mladima ili turističku agenciju, franšiza vam daje proveren način rada i podršku centrale iz Beograda.
             </p>
             <MailCta email={franchiseEmail} subject="Upit za Franšizu - American Adventure">
               Zatraži franšizni plan
@@ -189,7 +188,7 @@ export default function Cooperation({
           <div className="rounded-3xl bg-surface p-7 sm:p-10">
             <h3 className="font-display text-xl font-extrabold text-ink">Franšizni paket American Adventure</h3>
             <p className="mt-2 text-[15px] leading-relaxed text-ink-2">
-              Kompletan operativni i tehnički ekosistem za uspešno poslovanje:
+              Šta dobijate uz franšizu:
             </p>
             <div className="mt-6">
               <PointList items={FRANCHISE_POINTS} />
