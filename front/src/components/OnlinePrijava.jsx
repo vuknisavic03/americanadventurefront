@@ -189,7 +189,7 @@ export default function OnlinePrijava({
   const req = <span className="text-red-600" aria-hidden="true"> *</span>;
 
   return (
-    <section className="bg-brand px-5 py-14 sm:py-20">
+    <section className="bg-surface px-5 py-14 sm:py-20">
       <div className="mx-auto w-full max-w-2xl">
         {/* Koraci selekcije (Prilog 1A) */}
         {step !== "done" && (
@@ -198,10 +198,10 @@ export default function OnlinePrijava({
               <li
                 key={label}
                 aria-current={i === 0 ? "step" : undefined}
-                className={`border-t-2 pt-2.5 ${i === 0 ? "border-ink" : "border-ink/25"}`}
+                className={`border-t-2 pt-2.5 ${i === 0 ? "border-ink" : "border-line-strong"}`}
               >
-                <span className={`block text-xs tabular-nums ${i === 0 ? "text-ink" : "text-ink/70"}`}>{i + 1}</span>
-                <span className={`mt-0.5 hidden text-[13px] leading-snug sm:block ${i === 0 ? "font-semibold text-ink" : "text-ink/70"}`}>
+                <span className={`block text-xs tabular-nums ${i === 0 ? "text-ink" : "text-ink-3"}`}>{i + 1}</span>
+                <span className={`mt-0.5 hidden text-[13px] leading-snug sm:block ${i === 0 ? "font-semibold text-ink" : "text-ink-3"}`}>
                   {label}
                 </span>
               </li>
@@ -209,7 +209,7 @@ export default function OnlinePrijava({
           </ol>
         )}
 
-        <div className={`rounded-[1.75rem] bg-white p-7 sm:p-10 ${step !== "done" ? "mt-8" : ""}`}>
+        <div className={`rounded-[1.75rem] border border-line bg-white p-7 sm:p-10 ${step !== "done" ? "mt-8" : ""}`}>
           {/* KORAK 1: IZBOR PROGRAMA */}
           {step === "program" && (
             <>

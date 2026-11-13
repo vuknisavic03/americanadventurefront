@@ -250,7 +250,7 @@ const JOB_PLACES = ["Cape Cod", "Ocean City", "Myrtle Beach", "Wildwood", "Block
 function JobTypes() {
   const chip = "rounded-full bg-surface px-4 py-2 text-[15px] font-medium text-ink";
   return (
-    <section id="baza-poslova" className="mt-20 scroll-mt-36 border-t-2 border-ink pt-14">
+    <section id="baza-poslova" className="mt-28 scroll-mt-36">
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-4">
           <BlockTitle>Poslovi i mesta</BlockTitle>
@@ -295,7 +295,7 @@ function ProgramDetails({ programId }) {
   if (sections.length === 0) return null;
 
   return (
-    <section id="detalji" className="mt-20 scroll-mt-36 border-t-2 border-ink pt-14">
+    <section id="detalji" className="mt-28 scroll-mt-36">
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
         <div className="lg:col-span-4">
           <BlockTitle>Sve o programu</BlockTitle>
@@ -486,7 +486,7 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
 
         {/* Katalog poslova je za sada demo (lokalni podaci) — javno se prikazuje samo u demo režimu. */}
         {program.hasJobs && DEMO_MODE && (
-          <section id="baza-poslova" className="mt-20 scroll-mt-36 border-t-2 border-ink pt-14">
+          <section id="baza-poslova" className="mt-28 scroll-mt-36">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div className="max-w-xl">
                 <BlockTitle>Baza poslova u SAD</BlockTitle>
@@ -578,7 +578,7 @@ export default function ProgramsPage({ onNavigate = () => {}, initialProgramId =
 
         {/* Česta pitanja (Prilog 1B, tačka 2) */}
         {program.hasFaq && (
-          <section id="faq" className="mt-20 scroll-mt-36 border-t-2 border-ink pt-14">
+          <section id="faq" className="mt-28 scroll-mt-36">
             <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
               <BlockTitle className="lg:col-span-4">Česta pitanja</BlockTitle>
               <div className="divide-y divide-line border-y border-line border-t-2 border-t-ink lg:col-span-8">
