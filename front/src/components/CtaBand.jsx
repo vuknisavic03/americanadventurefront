@@ -8,9 +8,10 @@ export default function CtaBand({
   label = "Prijavi se besplatno",
   onNavigate = () => {},
   className = "",
+  id,
 }) {
   return (
-    <section className={`bg-brand ${className}`}>
+    <section id={id} className={`bg-brand ${className}`}>
       <Container className="flex flex-col gap-8 py-14 sm:py-16 lg:flex-row lg:items-center lg:justify-between">
         <div className="max-w-2xl">
           <h2 className="font-display text-3xl font-bold leading-[1.1] text-ink sm:text-4xl">{title}</h2>

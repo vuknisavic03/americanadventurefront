@@ -70,7 +70,7 @@ export default {
 
   "hero.kicker": "Work & Travel USA",
   "hero.title": "Leto u Americi: posao, plata i putovanje",
-  "hero.subtitle": "Work and Travel USA 2027 za studente. Nalazimo ti posao, vodimo te do vize i tu smo dok si tamo.",
+  "hero.subtitle": "Do četiri meseca rada u američkom letovalištu, pa još mesec dana putovanja. Nalazimo ti posao, vodimo te do vize i tu smo dok si tamo.",
   "hero.ctaPrimary": "Pogledaj programe",
   "hero.ctaSecondary": "Kontaktiraj nas",
   "hero.scroll": "Skroluj",
