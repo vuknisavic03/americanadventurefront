@@ -12,45 +12,15 @@ const APPLY = "/prijava-online?program=work-and-travel";
 const linkCls =
   "inline-flex items-center gap-1.5 text-[15px] font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:decoration-ink";
 
-/* ---------- Programi ---------- */
-const PROGRAMS = [
-  { id: "internship", title: "Internship & Training", who: "Studenti završnih godina i diplomci", text: "Plaćena stručna praksa do 12, odnosno 18 meseci." },
-  { id: "high-school", title: "High School USA", who: "Učenici od 14,5 do 18,5 godina", text: "Polugodište ili godina u američkoj školi i porodici domaćinu." },
-  { id: "au-pair", title: "Au Pair USA", who: "Od 18 do 26 godina", text: "Godina u američkoj porodici uz čuvanje dece i kurs na koledžu." },
-];
-
+/* ---------- Drugi programi ---------- */
 export function HomePrograms({ onNavigate }) {
-  const go = (href) => (e) => onNavigate(e, href);
   return (
-    <section className="bg-white py-16 sm:py-24">
-      <Container>
-        <SectionHeading title="Nisi student? Imamo program i za tebe" lead="Work and Travel je najtraženiji, ali nije jedini put do Amerike." />
-
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {PROGRAMS.map((p) => (
-            <a
-              key={p.id}
-              href={`/programi?p=${p.id}`}
-              onClick={go(`/programi?p=${p.id}`)}
-              className="group flex flex-col justify-between gap-6 rounded-3xl border border-line p-7 transition-colors hover:border-ink/40 sm:p-8"
-            >
-              <div>
-                <p className="text-[13px] text-ink-3">{p.who}</p>
-                <h3 className="mt-1 text-xl font-semibold text-ink">{p.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{p.text}</p>
-              </div>
-              <span className="inline-flex items-center gap-1.5 text-[15px] font-semibold text-ink">
-                Detalji <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </span>
-            </a>
-          ))}
-        </div>
-
-        <p className="mt-8">
-          <a href="/programi" onClick={go("/programi")} className={linkCls}>
-            Svi programi i usluge <ArrowRightIcon className="h-4 w-4" />
-          </a>
-        </p>
+    <section className="border-t border-line bg-white py-14 sm:py-16">
+      <Container className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+        <h2 className="font-display text-3xl font-bold leading-[1.1] text-ink sm:text-4xl">Nisi student? Imamo program i za tebe</h2>
+        <Button size="lg" variant="dark" href="/programi" onClick={(e) => onNavigate(e, "/programi")}>
+          Svi programi i usluge <ArrowRightIcon className="h-4 w-4" />
+        </Button>
       </Container>
     </section>
   );
@@ -86,78 +56,48 @@ export function HomeSteps() {
 
 /* ---------- Cena ---------- */
 const PACKAGES = [
-  { name: "Self", price: "$1.875", text: "Posao nalaziš sam, mi vodimo papire i vizu.", href: APPLY },
-  { name: "Full", price: "$2.275", text: "Posao i smeštaj obezbeđujemo mi.", featured: true, href: APPLY },
-  { name: "Lifeguard", price: "$2.075", text: "Spasilac na bazenu kod Vašingtona ili Bostona. Trenutno $300 popusta.", href: APPLY },
+  { name: "Self", price: "$1.875", text: "Posao nalaziš sam" },
+  { name: "Full", price: "$2.275", text: "Posao i smeštaj nalazimo mi", featured: true },
+  { name: "Lifeguard", price: "$2.075", text: "Spasilac na bazenu", note: "−$300 do popune kvote" },
 ];
-const INCLUDED = ["DS-2019 obrazac i SEVIS taksa", "Zdravstveno osiguranje", "Priprema za intervju i ambasadu", "Besplatan prevod dokumenata"];
-const TERMS = [
-  { title: "Plaćanje na rate", text: "Poslednja rata najkasnije do 1. maja." },
-  { title: "Novac nazad", text: "Ako ispunjavaš uslove programa, a viza ne bude odobrena." },
-  { title: "Plati kad zaradiš", text: "Veći deo programa po povratku. Broj mesta je ograničen." },
-];
+const INCLUDED = ["DS-2019 i SEVIS", "Osiguranje", "Priprema za ambasadu", "Prevod dokumenata"];
 
 export function HomePricing({ onNavigate }) {
   const go = (href) => (e) => onNavigate(e, href);
   return (
     <section className="bg-white py-16 sm:py-24">
       <Container>
-        <SectionHeading
-          title="Koliko košta Work and Travel"
-          lead="Cene su početne i važe za sezonu 2027. Viza ($185), avio karta i smeštaj plaćaju se posebno."
-        />
+        <SectionHeading title="Koliko košta" lead="Viza ($185) i avio karta plaćaju se posebno. Program se plaća na rate." />
 
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
           {PACKAGES.map((p) => (
-            <div
-              key={p.name}
-              className={cx("flex flex-col rounded-3xl p-7 sm:p-8", p.featured ? "bg-surface ring-2 ring-ink" : "border border-line")}
-            >
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-ink">{p.name} paket</h3>
+            <div key={p.name} className={cx("flex flex-col rounded-3xl p-7 sm:p-8", p.featured ? "bg-ink text-white" : "bg-surface text-ink")}>
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="text-lg font-semibold">{p.name}</h3>
                 {p.featured && <span className="rounded-full bg-brand px-3 py-1 text-xs font-semibold text-ink">Najčešći izbor</span>}
+                {p.note && <span className="rounded-full bg-brand px-3 py-1 text-xs font-semibold text-ink">{p.note}</span>}
               </div>
-              <p className="font-display mt-5 text-4xl font-bold text-ink">
-                <span className="align-middle text-base font-medium text-ink-3">od </span>
+              <p className="font-display mt-6 text-5xl font-bold tabular-nums">
+                <span className={cx("align-middle text-base font-medium", p.featured ? "text-white/60" : "text-ink-3")}>od </span>
                 {p.price}
               </p>
-              <p className="mt-3 flex-1 text-[15px] leading-relaxed text-ink-2">{p.text}</p>
-              <Button className="mt-7" block variant={p.featured ? "primary" : "outline"} href={p.href} onClick={go(p.href)}>
+              <p className={cx("mt-2 flex-1 text-[15px]", p.featured ? "text-white/70" : "text-ink-2")}>{p.text}</p>
+              <Button className="mt-8" block variant={p.featured ? "primary" : "dark"} href={APPLY} onClick={go(APPLY)}>
                 Prijavi se
               </Button>
             </div>
           ))}
         </div>
 
-        <div className="mt-10 grid gap-10 border-t border-line pt-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <h3 className="text-base font-semibold text-ink">U svakom paketu</h3>
-            <ul className="mt-4 space-y-2.5">
-              {INCLUDED.map((x) => (
-                <li key={x} className="flex items-start gap-3 text-[15px] text-ink-2">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand text-ink">
-                    <CheckIcon className="h-3 w-3" strokeWidth={3} />
-                  </span>
-                  {x}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <dl className="grid gap-6 sm:grid-cols-3 lg:col-span-7">
-            {TERMS.map((x) => (
-              <div key={x.title}>
-                <dt className="text-base font-semibold text-ink">{x.title}</dt>
-                <dd className="mt-1.5 text-[15px] leading-relaxed text-ink-2">{x.text}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <p className="mt-8">
-          <a href="/akcije" onClick={go("/akcije")} className={linkCls}>
-            Svi popusti i modeli plaćanja <ArrowRightIcon className="h-4 w-4" />
-          </a>
-        </p>
+        <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-[15px] text-ink-2">
+          <li className="font-semibold text-ink">U svakom paketu:</li>
+          {INCLUDED.map((x) => (
+            <li key={x} className="flex items-center gap-2">
+              <CheckIcon className="h-4 w-4 text-ink" strokeWidth={3} />
+              {x}
+            </li>
+          ))}
+        </ul>
       </Container>
     </section>
   );
