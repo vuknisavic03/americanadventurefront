@@ -28,8 +28,8 @@ export default {
   "nav.saradnja": "Saradnja",
   "nav.novosti": "Novosti",
   "nav.vesti": "Novosti",
-  "nav.fotostory": "Foto-story",
-  "nav.iskustva": "Foto-story",
+  "nav.fotostory": "Iskustva",
+  "nav.iskustva": "Iskustva",
   "nav.kontakt": "Kontakt",
 
   "coop.kompanijeNav": "Kompanije iz USA",

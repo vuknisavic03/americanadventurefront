@@ -24,7 +24,9 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
   const go = (href) => (e) => onNavigate(e, href);
 
   const [shown, setShown] = useState(12);
-  const [featured, ...others] = items;
+  const [cat, setCat] = useState("Sve");
+  const cats = ["Sve", ...new Set(items.map((n) => n.category))];
+  const [featured, ...others] = cat === "Sve" ? items : items.filter((n) => n.category === cat);
   const rest = others.slice(0, shown);
 
   const Meta = ({ item }) => (
@@ -40,6 +42,26 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
 
       <section className="bg-white py-14 sm:py-20">
         <Container>
+          {/* Rubrike */}
+          <div className="no-scrollbar -mx-5 mb-10 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:px-0">
+            {cats.map((c) => (
+              <button
+                key={c}
+                type="button"
+                onClick={() => {
+                  setCat(c);
+                  setShown(12);
+                }}
+                aria-pressed={cat === c}
+                className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                  cat === c ? "bg-ink text-white" : "border border-line-strong text-ink hover:border-ink/50"
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+
           {items.length === 0 && <p className="text-base text-ink-2">Trenutno nema objavljenih novosti.</p>}
 
           {/* Istaknuta vest */}

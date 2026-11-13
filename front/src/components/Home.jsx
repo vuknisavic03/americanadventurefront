@@ -205,7 +205,7 @@ export function HomeVoices({ onNavigate }) {
           title="Šta kažu oni koji su bili"
           lead={`${VOICES_TOTAL} učesnika je opisalo agenciju, mesto i poslodavca. Objavljujemo sve ocene, ne samo dobre.`}
           action={
-            <a href="/foto-story" onClick={(e) => onNavigate(e, "/foto-story")} className={linkCls}>
+            <a href="/iskustva" onClick={(e) => onNavigate(e, "/iskustva")} className={linkCls}>
               Sva iskustva <ArrowRightIcon className="h-4 w-4" />
             </a>
           }
