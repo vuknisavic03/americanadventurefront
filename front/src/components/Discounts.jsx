@@ -83,11 +83,11 @@ export default function Discounts({
       <section className="bg-surface py-16 sm:py-24">
         <Container>
           <BlockTitle className="max-w-2xl">{t("disc.reasonsTitle")}</BlockTitle>
-          <ol className="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          <ol className="mt-10 grid border-t-2 border-ink lg:grid-flow-col lg:grid-cols-2 lg:grid-rows-4 lg:gap-x-16">
             {reasons.map((reason, i) => (
-              <li key={reason} className="flex gap-5">
-                <span className="font-display flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand text-xl font-extrabold text-ink">{i + 1}</span>
-                <p className="pt-2.5 text-lg font-medium leading-snug text-ink">{reason}</p>
+              <li key={reason} className="flex items-baseline gap-6 border-b border-line py-6">
+                <span className="font-display w-9 shrink-0 text-3xl font-extrabold leading-none text-ink">{i + 1}</span>
+                <p className="text-lg leading-snug text-ink">{reason}</p>
               </li>
             ))}
           </ol>
