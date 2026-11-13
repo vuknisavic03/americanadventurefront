@@ -23,7 +23,7 @@ export default function Step1Activation({
   return (
     <div>
       <p className="text-[13px] font-semibold text-ink-3">
-        Work & Travel 2026 · Korak 1/4
+        Work and Travel 2027, korak 1 od 4
       </p>
       <h1 className="mt-1 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
         {t("auth.activationTitle")}
@@ -95,7 +95,7 @@ export default function Step1Activation({
                 setMatchedInvitation(null);
                 setCodeError("");
               }}
-              placeholder="Unesite kod iz pozivnice"
+              placeholder="Unesi kod iz pozivnice"
               className={`${inputCls} tabular-nums uppercase tracking-wider placeholder:normal-case placeholder:tracking-normal ${matchedInvitation ? "bg-surface cursor-not-allowed font-semibold" : ""}`}
             />
             <button

@@ -1,3 +1,4 @@
+import { DEMO_MODE } from "../../config.js";
 // front/src/data/candidateStore/preApplications.js
 // Faza 0: Online prijave, trijaža, pozivi, konsultacije i selekcioni gate
 
@@ -58,8 +59,9 @@ export async function submitPreApplicationWithBackend({
     message ? `Poruka: ${message}` : "",
   ].filter(Boolean);
 
+  let delivered = false;
   try {
-    await fetch("/api/public/pre-applications", {
+    const res = await fetch("/api/public/pre-applications", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -81,11 +83,14 @@ export async function submitPreApplicationWithBackend({
         website: "",
       }),
     });
+    delivered = res.ok;
   } catch {
-    // Lokalni upis se svakako izvršava ispod
+    // Mreža nije dostupna — pozivalac prikazuje grešku i rezervni put (e-pošta).
   }
+  // U demo režimu (bez backenda) prijava se čuva samo lokalno, da prototip ostane upotrebljiv.
+  if (!delivered && !DEMO_MODE) return { delivered: false };
 
-  return saveCandidate({
+  const saved = saveCandidate({
     id: `preapp-${Date.now()}`,
     email: (email || "").trim().toLowerCase(),
     firstName: firstName || "Kandidat",
@@ -119,6 +124,7 @@ export async function submitPreApplicationWithBackend({
     notes: noteParts.join(" | "),
     createdAt: new Date().toISOString(),
   });
+  return { delivered: true, candidate: saved };
 }
 
 /**

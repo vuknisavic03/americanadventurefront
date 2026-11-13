@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import { HomePrograms, HomeSteps, HomePricing, HomeVoices, HomeFaq, HomeOffers, HomeEarnings, HomeDestinations, HomeObjections, StickyApply } from "./components/Home";
@@ -26,6 +26,7 @@ const AdminPanel = lazy(() => import("./components/AdminPanel"));
 const ChatWidget = lazy(() => import("./components/ChatWidget"));
 
 const ADMIN_SESSION_KEY = "aa_admin_session";
+const PORTAL_PATHS = ["/prijava", "/registracija", "/profil", "/nalog", "/admin"];
 
 const TITLES = {
   "/": "American Adventure — Work & Travel",
@@ -41,11 +42,21 @@ const TITLES = {
   "/prijava": "Prijava na nalog",
   "/zaboravljena-lozinka": "Zaboravljena lozinka",
   "/registracija": "Aktivacija naloga",
-  "/prijava-online": "Online prijava za Work & Travel",
+  "/prijava-online": "Online prijava",
   "/nalog": "Moj profil",
   "/profil": "Moj profil",
   "/admin": "Admin portal",
 };
+
+// Pretraga iz zaglavlja: naziv programa vodi na program, sve ostalo na vesti i vodiče.
+const PROGRAM_WORDS = ["work and travel", "work & travel", "internship", "training", "high school", "srednj", "au pair", "h-2b", "australi", "dual", "posao", "poslov", "lifeguard", "spasila"];
+const searchTarget = (query) => {
+  const q = query.trim().toLowerCase();
+  const base = PROGRAM_WORDS.some((w) => q.includes(w)) ? "/programi" : "/novosti";
+  return `${base}?search=${encodeURIComponent(query.trim())}`;
+};
+
+const newsSlugFor = (path) => /^\/(novosti|vesti)\/.+/.test(path);
 
 const currentHref = () => window.location.pathname + window.location.search + window.location.hash || "/";
 
@@ -83,6 +94,32 @@ async function loginAdminWithBackend(email, password) {
   }
 }
 
+/** Nepostojeća adresa: jasno šta se desilo i kuda dalje. */
+function NotFound({ onNavigate }) {
+  const go = (href) => (e) => onNavigate(e, href);
+  return (
+    <section className="bg-brand">
+      <div className="mx-auto max-w-7xl px-5 pb-24 pt-16 sm:px-8 sm:pb-32 sm:pt-24">
+        <p className="font-sign text-lg font-bold text-ink">Greška 404</p>
+        <h1 className="font-display mt-4 max-w-4xl text-[clamp(2.6rem,6.4vw,5.4rem)] font-extrabold leading-[0.92] text-ink">
+          Ova strana ne postoji
+        </h1>
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/80">
+          Adresa je pogrešno upisana ili je strana premeštena. Kreni sa početne ili pogledaj programe.
+        </p>
+        <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="/" onClick={go("/")} className="inline-flex h-13 items-center justify-center rounded-full bg-ink px-7 text-base font-semibold text-white hover:bg-neutral-950">
+            Na početnu
+          </a>
+          <a href="/programi" onClick={go("/programi")} className="inline-flex h-13 items-center justify-center rounded-full border-2 border-ink px-7 text-base font-semibold text-ink hover:bg-ink hover:text-brand">
+            Programi
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function PageFallback() {
   return <div className="min-h-[70vh]" aria-busy="true" />;
 }
@@ -95,16 +132,8 @@ export default function App() {
   const [accountProgram, setAccountProgram] = useState("");
 
   const loggedIn = isAdmin || Boolean(currentCandidate);
+  const portalSynced = useRef(false);
 
-  useEffect(() => {
-    syncFromBackend(currentCandidate?.email).then((data) => {
-      if (data?.candidate) {
-        setCurrentCandidate((prev) => (prev ? { ...prev, ...data.candidate } : prev));
-      }
-    });
-    // Sinhronizacija samo pri pokretanju aplikacije.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const navigateTo = (href, { replace = false } = {}) => {
     if (!href) return;
@@ -140,6 +169,10 @@ export default function App() {
     };
 
     // 1) Kandidat — nalog nastaje registracijom sa verifikacionim kodom.
+    if (!portalSynced.current) {
+      portalSynced.current = true;
+      await syncFromBackend();
+    }
     const found = getCandidates().find(
       (c) => c.email?.toLowerCase() === id || (c.phone && c.phone.trim() === id)
     );
@@ -203,8 +236,22 @@ export default function App() {
 
   useEffect(() => {
     const title = TITLES[basePath];
-    document.title = !title || basePath === "/" ? TITLES["/"] : `${title} — American Adventure`;
+    if (newsSlugFor(basePath)) return; // naslov postavlja sama vest
+    document.title = basePath === "/" ? TITLES["/"] : title ? `${title} — American Adventure` : "Strana ne postoji — American Adventure";
   }, [basePath]);
+
+  // Stanje portala sa backenda treba samo prijavljenima i stranama naloga — javni posetilac ga ne preuzima.
+  const needsPortalState = loggedIn || PORTAL_PATHS.includes(basePath);
+  useEffect(() => {
+    if (!needsPortalState || portalSynced.current) return;
+    portalSynced.current = true;
+    syncFromBackend(currentCandidate?.email).then((data) => {
+      if (data?.candidate) {
+        setCurrentCandidate((prev) => (prev ? { ...prev, ...data.candidate } : prev));
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [needsPortalState]);
 
   const isProfile = basePath === "/profil" || basePath === "/nalog";
   const isAdminRoute = basePath === "/admin";
@@ -276,7 +323,7 @@ export default function App() {
         return <ExperiencesPage onNavigate={handleNavigate} />;
       case "/novosti":
       case "/vesti":
-        return <News onNavigate={handleNavigate} />;
+        return <News key={searchParam} initialQuery={searchParam} onNavigate={handleNavigate} />;
       case "/kontakt":
         return <Contact />;
       case "/zaboravljena-lozinka":
@@ -294,7 +341,8 @@ export default function App() {
             onSubmit={(data) => setAppliedProgram(data.program || "")}
           />
         );
-      default:
+      case "/":
+      case "":
         return (
           <>
             <Hero onNavigate={handleNavigate} />
@@ -311,6 +359,8 @@ export default function App() {
             <StickyApply onNavigate={handleNavigate} />
           </>
         );
+      default:
+        return <NotFound onNavigate={handleNavigate} />;
     }
   };
 
@@ -319,7 +369,7 @@ export default function App() {
       <Header
         navItems={navItems}
         activeHref={activeHref}
-        onSearch={(query) => navigateTo(`/programi?search=${encodeURIComponent(query)}`)}
+        onSearch={(query) => navigateTo(searchTarget(query))}
         onNavigate={handleNavigate}
         onLogin={() => navigateTo("/prijava")}
         onApply={() => navigateTo("/prijava-online?program=work-and-travel")}

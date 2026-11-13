@@ -119,12 +119,12 @@ export default function Register({
     setCodeError("");
 
     if (!email.trim()) {
-      setCodeError("Morate uneti email adresu na koju vam je poslat verifikacioni kod.");
+      setCodeError("Unesi e-mail na koji ti je poslat verifikacioni kod.");
       setMatchedInvitation(null);
       return null;
     }
     if (!code.trim()) {
-      setCodeError("Morate uneti verifikacioni kod iz pozivnice.");
+      setCodeError("Unesi verifikacioni kod iz pozivnice.");
       setMatchedInvitation(null);
       return null;
     }
@@ -201,7 +201,7 @@ export default function Register({
       }
       const confStr = ocrRes.confidence ? ` (pouzdanost OCR očitavanja: ${ocrRes.confidence}%)` : "";
       setOcrStatusMessage(
-        `${ocrRes.message || "Pasoš je uspešno očitan putem OCR-a!"}${confStr}`
+        `${ocrRes.message || "Pasoš je očitan."}${confStr}`
       );
     } else {
       if (!firstName && matchedInvitation?.candidateName) {
@@ -210,7 +210,7 @@ export default function Register({
       if (!lastName && matchedInvitation?.candidateName) {
         setLastName(matchedInvitation.candidateName.split(" ").slice(1).join(" "));
       }
-      setOcrStatusMessage(ocrRes?.message || "Fotografija pasoša je učitana. Molimo proverite i potvrdite očitane podatke ispod.");
+      setOcrStatusMessage(ocrRes?.message || "Fotografija pasoša je učitana. Proveri i potvrdi podatke ispod.");
     }
   };
 
@@ -272,7 +272,7 @@ export default function Register({
     e.preventDefault();
     if (paymentMethod === "later") {
       if (!guarantorName.trim() || !guarantorIdCard.trim() || !guarantorJmbg.trim() || !promissoryNotesCount.trim()) {
-        alert("Molimo unesite sve podatke o jemcu i broju menica.");
+        alert("Unesi sve podatke o jemcu i broj menica.");
         return;
       }
     }

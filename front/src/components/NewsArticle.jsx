@@ -1,4 +1,5 @@
 // NewsArticle.jsx
+import { useEffect } from "react";
 import { useTranslation } from "../i18n/LanguageContext";
 import NewsImage from "./NewsImage";
 import newsData from "../data/news";
@@ -34,6 +35,12 @@ export default function NewsArticle({ slug, items = newsData, onNavigate = () =>
   const backHref = "/novosti";
   const backLabel = BACK_LABEL[lang] || BACK_LABEL.SR;
   const goBack = (e) => onNavigate(e, backHref);
+
+  // Naslov kartice pregledača = naslov vesti.
+  const pageTitle = item ? tr(item.title) : "Vest nije pronađena";
+  useEffect(() => {
+    document.title = `${pageTitle} — American Adventure`;
+  }, [pageTitle]);
 
   if (!item) {
     return (
@@ -75,7 +82,7 @@ export default function NewsArticle({ slug, items = newsData, onNavigate = () =>
       </header>
 
       <div className="mx-auto -mt-32 max-w-5xl px-5 sm:-mt-44 sm:px-8">
-        <NewsImage src={item.image} theme={item.theme} alt={tr(item.title)} className="aspect-[16/9] w-full rounded-[1.5rem]" />
+        <NewsImage eager src={item.image} theme={item.theme} alt={tr(item.title)} className="aspect-[16/9] w-full rounded-[1.5rem]" />
       </div>
 
       <div className="mx-auto mt-14 max-w-2xl space-y-5 px-5 text-[18px] leading-[1.7] text-ink sm:px-8">

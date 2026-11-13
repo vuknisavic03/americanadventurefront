@@ -24,10 +24,10 @@ export default function ForgotPassword({ onNavigate = () => {}, loginHref = "/pr
       });
       const data = await res.json().catch(() => null);
       if (!res.ok) throw new Error(data?.message || "");
-      setMessage(data?.message || "Ako nalog postoji, poslali smo uputstvo za postavljanje nove lozinke.");
+      setMessage(data?.message || "Ako nalog postoji, poslali smo ti uputstvo za novu lozinku.");
       setStatus("sent");
     } catch (err) {
-      setMessage(err.message || "Zahtev nije poslat. Proverite internet vezu i pokušajte ponovo.");
+      setMessage(err.message || "Zahtev nije poslat. Proveri internet vezu i pokušaj ponovo.");
       setStatus("error");
     }
   };
@@ -49,7 +49,7 @@ export default function ForgotPassword({ onNavigate = () => {}, loginHref = "/pr
         ) : (
           <>
             <p className="mt-3 text-[15px] leading-relaxed text-ink-2">
-              Unesite e-mail adresu naloga. Poslaćemo vam uputstvo za postavljanje nove lozinke.
+              Unesi e-mail naloga. Poslaćemo ti uputstvo za novu lozinku.
             </p>
             <form onSubmit={handleSubmit} className="mt-8 space-y-5">
               {status === "error" && (

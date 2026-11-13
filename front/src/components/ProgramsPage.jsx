@@ -219,7 +219,7 @@ const ALL_PROGRAMS = [
   },
   {
     id: "viza-servis",
-    title: "Viza servis — SAD",
+    title: "Viza servis za SAD",
     tagline: "Priprema dokumentacije i zakazivanje termina u ambasadi",
     category: "Turisti, poslovni ljudi, porodice",
     duration: "Od konsultacija do termina u ambasadi",

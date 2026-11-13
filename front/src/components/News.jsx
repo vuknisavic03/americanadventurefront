@@ -17,7 +17,7 @@ import { Button, Container, PageHeader, SubNav } from "./ui";
  *
  * Gde se ubacuje: ruta /novosti (vidi App.jsx).
  */
-export default function News({ items = newsData, onNavigate = () => {} }) {
+export default function News({ items = newsData, initialQuery = "", onNavigate = () => {} }) {
   const { t, lang } = useTranslation();
   const tr = (field) => (typeof field === "string" ? field : field[lang] || field.SR);
   const hrefOf = (item) => `/novosti/${item.slug}`;
@@ -26,7 +26,12 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
   const [shown, setShown] = useState(12);
   const [cat, setCat] = useState("Sve");
   const cats = ["Sve", ...new Set(items.map((n) => n.category))];
-  const [featured, ...others] = cat === "Sve" ? items : items.filter((n) => n.category === cat);
+  const [query, setQuery] = useState(initialQuery);
+  const norm = (x) => x.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "dj");
+  const q = norm(query.trim());
+  const matches = (n) => !q || norm(`${tr(n.title)} ${tr(n.excerpt)} ${(n.body?.SR || []).join(" ")}`).includes(q);
+  const filtered = items.filter((n) => (cat === "Sve" || n.category === cat) && matches(n));
+  const [featured, ...others] = q ? [undefined, ...filtered] : filtered;
   const rest = others.slice(0, shown);
 
   const Meta = ({ item }) => (
@@ -54,13 +59,23 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
 
       <section className="bg-white py-14 sm:py-20">
         <Container>
+          {q && (
+            <div className="mb-12 flex flex-wrap items-baseline justify-between gap-4 border-b-2 border-ink pb-5">
+              <p className="font-display text-2xl font-extrabold text-ink">
+                {filtered.length > 0 ? `${filtered.length} ${filtered.length === 1 ? "tekst" : filtered.length < 5 ? "teksta" : "tekstova"} za „${query.trim()}“` : `Nema tekstova za „${query.trim()}“`}
+              </p>
+              <button type="button" onClick={() => setQuery("")} className="text-[15px] font-semibold text-ink underline decoration-2 decoration-ink/30 underline-offset-[5px] hover:decoration-ink">
+                Prikaži sve vesti
+              </button>
+            </div>
+          )}
           {items.length === 0 && <p className="text-base text-ink-2">Trenutno nema objavljenih novosti.</p>}
 
           {/* Istaknuta vest */}
           {featured && (
             <article className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
               <a href={hrefOf(featured)} onClick={go(hrefOf(featured))} tabIndex={-1} aria-hidden="true" className="block lg:col-span-7">
-                <NewsImage src={featured.image} theme={featured.theme} alt="" className="aspect-[16/10] w-full rounded-[1.25rem]" />
+                <NewsImage eager src={featured.image} theme={featured.theme} alt="" className="aspect-[16/10] w-full rounded-[1.25rem]" />
               </a>
               <div className="lg:col-span-5">
                 <Meta item={featured} />
@@ -83,7 +98,7 @@ export default function News({ items = newsData, onNavigate = () => {} }) {
 
           {/* Ostale vesti */}
           {rest.length > 0 && (
-            <div className="mt-20 grid gap-x-8 gap-y-14 border-t-2 border-ink pt-14 md:grid-cols-2 lg:grid-cols-3">
+            <div className={featured ? "mt-20 grid gap-x-8 gap-y-14 border-t-2 border-ink pt-14 md:grid-cols-2 lg:grid-cols-3" : "grid gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3"}>
               {rest.map((item) => (
                 <article key={item.slug}>
                   <a href={hrefOf(item)} onClick={go(hrefOf(item))} tabIndex={-1} aria-hidden="true" className="block">

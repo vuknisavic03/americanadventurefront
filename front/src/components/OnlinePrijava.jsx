@@ -5,7 +5,6 @@ import { useTranslation } from "../i18n/LanguageContext";
 import programItems from "../data/programItems";
 import { submitPreApplicationWithBackend } from "../data/candidateStore";
 
-const DEFAULT_BIRTH_DATE = "2005-01-01";
 const PUBLIC_UNIVERSITIES = [
   { name: "Univerzitet u Beogradu", city: "Beograd"},
   { name: "Univerzitet u Novom Sadu", city: "Novi Sad" },
@@ -94,7 +93,7 @@ export default function OnlinePrijava({
     // Osnovna polja (svi programi)
     firstName: "",
     lastName: "",
-    birthDate: DEFAULT_BIRTH_DATE,
+    birthDate: "",
     address: "",
     phone: "",
     email: "",
@@ -149,9 +148,14 @@ export default function OnlinePrijava({
     (university) => university.name === form.studyUniversity,
   );
 
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
+
   const submit = async (e) => {
     e.preventDefault();
-    if (!privacy) return;
+    if (!privacy || sending) return;
+    setSending(true);
+    setSendError(false);
 
     const payload = {
       program: selectedProgram,
@@ -161,7 +165,7 @@ export default function OnlinePrijava({
       ...form,
     };
 
-    await submitPreApplicationWithBackend({
+    const result = await submitPreApplicationWithBackend({
       firstName: form.firstName,
       lastName: form.lastName,
       email: form.email,
@@ -180,8 +184,14 @@ export default function OnlinePrijava({
       newsletterConsent: newsletter,
     });
 
+    setSending(false);
+    if (!result?.delivered) {
+      setSendError(true);
+      return;
+    }
     onSubmit(payload);
     setStep("done");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const labelCls = baseLabelCls;
@@ -286,11 +296,11 @@ export default function OnlinePrijava({
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="fn" className={labelCls}>Ime{req}</label>
-                      <input id="fn" type="text" required value={form.firstName} onChange={upd("firstName")} className={inputCls} placeholder="npr. Marko" />
+                      <input id="fn" type="text" required value={form.firstName} onChange={upd("firstName")} className={inputCls} placeholder="npr. Marko" autoComplete="given-name" />
                     </div>
                     <div>
                       <label htmlFor="ln" className={labelCls}>Prezime{req}</label>
-                      <input id="ln" type="text" required value={form.lastName} onChange={upd("lastName")} className={inputCls} placeholder="npr. Petrović" />
+                      <input id="ln" type="text" required value={form.lastName} onChange={upd("lastName")} className={inputCls} placeholder="npr. Petrović" autoComplete="family-name" />
                     </div>
                   </div>
 
@@ -302,18 +312,18 @@ export default function OnlinePrijava({
                     </div>
                     <div>
                       <label htmlFor="addr" className={labelCls}>Puna adresa stanovanja{req}</label>
-                      <input id="addr" type="text" required value={form.address} onChange={upd("address")} className={inputCls} placeholder="Ulica, broj, grad" />
+                      <input id="addr" type="text" required value={form.address} onChange={upd("address")} className={inputCls} placeholder="Ulica, broj, grad" autoComplete="street-address" />
                     </div>
                   </div>
 
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="ph" className={labelCls}>Telefon{req}</label>
-                      <input id="ph" type="tel" required value={form.phone} onChange={upd("phone")} className={inputCls} placeholder="+381 6..." />
+                      <input id="ph" type="tel" required value={form.phone} onChange={upd("phone")} className={inputCls} placeholder="+381 6…" autoComplete="tel" inputMode="tel" pattern="[+0-9 ()/-]{6,}" title="Upiši broj telefona, na primer +381 64 123 4567" />
                     </div>
                     <div>
-                      <label htmlFor="em" className={labelCls}>Email adresa{req}</label>
-                      <input id="em" type="email" required value={form.email} onChange={upd("email")} className={inputCls} placeholder="student@example.com" />
+                      <label htmlFor="em" className={labelCls}>E-mail{req}</label>
+                      <input id="em" type="email" required value={form.email} onChange={upd("email")} className={inputCls} placeholder="ime@primer.com" autoComplete="email" />
                     </div>
                   </div>
                 </div>
@@ -372,7 +382,7 @@ export default function OnlinePrijava({
                         </select>
                       </div>
                       <div>
-                        <label htmlFor="ects" className={labelCls}>Broj ESP bodova{req}</label>
+                        <label htmlFor="ects" className={labelCls}>Broj ESPB bodova{req}</label>
                         <input id="ects" type="number" required min="0" max="360" value={form.ectsPoints} onChange={upd("ectsPoints")} className={inputCls} placeholder="npr. 120" />
                       </div>
                     </div>
@@ -494,13 +504,13 @@ export default function OnlinePrijava({
 
                 {/* OBAVEZNA SAGLASNOST SA POLITIKOM PRIVATNOSTI (Prilog 1B, tačka 3) */}
                 <div className="space-y-3 pt-2">
-                  <label className="flex items-start gap-3 text-xs text-ink-2">
+                  <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-snug text-ink-2">
                     <input
                       type="checkbox"
                       required
                       checked={privacy}
                       onChange={(e) => setPrivacy(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 rounded-sm border-line-strong accent-ink"
+                      className="mt-0.5 h-5 w-5 shrink-0 rounded-sm border-line-strong accent-ink"
                     />
                     <span>
                       Saglasan/na sam sa obradom mojih podataka o ličnosti u svrhu ove prijave i upoznat/a sam sa{" "}
@@ -509,12 +519,12 @@ export default function OnlinePrijava({
                   </label>
 
                   {/* ZASEBNA OPCIONA NEWSLETTER SAGLASNOST (Prilog 1B, tačka 3) */}
-                  <label className="flex items-start gap-3 text-xs text-ink-2">
+                  <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-snug text-ink-2">
                     <input
                       type="checkbox"
                       checked={newsletter}
                       onChange={(e) => setNewsletter(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 rounded-sm border-line-strong accent-ink"
+                      className="mt-0.5 h-5 w-5 shrink-0 rounded-sm border-line-strong accent-ink"
                     />
                     <span>
                       Želim da primam obaveštenja o akcijama, popustima i novim otvorenim poslovima (opciono).
@@ -523,17 +533,30 @@ export default function OnlinePrijava({
                 </div>
 
                 {/* DUGME ZA SLANJE */}
+                {sendError && (
+                  <div role="alert" className="rounded-2xl bg-red-50 px-5 py-4 text-[15px] leading-relaxed text-red-800">
+                    <p className="font-semibold">Prijava nije stigla do nas.</p>
+                    <p className="mt-1">
+                      Proveri internet vezu i pokušaj ponovo. Ako ne uspe, pošalji nam podatke na{" "}
+                      <a className="font-semibold underline" href={`mailto:${destInfo.email}?subject=${encodeURIComponent(`Prijava: ${destInfo.label}`)}&body=${encodeURIComponent(`${form.firstName} ${form.lastName}\n${form.email}\n${form.phone}\n\n${form.note}`)}`}>
+                        {destInfo.email}
+                      </a>{" "}
+                      ili pozovi 064 107 2004.
+                    </p>
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  disabled={!privacy}
-                  className="bg-brand text-ink w-full rounded-full py-4 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40 transition-colors hover:bg-brand-strong"
+                  disabled={!privacy || sending}
+                  aria-busy={sending}
+                  className="h-14 w-full rounded-full bg-ink text-base font-semibold text-white transition-colors hover:bg-neutral-950 disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  Pošalji prijavu za {destInfo.label}
+                  {sending ? "Šaljem prijavu…" : `Pošalji prijavu za ${destInfo.label}`}
                 </button>
+                {!privacy && <p className="-mt-2 text-center text-[13px] text-ink-3">Prvo potvrdi saglasnost za obradu podataka.</p>}
 
-                <p className="text-center text-xs text-ink-3">
-                  Prijava je potpuno besplatna i ne obavezuje vas na potpisivanje ugovora.
-                </p>
+                <p className="text-center text-[13px] text-ink-3">Prijava je besplatna i ne obavezuje te na potpisivanje ugovora.</p>
               </form>
             </>
           )}
@@ -574,7 +597,7 @@ export default function OnlinePrijava({
                     setForm({
                       firstName: "",
                       lastName: "",
-                      birthDate: DEFAULT_BIRTH_DATE,
+                      birthDate: "",
                       address: "",
                       phone: "",
                       email: "",
