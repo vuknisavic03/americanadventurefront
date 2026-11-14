@@ -1,6 +1,6 @@
 // OnlinePrijava.jsx
 import { useEffect, useState } from "react";
-import { labelCls as baseLabelCls, inputCls as baseInputCls, ArrowRightIcon } from "./ui";
+import { labelCls as baseLabelCls, inputCls as baseInputCls, ArrowRightIcon, CheckIcon } from "./ui";
 import { useTranslation } from "../i18n/LanguageContext";
 import programItems from "../data/programItems";
 import { submitPreApplicationWithBackend } from "../data/candidateStore";
@@ -35,15 +35,6 @@ function getLatestAdultBirthDate() {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
-}
-
-function CheckCircleIcon({ className = "h-9 w-9" }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M8 12.5l2.5 2.5L16 9.5" />
-    </svg>
-  );
 }
 
 function BackIcon({ className = "h-4 w-4" }) {
@@ -563,34 +554,33 @@ export default function OnlinePrijava({
 
           {/* KORAK 3: POTVRDA USPEŠNOG SLANJA */}
           {step === "done" && (
-            <div className="flex flex-col items-center py-6 text-center">
-              <span className="bg-brand text-ink flex h-16 w-16 items-center justify-center rounded-full">
-                <CheckCircleIcon className="h-9 w-9" />
-              </span>
-              <h1 className="mt-6 font-display text-[2.2rem] font-extrabold leading-[1] text-ink">Prijava je poslata</h1>
-              <p className="mt-3 max-w-md text-base text-ink-2">
-                Hvala na prijavi za <strong className="font-semibold text-ink">{destInfo.label}</strong>. Podaci su evidentirani i naš tim ih je dobio.
+            <div className="py-2">
+              <p className="flex items-center gap-2.5 text-[15px] font-semibold text-emerald-700">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-700 text-white">
+                  <CheckIcon className="h-3.5 w-3.5" />
+                </span>
+                Primljeno
+              </p>
+              <h1 className="font-display mt-4 text-[clamp(2rem,4vw,2.6rem)] font-extrabold leading-[1] text-ink">Prijava je poslata</h1>
+              <p className="mt-4 max-w-lg text-[17px] leading-relaxed text-ink-2">
+                Prijava za {destInfo.label} je stigla do našeg tima. Javljamo se na e-mail i telefon koje si naveo.
               </p>
 
-              <div className="mt-8 w-full max-w-md rounded-2xl bg-surface p-6 text-left">
-                <h2 className="text-sm font-semibold text-ink">Šta sledi</h2>
-                <ol className="mt-4 space-y-3 text-sm leading-relaxed text-ink-2">
-                  <li className="flex items-start gap-2.5">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">1</span>
-                    <span>Koordinator te zove ili ti piše radi kratkog razgovora.</span>
+              <h2 className="mt-10 text-[15px] font-semibold text-ink">Šta sledi</h2>
+              <ol className="mt-3 border-t-2 border-ink">
+                {[
+                  "Koordinator te zove ili ti piše radi kratkog razgovora.",
+                  "Zakazujemo besplatne konsultacije, u kancelariji ili preko video poziva.",
+                  "Kad te odobrimo, otvaramo ti nalog na portalu, gde predaješ dokumenta i biraš posao.",
+                ].map((x, i) => (
+                  <li key={x} className="flex items-baseline gap-5 border-b border-line py-4">
+                    <span className="font-display w-5 shrink-0 text-xl font-extrabold leading-none text-ink">{i + 1}</span>
+                    <span className="text-[16px] leading-snug text-ink">{x}</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">2</span>
-                    <span>Zakazujemo besplatne konsultacije, u kancelariji ili preko video poziva.</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-xs font-semibold text-white">3</span>
-                    <span>Kad te odobrimo, otvaramo ti nalog na portalu, gde predaješ dokumenta i biraš posao.</span>
-                  </li>
-                </ol>
-              </div>
+                ))}
+              </ol>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <button
                   type="button"
                   onClick={() => {
@@ -624,16 +614,19 @@ export default function OnlinePrijava({
                     setPrivacy(false);
                     setStep("program");
                   }}
-                  className="inline-flex h-11 items-center justify-center rounded-full border border-line-strong px-5 text-sm font-semibold text-ink transition-colors hover:bg-surface"
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-line-strong px-6 text-[15px] font-semibold text-ink transition-colors hover:border-ink"
                 >
-                  Nova prijava
+                  Pošalji još jednu prijavu
                 </button>
                 <a
                   href={logoHref}
                   onClick={go(logoHref)}
-                  className="inline-flex h-11 items-center justify-center rounded-full bg-brand px-5 text-sm font-semibold text-ink transition-colors hover:bg-brand-strong"
+                  className="order-first inline-flex h-12 items-center justify-center rounded-full bg-ink px-6 text-[15px] font-semibold text-white transition-colors hover:bg-neutral-950"
                 >
-                  Povratak na početnu stranu
+                  Na početnu
+                </a>
+                <a href="tel:+381641072004" className="mt-2 self-center text-[15px] font-semibold text-ink underline decoration-ink/30 decoration-2 underline-offset-[5px] hover:decoration-ink sm:mt-0 sm:ml-auto">
+                  064 107 2004
                 </a>
               </div>
             </div>
