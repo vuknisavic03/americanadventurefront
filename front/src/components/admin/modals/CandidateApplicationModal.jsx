@@ -827,21 +827,6 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               </div>
             </div>
 
-            <div className="ml-auto flex items-center gap-3">
-              {currentFlow?.nextId ? (
-                <button
-                  type="button"
-                  onClick={() => handleSelectStep(currentFlow.nextId)}
-                  className="inline-flex h-9 items-center rounded-full bg-ink px-4 text-[13px] font-semibold text-white transition-colors hover:bg-neutral-950"
-                >
-                  {currentFlow.nextLabel}
-                </button>
-              ) : (
-                <span className="inline-flex h-9 items-center gap-1.5 rounded-full bg-emerald-100 px-4 text-[13px] font-semibold text-emerald-800">
-                  <CheckIcon className="h-4 w-4" /> Viza odobrena, spreman za polazak
-                </span>
-              )}
-            </div>
           </div>
 
         </div>
@@ -926,16 +911,16 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     ? "bg-emerald-50"
                     : contractVerificationStatus === "rejected"
                     ? "bg-red-50"
-                    : "bg-amber-50"
+                    : "border-line bg-white"
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <span className="text-xs font-bold text-ink-3">
-                      Uslov 1 za otključavanje Koraka 1
+                    <span className="text-xs font-medium text-ink-3">
+                      Uslov 1 od 2
                     </span>
-                    <h4 className="text-sm font-semibold text-ink mt-0.5">
-                      Ugovor o posredovanju i Izjava o odgovornosti
+                    <h4 className="mt-0.5 text-[15px] font-semibold text-ink">
+                      Ugovor o posredovanju i izjava o odgovornosti
                     </h4>
                   </div>
                   <span
@@ -968,7 +953,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                           {signedContractFileName}
                         </p>
                         <p className="text-xs text-ink-3">
-                          Svojeručno potpisani primerak kandidata
+                          Potpisan primerak
                         </p>
                       </div>
                       <button
@@ -989,7 +974,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     </div>
                   ) : (
                     <p className="text-xs text-ink-3">
-                      Kandidat još nije otpremio sken potpisanog ugovora.
+                      Potpisan ugovor još nije otpremljen.
                     </p>
                   )}
 
@@ -1008,7 +993,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       onClick={() => openPrintableContractWindow({ id: candidate.id, email: email })}
                       className="rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
                     >
-                      Otvori popunjen ugovor i izjavu za štampu
+                      Ugovor za štampu
                     </button>
                   </div>
                 </div>
@@ -1038,7 +1023,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     }
                     className="rounded-full border border-red-300 bg-white px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50"
                   >
-                    Vrati na ponovno slanje
+                    Vrati na dopunu
                   </button>
                 </div>
               </div>
@@ -1056,10 +1041,10 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <span className="text-xs font-bold text-ink-3">
-                        Uslov 2 za otključavanje Koraka 1
+                      <span className="text-xs font-medium text-ink-3">
+                        Uslov 2 od 2
                       </span>
-                      <h4 className="text-sm font-semibold text-ink mt-0.5">
+                      <h4 className="mt-0.5 text-[15px] font-semibold text-ink">
                         {isFull
                           ? `Uplata programa u celosti (${finalPrice} € u RSD)`
                           : `Prva rata programa (${firstInstallmentAmount} € u RSD)`}
@@ -1084,8 +1069,8 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
 
                   <p className="mt-2 text-xs text-ink-2 leading-relaxed">
                     {isFull
-                      ? `Kandidat je odabrao jednokratno plaćanje programa u celosti (${finalPrice} € po kursu NBS). Potvrdom uplate i ugovora otključavaju se svi naredni koraci bez rata.`
-                      : `Uplata I rate (${firstInstallmentAmount} € po srednjem kursu NBS) u roku od 7 dana od potpisivanja ugovora. Potvrdom uplate i ugovora kandidat prelazi na Korak 1: Dokumenta.`}
+                      ? `Jednokratna uplata od ${finalPrice} € po srednjem kursu NBS. Kad su ugovor i uplata potvrđeni, kandidat prelazi na Korak 1.`
+                      : `Rok je 7 dana od potpisivanja ugovora, po srednjem kursu NBS. Kad su ugovor i uplata potvrđeni, kandidat prelazi na Korak 1.`}
                   </p>
                 </div>
 
@@ -1101,8 +1086,8 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     className="rounded-lg border border-line-strong bg-white px-2.5 py-1.5 text-xs font-semibold"
                   >
                     <option value="unpaid">Nije uplaćeno</option>
-                    <option value="pending">Uplata prijavljena (Na čekanju)</option>
-                    <option value="paid">Potvrđeno / Plaćeno</option>
+                    <option value="pending">Uplata prijavljena</option>
+                    <option value="paid">Plaćeno</option>
                   </select>
 
                   {!(isFull ? isFullPaymentPaid || firstInstallmentApproved : firstInstallmentApproved) && (
@@ -1112,7 +1097,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       className="rounded-full bg-emerald-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
                     >
                       {isFull
-                        ? `Potvrdi uplatu u celosti (${finalPrice} €)`
+                        ? `Potvrdi uplatu (${finalPrice} €)`
                         : `Potvrdi uplatu I rate (${firstInstallmentAmount} €)`}
                     </button>
                   )}
@@ -1130,8 +1115,8 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
           <div className="space-y-5">
             {/* 2. Lični podaci i Pasoš */}
             <div className="rounded-xl border border-line bg-white p-4 space-y-4">
-              <h4 className="text-[13px] font-bold text-ink-3">
-                Lični, akademski i pasoški podaci kandidata
+              <h4 className="text-[15px] font-semibold text-ink">
+                Lični podaci
               </h4>
               <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-3">
                 <Field label="Ime">
@@ -1140,7 +1125,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                 <Field label="Prezime">
                   <input value={lastName} onChange={(e) => setLastName(e.target.value)} className={FIELD_CLS} required />
                 </Field>
-                <Field label="Email adresa">
+                <Field label="E-mail">
                   <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={FIELD_CLS} required />
                 </Field>
                 <Field label="Broj telefona">
@@ -1233,8 +1218,8 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
 
             {/* 3. Paket programa, popust i jemac */}
             <div className="rounded-xl border border-line bg-white p-4 space-y-4">
-              <h4 className="text-[13px] font-bold text-ink-3">
-                Paket programa, popust i model otplate III rate (PKZ / Jemac)
+              <h4 className="text-[15px] font-semibold text-ink">
+                Paket, popust i plaćanje III rate
               </h4>
               <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-3">
                 <Field label="Paket programa">
@@ -1319,84 +1304,19 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
         {/* ================================================================ */}
         {activeTab === "step1_docs" && (
           <div className="space-y-5">
-            {/* Gate za odobravanje kompletnog dosijea */}
-            <div
-              className={`rounded-xl border p-4 flex flex-wrap items-center justify-between gap-4 ${
-                documentsApproved
-                  ? "bg-emerald-50"
-                  : documentsVerificationStatus === "rejected"
-                  ? "bg-red-50"
-                  : "border-line bg-surface"
-              }`}
-            >
-              <div>
-                <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-semibold text-ink">
-                    Verifikacija kompletnog dosijea (Korak 1 &rarr; Korak 2)
-                  </h4>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium ${
-                      documentsApproved
-                        ? "bg-emerald-100 text-emerald-800"
-                        : documentsVerificationStatus === "rejected"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-surface-2 text-ink"
-                    }`}
-                  >
-                    {documentsApproved
-                      ? "Dosije odobren"
-                      : documentsVerificationStatus === "rejected"
-                      ? "Vraćeno na dopunu"
-                      : "Čeka verifikaciju"}
-                  </span>
-                </div>
-                <p className="text-xs text-ink-2 mt-1">
-                  Pregledajte CV, 60s video, uverenje sa fakulteta i uverenje iz MUP-a. Odobravanjem dosijea kandidat automatski prelazi na <strong>Korak 2: Posao i ponuda</strong>.
-                </p>
-                {documentsRejectionReason && !documentsApproved && (
-                  <p className="mt-2 rounded-lg bg-red-100/80 px-3 py-1.5 text-xs font-semibold text-red-900">
-                    Razlog vraćanja na dopunu: {documentsRejectionReason}
-                  </p>
-                )}
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => handleVerifyDocumentsAction(true)}
-                  className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-700"
-                >
-                  Odobri dosije (Prebaci na Korak 2)
-                </button>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setRejectionModal({
-                      type: "documents",
-                      title: "Vraćanje dokumentacije na dopunu uz obrazloženje",
-                      reason: documentsRejectionReason || "",
-                    })
-                  }
-                  className="rounded-full border border-red-300 bg-white px-3.5 py-2 text-xs font-semibold text-red-700 hover:bg-red-50"
-                >
-                  Vrati na dopunu
-                </button>
-              </div>
-            </div>
-
             {/* 1. CV Builder i Video prezentacija */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="rounded-xl border border-line bg-white p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-[13px] font-bold text-ink-3">
-                    1. CV Biografija i Studentski profil
+                  <h4 className="text-[15px] font-semibold text-ink">
+                    CV
                   </h4>
                   <button
                     type="button"
                     onClick={() => setShowProfileBuilder(true)}
                     className="rounded-full bg-brand px-3 py-1 text-xs font-bold text-ink transition-colors hover:bg-brand-strong"
                   >
-                    Otvori CV Builder
+                    CV builder
                   </button>
                 </div>
 
@@ -1421,7 +1341,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   )}
                   <div className="mt-2 pt-2 border-t border-line">
                     <label className="cursor-pointer text-xs font-semibold text-ink hover:underline">
-                      {uploadingDocType === "cv" ? "Otpremanje..." : "+ Otpremi novi CV fajl"}
+                      {uploadingDocType === "cv" ? "Otpremanje..." : "Otpremi CV"}
                       <input
                         type="file"
                         accept=".pdf,.doc,.docx"
@@ -1434,10 +1354,10 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               </div>
 
               <div className="rounded-xl border border-line bg-white p-4 space-y-3">
-                <h4 className="text-[13px] font-bold text-ink-3">
-                  2. YouTube 60s Video Prezentacija
+                <h4 className="text-[15px] font-semibold text-ink">
+                  Video prezentacija (60 s)
                 </h4>
-                <Field label="YouTube Unlisted/Public URL">
+                <Field label="YouTube link">
                   <input
                     type="url"
                     value={youtubeUrl}
@@ -1453,7 +1373,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     rel="noreferrer"
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink hover:underline"
                   >
-                    ▶ Otvori video prezentaciju kandidata u novom prozoru &rarr;
+                    Otvori video
                   </a>
                 )}
               </div>
@@ -1464,8 +1384,8 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               {/* Uverenje sa fakulteta */}
               <div className="rounded-xl border border-line bg-white p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-[13px] font-bold text-ink-3">
-                    3. Uverenje sa fakulteta o studiranju
+                  <h4 className="text-[15px] font-semibold text-ink">
+                    Uverenje o studiranju
                   </h4>
                   <span
                     className={`rounded-full px-3 py-1 text-xs font-medium ${
@@ -1506,7 +1426,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
 
                   <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-2">
                     <label className="cursor-pointer text-xs font-semibold text-ink hover:underline">
-                      {uploadingDocType === "facultyCert" ? "Otpremanje..." : "+ Otpremi uverenje"}
+                      {uploadingDocType === "facultyCert" ? "Otpremanje..." : "Otpremi uverenje"}
                       <input
                         type="file"
                         accept=".pdf,.jpg,.jpeg,.png"
@@ -1521,7 +1441,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         onChange={(e) => setFacultyCertAiTranslation(e.target.checked)}
                         className="h-3.5 w-3.5 rounded"
                       />
-                      Sudski prevod spreman
+                      Sudski prevod gotov
                     </label>
                   </div>
                 </div>
@@ -1530,8 +1450,8 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               {/* Uverenje iz MUP-a */}
               <div className="rounded-xl border border-line bg-white p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-[13px] font-bold text-ink-3">
-                    4. Uverenje iz MUP-a o nekažnjavanju
+                  <h4 className="text-[15px] font-semibold text-ink">
+                    Uverenje o nekažnjavanju (MUP)
                   </h4>
                   <span
                     className={`rounded-full px-3 py-1 text-xs font-medium ${
@@ -1572,7 +1492,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
 
                   <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-2">
                     <label className="cursor-pointer text-xs font-semibold text-ink hover:underline">
-                      {uploadingDocType === "policeCert" ? "Otpremanje..." : "+ Otpremi MUP uverenje"}
+                      {uploadingDocType === "policeCert" ? "Otpremanje..." : "Otpremi uverenje"}
                       <input
                         type="file"
                         accept=".pdf,.jpg,.jpeg,.png"
@@ -1587,10 +1507,75 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         onChange={(e) => setPoliceCertificateTranslated(e.target.checked)}
                         className="h-3.5 w-3.5 rounded"
                       />
-                      Sudski prevod spreman
+                      Sudski prevod gotov
                     </label>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Gate za odobravanje kompletnog dosijea */}
+            <div
+              className={`rounded-xl border p-4 flex flex-wrap items-center justify-between gap-4 ${
+                documentsApproved
+                  ? "bg-emerald-50"
+                  : documentsVerificationStatus === "rejected"
+                  ? "bg-red-50"
+                  : "border-line bg-surface"
+              }`}
+            >
+              <div>
+                <div className="flex items-center gap-2">
+                  <h4 className="text-[15px] font-semibold text-ink">
+                    Odluka o dokumentima
+                  </h4>
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${
+                      documentsApproved
+                        ? "bg-emerald-100 text-emerald-800"
+                        : documentsVerificationStatus === "rejected"
+                        ? "bg-red-100 text-red-700"
+                        : "bg-surface-2 text-ink"
+                    }`}
+                  >
+                    {documentsApproved
+                      ? "Odobrena"
+                      : documentsVerificationStatus === "rejected"
+                      ? "Vraćeno na dopunu"
+                      : "Čeka pregled"}
+                  </span>
+                </div>
+                <p className="text-xs text-ink-2 mt-1">
+                  Kad su sva dokumenta pregledana i odobrena, kandidat prelazi na Korak 2: Posao i ponuda.
+                </p>
+                {documentsRejectionReason && !documentsApproved && (
+                  <p className="mt-2 rounded-lg bg-red-100/80 px-3 py-1.5 text-xs font-semibold text-red-900">
+                    Razlog za dopunu: {documentsRejectionReason}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleVerifyDocumentsAction(true)}
+                  className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-700"
+                >
+                  Odobri dokumenta
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setRejectionModal({
+                      type: "documents",
+                      title: "Vraćanje dokumentacije na dopunu uz obrazloženje",
+                      reason: documentsRejectionReason || "",
+                    })
+                  }
+                  className="rounded-full border border-red-300 bg-white px-3.5 py-2 text-xs font-semibold text-red-700 hover:bg-red-50"
+                >
+                  Vrati na dopunu
+                </button>
               </div>
             </div>
           </div>
@@ -1615,16 +1600,13 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               <div className="rounded-xl border border-line bg-white p-4 space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
                   <div>
-                    <span className="text-xs font-bold text-ink-3">
-                      Korak 2.1 — Ponuda radnih mesta za ovog kandidata
-                    </span>
-                    <h4 className="text-sm font-semibold text-ink">
-                      Dodeljivanje poslova iz Baze poslova
+                    <h4 className="text-[15px] font-semibold text-ink">
+                      Poslovi koje kandidat vidi u svom nalogu
                     </h4>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="rounded-full bg-surface border border-line px-3 py-1 text-xs font-medium text-ink">
-                      Kandidatu ponuđeno: {offeredCount} poslova
+                      Ponuđeno: {offeredCount}
                     </span>
                   </div>
                 </div>
@@ -1638,7 +1620,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         onChange={(e) => setOfferAllJobs(e.target.checked)}
                         className="h-4 w-4 rounded"
                       />
-                      <span>Ponudi sve poslove iz Baze poslova (podrazumevano)</span>
+                      <span>Ponudi sve poslove iz baze</span>
                     </label>
 
                     {!offerAllJobs && (
@@ -1683,7 +1665,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                             />
                             <div className="min-w-0 flex-1">
                               <p className="font-bold text-ink truncate">{job.title}</p>
-                              <p className="text-xs text-ink-2 truncate">{job.employer} • {job.city}</p>
+                              <p className="text-xs text-ink-2 truncate">{job.employer}, {job.city}</p>
                               <p className="text-2xs font-semibold text-amber-900 mt-0.5">{job.wage}</p>
                             </div>
                           </div>
@@ -1698,11 +1680,8 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               <div className="rounded-xl border border-line bg-white p-4 space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
                   <div>
-                    <span className="text-xs font-bold text-ink-3">
-                      Korak 2.2 — Izbor kandidata & Intervju sa poslodavcem
-                    </span>
-                    <h4 className="text-sm font-semibold text-ink">
-                      Status razgovora za posao i radne ponude
+                    <h4 className="text-[15px] font-semibold text-ink">
+                      Izabrani posao i razgovor sa poslodavcem
                     </h4>
                   </div>
                   <div className="flex items-center gap-2">
@@ -1720,11 +1699,11 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       }`}
                     >
                       {jobApplicationStatus === "ACCEPTED" || (hasJob && !["SCHEDULED", "APPLIED", "NO_SLOTS", "REJECTED"].includes(jobApplicationStatus))
-                        ? "Job Offer obezbeđen (Prihvaćen)"
+                        ? "Job offer potvrđen"
                         : jobApplicationStatus === "SCHEDULED"
                         ? "Intervju zakazan"
                         : jobApplicationStatus === "APPLIED"
-                        ? "Kandidat poslao prijavu (Čeka termin)"
+                        ? "Prijava poslata, čeka termin"
                         : jobApplicationStatus === "NO_SLOTS"
                         ? "Nema slobodnih termina"
                         : jobApplicationStatus === "REJECTED"
@@ -1735,7 +1714,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                 </div>
 
                 {/* Brzi izbor ili izmena posla iz kataloga */}
-                <Field label="Izabrana radna pozicija (automatski popunjeno na osnovu izbora kandidata ili ručno dodeljeno)">
+                <Field label="Pozicija iz baze poslova">
                   <select
                     value=""
                     onChange={(e) => {
@@ -1751,17 +1730,17 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     }}
                     className={FIELD_CLS}
                   >
-                    <option value="">-- Dodelite ili promenite posao iz baze poslova --</option>
+                    <option value="">Izaberi posao iz baze</option>
                     {allCatalogJobs.map((j) => (
                       <option key={j.id} value={j.id}>
-                        {j.employer} — {j.title} ({j.city} • {j.wage})
+                        {j.employer}: {j.title} ({j.city}, {j.wage})
                       </option>
                     ))}
                   </select>
                 </Field>
 
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  <Field label="Naziv poslodavca (Kompanija)">
+                  <Field label="Poslodavac">
                     <input
                       value={selectedJobEmployer}
                       onChange={(e) => setSelectedJobEmployer(e.target.value)}
@@ -1769,7 +1748,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       className={FIELD_CLS}
                     />
                   </Field>
-                  <Field label="Radna pozicija (Job Title)">
+                  <Field label="Pozicija">
                     <input
                       value={selectedJobTitle}
                       onChange={(e) => setSelectedJobTitle(e.target.value)}
@@ -1777,7 +1756,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       className={FIELD_CLS}
                     />
                   </Field>
-                  <Field label="Grad i američka država">
+                  <Field label="Mesto">
                     <input
                       value={selectedJobCity}
                       onChange={(e) => setSelectedJobCity(e.target.value)}
@@ -1785,7 +1764,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       className={FIELD_CLS}
                     />
                   </Field>
-                  <Field label="Satnica (USD/h)">
+                  <Field label="Satnica (USD)">
                     <input
                       value={selectedJobWage}
                       onChange={(e) => setSelectedJobWage(e.target.value)}
@@ -1793,7 +1772,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       className={FIELD_CLS}
                     />
                   </Field>
-                  <Field label="Smeštaj (Housing)">
+                  <Field label="Smeštaj">
                     <input
                       value={selectedJobHousing}
                       onChange={(e) => setSelectedJobHousing(e.target.value)}
@@ -1812,7 +1791,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         }}
                         className="h-4 w-4 rounded"
                       />
-                      Potvrđen Job Offer (Posao obezbeđen)
+                      Job offer potvrđen
                     </label>
                   </div>
                 </div>
@@ -1820,11 +1799,11 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                 {/* Sekcija: Upravljanje tokom intervjua i realnim ishodima */}
                 <div className="rounded-2xl border border-line bg-white p-5 space-y-3 sm:p-6">
                   <h5 className="text-[13px] font-bold text-ink-2">
-                    Upravljanje terminom i ishodom razgovora sa poslodavcem
+                    Razgovor sa poslodavcem
                   </h5>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <Field label="Termin intervjua (Datum i vreme)">
+                    <Field label="Termin">
                       <input
                         type="datetime-local"
                         value={interviewScheduledAt}
@@ -1832,17 +1811,17 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         className={FIELD_CLS}
                       />
                     </Field>
-                    <Field label="Format razgovora">
+                    <Field label="Format">
                       <select
                         value={interviewType}
                         onChange={(e) => setInterviewType(e.target.value)}
                         className={FIELD_CLS}
                       >
-                        <option value="ONLINE">Online (Google Meet / Zoom)</option>
-                        <option value="IN_PERSON">Uživo u agenciji / hotelu</option>
+                        <option value="ONLINE">Online</option>
+                        <option value="IN_PERSON">Uživo</option>
                       </select>
                     </Field>
-                    <Field label="Link za pristup ili adresa">
+                    <Field label="Link ili adresa">
                       <input
                         value={interviewLink}
                         onChange={(e) => setInterviewLink(e.target.value)}
@@ -1852,11 +1831,11 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     </Field>
                   </div>
 
-                  <Field label="Napomena / Poruka kandidatu (Instrukcije za intervju, razlog odbijanja ili obaveštenje o terminima)">
+                  <Field label="Poruka kandidatu">
                     <input
                       value={interviewNote}
                       onChange={(e) => setInterviewNote(e.target.value)}
-                      placeholder="npr. Poslodavac trenutno nema slobodnih termina / Pripremite nivo engleskog..."
+                      placeholder="Uputstvo za razgovor ili razlog odbijanja"
                       className={FIELD_CLS}
                     />
                   </Field>
@@ -1867,7 +1846,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       type="button"
                       onClick={() => {
                         if (!interviewScheduledAt) {
-                          alert("Molimo unesite datum i vreme intervjua.");
+                          alert("Unesi datum i vreme razgovora.");
                           return;
                         }
                         setJobApplicationStatus("SCHEDULED");
@@ -1881,18 +1860,18 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                           hasJob: false,
                         });
                         onSave(updated, { keepOpen: true });
-                        setAdminToast("Termin intervjua je uspešno zakazan i sačuvan.");
+                        setAdminToast("Razgovor je zakazan.");
                         setTimeout(() => setAdminToast(""), 4000);
                       }}
                       className="rounded-full bg-ink px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-neutral-950"
                     >
-                      Zakaži termin intervjua
+                      Zakaži razgovor
                     </button>
 
                     <button
                       type="button"
                       onClick={() => {
-                        const note = interviewNote || "Poslodavac trenutno nema slobodnih termina za razgovor za ovu poziciju. Molimo odaberite drugu opciju iz baze poslova.";
+                        const note = interviewNote || "Poslodavac trenutno nema slobodnih termina. Izaberi drugi posao iz baze.";
                         setJobApplicationStatus("NO_SLOTS");
                         setHasJob(false);
                         if (!interviewNote) setInterviewNote(note);
@@ -1902,7 +1881,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                           hasJob: false,
                         });
                         onSave(updated, { keepOpen: true });
-                        setAdminToast("Evidentirano da nema termina. Obaveštenje je poslato kandidatu.");
+                        setAdminToast("Evidentirano: nema termina. Kandidat je obavešten.");
                         setTimeout(() => setAdminToast(""), 4000);
                       }}
                       className="rounded-full bg-amber-50 px-3.5 py-1.5 text-xs font-semibold text-amber-950 hover:bg-amber-100"
@@ -1913,7 +1892,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     <button
                       type="button"
                       onClick={() => {
-                        const note = interviewNote || "Poslodavac nije prihvatio kandidata nakon razgovora. Molimo izaberite novu ponudu iz baze.";
+                        const note = interviewNote || "Poslodavac nije prihvatio kandidata. Izaberi novi posao iz baze.";
                         setJobApplicationStatus("REJECTED");
                         setHasJob(false);
                         if (!interviewNote) setInterviewNote(note);
@@ -1923,7 +1902,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                           hasJob: false,
                         });
                         onSave(updated, { keepOpen: true });
-                        setAdminToast("Evidentirano da je poslodavac odbio kandidata. Otključan novi izbor posla.");
+                        setAdminToast("Evidentirano: poslodavac je odbio kandidata. Izbor posla je ponovo otvoren.");
                         setTimeout(() => setAdminToast(""), 4000);
                       }}
                       className="rounded-full bg-red-50 px-3.5 py-1.5 text-xs font-semibold text-red-900 hover:bg-red-100"
@@ -1941,12 +1920,12 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                           hasJob: true,
                         });
                         onSave(updated, { keepOpen: true });
-                        setAdminToast("Poslodavac je prihvatio kandidata. Job Offer je obezbeđen!");
+                        setAdminToast("Poslodavac je prihvatio kandidata. Job offer je potvrđen.");
                         setTimeout(() => setAdminToast(""), 4000);
                       }}
                       className="rounded-full bg-emerald-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
                     >
-                      Poslodavac prihvatio (Job Offer)
+                      Prihvaćen, job offer
                     </button>
                   </div>
                 </div>
@@ -1964,10 +1943,10 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               >
                 <div>
                   <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-semibold text-ink">
+                    <h4 className="text-[15px] font-semibold text-ink">
                       {isFull
-                        ? "Uplata programa u celosti"
-                        : `Druga rata programa (${secondInstallmentAmount} EUR u RSD)`}
+                        ? "Plaćanje u celosti"
+                        : `II rata (${secondInstallmentAmount} €)`}
                     </h4>
                     <span
                       className={`rounded-full px-3 py-1 text-xs font-medium ${
@@ -1979,7 +1958,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       }`}
                     >
                       {isFull
-                        ? "Program uplaćen u celosti"
+                        ? isFullPaymentPaid
+                          ? "Plaćeno u celosti"
+                          : "Bez II rate"
                         : secondInstallmentPaid
                         ? "II rata plaćena"
                         : secondInstallmentStatus === "pending"
@@ -1989,8 +1970,8 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   </div>
                   <p className="text-xs text-ink-3 mt-1">
                     {isFull
-                      ? "Kandidat nema obavezu plaćanja II rate jer je program plaćen u celosti."
-                      : "Uplaćuje se po obezbeđivanju radne ponude (potpisan Job Offer)."}
+                      ? "Program se plaća u celosti, pa II rata ne postoji."
+                      : "Plaća se kad je job offer potpisan."}
                   </p>
                 </div>
 
@@ -2001,13 +1982,11 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       onClick={() => handleConfirmInstallmentAction(2)}
                       className="rounded-full bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
                     >
-                      Proknjiži II ratu ({secondInstallmentAmount} EUR)
+                      Proknjiži II ratu ({secondInstallmentAmount} €)
                     </button>
                   )}
-                  {(isFull || secondInstallmentPaid) && (
-                    <span className="text-xs font-semibold text-emerald-800">
-                      {isFull ? "Program je uplaćen u celosti" : "Uplata II rate je proknjižena"}
-                    </span>
+                  {!isFull && secondInstallmentPaid && (
+                    <span className="text-xs font-semibold text-emerald-800">Proknjiženo</span>
                   )}
                 </div>
               </div>
@@ -2020,90 +1999,31 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
         {/* ================================================================ */}
         {activeTab === "step3_visa" && (
           <div className="space-y-5">
-            {/* Glavni status J-1 Vize */}
-            <div
-              className={`rounded-xl border p-4 flex flex-wrap items-center justify-between gap-4 ${
-                hasVisa
-                  ? "bg-emerald-50"
-                  : "border-line bg-surface"
-              }`}
-            >
-              <div>
-                <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-semibold text-ink">
-                    Status J-1 Vize i spremnosti za polazak u SAD
-                  </h4>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium ${
-                      hasVisa ? "bg-emerald-200 text-emerald-950" : "bg-surface-2 text-ink"
-                    }`}
-                  >
-                    {hasVisa ? "Viza odobrena • Spreman za polazak" : "Čekanje na vizu"}
-                  </span>
-                </div>
-                <p className="text-xs text-ink-2 mt-1">
-                  Nakon uspešnog intervjua u Ambasadi SAD u Beogradu, potvrdite odobrenu J-1 vizu kako bi kandidat dobio status <strong>Viza odobrena / Spreman za polazak</strong>.
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2">
-                {!hasVisa ? (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setHasVisa(true);
-                      setStatus("ready");
-                      const updated = buildUpdatedCandidate({ hasVisa: true, status: "ready" });
-                      onSave(updated, { keepOpen: true });
-                      showToast("J-1 Viza je potvrđena! Kandidat ima status: Viza odobrena / Spreman za polazak.");
-                    }}
-                    className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-700"
-                  >
-                    Potvrdi ODOBRENU J-1 Vizu
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setHasVisa(false);
-                      setStatus("departure");
-                      const updated = buildUpdatedCandidate({ hasVisa: false, status: "departure" });
-                      onSave(updated, { keepOpen: true });
-                      showToast("Status vraćen na: Čekanje na vizu.");
-                    }}
-                    className="rounded-full border border-line-strong bg-white px-3 py-1.5 text-xs font-semibold text-ink hover:bg-surface-2"
-                  >
-                    Vrati na "Čekanje na vizu"
-                  </button>
-                )}
-              </div>
-            </div>
-
             {/* 1. DS-2019, Ambasada termin i III rata */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="rounded-xl border border-line bg-white p-4 space-y-3">
-                <h4 className="text-[13px] font-bold text-ink-3">
-                  1. DS-2019 Obrazac i Termin u Ambasadi SAD
+                <h4 className="text-[15px] font-semibold text-ink">
+                  DS-2019 i ambasada
                 </h4>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <Field label="Status DS-2019 formulara">
+                  <Field label="Status DS-2019">
                     <select value={ds2019Status} onChange={(e) => setDs2019Status(e.target.value)} className={FIELD_CLS}>
                       <option value="LOCKED">Čeka II ratu</option>
-                      <option value="IN_PROGRESS">U izradi kod US sponzora</option>
-                      <option value="ISSUED">Izdat i spreman (SEVIS aktivan)</option>
+                      <option value="IN_PROGRESS">U izradi kod sponzora</option>
+                      <option value="ISSUED">Izdat, SEVIS aktivan</option>
                     </select>
                   </Field>
                   <Field label="SEVIS / DS-2019 broj">
                     <input value={ds2019Number} onChange={(e) => setDs2019Number(e.target.value)} placeholder="npr. N0012345678" className={`${FIELD_CLS} tabular-nums`} />
                   </Field>
-                  <Field label="Datum i vreme intervjua u Ambasadi">
+                  <Field label="Razgovor u ambasadi">
                     <input type="datetime-local" value={embassyInterviewDate} onChange={(e) => setEmbassyInterviewDate(e.target.value)} className={FIELD_CLS} />
                   </Field>
-                  <Field label="Priprema za Ambasadu">
+                  <Field label="Priprema za ambasadu">
                     <select value={embassyPrepStatus} onChange={(e) => setEmbassyPrepStatus(e.target.value)} className={FIELD_CLS}>
                       <option value="NOT_SCHEDULED">Nije održana</option>
                       <option value="SCHEDULED">Zakazana priprema</option>
-                      <option value="COMPLETED">Održana priprema za vizu</option>
+                      <option value="COMPLETED">Održana</option>
                     </select>
                   </Field>
                 </div>
@@ -2113,27 +2033,27 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     download="Uplatnica_viziranje.docx"
                     className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink hover:underline"
                   >
-                    Preuzmi zvaničnu uplatnicu za viziranje (.docx) &rarr;
+                    Uplatnica za vizu (.docx)
                   </a>
                 </div>
               </div>
 
               {/* III rata i Avio karta / Orijentacija */}
               <div className="rounded-xl border border-line bg-white p-4 space-y-3">
-                <h4 className="text-[13px] font-bold text-ink-3">
+                <h4 className="text-[15px] font-semibold text-ink">
                   {isFull
-                    ? "2. Završna rata — Plaćeno u celosti, Avio karta i Orijentacija"
-                    : `2. Završna (III) rata (${thirdInstallmentAmount} €), Avio karta i Orijentacija`}
+                    ? "Plaćanje u celosti, let i orijentacija"
+                    : `III rata (${thirdInstallmentAmount} €), let i orijentacija`}
                 </h4>
                 <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-line bg-surface p-3">
                   <div>
                     <p className="text-xs font-semibold text-ink">
                       {isFull
-                        ? "Program je uplaćen u celosti prilikom registracije"
-                        : `III rata (${thirdInstallmentAmount} €) — ${paymentMethod === "now" ? "Standardno" : "PKZ / Rate"}`}
+                        ? "Plaćanje u celosti, bez III rate"
+                        : `III rata (${thirdInstallmentAmount} €), ${paymentMethod === "now" ? "standardno" : "PKZ"}`}
                     </p>
                     <p className="text-xs text-ink-3">
-                      Status: {isFull || thirdInstallmentPaid ? "Plaćeno u celosti" : thirdInstallmentStatus === "pending" ? "Prijavljena uplata" : "Čeka uplatu / PKZ"}
+                      Status: {isFull ? (isFullPaymentPaid ? "Plaćeno u celosti" : "Čeka uplatu u celosti") : thirdInstallmentPaid ? "Plaćeno" : thirdInstallmentStatus === "pending" ? "Prijavljena uplata" : "Čeka uplatu ili PKZ"}
                     </p>
                   </div>
                   {!isFull && !thirdInstallmentPaid && (
@@ -2148,10 +2068,10 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <Field label="Datum leta (Polazak u SAD)">
+                  <Field label="Polazak">
                     <input type="date" value={flightDepartureDate} onChange={(e) => setFlightDepartureDate(e.target.value)} className={FIELD_CLS} />
                   </Field>
-                  <Field label="Datum povratka iz SAD">
+                  <Field label="Povratak">
                     <input type="date" value={flightReturnDate} onChange={(e) => setFlightReturnDate(e.target.value)} className={FIELD_CLS} />
                   </Field>
                 </div>
@@ -2164,7 +2084,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       onChange={(e) => setOrientationAttended(e.target.checked)}
                       className="h-4 w-4 rounded"
                     />
-                    Održana obavezna orijentacija pred put
+                    Orijentacija održana
                   </label>
                   <a
                     href="/documents/Narudzbenica-avio-karte.pdf"
@@ -2182,22 +2102,22 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
             <div className="rounded-xl border border-line bg-white p-4 space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <h4 className="text-[13px] font-bold text-ink-3">
-                    3. Odgovori kandidata iz DS-160 viza upitnika
+                  <h4 className="text-[15px] font-semibold text-ink">
+                    DS-160 upitnik kandidata
                   </h4>
                   {(() => {
                     const st = getDs160Status(candidate.ds160);
                     if (st.isComplete) {
                       return (
                         <span className="rounded-full bg-emerald-100 text-emerald-800 px-3 py-1 text-xs font-medium">
-                          Kompletiran (svih 17 polja)
+                          Popunjen
                         </span>
                       );
                     }
                     if (st.isStarted) {
                       return (
                         <span className="rounded-full bg-amber-100 text-amber-800 px-3 py-1 text-xs font-medium">
-                          U izradi ({st.filledCount}/{st.totalCount} polja)
+                          Popunjeno {st.filledCount} od {st.totalCount}
                         </span>
                       );
                     }
@@ -2213,13 +2133,13 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   download="UPITNIK_za_izradu_DS160_J1.docx"
                   className="text-xs font-semibold text-ink hover:underline"
                 >
-                  Preuzmi prazan DS-160 obrazac (.docx)
+                  Prazan DS-160 (.docx)
                 </a>
               </div>
 
               {ds160Entries.length === 0 ? (
                 <p className="text-xs text-ink-3 py-3">
-                  Kandidat još uvek nije sačuvao odgovore u DS-160 upitniku na svom Dashboard-u.
+                  Kandidat još nije popunio DS-160 upitnik u svom nalogu.
                 </p>
               ) : (
                 <div className="grid max-h-64 grid-cols-1 gap-2 overflow-y-auto sm:grid-cols-2 md:grid-cols-3 pr-1">
@@ -2231,6 +2151,65 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* Glavni status J-1 Vize */}
+            <div
+              className={`rounded-xl border p-4 flex flex-wrap items-center justify-between gap-4 ${
+                hasVisa
+                  ? "bg-emerald-50"
+                  : "border-line bg-surface"
+              }`}
+            >
+              <div>
+                <div className="flex items-center gap-2">
+                  <h4 className="text-[15px] font-semibold text-ink">
+                    Odluka o vizi
+                  </h4>
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-medium ${
+                      hasVisa ? "bg-emerald-200 text-emerald-950" : "bg-surface-2 text-ink"
+                    }`}
+                  >
+                    {hasVisa ? "Viza odobrena" : "Čekanje na vizu"}
+                  </span>
+                </div>
+                <p className="text-xs text-ink-2 mt-1">
+                  Kad ambasada odobri J-1 vizu, potvrdi je ovde. Kandidat dobija status Viza odobrena.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {!hasVisa ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setHasVisa(true);
+                      setStatus("ready");
+                      const updated = buildUpdatedCandidate({ hasVisa: true, status: "ready" });
+                      onSave(updated, { keepOpen: true });
+                      showToast("J-1 viza je potvrđena. Kandidat ima status Viza odobrena.");
+                    }}
+                    className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-700"
+                  >
+                    Potvrdi odobrenu vizu
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setHasVisa(false);
+                      setStatus("departure");
+                      const updated = buildUpdatedCandidate({ hasVisa: false, status: "departure" });
+                      onSave(updated, { keepOpen: true });
+                      showToast("Status je vraćen na Čekanje na vizu.");
+                    }}
+                    className="rounded-full border border-line-strong bg-white px-3 py-1.5 text-xs font-semibold text-ink hover:bg-surface-2"
+                  >
+                    Vrati na čekanje vize
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         )}
@@ -2274,10 +2253,10 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
                 <div>
                   <h4 className="text-[13px] font-bold text-ink-2">
-                    Podešavanje plana plaćanja i iznosa rata
+                    Plan plaćanja
                   </h4>
                   <p className="text-xs text-ink-3 mt-0.5">
-                    Administrator može dinamički prilagoditi iznose pojedinačnih rata za ovog kandidata.
+                    Iznosi rata mogu da se prilagode ovom kandidatu.
                   </p>
                 </div>
                 <span className="rounded-full bg-surface-2 px-3 py-1 text-xs font-medium text-ink-2">
@@ -2292,9 +2271,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     onChange={(e) => setPaymentMethod(e.target.value)}
                     className={FIELD_CLS}
                   >
-                    <option value="now">Jednokratno — Uplata u celosti (odmah)</option>
-                    <option value="installments">Plaćanje u ratama (I, II i III rata)</option>
-                    <option value="later">PKZ — Plaćanje kroz zaradu u SAD</option>
+                    <option value="now">Jednokratno, u celosti</option>
+                    <option value="installments">Na rate (I, II i III)</option>
+                    <option value="later">PKZ, plaćanje kroz zaradu</option>
                   </select>
                 </Field>
 
@@ -2335,9 +2314,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                           onClick={() => {
                             const balanced = Math.max(0, finalPrice - Number(firstInstallmentAmount || 0) - Number(secondInstallmentAmount || 0));
                             setThirdInstallmentAmount(balanced);
-                            showToast(`III rata je automatski uravnotežena na ${balanced} € kako bi zbir odgovarao ceni programa.`);
+                            showToast(`III rata je podešena na ${balanced} €, da zbir odgovara ceni programa.`);
                           }}
-                          title="Automatski proračunaj III ratu"
+                          title="Izračunaj III ratu"
                           className="rounded-lg bg-surface-2 hover:bg-neutral-200 border border-line-strong px-2 text-xs font-semibold text-ink whitespace-nowrap"
                         >
                           Auto
@@ -2347,9 +2326,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   </>
                 ) : (
                   <div className="sm:col-span-3 rounded-lg bg-emerald-50 p-2.5 text-xs text-emerald-950">
-                    <p className="font-semibold">Jednokratna uplata programa u celosti</p>
+                    <p className="font-semibold">Jednokratna uplata</p>
                     <p className="text-xs text-emerald-900/80 mt-0.5">
-                      Kandidat plaća celokupan iznos odjednom ({formatEur(finalPrice)} / {formatRsd(finalPrice * currentNbsRate)}). Nema pojedinačnih podela na II i III ratu.
+                      Ceo iznos odjednom: {formatEur(finalPrice)}, odnosno {formatRsd(finalPrice * currentNbsRate)}. Nema II i III rate.
                     </p>
                   </div>
                 )}
@@ -2379,10 +2358,10 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               <div className={`rounded-xl border p-4 ${isFullPaymentPaid || firstInstallmentApproved ? "bg-emerald-50" : "border-line bg-white"}`}>
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div>
-                    <span className="text-xs font-bold text-ink-3">
+                    <span className="text-xs font-medium text-ink-3">
                       Jednokratno plaćanje
                     </span>
-                    <h4 className="text-sm font-semibold text-ink mt-0.5">
+                    <h4 className="mt-0.5 text-[15px] font-semibold text-ink">
                       Uplata programa u celosti
                     </h4>
                   </div>
@@ -2410,7 +2389,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   </div>
                   <div className="rounded-lg border border-line bg-surface p-3">
                     <span className="text-xs font-semibold text-ink-3">
-                      {candidate.fullPaymentPaidRsd ? "Zaključan dinarski iznos (RSD)" : "Dinarska protivvrednost (RSD)"}
+                      {candidate.fullPaymentPaidRsd ? "Zaključan iznos (RSD)" : "Iznos u dinarima"}
                     </span>
                     <p className="text-lg font-bold text-ink mt-0.5">
                       {formatRsd(
@@ -2425,10 +2404,10 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   <div className="mt-3 rounded-lg border border-emerald-200 bg-white p-2.5 text-xs text-emerald-950 flex flex-wrap items-center justify-between gap-2">
                     <div>
                       <p className="font-semibold">
-                        Plaćeno dana: {candidate.fullPaymentPaidDate || "—"} • Primenjeni kurs NBS: {Number(candidate.fullPaymentExchangeRate || currentNbsRate).toFixed(4)} RSD
+                        Plaćeno {candidate.fullPaymentPaidDate || "—"}, kurs NBS {Number(candidate.fullPaymentExchangeRate || currentNbsRate).toFixed(4)} RSD
                       </p>
                       <p className="text-xs text-emerald-900/80 mt-0.5">
-                        Dinarski iznos je trajno evidentiran i fiksiran na dan knjiženja uplate.
+                        Dinarski iznos je zaključan na dan knjiženja.
                       </p>
                     </div>
                     <span className="rounded-md bg-emerald-100 text-emerald-800 px-2 py-0.5 text-2xs font-semibold">
@@ -2438,14 +2417,14 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                 ) : (
                   <div className="mt-3 flex items-center justify-between gap-2 pt-2 border-t border-line">
                     <p className="text-xs text-ink-2">
-                      Obračunato po današnjem srednjem kursu NBS: <strong>{Number(currentNbsRate).toFixed(4)} RSD</strong>
+                      Današnji srednji kurs NBS: <strong>{Number(currentNbsRate).toFixed(4)} RSD</strong>
                     </p>
                     <button
                       type="button"
                       onClick={() => handleConfirmInstallmentAction("full")}
                       className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700"
                     >
-                      Proknjiži uplatu u celosti ({formatEur(finalPrice)})
+                      Proknjiži uplatu ({formatEur(finalPrice)})
                     </button>
                   </div>
                 )}
@@ -2455,7 +2434,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                 {[
                   {
                     num: 1,
-                    title: "I rata (Registracija & Ugovor)",
+                    title: "I rata, uz ugovor",
                     eur: r1Amount,
                     paid: firstInstallmentApproved,
                     status: firstInstallmentStatus,
@@ -2465,7 +2444,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   },
                   {
                     num: 2,
-                    title: "II rata (Job Offer)",
+                    title: "II rata, uz job offer",
                     eur: r2Amount,
                     paid: secondInstallmentPaid,
                     status: secondInstallmentStatus,
@@ -2475,7 +2454,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   },
                   {
                     num: 3,
-                    title: "III rata (Pred vizu / PKZ)",
+                    title: "III rata, pred vizu ili PKZ",
                     eur: r3Amount,
                     paid: thirdInstallmentPaid,
                     status: thirdInstallmentStatus,
@@ -2557,29 +2536,29 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
             {/* Garancija kursa obaveštenje */}
             <div className="rounded-xl border border-line bg-neutral-50/70 p-3 text-xs text-ink-2">
               <p className="font-semibold text-ink">
-                Pravilo deviznog obračuna i evidencije uplata (NBS):
+                Kurs NBS:
               </p>
               <p className="text-xs text-ink-2 mt-0.5">
-                Kada kandidat uplati i administrator proknjiži ratu (ili iznos u celosti), sistem u dosijeu i KIR fakturi trajno čuva tačan datum, primenjeni srednji kurs NBS na taj dan i uplaćeni dinarski iznos. Promene kursa nakon datuma uplate ne menjaju proknjiženi dinarski iznos.
-              </p>
+                Pri knjiženju se čuvaju datum, srednji kurs NBS tog dana i uplaćen iznos u dinarima. Kasnija promena kursa ne menja proknjižene iznose.
+</p>
             </div>
 
             {/* KIR Fakture */}
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-line bg-surface p-3.5">
               <div>
-                <p className="text-xs font-semibold text-ink">Knjiga izdatih računa (KIR) za ovog kandidata</p>
+                <p className="text-xs font-semibold text-ink">Računi (KIR)</p>
                 <p className="text-xs text-ink-3">
-                  Svaka potvrda rate automatski kreira račun u KIR-u. Možete izdati i dodatni račun ručno.
+                  Svaka proknjižena rata automatski dobija račun. Dodatni račun se izdaje ručno.
                 </p>
               </div>
               <PrimaryButton onClick={() => setShowCreateInvoiceModal(true)}>
-                <PlusIcon className="h-4 w-4" /> Izradite novu fakturu
+                <PlusIcon className="h-4 w-4" /> Izdaj račun
               </PrimaryButton>
             </div>
 
             {candidateInvoices.length === 0 ? (
               <div className="rounded-xl border border-dashed border-line-strong py-8 text-center text-xs text-ink-3">
-                Nema evidentiranih KIR računa za ovog kandidata.
+                Još nema računa.
               </div>
             ) : (
               <div className="overflow-hidden rounded-xl border border-line">
@@ -2638,8 +2617,8 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
         {activeTab === "history" && (
           <div className="space-y-4">
             <div className="rounded-xl border border-line bg-white p-4 space-y-3.5">
-              <h4 className="text-[13px] font-bold text-ink-3">
-                Podaci iz Faze 0 (Inicijalna prijava, trijaža i konsultacije)
+              <h4 className="text-[15px] font-semibold text-ink">
+                Selekcija (Faza 0)
               </h4>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <Field label="Status prvog kontakta">
@@ -2664,20 +2643,20 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   </select>
                 </Field>
               </div>
-              <Field label="Beleške sa konsultacija (Faza 0)">
+              <Field label="Beleške sa konsultacija">
                 <textarea rows={2} value={consultationNotes} onChange={(e) => setConsultationNotes(e.target.value)} className={FIELD_CLS} />
               </Field>
             </div>
 
             <div className="rounded-xl border border-line bg-white p-4 space-y-3">
-              <h4 className="text-[13px] font-bold text-ink-3">
-                Interne napomene i dnevnik aktivnosti kandidata
+              <h4 className="text-[15px] font-semibold text-ink">
+                Interne beleške
               </h4>
               <textarea
                 rows={5}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="Unesite interne napomene o kandidatu..."
+                placeholder="Vidljivo samo timu agencije"
                 className={FIELD_CLS}
               />
             </div>
@@ -2694,7 +2673,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
           onCreated={() => {
             refreshCandidateInvoices();
             setShowCreateInvoiceModal(false);
-            showToast("Nova KIR faktura je uspešno kreirana.");
+            showToast("Račun je izdat.");
           }}
         />
       )}
@@ -2823,7 +2802,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
           <div className="w-full max-w-xl lg:max-w-2xl rounded-2xl bg-white p-6 sm:p-8 shadow-2xl space-y-4">
             <h3 className="text-base font-bold text-red-900">{rejectionModal.title}</h3>
             <p className="text-xs text-ink-2">
-              Unesite razlog vraćanja koji će odmah biti prikazan kandidatu na njegovom Dashboard profilu:
+              Razlog koji kandidat vidi u svom nalogu:
             </p>
             <textarea
               rows={4}
@@ -2837,7 +2816,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               <button
                 type="button"
                 onClick={() => {
-                  const reasonText = rejectionModal.reason.trim() || "Dokument nije ispravan. Molimo pošaljite ponovo.";
+                  const reasonText = rejectionModal.reason.trim() || "Dokument nije ispravan. Pošalji ga ponovo.";
                   if (rejectionModal.type === "contract") {
                     handleVerifyContractAction(false, reasonText);
                   } else {
