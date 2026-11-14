@@ -1,275 +1,135 @@
 // front/src/components/dashboard/Step0Registration.jsx
-// Registracija: izbor programa → ugovor → prva uplata → popusti.
-import { useRef } from "react";
+// Registracija: ugovor → prva uplata. Program, popusti i uplatnice žive u sekcijama "Uplate" i "Moji podaci".
+import { Button } from "../ui";
 import { UploadIcon } from "./icons";
-import { Button, buttonCls } from "../ui";
-import { StepShell, Panel, Field, Notice, StatusPill } from "./ui";
+import { StepShell, TaskList, Actions, LinkButton, FileLine, StatusPill } from "./ui";
 import { downloadContractPdf, downloadResponsibilityStatementPdf } from "../../data/candidateStore";
 
-const linkCls = "text-sm font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink";
-
-export default function Step0Registration({
-  candidate,
-  hasSignedContract,
-  isContractApproved,
-  isContractPending,
-  isFirstInstallmentPaid,
-  isFirstInstallmentPending,
-  isRegistrationDone,
-  handleReportFirstInstallment,
-  signedContractInputRef,
-  isUploadingSignedContract,
-  handleUploadSignedContract,
-  handlePaymentSlipClick,
-  setShowChangeDiscountModal,
-  copiedRefCode,
-  setCopiedRefCode,
-}) {
-  const localInputRef = useRef(null);
-  const inputRef = signedContractInputRef || localInputRef;
-
-  const isFull = candidate.paymentMethod === "now";
-  const paymentAmount = isFull
+export function firstPaymentAmount(candidate) {
+  return candidate.paymentMethod === "now"
     ? Number(candidate.finalPrice) || Number(candidate.basePrice) || 1750
     : Number(candidate.firstInstallmentAmount) || 250;
+}
 
-  const stepStatus = isRegistrationDone
-    ? { tone: "done", label: "Registracija završena" }
-    : isFirstInstallmentPending
-    ? { tone: "wait", label: isFull ? "Čeka se potvrda uplate programa" : "Čeka se potvrda uplate I rate" }
-    : isContractPending
-    ? { tone: "wait", label: "Ugovor čeka overu administratora" }
-    : hasSignedContract
-    ? { tone: "neutral", label: isFull ? "Čeka uplatu programa" : "Čeka uplatu I rate" }
-    : { tone: "neutral", label: "Čeka potpisani ugovor" };
+export function buildRegistrationTasks(ctx) {
+  const {
+    candidate,
+    hasSignedContract,
+    isContractApproved,
+    isContractPending,
+    isFirstInstallmentPaid,
+    isFirstInstallmentPending,
+    isUploadingSignedContract,
+    pickSignedContract,
+    setShowSignContractModal,
+    handlePaymentSlipClick,
+    handleReportFirstInstallment,
+  } = ctx;
+  const isFull = candidate.paymentMethod === "now";
+  const amount = firstPaymentAmount(candidate);
+  const contractRejected = candidate.contractVerificationStatus === "rejected";
 
-  const paymentStatus = isFirstInstallmentPaid
-    ? { tone: "done", label: isFull ? "Program plaćen u celosti" : "I rata plaćena" }
-    : isFirstInstallmentPending
-    ? { tone: "wait", label: "Čeka potvrdu administratora" }
-    : hasSignedContract
-    ? { tone: "neutral", label: "Čeka uplatu" }
-    : { tone: "neutral", label: "Zaključano do ugovora" };
-
-  const procedure = [
-    { n: 1, title: "Preuzmi", text: "Ugovor i Izjava o odgovornosti stižu popunjeni tvojim podacima." },
-    { n: 2, title: "Odštampaj", text: "Oba dokumenta na A4 formatu." },
-    { n: 3, title: "Potpiši", text: "Svojeručno, na liniji za potpis studenta." },
-    { n: 4, title: "Skeniraj i okači", text: "PDF ili fotografija potpisanog ugovora." },
+  return [
+    {
+      id: "contract",
+      waitText: "Ugovor je na overi kod pravnog tima",
+      title: "Potpiši i okači ugovor",
+      state: isContractApproved ? "done" : contractRejected ? "danger" : isContractPending ? "wait" : "current",
+      status: isContractApproved
+        ? "Overen"
+        : contractRejected
+        ? "Vraćen na ispravku"
+        : isContractPending
+        ? "Na overi kod pravnog tima"
+        : "Čeka tvoj potpis",
+      desc: isContractApproved
+        ? "Pravni tim je overio potpisani ugovor."
+        : isContractPending
+        ? "Proveravamo potpise i podatke. Uplatnicu za sledeći korak možeš da preuzmeš već sada."
+        : "Ugovor i Izjava o odgovornosti stižu popunjeni tvojim podacima. Odštampaj oba, potpiši na liniji za studenta i okači sken ili fotografiju.",
+      render: (isNext) => (
+        <Actions>
+          {hasSignedContract ? (
+            <FileLine name={candidate.signedContractFileName || "Potpisani ugovor"}>
+              <LinkButton onClick={pickSignedContract} disabled={isUploadingSignedContract} className="ml-1">
+                Zameni
+              </LinkButton>
+            </FileLine>
+          ) : (
+            <>
+              <Button variant={isNext ? "primary" : "dark"} size="sm" onClick={() => setShowSignContractModal(true)}>
+                Potpiši ugovor
+              </Button>
+              <Button variant="outline" size="sm" disabled={isUploadingSignedContract} onClick={pickSignedContract}>
+                <UploadIcon className="h-4 w-4" />
+                {isUploadingSignedContract ? "Kačenje…" : "Već imam potpisan — okači"}
+              </Button>
+            </>
+          )}
+          <span className="flex flex-wrap gap-x-4 gap-y-1 sm:ml-auto">
+            <LinkButton onClick={() => downloadContractPdf(candidate.id, candidate.email)}>Ugovor (PDF)</LinkButton>
+            <LinkButton onClick={() => downloadResponsibilityStatementPdf(candidate.id, candidate.email)}>
+              Izjava o odgovornosti (PDF)
+            </LinkButton>
+          </span>
+        </Actions>
+      ),
+    },
+    {
+      id: "payment1",
+      waitText: "Proveravamo tvoju uplatu",
+      title: isFull ? `Uplati program — ${amount} €` : `Uplati I ratu — ${amount} €`,
+      state: isFirstInstallmentPaid ? "done" : isFirstInstallmentPending ? "wait" : !hasSignedContract ? "locked" : "current",
+      status: isFirstInstallmentPaid
+        ? "Proknjiženo"
+        : isFirstInstallmentPending
+        ? "Proveravamo uplatu"
+        : !hasSignedContract
+        ? "Posle ugovora"
+        : "Čeka uplatu",
+      desc: isFirstInstallmentPaid
+        ? `Uplata od ${amount} € je potvrđena.`
+        : isFirstInstallmentPending
+        ? "Čim potvrdimo uplatu na izvodu, otključava se Korak 1."
+        : !hasSignedContract
+        ? "Uplatnica se otključava čim okačiš potpisani ugovor."
+        : "Plaća se u dinarima po srednjem kursu NBS na dan uplate. Na uplatnici je IPS QR kod za m-banking. Kad platiš, javi nam ovde.",
+      render: (isNext) =>
+        isFirstInstallmentPaid ? null : (
+          <Actions>
+            <Button variant="outline" size="sm" onClick={handlePaymentSlipClick}>
+              Preuzmi uplatnicu
+            </Button>
+            {!isFirstInstallmentPending && (
+              <Button variant={isNext ? "primary" : "dark"} size="sm" onClick={handleReportFirstInstallment}>
+                Platio sam — prijavi uplatu
+              </Button>
+            )}
+          </Actions>
+        ),
+    },
   ];
+}
+
+export default function Step0Registration({ ctx, quiet, compact }) {
+  const { candidate, isRegistrationDone, isFirstInstallmentPending, isContractPending } = ctx;
+  const isFull = candidate.paymentMethod === "now";
 
   return (
     <StepShell
+      compact={compact}
       index="0"
       state={isRegistrationDone ? "done" : "current"}
       kicker="Registracija"
-      title={isFull ? "Program, ugovor i uplata u celosti" : "Program, ugovor i I rata"}
-      description={
-        isFull
-          ? "Pravni i finansijski osnov učešća. Potpisan ugovor i uplata programa otključavaju Korak 1."
-          : "Pravni i finansijski osnov učešća. Potpisan ugovor i uplata prve rate otključavaju Korak 1."
+      title={isFull ? "Ugovor i uplata programa" : "Ugovor i I rata"}
+      description="Dve stvari i otvaraš Korak 1: potpisan ugovor i prva uplata."
+      status={
+        <StatusPill tone={isRegistrationDone ? "done" : isFirstInstallmentPending || isContractPending ? "wait" : "neutral"}>
+          {isRegistrationDone ? "Završeno" : isFirstInstallmentPending || isContractPending ? "Čeka našu potvrdu" : "U toku"}
+        </StatusPill>
       }
-      status={<StatusPill tone={stepStatus.tone}>{stepStatus.label}</StatusPill>}
     >
-      {/* 0.1 Izabrani program i način plaćanja */}
-      <Panel
-        title="Izabrani program"
-        aside={
-          <span className="text-sm tabular-nums text-ink-3">
-            Šifra prijave WT-{String(candidate.id || "2576").replace(/[^0-9]/g, "").slice(-4) || "2576"}
-          </span>
-        }
-      >
-        <div className="grid gap-3 sm:grid-cols-3">
-          <Field label="Program i paket" hint="Smeštaj, američki poslodavac i DS-2019">
-            {candidate.programName || "Work & Travel USA 2026 — Full Placement"}
-          </Field>
-          <Field
-            label="Način plaćanja"
-            hint={
-              candidate.paymentMethod === "pkz"
-                ? "Treća rata dospeva u SAD, iz prvih plata"
-                : "Prva uplata ide uz potpisivanje ugovora"
-            }
-          >
-            {candidate.paymentMethod === "pkz"
-              ? "PKZ model (plaćanje kroz zaradu u SAD)"
-              : candidate.paymentMethod === "installments"
-              ? "Na rate (I, II i III rata)"
-              : "U celosti (sa popustom)"}
-          </Field>
-          <Field
-            label="Ukupna ugovorena cena"
-            hint={candidate.discount > 0 ? `Uračunat popust od ${candidate.discount} $` : undefined}
-          >
-            <span className="text-lg tabular-nums">{candidate.finalPrice || candidate.basePrice || 1850} €</span>
-          </Field>
-        </div>
-      </Panel>
-
-      {/* 0.2 Ugovor o posredovanju i Izjava o odgovornosti */}
-      <Panel
-        title="Ugovor o posredovanju i Izjava o odgovornosti"
-        description="Ugovor mora biti potpisan i okačen pre bilo kakve uplate."
-        aside={
-          <StatusPill tone={isContractApproved ? "done" : hasSignedContract ? "wait" : "neutral"}>
-            {isContractApproved ? "Ugovor overen" : hasSignedContract ? "Okačen — čeka overu" : "Čeka potpis"}
-          </StatusPill>
-        }
-      >
-        <ol className="grid gap-x-6 gap-y-5 sm:grid-cols-2 lg:grid-cols-4">
-          {procedure.map((s) => (
-            <li key={s.n} className="border-t border-line-strong pt-3">
-              <p className="text-xs tabular-nums text-ink-3">{s.n}</p>
-              <p className="mt-1 text-sm font-semibold text-ink">{s.title}</p>
-              <p className="mt-1 text-[13px] leading-relaxed text-ink-2">{s.text}</p>
-            </li>
-          ))}
-        </ol>
-
-        <div className="mt-5 flex flex-wrap items-center gap-2.5">
-          <Button variant="outline" size="sm" onClick={() => downloadContractPdf(candidate.id, candidate.email)}>
-            Ugovor (PDF)
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => downloadResponsibilityStatementPdf(candidate.id, candidate.email)}
-          >
-            Izjava o odgovornosti (PDF)
-          </Button>
-
-          {hasSignedContract ? (
-            <span className="ml-auto flex min-w-0 items-center gap-3">
-              <span className="truncate text-sm text-ink-2">
-                {candidate.signedContractFileName || "Potpisani_Ugovor.pdf"}
-              </span>
-              <button type="button" onClick={() => inputRef.current?.click()} className={linkCls}>
-                Zameni
-              </button>
-            </span>
-          ) : (
-            <Button
-              variant="primary"
-              size="sm"
-              className="ml-auto"
-              disabled={isUploadingSignedContract}
-              onClick={() => inputRef.current?.click()}
-            >
-              <UploadIcon className="h-4 w-4" />
-              {isUploadingSignedContract ? "Kačenje…" : "Okači potpisani ugovor"}
-            </Button>
-          )}
-        </div>
-
-        <input
-          ref={inputRef}
-          type="file"
-          accept=".pdf,image/*"
-          className="sr-only"
-          onChange={(e) => handleUploadSignedContract(e.target.files?.[0])}
-        />
-
-        {hasSignedContract && isContractApproved && (
-          <Notice tone="done" className="mt-4">
-            Pravni tim agencije je verifikovao i odobrio potpisani ugovor.
-          </Notice>
-        )}
-        {hasSignedContract && isContractPending && (
-          <Notice tone="wait" className="mt-4" title="Ugovor je okačen — čeka se verifikacija">
-            Pravni tim proverava potpise i unete podatke. U međuvremenu možeš da preuzmeš uplatnicu.
-          </Notice>
-        )}
-      </Panel>
-
-      {/* 0.3 Prva uplata */}
-      <Panel
-        title={isFull ? `Uplata programa u celosti — ${paymentAmount} €` : `Uplata I rate — ${paymentAmount} €`}
-        description={
-          isFull
-            ? "Jednokratna uplata na račun agencije, u dinarskoj protivvrednosti po srednjem kursu NBS na dan uplate. IPS QR kod je na uplatnici."
-            : "Uplata na račun agencije, u dinarskoj protivvrednosti po srednjem kursu NBS na dan uplate. IPS QR kod je na uplatnici."
-        }
-        aside={<StatusPill tone={paymentStatus.tone}>{paymentStatus.label}</StatusPill>}
-      >
-        <div className="flex flex-wrap items-center gap-2.5">
-          <button
-            type="button"
-            onClick={handlePaymentSlipClick}
-            aria-disabled={!hasSignedContract}
-            title={hasSignedContract ? undefined : "Ugovor mora biti okačen pre uplate"}
-            className={buttonCls({
-              variant: "outline",
-              size: "sm",
-              className: hasSignedContract ? "" : "cursor-not-allowed opacity-50",
-            })}
-          >
-            <UploadIcon className="h-4 w-4 rotate-180" />
-            Preuzmi uplatnicu (PDF)
-          </button>
-
-          {hasSignedContract && !isFirstInstallmentPaid && !isFirstInstallmentPending && (
-            <Button variant="primary" size="sm" onClick={handleReportFirstInstallment}>
-              {isFull ? "Prijavi uplatu programa" : "Prijavi uplatu I rate"}
-            </Button>
-          )}
-        </div>
-
-        {isFirstInstallmentPending && (
-          <Notice
-            tone="wait"
-            className="mt-4"
-            title={isFull ? "Uplata programa je prijavljena" : "Uplata I rate je prijavljena"}
-          >
-            Čim administrator potvrdi prijem uplate ({paymentAmount} €), otključava se Korak 1.
-          </Notice>
-        )}
-        {isFirstInstallmentPaid && (
-          <Notice tone="done" className="mt-4">
-            {isFull
-              ? `Uplata programa (${paymentAmount} €) je potvrđena i proknjižena.`
-              : `Uplata prve rate (${paymentAmount} €) je potvrđena i proknjižena.`}
-          </Notice>
-        )}
-      </Panel>
-
-      {/* 0.4 Popusti i preporuke */}
-      <Panel
-        title="Popusti i preporuke"
-        aside={
-          <Button variant="outline" size="sm" onClick={() => setShowChangeDiscountModal(true)}>
-            Promeni popust
-          </Button>
-        }
-      >
-        <div className="grid gap-3 sm:grid-cols-3">
-          <Field
-            label="Aktivna promocija"
-            hint={candidate.discount > 0 ? `Ušteda ${candidate.discount} $` : undefined}
-          >
-            {candidate.discountNote || "Nema aktivnog popusta"}
-          </Field>
-          <Field label="Obračun popusta">
-            {candidate.discountTiming === "end" ? "Na poslednjoj rati (nakon vize i posla)" : "Odmah umanjuje osnovnu cenu"}
-          </Field>
-          <Field label="Dovedi prijatelja — 100 $ po osobi">
-            <span className="flex items-center justify-between gap-3">
-              <span className="tabular-nums">{candidate.referralCode || "WT-REF"}</span>
-              <button
-                type="button"
-                onClick={() => {
-                  navigator.clipboard?.writeText(candidate.referralCode || "");
-                  setCopiedRefCode(true);
-                  setTimeout(() => setCopiedRefCode(false), 2000);
-                }}
-                className="text-xs font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink"
-              >
-                {copiedRefCode ? "Kopirano" : "Kopiraj kod"}
-              </button>
-            </span>
-          </Field>
-        </div>
-      </Panel>
+      <TaskList tasks={buildRegistrationTasks(ctx)} quiet={quiet} />
     </StepShell>
   );
 }

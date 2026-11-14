@@ -5,9 +5,6 @@ import {
   getCurrentUser,
   saveCandidate,
   syncFromBackend,
-  downloadContractPdf,
-  downloadResponsibilityStatementPdf,
-  signCandidateContract,
   openPrintablePaymentSlipWindow,
   uploadDocumentWithBackend,
   uploadSignedContractWithBackend,
@@ -21,19 +18,26 @@ import {
   verifyCandidateContract,
   verifyCandidateDocuments,
 } from "../data/candidateStore";
-import { getInvoicesForCandidate, ensureCandidateInstallmentInvoice } from "../data/invoicesStore";
+import {
+  getInvoicesForCandidate,
+  ensureCandidateInstallmentInvoice,
+  getCurrentNbsRate,
+  fetchCurrentNbsRate,
+} from "../data/invoicesStore";
 
 import InvoiceModal from "./InvoiceModal";
 import ProfileBuilderModal from "./ProfileBuilderModal";
 import JobFairModal from "./JobFairModal";
 import JobOfferModal from "./JobOfferModal";
 
-import DashboardHeader from "./dashboard/DashboardHeader";
-import Step0Registration from "./dashboard/Step0Registration";
-import Step1Documents from "./dashboard/Step1Documents";
-import Step2JobPlacement from "./dashboard/Step2JobPlacement";
-import Step3VisaDeparture from "./dashboard/Step3VisaDeparture";
-import CandidatePreferencesFooter from "./dashboard/CandidatePreferencesFooter";
+import DashboardHeader, { StageNav } from "./dashboard/DashboardHeader";
+import Step0Registration, { buildRegistrationTasks } from "./dashboard/Step0Registration";
+import Step1Documents, { buildDocumentTasks } from "./dashboard/Step1Documents";
+import Step2JobPlacement, { buildJobTasks } from "./dashboard/Step2JobPlacement";
+import Step3VisaDeparture, { buildVisaTasks } from "./dashboard/Step3VisaDeparture";
+import DocumentsView from "./dashboard/DocumentsView";
+import PaymentsView from "./dashboard/PaymentsView";
+import ProfileView from "./dashboard/ProfileView";
 
 import SignContractModal from "./dashboard/modals/SignContractModal";
 import Ds160Modal from "./dashboard/modals/Ds160Modal";
@@ -251,10 +255,6 @@ export default function Dashboard({
   );
   const isStep3Done = isReady;
 
-  // Kompatibilnost sa pomoćnim proverama
-  const isStep4Done = isDeparture;
-  const isStep5Done = isReady;
-
   // 'all' | 'reg' | 'step1' | 'step2' | 'step3' — portal se otvara na koraku koji je trenutno na redu.
   const [activeStepTab, setActiveStepTab] = useState(() =>
     !isRegistrationDone ? "reg" : !isStep1Done ? "step1" : !isStep2Done ? "step2" : "step3"
@@ -369,7 +369,6 @@ export default function Dashboard({
   };
 
   const handleScheduleInterview = (details) => {
-    setInterviewScheduled(true);
     updateCandidateState({
       interviewScheduled: true,
       interviewDetails: details,
@@ -402,8 +401,6 @@ export default function Dashboard({
     setUploadToast("Job Offer je prihvaćen! Detalji poslodavca su automatski sinhronizovani sa DS-160 upitnikom.");
     setTimeout(() => setUploadToast(""), 5000);
   };
-
-  const [copiedRefCode, setCopiedRefCode] = useState(false);
 
   // Ažuriranje i perzistencija
   const updateCandidateState = (updates) => {
@@ -773,176 +770,334 @@ export default function Dashboard({
 
   const embedUrl = getYouTubeEmbedUrl(candidate.youtubeUrl);
 
+  // Kurs NBS za dinarske uplatnice (II rata)
+  const [nbsRate, setNbsRate] = useState(() => getCurrentNbsRate("EUR"));
+  useEffect(() => {
+    let active = true;
+    fetchCurrentNbsRate("EUR").then((rate) => {
+      if (active && rate) setNbsRate(rate);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Sekcija portala: "put" (koraci) | "dokumenta" | "uplate" | "podaci"
+  const [view, setView] = useState("put");
+
+  /** Prebaci na sekciju (i korak) i skroluj do elementa. */
+  const goTo = (nextView, anchorId, stage) => {
+    setView(nextView);
+    if (stage) setActiveStepTab(stage);
+    setTimeout(() => {
+      const el = anchorId && document.getElementById(anchorId);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      else window.scrollTo({ top: document.getElementById("portal-sections")?.offsetTop - 80 || 0, behavior: "smooth" });
+    }, 60);
+  };
+
+  const flash = (msg, ms = 4000) => {
+    setUploadToast(msg);
+    setTimeout(() => setUploadToast(""), ms);
+  };
+
+  // Svi fajl-inputi žive na jednom mestu — dugmad u koracima i u "Dokumentima" ih samo otvaraju.
+  const pickSignedContract = () => signedContractInputRef.current?.click();
+  const pickCv = () => cvInputRef.current?.click();
+  const pickFacultyCert = () => certInputRef.current?.click();
+  const pickPoliceCert = () => policeInputRef.current?.click();
+  const openTranslation = (doc) => {
+    setActiveTranslationDoc(doc);
+    setShowTranslationModal(true);
+  };
+
+  const payNow = candidate.paymentMethod === "now";
+  const fullyPaid = payNow || candidate.isFullPaymentPaid;
+
+  const ctx = {
+    candidate,
+    status,
+    t,
+    nbsRate,
+    goTo,
+    flash,
+    // Registracija
+    hasSignedContract,
+    isContractApproved,
+    isContractPending,
+    isFirstInstallmentPaid,
+    isFirstInstallmentPending,
+    isRegistrationDone,
+    isUploadingSignedContract,
+    pickSignedContract,
+    setShowSignContractModal,
+    handlePaymentSlipClick,
+    handleReportFirstInstallment,
+    setShowChangeDiscountModal,
+    // Korak 1
+    isStep1Done,
+    isDocumentsApproved,
+    isDocumentsPending,
+    isDocumentsRejected,
+    isRequirementsMet,
+    handleSubmitForReview,
+    setShowProfileBuilderModal,
+    setShowVideoModal,
+    isYoutubeEditing,
+    setIsYoutubeEditing,
+    youtubeInput,
+    setYoutubeInput,
+    handleSaveYoutube,
+    embedUrl,
+    pickCv,
+    isUploadingCv,
+    setCvFile,
+    updateCandidateState,
+    pickFacultyCert,
+    pickPoliceCert,
+    isUploadingCert,
+    facultyFile,
+    setFacultyFile,
+    aiTranslationReady,
+    setAiTranslationReady,
+    runAiTranslation,
+    isTranslating,
+    policeFile,
+    setPoliceFile,
+    policeTranslationReady,
+    setPoliceTranslationReady,
+    runPoliceTranslation,
+    isTranslatingPolice,
+    openTranslation,
+    // Korak 2
+    isStep2Done,
+    hasConfirmedJob,
+    isSecondInstallmentPaid,
+    isSecondInstallmentPending,
+    handleReportSecondInstallment,
+    setShowJobFairModal,
+    setShowJobOfferModal,
+    // Korak 3
+    isStep3Done,
+    isDeparture,
+    isReady,
+    isThirdInstallmentPaid,
+    isThirdInstallmentPending,
+    handleReportThirdInstallment,
+    setShowDs160Modal,
+    // Uplate
+    setShowInvoicesModal,
+    candidateInvoices,
+  };
+
+  // Četiri koraka: stanje, kratka napomena i zadaci (iz istih funkcija koje crtaju korake).
+  const step3Locked = !isSecondInstallmentPaid && !fullyPaid;
+  const stages = [
+    {
+      id: "reg",
+      label: "Registracija",
+      title: payNow ? "Ugovor i uplata" : "Ugovor i I rata",
+      done: isRegistrationDone,
+      quiet: false,
+      tasks: buildRegistrationTasks(ctx),
+      state: isRegistrationDone ? "done" : isFirstInstallmentPending || isContractPending ? "wait" : "current",
+      note: isRegistrationDone
+        ? "Završeno"
+        : isFirstInstallmentPending
+        ? "Proveravamo uplatu"
+        : isContractPending
+        ? "Ugovor na overi"
+        : hasSignedContract
+        ? "Čeka uplatu"
+        : "Čeka potpisan ugovor",
+    },
+    {
+      id: "step1",
+      label: "Korak 1",
+      title: "Profil i dokumenta",
+      done: isStep1Done,
+      quiet: !isRegistrationDone,
+      tasks: buildDocumentTasks(ctx),
+      state: isStep1Done ? "done" : isDocumentsRejected ? "danger" : isDocumentsPending ? "wait" : !isRegistrationDone ? "locked" : "current",
+      note: isStep1Done
+        ? "Dosije odobren"
+        : isDocumentsRejected
+        ? "Vraćeno na dopunu"
+        : isDocumentsPending
+        ? "Dosije na pregledu"
+        : !isRegistrationDone
+        ? "Posle registracije"
+        : "Profil i dokumenta",
+    },
+    {
+      id: "step2",
+      label: "Korak 2",
+      title: fullyPaid ? "Posao i Job Offer" : "Posao i II rata",
+      done: isStep2Done,
+      quiet: !isDocumentsApproved,
+      tasks: buildJobTasks(ctx),
+      state: isStep2Done
+        ? "done"
+        : isSecondInstallmentPending
+        ? "wait"
+        : hasConfirmedJob || status === "job" || interviewScheduled || isDocumentsApproved
+        ? "current"
+        : "locked",
+      note: isStep2Done
+        ? "Završeno"
+        : isSecondInstallmentPending
+        ? "Proveravamo II ratu"
+        : hasConfirmedJob
+        ? "Job Offer"
+        : !isDocumentsApproved
+        ? "Posle odobrenog dosijea"
+        : candidate.jobApplicationStatus === "SCHEDULED" || interviewScheduled
+        ? "Intervju zakazan"
+        : candidate.jobApplicationStatus === "APPLIED"
+        ? "Prijava kod poslodavca"
+        : candidate.jobApplicationStatus === "NO_SLOTS" || candidate.jobApplicationStatus === "REJECTED"
+        ? "Biraj drugi posao"
+        : "Izaberi posao",
+    },
+    {
+      id: "step3",
+      label: "Korak 3",
+      title: isStep3Done ? "Viza odobrena" : "Viza i polazak",
+      done: isStep3Done,
+      quiet: step3Locked,
+      tasks: buildVisaTasks({ ...ctx, stepLocked: step3Locked }),
+      state: isStep3Done ? "done" : isThirdInstallmentPending ? "wait" : status === "departure" ? "current" : "locked",
+      note: isStep3Done
+        ? "Spreman za let"
+        : isThirdInstallmentPending
+        ? "Proveravamo III ratu"
+        : status === "departure"
+        ? "Ambasada SAD"
+        : step3Locked
+        ? "Posle II rate"
+        : "DS-2019 i viza",
+    },
+  ];
+
+  // Sledeći korak: prvi zadatak koji traži akciju u koraku koji je na redu.
+  const currentStage = stages.find((s) => !s.done) || null;
+  const next = (() => {
+    if (!currentStage) {
+      const pdo = stages[3].tasks.find((x) => x.id === "pdo");
+      return {
+        kind: "done",
+        title: "Viza je odobrena — vidimo se na orijentaciji",
+        desc: pdo?.desc,
+        cta: "Pogledaj Korak 3",
+        onGo: () => goTo("put", "task-pdo", "step3"),
+      };
+    }
+    const todo = currentStage.tasks.find((x) => x.state === "current" || x.state === "danger");
+    if (todo) {
+      return {
+        kind: "do",
+        stageLabel: currentStage.label,
+        title: todo.title,
+        cta: todo.state === "danger" ? "Reši" : "Kreni",
+        onGo: () => goTo("put", `task-${todo.id}`, currentStage.id),
+      };
+    }
+    const waiting =
+      currentStage.tasks.find((x) => x.state === "wait" && x.waitText) || currentStage.tasks.find((x) => x.state === "wait");
+    return {
+      kind: "wait",
+      title: waiting?.waitText || waiting?.title || "Proveravamo tvoje podatke",
+      desc: waiting?.desc || "Javljamo ti se čim završimo. Ne moraš ništa da radiš.",
+      cta: "Detalji",
+      onGo: () => goTo("put", waiting ? `task-${waiting.id}` : null, currentStage.id),
+    };
+  })();
+
+  const paymentDue =
+    (hasSignedContract && !isFirstInstallmentPaid && !isFirstInstallmentPending ? 1 : 0) +
+    (!fullyPaid && hasConfirmedJob && !isSecondInstallmentPaid && !isSecondInstallmentPending ? 1 : 0);
+
+  const stepProps = (id) => ({ ctx, quiet: stages.find((s) => s.id === id)?.quiet, compact: activeStepTab !== "all" });
+
   return (
     <div className="min-h-screen bg-surface text-ink">
-      {/* Zaglavlje, Hero, Brze akcije, Stepper i Filter tabovi */}
       <DashboardHeader
         candidate={candidate}
         logoHref={logoHref}
         goHome={goHome}
         onLogout={onLogout}
         t={t}
-        hasSignedContract={hasSignedContract}
-        isContractApproved={isContractApproved}
-        isContractPending={isContractPending}
-        isFirstInstallmentPaid={isFirstInstallmentPaid}
-        isFirstInstallmentPending={isFirstInstallmentPending}
-        setShowSignContractModal={setShowSignContractModal}
-        handlePaymentSlipClick={handlePaymentSlipClick}
-        setShowInvoicesModal={setShowInvoicesModal}
-        candidateInvoices={candidateInvoices}
-        setShowDs160Modal={setShowDs160Modal}
-        uploadToast={uploadToast}
         statusBadgeText={statusBadgeText}
-        currentProgress={currentProgress}
-        isRegistrationDone={isRegistrationDone}
-        isStep1Done={isStep1Done}
-        isDocumentsApproved={isDocumentsApproved}
-        isDocumentsPending={isDocumentsPending}
-        isDocumentsRejected={isDocumentsRejected}
-        isStep2Done={isStep2Done}
-        isSecondInstallmentPaid={isSecondInstallmentPaid}
-        isSecondInstallmentPending={isSecondInstallmentPending}
-        isStep3Done={isStep3Done}
-        isThirdInstallmentPaid={isThirdInstallmentPaid}
-        isThirdInstallmentPending={isThirdInstallmentPending}
-        profileScore={profileScore}
-        hasConfirmedJob={hasConfirmedJob}
-        status={status}
-        interviewScheduled={interviewScheduled}
-        jobApplicationStatus={candidate.jobApplicationStatus}
-        activeStepTab={activeStepTab}
-        setActiveStepTab={setActiveStepTab}
+        next={next}
+        view={view}
+        setView={setView}
+        badges={{ uplate: paymentDue }}
       />
 
-      {/* Glavni sadržaj koraka */}
-      <main className="mx-auto max-w-6xl px-5 pb-20 pt-10 sm:px-8">
-        {/* FAZA 0: REGISTRACIJA, IZBOR PROGRAMA, UGOVOR & I RATA */}
-        {(activeStepTab === "all" || activeStepTab === "reg") && (
-          <Step0Registration
-            candidate={candidate}
-            hasSignedContract={hasSignedContract}
-            isContractApproved={isContractApproved}
-            isContractPending={isContractPending}
-            isFirstInstallmentPaid={isFirstInstallmentPaid}
-            isFirstInstallmentPending={isFirstInstallmentPending}
-            isRegistrationDone={isRegistrationDone}
-            handleReportFirstInstallment={handleReportFirstInstallment}
-            handleSimulateFirstPaymentConfirm={handleSimulateFirstPaymentConfirm}
-            handleSimulateContractApprove={handleSimulateContractApprove}
-            signedContractInputRef={signedContractInputRef}
-            isUploadingSignedContract={isUploadingSignedContract}
-            handleUploadSignedContract={handleUploadSignedContract}
-            handlePaymentSlipClick={handlePaymentSlipClick}
-            setShowChangeDiscountModal={setShowChangeDiscountModal}
-            copiedRefCode={copiedRefCode}
-            setCopiedRefCode={setCopiedRefCode}
-          />
+      <main id="portal-sections" className="mx-auto max-w-6xl px-5 pb-24 pt-8 sm:px-8">
+        {view === "put" && (
+          <>
+            <StageNav stages={stages} activeStepTab={activeStepTab} setActiveStepTab={setActiveStepTab} />
+            {(activeStepTab === "all" || activeStepTab === "reg") && <Step0Registration {...stepProps("reg")} />}
+            {(activeStepTab === "all" || activeStepTab === "step1") && <Step1Documents {...stepProps("step1")} />}
+            {(activeStepTab === "all" || activeStepTab === "step2") && <Step2JobPlacement {...stepProps("step2")} />}
+            {(activeStepTab === "all" || activeStepTab === "step3") && <Step3VisaDeparture {...stepProps("step3")} />}
+          </>
         )}
-
-        {/* KORAK 1: PROFIL, DOKUMENTACIJA & ZVANIČNI PREVODI */}
-        {(activeStepTab === "all" || activeStepTab === "step1") && (
-          <Step1Documents
-            candidate={candidate}
-            setShowDs160Modal={setShowDs160Modal}
-            isRegistrationDone={isRegistrationDone}
-            isStep1Done={isStep1Done}
-            isDocumentsApproved={isDocumentsApproved}
-            isDocumentsPending={isDocumentsPending}
-            isDocumentsRejected={isDocumentsRejected}
-            handleSimulateDocumentsApprove={handleSimulateDocumentsApprove}
-            profileScore={profileScore}
-            setShowProfileBuilderModal={setShowProfileBuilderModal}
-            setShowVideoModal={setShowVideoModal}
-            isYoutubeEditing={isYoutubeEditing}
-            setIsYoutubeEditing={setIsYoutubeEditing}
-            youtubeInput={youtubeInput}
-            setYoutubeInput={setYoutubeInput}
-            handleSaveYoutube={handleSaveYoutube}
-            embedUrl={embedUrl}
-            cvInputRef={cvInputRef}
-            handleCvUpload={handleCvUpload}
-            setCvFile={setCvFile}
-            updateCandidateState={updateCandidateState}
-            certInputRef={certInputRef}
-            isUploadingCert={isUploadingCert}
-            facultyFile={facultyFile}
-            setFacultyFile={setFacultyFile}
-            aiTranslationReady={aiTranslationReady}
-            setAiTranslationReady={setAiTranslationReady}
-            handleCertUpload={handleCertUpload}
-            runAiTranslation={runAiTranslation}
-            isTranslating={isTranslating}
-            setActiveTranslationDoc={setActiveTranslationDoc}
-            setShowTranslationModal={setShowTranslationModal}
-            setUploadToast={setUploadToast}
-            policeInputRef={policeInputRef}
-            policeFile={policeFile}
-            setPoliceFile={setPoliceFile}
-            policeTranslationReady={policeTranslationReady}
-            setPoliceTranslationReady={setPoliceTranslationReady}
-            handlePoliceCertUpload={handlePoliceCertUpload}
-            runPoliceTranslation={runPoliceTranslation}
-            isTranslatingPolice={isTranslatingPolice}
-            isPastReview={isPastReview}
-            applicationSubmitted={applicationSubmitted}
-            isRequirementsMet={isRequirementsMet}
-            handleSubmitForReview={handleSubmitForReview}
-            t={t}
-          />
-        )}
-
-        {/* KORAK 2: POSAO, INTERVJU SA POSLODAVCEM & II RATA */}
-        {(activeStepTab === "all" || activeStepTab === "step2") && (
-          <Step2JobPlacement
-            candidate={candidate}
-            status={status}
-            isDocumentsApproved={isDocumentsApproved}
-            isStep2Done={isStep2Done}
-            hasConfirmedJob={hasConfirmedJob}
-            isSecondInstallmentPaid={isSecondInstallmentPaid}
-            isSecondInstallmentPending={isSecondInstallmentPending}
-            handleReportSecondInstallment={handleReportSecondInstallment}
-            handleConfirmSecondInstallment={handleConfirmSecondInstallment}
-            interviewScheduled={interviewScheduled}
-            setShowJobFairModal={setShowJobFairModal}
-            setShowJobOfferModal={setShowJobOfferModal}
-            setShowInvoicesModal={setShowInvoicesModal}
-            handleAcceptJobOffer={handleAcceptJobOffer}
-            updateCandidateState={updateCandidateState}
-            setUploadToast={setUploadToast}
-          />
-        )}
-
-        {/* KORAK 3: AMBASADA SAD, VIZA, III RATA / PKZ & POLAZAK */}
-        {(activeStepTab === "all" || activeStepTab === "step3") && (
-          <Step3VisaDeparture
-            candidate={candidate}
-            status={status}
-            isStep3Done={isStep3Done}
-            isDeparture={isDeparture}
-            isReady={isReady}
-            isSecondInstallmentPaid={isSecondInstallmentPaid}
-            isThirdInstallmentPaid={isThirdInstallmentPaid}
-            isThirdInstallmentPending={isThirdInstallmentPending}
-            handleReportThirdInstallment={handleReportThirdInstallment}
-            handleConfirmThirdInstallment={handleConfirmThirdInstallment}
-            setShowDs160Modal={setShowDs160Modal}
-            updateCandidateState={updateCandidateState}
-            setUploadToast={setUploadToast}
-          />
-        )}
-
-        {/* PREGLED PREFERENCIJA I ARHIVA DOKUMENATA */}
-        <CandidatePreferencesFooter
-          candidate={candidate}
-          aiTranslationReady={aiTranslationReady}
-          isStep4Done={isStep4Done}
-          isStep5Done={isStep5Done}
-          status={status}
-          t={t}
-        />
+        {view === "dokumenta" && <DocumentsView ctx={ctx} />}
+        {view === "uplate" && <PaymentsView ctx={ctx} />}
+        {view === "podaci" && <ProfileView ctx={ctx} />}
       </main>
+
+      {/* Fajl-inputi (jedno mesto za sva kačenja) */}
+      <input
+        ref={signedContractInputRef}
+        type="file"
+        accept=".pdf,image/*"
+        className="sr-only"
+        tabIndex={-1}
+        aria-hidden="true"
+        onChange={(e) => {
+          handleUploadSignedContract(e.target.files?.[0]);
+          e.target.value = "";
+        }}
+      />
+      <input
+        ref={cvInputRef}
+        type="file"
+        accept=".pdf,application/pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        className="sr-only"
+        tabIndex={-1}
+        aria-hidden="true"
+        onChange={handleCvUpload}
+      />
+      <input
+        ref={certInputRef}
+        type="file"
+        accept=".pdf,application/pdf,image/png,image/jpeg,image/jpg,image/*"
+        className="sr-only"
+        tabIndex={-1}
+        aria-hidden="true"
+        onChange={handleCertUpload}
+      />
+      <input
+        ref={policeInputRef}
+        type="file"
+        accept=".pdf,application/pdf,image/png,image/jpeg,image/jpg,image/*"
+        className="sr-only"
+        tabIndex={-1}
+        aria-hidden="true"
+        onChange={handlePoliceCertUpload}
+      />
+
+      {uploadToast && (
+        <div
+          role="status"
+          className="fixed inset-x-4 bottom-5 z-50 mx-auto max-w-lg rounded-xl bg-ink px-4 py-3 text-sm font-medium text-white shadow-lg sm:bottom-8"
+        >
+          {uploadToast}
+        </div>
+      )}
 
       {/* MODAL: UPUTSTVO ZA YOUTUBE VIDEO */}
       <VideoInstructionsModal
@@ -1024,18 +1179,9 @@ export default function Dashboard({
         <SignContractModal
           candidate={candidate}
           onClose={() => setShowSignContractModal(false)}
-          onSignDigital={(signedBy) => {
-            const res = signCandidateContract(candidate.id || candidate.email, signedBy);
-            if (res) {
-              setCandidate(res);
-              setShowSignContractModal(false);
-              setUploadToast("Ugovor je digitalno verifikovan i potpisan! Uplatnica je sada otključana.");
-              setTimeout(() => setUploadToast(""), 5000);
-            }
-          }}
-          onUploadSignedFile={(file) => handleUploadSignedContract(file)}
-          onDownloadContract={() => downloadContractPdf(candidate.id, candidate.email)}
-          onDownloadResponsibility={() => downloadResponsibilityStatementPdf(candidate.id, candidate.email)}
+          onUploadSignedContract={(file) => handleUploadSignedContract(file)}
+          onUpdateCandidate={updateCandidateState}
+          isUploading={isUploadingSignedContract}
         />
       )}
 
