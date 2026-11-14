@@ -41,7 +41,7 @@ const SECTIONS = [
   { id: "put", label: "Moj put" },
   { id: "dokumenta", label: "Dokumenta" },
   { id: "uplate", label: "Uplate" },
-  { id: "podaci", label: "Moji podaci" },
+  { id: "podaci", label: "Moji podaci", short: "Podaci" },
 ];
 
 export default function DashboardHeader({ candidate, logoHref, goHome, onLogout, t, next, view, setView, onOpenTimeline, badges = {} }) {
@@ -72,16 +72,12 @@ export default function DashboardHeader({ candidate, logoHref, goHome, onLogout,
       </header>
 
       <div className="mx-auto max-w-6xl px-5 pt-9 sm:px-8 sm:pt-12">
-        <div className="flex items-end justify-between gap-4">
-          <h1 className="font-display text-3xl font-bold leading-[1.08] text-ink sm:text-4xl">Zdravo, {candidate.firstName}</h1>
-          <Button variant="outline" size="sm" onClick={onOpenTimeline}>
-            Moja aplikacija
-          </Button>
-        </div>
+        <h1 className="font-display text-3xl font-bold leading-[1.08] text-ink sm:text-4xl">Zdravo, {candidate.firstName}</h1>
 
         <NextCard next={next} />
 
-        <div role="tablist" aria-label="Sekcije portala" className="no-scrollbar -mx-5 mt-10 flex gap-7 overflow-x-auto border-b border-line px-5 sm:mx-0 sm:px-0">
+        <div className="mt-10 flex items-center gap-4 border-b border-line">
+        <div role="tablist" aria-label="Sekcije portala" className="no-scrollbar -ml-5 flex min-w-0 flex-1 gap-5 self-end sm:gap-7 overflow-x-auto pl-5 sm:ml-0 sm:pl-0">
           {SECTIONS.map((s) => {
             const active = view === s.id;
             return (
@@ -96,13 +92,30 @@ export default function DashboardHeader({ candidate, logoHref, goHome, onLogout,
                   active ? "border-ink text-ink" : "border-transparent text-ink-3 hover:text-ink"
                 )}
               >
-                {s.label}
+                {s.short ? (
+                  <>
+                    <span className="sm:hidden">{s.short}</span>
+                    <span className="hidden sm:inline">{s.label}</span>
+                  </>
+                ) : (
+                  s.label
+                )}
                 {badges[s.id] ? (
                   <span className="rounded-full bg-brand px-1.5 text-xs tabular-nums text-ink">{badges[s.id]}</span>
                 ) : null}
               </button>
             );
           })}
+        </div>
+          <Button variant="outline" size="sm" onClick={onOpenTimeline} aria-label="Moja aplikacija" className="mb-2.5 w-9 px-0! sm:w-auto sm:px-4!">
+            <svg className="h-4 w-4 shrink-0 sm:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <circle cx="5" cy="6" r="1.5" />
+              <circle cx="5" cy="12" r="1.5" />
+              <circle cx="5" cy="18" r="1.5" />
+              <path d="M10 6h10M10 12h10M10 18h10" />
+            </svg>
+            <span className="hidden sm:inline">Moja aplikacija</span>
+          </Button>
         </div>
       </div>
     </>
