@@ -115,9 +115,11 @@ export default function Step0Registration({ ctx, quiet, compact }) {
   const { candidate, isRegistrationDone, isFirstInstallmentPending, isContractPending } = ctx;
   const isFull = candidate.paymentMethod === "now";
 
+  const tasks = buildRegistrationTasks(ctx);
   return (
     <StepShell
       compact={compact}
+      progress={{ done: tasks.filter((x) => x.state === "done").length, total: tasks.length }}
       index="0"
       state={isRegistrationDone ? "done" : "current"}
       kicker="Registracija"
@@ -129,7 +131,7 @@ export default function Step0Registration({ ctx, quiet, compact }) {
         </StatusPill>
       }
     >
-      <TaskList tasks={buildRegistrationTasks(ctx)} quiet={quiet} />
+      <TaskList tasks={tasks} quiet={quiet} />
     </StepShell>
   );
 }

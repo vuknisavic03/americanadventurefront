@@ -8,31 +8,36 @@ import { Button, cx } from "../ui";
 /** Jedna stvar koju student sada treba da uradi (ili poruka da je red na nama). */
 function NextCard({ next }) {
   if (!next) return null;
-  const waiting = next.kind === "wait";
-  const finished = next.kind === "done";
+  const quiet = next.kind === "wait" || next.kind === "done";
   return (
     <div
       className={cx(
-        "mt-8 flex flex-col gap-5 rounded-2xl p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6",
-        waiting || finished ? "border border-line bg-white" : "bg-ink text-white"
+        "relative mt-8 overflow-hidden rounded-2xl p-5 sm:p-6",
+        quiet
+          ? "border border-line bg-white shadow-[0_1px_2px_rgba(35,31,32,0.04),0_10px_30px_-18px_rgba(35,31,32,0.18)]"
+          : "bg-ink text-white shadow-[0_18px_40px_-20px_rgba(35,31,32,0.6)]"
       )}
     >
-      <div className="min-w-0">
-        <p className={cx("text-[13px] font-medium", waiting || finished ? "text-ink-3" : "text-white/60")}>
-          {finished ? "Sve je spremno" : waiting ? "Sada je red na nama" : `Sledeće · ${next.stageLabel}`}
-        </p>
-        <p className={cx("mt-1 text-xl font-semibold leading-snug", waiting || finished ? "text-ink" : "text-white")}>{next.title}</p>
-        {next.desc && (
-          <p className={cx("mt-1 max-w-2xl text-sm leading-relaxed", waiting || finished ? "text-ink-2" : "text-white/75")}>
-            {next.desc}
+      <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <p className={cx("flex items-center gap-2 text-[13px] font-medium", quiet ? "text-ink-3" : "text-white/55")}>
+            {!quiet && <span className="h-1.5 w-1.5 rounded-full bg-brand" />}
+            {next.kind === "done" ? "Sve je spremno" : next.kind === "wait" ? "Sada je red na nama" : `Sledeći korak · ${next.stageLabel}`}
           </p>
+          <p className={cx("mt-1.5 text-xl font-semibold leading-snug tracking-[-0.01em]", quiet ? "text-ink" : "text-white")}>
+            {next.title}
+          </p>
+          {next.desc && (
+            <p className={cx("mt-1 max-w-2xl text-sm leading-relaxed", quiet ? "text-ink-2" : "text-white/70")}>{next.desc}</p>
+          )}
+        </div>
+        {next.onGo && (
+          <Button variant={quiet ? "outline" : "primary"} onClick={next.onGo} className="w-full sm:w-auto">
+            {next.cta}
+            {!quiet && <span aria-hidden="true">→</span>}
+          </Button>
         )}
       </div>
-      {next.onGo && (
-        <Button variant={waiting || finished ? "outline" : "primary"} onClick={next.onGo} className="w-full sm:w-auto">
-          {next.cta}
-        </Button>
-      )}
     </div>
   );
 }

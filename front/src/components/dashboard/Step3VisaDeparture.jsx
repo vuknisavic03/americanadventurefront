@@ -151,9 +151,11 @@ export default function Step3VisaDeparture({ ctx, quiet, compact }) {
   const isFullPaid = candidate.paymentMethod === "now" || candidate.isFullPaymentPaid;
   const stepLocked = !isSecondInstallmentPaid && !isFullPaid;
 
+  const tasks = buildVisaTasks({ ...ctx, stepLocked });
   return (
     <StepShell
       compact={compact}
+      progress={{ done: tasks.filter((x) => x.state === "done").length, total: tasks.length }}
       index="3"
       state={isStep3Done ? "done" : stepLocked ? "locked" : "current"}
       kicker="Korak 3"
@@ -170,7 +172,7 @@ export default function Step3VisaDeparture({ ctx, quiet, compact }) {
           Pasoš sa vizom te čeka u agenciji. Ostala je još orijentacija pred put.
         </Notice>
       )}
-      <TaskList tasks={buildVisaTasks({ ...ctx, stepLocked })} quiet={quiet || stepLocked} />
+      <TaskList tasks={tasks} quiet={quiet || stepLocked} />
     </StepShell>
   );
 }

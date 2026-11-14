@@ -214,9 +214,11 @@ export default function Step2JobPlacement({ ctx, quiet, compact }) {
   const { candidate, isDocumentsApproved, isStep2Done, isSecondInstallmentPending } = ctx;
   const isFull = candidate.paymentMethod === "now" || candidate.isFullPaymentPaid;
 
+  const tasks = buildJobTasks(ctx);
   return (
     <StepShell
       compact={compact}
+      progress={{ done: tasks.filter((x) => x.state === "done").length, total: tasks.length }}
       index="2"
       state={isStep2Done ? "done" : !isDocumentsApproved ? "locked" : "current"}
       kicker="Korak 2"
@@ -228,7 +230,7 @@ export default function Step2JobPlacement({ ctx, quiet, compact }) {
         </StatusPill>
       }
     >
-      <TaskList tasks={buildJobTasks(ctx)} quiet={quiet} />
+      <TaskList tasks={tasks} quiet={quiet} />
     </StepShell>
   );
 }

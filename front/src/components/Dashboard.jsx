@@ -32,6 +32,7 @@ import JobOfferModal from "./JobOfferModal";
 
 import DashboardHeader from "./dashboard/DashboardHeader";
 import ApplicationTimeline from "./dashboard/ApplicationTimeline";
+import { openTask } from "./dashboard/ui";
 import Step0Registration, { buildRegistrationTasks } from "./dashboard/Step0Registration";
 import Step1Documents, { buildDocumentTasks } from "./dashboard/Step1Documents";
 import Step2JobPlacement, { buildJobTasks } from "./dashboard/Step2JobPlacement";
@@ -760,6 +761,7 @@ export default function Dashboard({
   const goTo = (nextView, anchorId, stage) => {
     setView(nextView);
     if (stage) setActiveStepTab(stage);
+    if (anchorId?.startsWith("task-")) setTimeout(() => openTask(anchorId.slice(5)), 0);
     setTimeout(() => {
       const el = anchorId && document.getElementById(anchorId);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1014,9 +1016,9 @@ export default function Dashboard({
               <button
                 type="button"
                 onClick={() => setActiveStepTab(currentStageId)}
-                className="mb-6 text-[13px] font-medium text-ink-3 underline decoration-line-strong underline-offset-4 hover:text-ink"
+                className="mb-5 inline-flex items-center gap-1.5 text-[13px] font-medium text-ink-3 hover:text-ink"
               >
-                Nazad na trenutni korak
+                <span aria-hidden="true">←</span> Nazad na trenutni korak
               </button>
             )}
             {shownStage === "reg" && <Step0Registration {...stepProps("reg")} />}

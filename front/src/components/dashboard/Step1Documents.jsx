@@ -311,9 +311,11 @@ export function buildDocumentTasks(ctx) {
 export default function Step1Documents({ ctx, quiet, compact }) {
   const { candidate, isRegistrationDone, isStep1Done, isDocumentsPending, isDocumentsRejected } = ctx;
 
+  const tasks = buildDocumentTasks(ctx);
   return (
     <StepShell
       compact={compact}
+      progress={{ done: tasks.filter((x) => x.state === "done").length, total: tasks.length }}
       index="1"
       state={isStep1Done ? "done" : !isRegistrationDone ? "locked" : "current"}
       kicker="Korak 1"
@@ -341,7 +343,7 @@ export default function Step1Documents({ ctx, quiet, compact }) {
           )}
         </Notice>
       )}
-      <TaskList tasks={buildDocumentTasks(ctx)} quiet={quiet} />
+      <TaskList tasks={tasks} quiet={quiet} />
     </StepShell>
   );
 }
