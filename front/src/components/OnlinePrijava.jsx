@@ -1,13 +1,10 @@
 // OnlinePrijava.jsx
 import { useEffect, useState } from "react";
-import Logo from "./Logo";
+import { labelCls as baseLabelCls, inputCls as baseInputCls, ArrowRightIcon, CheckIcon } from "./ui";
 import { useTranslation } from "../i18n/LanguageContext";
 import programItems from "../data/programItems";
 import { submitPreApplicationWithBackend } from "../data/candidateStore";
 
-const BRAND_YELLOW = "#FDD503";
-const INK = "#231f20";
-const DEFAULT_BIRTH_DATE = "2005-01-01";
 const PUBLIC_UNIVERSITIES = [
   { name: "Univerzitet u Beogradu", city: "Beograd"},
   { name: "Univerzitet u Novom Sadu", city: "Novi Sad" },
@@ -40,24 +37,6 @@ function getLatestAdultBirthDate() {
   return `${year}-${month}-${day}`;
 }
 
-function CheckCircleIcon({ className = "h-9 w-9" }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M8 12.5l2.5 2.5L16 9.5" />
-    </svg>
-  );
-}
-
-function ClockIcon({ className = "h-9 w-9" }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7.5V12l3 2" />
-    </svg>
-  );
-}
-
 function BackIcon({ className = "h-4 w-4" }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
@@ -70,14 +49,14 @@ function BackIcon({ className = "h-4 w-4" }) {
 // Mapiranje zvaničnih destinacija prijava prema specifikaciji PRILOG 1B (Sekcija 4)
 const PROGRAM_DESTINATIONS = {
   "work-and-travel": { email: "beograd@workandtravel.rs", label: "Work and Travel USA" },
-  "internship": { email: "internship@workandtravel.rs", label: "Internship & Training Program" },
+  "internship": { email: "internship@workandtravel.rs", label: "Internship i Training" },
   "high-school": { email: "office.americanadventure@gmail.com", label: "High School USA" },
   "au-pair": { email: "aupair@workandtravel.rs", label: "Au Pair USA" },
-  "h2b": { email: "office.americanadventure@gmail.com", label: "H-2B Program u Americi" },
-  "australia": { email: "australia@workandtravel.rs", label: "Australia Work Program" },
-  "avio-karte": { email: "aviokarte@workandtravel.rs", label: "Avio Karte" },
-  "povracaj-poreza": { email: "office.americanadventure@gmail.com", label: "Povraćaj Poreza iz USA" },
-  "viza-servis": { email: "office.americanadventure@gmail.com", label: "Viza Servis – SAD" },
+  "h2b": { email: "office.americanadventure@gmail.com", label: "H-2B program u Americi" },
+  "australia": { email: "australia@workandtravel.rs", label: "Australia Training Program" },
+  "avio-karte": { email: "aviokarte@workandtravel.rs", label: "Avio karte" },
+  "povracaj-poreza": { email: "office.americanadventure@gmail.com", label: "Povraćaj poreza iz SAD" },
+  "viza-servis": { email: "office.americanadventure@gmail.com", label: "Viza servis za SAD" },
 };
 
 export default function OnlinePrijava({
@@ -105,7 +84,7 @@ export default function OnlinePrijava({
     // Osnovna polja (svi programi)
     firstName: "",
     lastName: "",
-    birthDate: DEFAULT_BIRTH_DATE,
+    birthDate: "",
     address: "",
     phone: "",
     email: "",
@@ -160,9 +139,14 @@ export default function OnlinePrijava({
     (university) => university.name === form.studyUniversity,
   );
 
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
+
   const submit = async (e) => {
     e.preventDefault();
-    if (!privacy) return;
+    if (!privacy || sending) return;
+    setSending(true);
+    setSendError(false);
 
     const payload = {
       program: selectedProgram,
@@ -172,7 +156,7 @@ export default function OnlinePrijava({
       ...form,
     };
 
-    await submitPreApplicationWithBackend({
+    const result = await submitPreApplicationWithBackend({
       firstName: form.firstName,
       lastName: form.lastName,
       email: form.email,
@@ -191,59 +175,49 @@ export default function OnlinePrijava({
       newsletterConsent: newsletter,
     });
 
+    setSending(false);
+    if (!result?.delivered) {
+      setSendError(true);
+      return;
+    }
     onSubmit(payload);
     setStep("done");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const labelCls = "block text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/70";
-  const inputCls =
-    "mt-1.5 w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-sm text-[var(--brand-ink)] transition-colors duration-150 placeholder:text-black/35 focus:border-[var(--brand-ink)] focus:outline-hidden focus:ring-2 focus:ring-[var(--brand-ink)]/15";
-  const req = <span className="text-red-500 font-bold" aria-hidden="true"> *</span>;
+  const labelCls = baseLabelCls;
+  const inputCls = `mt-2 ${baseInputCls}`;
+  const req = <span className="text-red-600" aria-hidden="true"> *</span>;
 
   return (
-    <section className="flex min-h-[calc(100vh-6rem)] items-center justify-center bg-[var(--brand-ink)]/[0.03] px-6 py-16 sm:py-20">
-      <div className="w-full max-w-2xl">
-        <a
-          href={logoHref}
-          onClick={go(logoHref)}
-          aria-label={t("a11y.home")}
-          className="mx-auto flex w-fit text-[var(--brand-ink)] transition-opacity duration-200 hover:opacity-80"
-        >
-          <Logo className="h-12 w-auto" />
-        </a>
-
-        {/* Koraci selekcije procesa (Prilog 1A) */}
+    <section className="bg-surface px-5 py-14 sm:py-20">
+      <div className="mx-auto w-full max-w-2xl">
+        {/* Koraci selekcije (Prilog 1A) */}
         {step !== "done" && (
-          <ol className="mx-auto mt-8 flex max-w-md items-center justify-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.08em] text-[var(--brand-ink)]/45">
-            <span className="flex h-7 items-center whitespace-nowrap rounded-full bg-[var(--brand-ink)] px-3 text-[0.68rem] font-bold text-white">
-              1. Online prijava
-            </span>
-            <span className="h-1 w-1 shrink-0 rounded-full bg-black/20" />
-            <span className="flex h-7 items-center whitespace-nowrap rounded-full bg-black/[0.06] px-3 text-[0.68rem] font-bold text-[var(--brand-ink)]/45">
-              2. Selekcija
-            </span>
-            <span className="h-1 w-1 shrink-0 rounded-full bg-black/20" />
-            <span className="flex h-7 items-center whitespace-nowrap rounded-full bg-black/[0.06] px-3 text-[0.68rem] font-bold text-[var(--brand-ink)]/45">
-              3. Konsultacije
-            </span>
-            <span className="h-1 w-1 shrink-0 rounded-full bg-black/20" />
-            <span className="flex h-7 items-center whitespace-nowrap rounded-full bg-black/[0.06] px-3 text-[0.68rem] font-bold text-[var(--brand-ink)]/45">
-              4. Nalog
-            </span>
+          <ol className="grid grid-cols-4 gap-2 sm:gap-3">
+            {["Online prijava", "Selekcija", "Konsultacije", "Nalog"].map((label, i) => (
+              <li
+                key={label}
+                aria-current={i === 0 ? "step" : undefined}
+                className={`border-t-2 pt-2.5 ${i === 0 ? "border-ink" : "border-line-strong"}`}
+              >
+                <span className={`block text-xs tabular-nums ${i === 0 ? "text-ink" : "text-ink-3"}`}>{i + 1}</span>
+                <span className={`mt-0.5 hidden text-[13px] leading-snug sm:block ${i === 0 ? "font-semibold text-ink" : "text-ink-3"}`}>
+                  {label}
+                </span>
+              </li>
+            ))}
           </ol>
         )}
 
-        <div className="mt-6 rounded-3xl border border-black/10 bg-white p-7 shadow-xs sm:p-10">
+        <div className={`rounded-[1.75rem] border border-line bg-white p-7 sm:p-10 ${step !== "done" ? "mt-8" : ""}`}>
           {/* KORAK 1: IZBOR PROGRAMA */}
           {step === "program" && (
             <>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--brand-ink)]/45">
-                Korak 1/2 · Izbor programa
-              </p>
-              <h1 className="mt-1.5 text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
-                Izaberite program za prijavu
+              <h1 className="font-display text-[2.2rem] font-extrabold leading-[1] text-ink">
+                Izaberi program
               </h1>
-              <p className="mt-2 text-sm text-[var(--brand-ink)]/65">
+              <p className="mt-2 text-sm text-ink-2">
                 Prijavna forma se automatski prilagođava zahtevima izabranog programa.
               </p>
 
@@ -258,25 +232,21 @@ export default function OnlinePrijava({
                         setSelectedProgram(p.id || "work-and-travel");
                         setStep("form");
                       }}
-                      className={`flex w-full items-center justify-between rounded-xl border px-4 py-3.5 text-left text-sm font-semibold transition-colors duration-150 ${
-                        sel
-                          ? "border-[var(--brand-ink)] bg-[var(--brand-yellow)]/10 text-[var(--brand-ink)]"
-                          : "border-black/10 text-[var(--brand-ink)]/80 hover:bg-black/[0.03]"
+                      className={`flex w-full items-center justify-between rounded-xl border px-4 py-3.5 text-left text-sm font-medium transition-colors duration-150 ${
+                        sel ? "border-ink bg-surface text-ink" : "border-line-strong text-ink hover:border-ink/40"
                       }`}
                     >
                       <span className="flex items-center gap-3">
                         <span
-                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${
-                            sel ? "border-[var(--brand-ink)]" : "border-black/25"
+                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${
+                            sel ? "border-ink" : "border-line-strong"
                           }`}
                         >
-                          {sel && <span className="h-2.5 w-2.5 rounded-full bg-[var(--brand-ink)]" />}
+                          {sel && <span className="h-2.5 w-2.5 rounded-full bg-ink" />}
                         </span>
                         <span>{p.label}</span>
                       </span>
-                      <span className="text-xs font-normal text-[var(--brand-ink)]/45">
-                        {PROGRAM_DESTINATIONS[p.id]?.email}
-                      </span>
+                      <ArrowRightIcon className="h-4 w-4 shrink-0 text-ink-3" />
                     </button>
                   );
                 })}
@@ -287,43 +257,41 @@ export default function OnlinePrijava({
           {/* KORAK 2: DINAMIČKA PRIJAVNA FORMA PREMA PRILOGU 1B (SEKCIJA 4) */}
           {step === "form" && (
             <>
-              <div className="flex items-center justify-between border-b border-black/10 pb-4">
+              <div className="flex items-center justify-between mb-4">
                 <button
                   type="button"
                   onClick={() => setStep("program")}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/55 transition-colors hover:text-[var(--brand-ink)]"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-2 transition-colors hover:text-ink"
                 >
                   <BackIcon /> Promeni program
                 </button>
-                <span className="rounded-full bg-black/[0.04] px-3 py-1 text-xs font-bold text-[var(--brand-ink)]">
+                <span className="rounded-full bg-surface-2 px-3 py-1 text-xs font-medium text-ink">
                   {destInfo.label}
                 </span>
               </div>
 
               <div className="mt-4">
-                <h1 className="text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
-                  Prijavni formular
-                </h1>
-                <p className="mt-1 text-xs text-[var(--brand-ink)]/55">
-                  Podaci iz ove forme se šalju direktno na: <strong className="text-[var(--brand-ink)]">{destInfo.email}</strong>
+                <h1 className="font-display text-[2.2rem] font-extrabold leading-[1] text-ink">Prijavni formular</h1>
+                <p className="mt-2 text-sm text-ink-2">
+                  Prijava stiže direktno timu agencije. Javljamo se na e-mail i telefon koje navedeš.
                 </p>
               </div>
 
-              <form onSubmit={submit} className="mt-6 space-y-5">
+              <form onSubmit={submit} className="mt-8 space-y-8">
                 {/* 1. OSNOVNI LIČNI PODACI (Obavezni za sve programe) */}
-                <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                <div className="border-t border-line pt-6">
+                  <h3 className="text-base font-semibold text-ink">
                     Osnovni lični podaci
                   </h3>
 
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="fn" className={labelCls}>Ime{req}</label>
-                      <input id="fn" type="text" required value={form.firstName} onChange={upd("firstName")} className={inputCls} placeholder="npr. Marko" />
+                      <input id="fn" type="text" required value={form.firstName} onChange={upd("firstName")} className={inputCls} placeholder="npr. Marko" autoComplete="given-name" />
                     </div>
                     <div>
                       <label htmlFor="ln" className={labelCls}>Prezime{req}</label>
-                      <input id="ln" type="text" required value={form.lastName} onChange={upd("lastName")} className={inputCls} placeholder="npr. Petrović" />
+                      <input id="ln" type="text" required value={form.lastName} onChange={upd("lastName")} className={inputCls} placeholder="npr. Petrović" autoComplete="family-name" />
                     </div>
                   </div>
 
@@ -331,30 +299,30 @@ export default function OnlinePrijava({
                     <div>
                       <label htmlFor="bd" className={labelCls}>Datum rođenja{req}</label>
                       <input id="bd" type="date" required max={latestAdultBirthDate} value={form.birthDate} onChange={upd("birthDate")} className={inputCls} />
-                      <p className="mt-1 text-xs text-[var(--brand-ink)]/55">Prijava je moguća samo za punoletne osobe.</p>
+                      <p className="mt-1 text-xs text-ink-3">Prijava je moguća samo za punoletne osobe.</p>
                     </div>
                     <div>
                       <label htmlFor="addr" className={labelCls}>Puna adresa stanovanja{req}</label>
-                      <input id="addr" type="text" required value={form.address} onChange={upd("address")} className={inputCls} placeholder="Ulica, broj, grad" />
+                      <input id="addr" type="text" required value={form.address} onChange={upd("address")} className={inputCls} placeholder="Ulica, broj, grad" autoComplete="street-address" />
                     </div>
                   </div>
 
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="ph" className={labelCls}>Telefon{req}</label>
-                      <input id="ph" type="tel" required value={form.phone} onChange={upd("phone")} className={inputCls} placeholder="+381 6..." />
+                      <input id="ph" type="tel" required value={form.phone} onChange={upd("phone")} className={inputCls} placeholder="+381 6…" autoComplete="tel" inputMode="tel" pattern="[+0-9 ()/-]{6,}" title="Upiši broj telefona, na primer +381 64 123 4567" />
                     </div>
                     <div>
-                      <label htmlFor="em" className={labelCls}>Email adresa{req}</label>
-                      <input id="em" type="email" required value={form.email} onChange={upd("email")} className={inputCls} placeholder="student@example.com" />
+                      <label htmlFor="em" className={labelCls}>E-mail{req}</label>
+                      <input id="em" type="email" required value={form.email} onChange={upd("email")} className={inputCls} placeholder="ime@primer.com" autoComplete="email" />
                     </div>
                   </div>
                 </div>
 
                 {/* 2. SPECIFIČNA POLJA ZA WORK AND TRAVEL (Prilog 1B, tačka 4) */}
                 {selectedProgram === "work-and-travel" && (
-                  <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                  <div className="border-t border-line pt-6">
+                    <h3 className="text-base font-semibold text-ink">
                       Podaci o studijama (Work and Travel)
                     </h3>
 
@@ -366,7 +334,7 @@ export default function OnlinePrijava({
                       <div>
                         <label htmlFor="university" className={labelCls}>Univerzitet{req}</label>
                         <select id="university" required value={form.studyUniversity} onChange={upd("studyUniversity")} className={inputCls}>
-                          <option value="">Izaberite univerzitet</option>
+                          <option value="">Izaberi univerzitet</option>
                           <optgroup label="Državni univerziteti">
                             {PUBLIC_UNIVERSITIES.map((university) => (
                               <option key={university.name} value={university.name}>
@@ -405,7 +373,7 @@ export default function OnlinePrijava({
                         </select>
                       </div>
                       <div>
-                        <label htmlFor="ects" className={labelCls}>Broj ESP bodova{req}</label>
+                        <label htmlFor="ects" className={labelCls}>Broj ESPB bodova{req}</label>
                         <input id="ects" type="number" required min="0" max="360" value={form.ectsPoints} onChange={upd("ectsPoints")} className={inputCls} placeholder="npr. 120" />
                       </div>
                     </div>
@@ -414,8 +382,8 @@ export default function OnlinePrijava({
 
                 {/* 3. SPECIFIČNA POLJA ZA INTERNSHIP / H-2B */}
                 {(selectedProgram === "internship" || selectedProgram === "h2b") && (
-                  <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                  <div className="border-t border-line pt-6">
+                    <h3 className="text-base font-semibold text-ink">
                       Oblast rada / usavršavanja
                     </h3>
                     <div className="mt-4">
@@ -427,8 +395,8 @@ export default function OnlinePrijava({
 
                 {/* 4. SPECIFIČNA POLJA ZA HIGH SCHOOL */}
                 {selectedProgram === "high-school" && (
-                  <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                  <div className="border-t border-line pt-6">
+                    <h3 className="text-base font-semibold text-ink">
                       Podaci o roditeljima (High School Program)
                     </h3>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -454,8 +422,8 @@ export default function OnlinePrijava({
 
                 {/* 5. SPECIFIČNA POLJA ZA AU PAIR */}
                 {selectedProgram === "au-pair" && (
-                  <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                  <div className="border-t border-line pt-6">
+                    <h3 className="text-base font-semibold text-ink">
                       Vozačka dozvola (Au Pair USA)
                     </h3>
                     <div className="mt-4">
@@ -470,8 +438,8 @@ export default function OnlinePrijava({
 
                 {/* 6. SPECIFIČNA POLJA ZA AVIO KARTE */}
                 {selectedProgram === "avio-karte" && (
-                  <div className="rounded-2xl border border-black/5 bg-black/[0.015] p-4 sm:p-5">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/60">
+                  <div className="border-t border-line pt-6">
+                    <h3 className="text-base font-semibold text-ink">
                       Detalji leta i karte (Avio karte)
                     </h3>
                     <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -513,7 +481,7 @@ export default function OnlinePrijava({
                 {/* OPCIONA NAPOMENA (Prilog 1B, tačka 3) */}
                 <div>
                   <label htmlFor="note" className={labelCls}>
-                    Napomena / Dodatna pitanja <span className="font-normal text-[var(--brand-ink)]/40">(opciono)</span>
+                    Napomena / Dodatna pitanja <span className="font-normal text-ink-3">(opciono)</span>
                   </label>
                   <textarea
                     id="note"
@@ -521,33 +489,33 @@ export default function OnlinePrijava({
                     value={form.note}
                     onChange={upd("note")}
                     className={`${inputCls} resize-none`}
-                    placeholder="Unesite bilo kakvu dodatnu napomenu, željenu lokaciju ili pitanje..."
+                    placeholder="Željena lokacija, pitanje ili bilo šta što treba da znamo"
                   />
                 </div>
 
                 {/* OBAVEZNA SAGLASNOST SA POLITIKOM PRIVATNOSTI (Prilog 1B, tačka 3) */}
                 <div className="space-y-3 pt-2">
-                  <label className="flex items-start gap-3 text-xs text-[var(--brand-ink)]/80">
+                  <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-snug text-ink-2">
                     <input
                       type="checkbox"
                       required
                       checked={privacy}
                       onChange={(e) => setPrivacy(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 rounded-sm border-black/30 accent-[var(--brand-ink)]"
+                      className="mt-0.5 h-5 w-5 shrink-0 rounded-sm border-line-strong accent-ink"
                     />
                     <span>
                       Saglasan/na sam sa obradom mojih podataka o ličnosti u svrhu ove prijave i upoznat/a sam sa{" "}
-                      <span className="font-bold underline">Politikom privatnosti</span> American Adventure agencije.{req}
+                      <span className="font-semibold underline">Politikom privatnosti</span> American Adventure agencije.{req}
                     </span>
                   </label>
 
                   {/* ZASEBNA OPCIONA NEWSLETTER SAGLASNOST (Prilog 1B, tačka 3) */}
-                  <label className="flex items-start gap-3 text-xs text-[var(--brand-ink)]/80">
+                  <label className="flex cursor-pointer items-start gap-3 text-[14px] leading-snug text-ink-2">
                     <input
                       type="checkbox"
                       checked={newsletter}
                       onChange={(e) => setNewsletter(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 shrink-0 rounded-sm border-black/30 accent-[var(--brand-ink)]"
+                      className="mt-0.5 h-5 w-5 shrink-0 rounded-sm border-line-strong accent-ink"
                     />
                     <span>
                       Želim da primam obaveštenja o akcijama, popustima i novim otvorenim poslovima (opciono).
@@ -556,66 +524,70 @@ export default function OnlinePrijava({
                 </div>
 
                 {/* DUGME ZA SLANJE */}
+                {sendError && (
+                  <div role="alert" className="rounded-2xl bg-red-50 px-5 py-4 text-[15px] leading-relaxed text-red-800">
+                    <p className="font-semibold">Prijava nije stigla do nas.</p>
+                    <p className="mt-1">
+                      Proveri internet vezu i pokušaj ponovo. Ako ne uspe, pošalji nam podatke na{" "}
+                      <a className="font-semibold underline" href={`mailto:${destInfo.email}?subject=${encodeURIComponent(`Prijava: ${destInfo.label}`)}&body=${encodeURIComponent(`${form.firstName} ${form.lastName}\n${form.email}\n${form.phone}\n\n${form.note}`)}`}>
+                        {destInfo.email}
+                      </a>{" "}
+                      ili pozovi 064 107 2004.
+                    </p>
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  disabled={!privacy}
-                  className="w-full rounded-full py-4 text-sm font-bold uppercase tracking-[0.08em] shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
-                  style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+                  disabled={!privacy || sending}
+                  aria-busy={sending}
+                  className="h-14 w-full rounded-full bg-ink text-base font-semibold text-white transition-colors hover:bg-neutral-950 disabled:cursor-not-allowed disabled:opacity-40"
                 >
-                  POŠALJI PRIJAVU ZA {destInfo.label.toUpperCase()}
+                  {sending ? "Šaljem prijavu…" : `Pošalji prijavu za ${destInfo.label}`}
                 </button>
+                {!privacy && <p className="-mt-2 text-center text-[13px] text-ink-3">Prvo potvrdi saglasnost za obradu podataka.</p>}
 
-                <p className="text-center text-xs text-[var(--brand-ink)]/50">
-                  Prijava je potpuno besplatna i ne obavezuje vas na potpisivanje ugovora.
-                </p>
+                <p className="text-center text-[13px] text-ink-3">Prijava je besplatna i ne obavezuje te na potpisivanje ugovora.</p>
               </form>
             </>
           )}
 
           {/* KORAK 3: POTVRDA USPEŠNOG SLANJA */}
           {step === "done" && (
-            <div className="flex flex-col items-center py-6 text-center">
-              <span className="flex h-16 w-16 items-center justify-center rounded-full" style={{ backgroundColor: BRAND_YELLOW, color: INK }}>
-                <CheckCircleIcon className="h-9 w-9" />
-              </span>
-              <h1 className="mt-5 text-2xl font-extrabold text-[var(--brand-ink)]">
-                Prijava je uspešno poslata!
-              </h1>
-              <p className="mt-2 max-w-md text-sm text-[var(--brand-ink)]/70">
-                Hvala vam na prijavi za <strong>{destInfo.label}</strong>. Podaci su uspešno evidentirani i prosleđeni timu na <strong>{destInfo.email}</strong>.
+            <div className="py-2">
+              <p className="flex items-center gap-2.5 text-[15px] font-semibold text-emerald-700">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-700 text-white">
+                  <CheckIcon className="h-3.5 w-3.5" />
+                </span>
+                Primljeno
+              </p>
+              <h1 className="font-display mt-4 text-[clamp(2rem,4vw,2.6rem)] font-extrabold leading-[1] text-ink">Prijava je poslata</h1>
+              <p className="mt-4 max-w-lg text-[17px] leading-relaxed text-ink-2">
+                Prijava za {destInfo.label} je stigla do našeg tima. Javljamo se na e-mail i telefon koje si naveo.
               </p>
 
-              <div className="mt-6 w-full max-w-md rounded-2xl border border-black/10 bg-[var(--brand-yellow)]/[0.08] p-5 text-left">
-                <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full" style={{ backgroundColor: BRAND_YELLOW, color: INK }}>
-                  <ClockIcon className="h-7 w-7" />
-                </span>
-                <h2 className="mt-4 text-center text-sm font-bold text-[var(--brand-ink)]">
-                  Naredni koraci u procesu:
-                </h2>
-                <ol className="mt-4 space-y-2.5 text-xs text-[var(--brand-ink)]/80">
-                  <li className="flex items-start gap-2.5">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand-ink)] text-[0.65rem] font-bold text-white">1</span>
-                    <span>Naš koordinator će vas kontaktirati telefonom ili putem emaila radi inicijalnog razgovora.</span>
+              <h2 className="mt-10 text-[15px] font-semibold text-ink">Šta sledi</h2>
+              <ol className="mt-3 border-t-2 border-ink">
+                {[
+                  "Koordinator te zove ili ti piše radi kratkog razgovora.",
+                  "Zakazujemo besplatne konsultacije, u kancelariji ili preko video poziva.",
+                  "Kad te odobrimo, otvaramo ti nalog na portalu, gde predaješ dokumenta i biraš posao.",
+                ].map((x, i) => (
+                  <li key={x} className="flex items-baseline gap-5 border-b border-line py-4">
+                    <span className="font-display w-5 shrink-0 text-xl font-extrabold leading-none text-ink">{i + 1}</span>
+                    <span className="text-[16px] leading-snug text-ink">{x}</span>
                   </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand-ink)] text-[0.65rem] font-bold text-white">2</span>
-                    <span>Zakazujemo besplatne informativne konsultacije (uživo u kancelariji ili online preko video poziva).</span>
-                  </li>
-                  <li className="flex items-start gap-2.5">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--brand-ink)] text-[0.65rem] font-bold text-white">3</span>
-                    <span>Nakon odobrenja aktiviramo vaš lični nalog na portalu za unos kompletne dokumentacije i izbor posla.</span>
-                  </li>
-                </ol>
-              </div>
+                ))}
+              </ol>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <button
                   type="button"
                   onClick={() => {
                     setForm({
                       firstName: "",
                       lastName: "",
-                      birthDate: DEFAULT_BIRTH_DATE,
+                      birthDate: "",
                       address: "",
                       phone: "",
                       email: "",
@@ -642,17 +614,19 @@ export default function OnlinePrijava({
                     setPrivacy(false);
                     setStep("program");
                   }}
-                  className="rounded-full border border-black/15 px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)] hover:bg-black/5"
+                  className="inline-flex h-12 items-center justify-center rounded-full border border-line-strong px-6 text-[15px] font-semibold text-ink transition-colors hover:border-ink"
                 >
-                  Nova prijava
+                  Pošalji još jednu prijavu
                 </button>
                 <a
                   href={logoHref}
                   onClick={go(logoHref)}
-                  className="rounded-full px-6 py-3 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)] shadow-xs"
-                  style={{ backgroundColor: BRAND_YELLOW }}
+                  className="order-first inline-flex h-12 items-center justify-center rounded-full bg-ink px-6 text-[15px] font-semibold text-white transition-colors hover:bg-neutral-950"
                 >
-                  Povratak na početnu stranu
+                  Na početnu
+                </a>
+                <a href="tel:+381641072004" className="mt-2 self-center text-[15px] font-semibold text-ink underline decoration-ink/30 decoration-2 underline-offset-[5px] hover:decoration-ink sm:mt-0 sm:ml-auto">
+                  064 107 2004
                 </a>
               </div>
             </div>

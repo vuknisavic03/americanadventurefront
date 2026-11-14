@@ -2,7 +2,7 @@
 // Zvanični ugovori agencije American Adventure d.o.o., Izjava o odgovornosti, Saglasnost,
 // Promocije (Prilog 1), nalozi za uplatu, sertifikovani sudski prevodi i izvoz za Ambasadu.
 
-import { getCandidates, getCurrentUser } from "./candidates.js";
+import { getCandidates, getCurrentUser } from "./session.js";
 
 /**
  * Pomoćna funkcija za preuzimanje zvaničnog PDF fajla iz /documents foldera

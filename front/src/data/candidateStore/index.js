@@ -3,6 +3,7 @@
 
 export * from "./storage.js";
 export * from "./mockSeed.js";
+export * from "./session.js";
 export * from "./candidates.js";
 export * from "./invitations.js";
 export * from "./preApplications.js";

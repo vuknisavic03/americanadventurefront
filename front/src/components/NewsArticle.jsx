@@ -1,7 +1,10 @@
 // NewsArticle.jsx
+import { useEffect } from "react";
 import { useTranslation } from "../i18n/LanguageContext";
 import NewsImage from "./NewsImage";
 import newsData from "../data/news";
+import CtaBand from "./CtaBand";
+import { Button, PlaneIcon } from "./ui";
 
 // „Nazad na vesti" po jeziku (kratko, drži se ovde).
 const BACK_LABEL = {
@@ -12,50 +15,48 @@ const BACK_LABEL = {
   BS: "Nazad na vijesti",
 };
 
-function BackIcon({ className = "h-4 w-4" }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
-      <path d="M19 12H5" />
-      <path d="M11 18l-6-6 6-6" />
-    </svg>
-  );
-}
-
 /**
  * NewsArticle — pojedinačna vest (puni tekst).
  *
  * Nalazi vest po `slug`-u, prikazuje sliku, naslov i pasuse (lokalizovano).
- * Naslov/sažetak/telo se biraju po jeziku; „Nazad na vesti" vodi na /vesti.
+ * Naslov/sažetak/telo se biraju po jeziku; „Nazad na vesti" vodi na /novosti.
  *
  * Props:
  *  - slug:       koja vest (string)
  *  - items:      izvor vesti (default: src/data/news.js)
  *  - onNavigate: (event, href) => void
  *
- * Gde se ubacuje: ruta /vesti/<slug> (vidi App.jsx — prebacivanje prikaza).
+ * Gde se ubacuje: ruta /novosti/<slug> (vidi App.jsx — prebacivanje prikaza).
  */
 export default function NewsArticle({ slug, items = newsData, onNavigate = () => {} }) {
-  const { t, lang } = useTranslation();
+  const { lang } = useTranslation();
   const tr = (field) => (typeof field === "string" ? field : field?.[lang] || field?.SR);
   const item = items.find((n) => n.slug === slug);
+  const backHref = "/novosti";
+  const backLabel = BACK_LABEL[lang] || BACK_LABEL.SR;
+  const goBack = (e) => onNavigate(e, backHref);
 
-  const go = (href) => (e) => {
-    e.preventDefault();
-    onNavigate(e, href);
-  };
+  // Naslov kartice pregledača = naslov vesti.
+  const pageTitle = item ? tr(item.title) : "Vest nije pronađena";
+  useEffect(() => {
+    document.title = `${pageTitle} — American Adventure`;
+  }, [pageTitle]);
 
   if (!item) {
     return (
       <section className="bg-white py-24">
-        <div className="mx-auto max-w-3xl px-6 text-center sm:px-10">
-          <p className="text-lg text-[var(--brand-ink)]/70">404</p>
-          <a href="/vesti" onClick={go("/vesti")} className="mt-4 inline-block font-bold text-[var(--brand-ink)] underline">
-            {BACK_LABEL[lang] || BACK_LABEL.SR}
-          </a>
+        <div className="mx-auto max-w-2xl px-5 sm:px-8">
+          <h1 className="font-display text-3xl font-bold text-ink">Ova vest ne postoji</h1>
+          <p className="mt-4 text-base text-ink-2">Možda je uklonjena ili je adresa pogrešno upisana.</p>
+          <Button variant="outline" className="mt-8" href={backHref} onClick={goBack}>
+            {backLabel}
+          </Button>
         </div>
       </section>
     );
   }
+
+  const related = items.filter((n) => n.slug !== item.slug && n.category === item.category).slice(0, 3);
 
   const paragraphs = Array.isArray(item.body?.[lang])
     ? item.body[lang]
@@ -64,43 +65,72 @@ export default function NewsArticle({ slug, items = newsData, onNavigate = () =>
     : [tr(item.excerpt)];
 
   return (
-    <article className="bg-white pb-20 sm:pb-28">
-      <div className="mx-auto max-w-3xl px-6 pt-10 sm:px-10 sm:pt-14">
-        {/* Nazad */}
-        <a
-          href="/vesti"
-          onClick={go("/vesti")}
-          className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.06em] text-[var(--brand-ink)]/60 transition-colors duration-150 hover:text-[var(--brand-ink)]"
-        >
-          <BackIcon className="h-4 w-4" />
-          {BACK_LABEL[lang] || BACK_LABEL.SR}
-        </a>
-
-        {/* Meta */}
-        <div className="mt-8 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.1em]">
-          <span className="rounded-full bg-[var(--brand-yellow)] px-3 py-1 text-[var(--brand-ink)]">{item.category}</span>
-          <span className="text-[var(--brand-ink)]/45">{item.date}</span>
+    <article className="bg-white">
+      <header className="bg-brand pb-40 sm:pb-56">
+        <div className="mx-auto max-w-4xl px-5 pt-10 sm:px-8 sm:pt-14">
+          <p className="font-sign flex max-w-sm items-center gap-3 text-base font-bold text-ink">
+            <a href={backHref} onClick={goBack} aria-label={backLabel} className="hover:underline hover:decoration-2 hover:underline-offset-4">
+              Novosti
+            </a>
+            <span className="perforation flex-1 text-ink/35" aria-hidden="true" />
+            <PlaneIcon className="h-4 w-4" />
+            <span>{item.category}</span>
+          </p>
+          <time className="font-sign mt-10 block text-[15px] font-semibold text-ink/70">{item.date}</time>
+          <h1 className="font-display mt-5 text-[clamp(2.3rem,5.4vw,4.4rem)] font-extrabold leading-[0.96] text-ink">{tr(item.title)}</h1>
         </div>
+      </header>
 
-        {/* Naslov */}
-        <h1 className="mt-5 text-3xl font-extrabold leading-tight tracking-tight text-[var(--brand-ink)] sm:text-4xl lg:text-5xl">
-          {tr(item.title)}
-        </h1>
+      <div className="mx-auto -mt-32 max-w-5xl px-5 sm:-mt-44 sm:px-8">
+        <NewsImage eager src={item.image} theme={item.theme} alt={tr(item.title)} className="aspect-[16/9] w-full rounded-[1.5rem]" />
       </div>
 
-      {/* Slika */}
-      <div className="mx-auto mt-8 max-w-4xl px-6 sm:px-10">
-        <NewsImage src={item.image} theme={item.theme} alt={tr(item.title)} className="aspect-[16/9] w-full rounded-2xl" />
+      <div className="mx-auto mt-14 max-w-2xl space-y-5 px-5 text-[18px] leading-[1.7] text-ink sm:px-8">
+        {paragraphs.map((p, i) =>
+          p.startsWith("## ") ? (
+            <h2 key={i} className="font-display pt-6 text-[1.6rem] font-extrabold leading-tight text-ink">{p.slice(3)}</h2>
+          ) : p.startsWith("• ") ? (
+            <p key={i} className="flex gap-4">
+              <span className="mt-[12px] h-2 w-2 shrink-0 bg-brand ring-2 ring-ink" aria-hidden="true" />
+              <span>{p.slice(2)}</span>
+            </p>
+          ) : i === 0 ? (
+            <p key={i} className="text-[21px] leading-[1.55] text-ink">{p}</p>
+          ) : (
+            <p key={i} className="text-ink/85">{p}</p>
+          )
+        )}
       </div>
 
-      {/* Tekst */}
-      <div className="mx-auto mt-10 max-w-3xl px-6 sm:px-10">
-        <div className="space-y-5 text-[1.05rem] leading-relaxed text-[var(--brand-ink)]/80">
-          {paragraphs.map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
-        </div>
-      </div>
+      {related.length > 0 && (
+        <section className="mx-auto mt-24 max-w-7xl px-5 sm:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-4 border-t-2 border-ink pt-10">
+            <h2 className="font-display text-[clamp(1.8rem,3.2vw,2.5rem)] font-extrabold leading-none text-ink">Još iz rubrike {item.category}</h2>
+            <a href={backHref} onClick={goBack} className="text-[15px] font-semibold text-ink underline decoration-2 decoration-ink/30 underline-offset-[5px] hover:decoration-ink">
+              Sve vesti
+            </a>
+          </div>
+          <div className="mt-10 grid gap-x-8 gap-y-12 md:grid-cols-3">
+            {related.map((r) => {
+              const href = `/novosti/${r.slug}`;
+              return (
+                <article key={r.slug}>
+                  <a href={href} onClick={(e) => onNavigate(e, href)} tabIndex={-1} aria-hidden="true" className="block">
+                    <NewsImage src={r.image} theme={r.theme} alt="" className="aspect-[16/10] w-full rounded-[1.25rem]" />
+                  </a>
+                  <h3 className="font-display mt-4 text-[1.3rem] font-extrabold leading-[1.12] text-ink">
+                    <a href={href} onClick={(e) => onNavigate(e, href)} className="hover:underline hover:decoration-brand hover:decoration-4 hover:underline-offset-4">
+                      {tr(r.title)}
+                    </a>
+                  </h3>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      <CtaBand className="mt-24" onNavigate={onNavigate} />
     </article>
   );
 }

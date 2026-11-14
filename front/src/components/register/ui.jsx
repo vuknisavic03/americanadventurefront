@@ -1,12 +1,11 @@
 // front/src/components/register/ui.jsx
 // Ikonice, stilovi i koračni indikator (stepper) za registraciju
 
-export const BRAND_YELLOW = "#FDD503";
-export const INK = "#231f20";
+// Polja dele izgled sa ostatkom sistema (src/components/ui) — ovde samo razmak ispod oznake.
+import { labelCls as baseLabelCls, inputCls as baseInputCls } from "../ui";
 
-export const labelCls = "block text-sm font-semibold text-[var(--brand-ink)]";
-export const inputCls =
-  "mt-2 w-full rounded-xl border border-black/15 bg-white px-4 py-3 text-[var(--brand-ink)] transition-colors duration-150 placeholder:text-black/35 focus:border-[var(--brand-ink)] focus:outline-hidden focus:ring-2 focus:ring-[var(--brand-ink)]/15";
+export const labelCls = baseLabelCls;
+export const inputCls = `mt-2 ${baseInputCls}`;
 
 export function CheckIcon({ className = "h-5 w-5" }) {
   return (
@@ -43,39 +42,34 @@ export function ScanIcon({ className = "h-5 w-5" }) {
   );
 }
 
+/** Koračni indikator registracije — četiri segmenta sa linijom iznad (isti obrazac kao u portalu). */
 export function RegisterStepper({ step, t }) {
+  const steps = [t("reg.stepActivation"), t("reg.stepPassport"), t("reg.stepPayment"), t("reg.stepPreferences")];
   return (
-    <div className="mt-8 flex items-center justify-between px-2 text-xs font-bold uppercase tracking-wider text-[var(--brand-ink)]/55 sm:px-4">
-      <span className={`flex items-center gap-1.5 ${step === 1 ? "text-[var(--brand-ink)] font-extrabold" : ""}`}>
-        <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${step === 1 ? "bg-[var(--brand-yellow)] text-black font-black" : step > 1 ? "bg-[var(--brand-ink)] text-white" : "bg-black/10"}`}>
-          {step > 1 ? "✓" : "1"}
-        </span>
-        <span className="hidden sm:inline">{t("reg.stepActivation")}</span>
-      </span>
-      <span className="h-0.5 w-6 bg-black/15 sm:w-10" />
-
-      <span className={`flex items-center gap-1.5 ${step === 2 ? "text-[var(--brand-ink)] font-extrabold" : ""}`}>
-        <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${step === 2 ? "bg-[var(--brand-yellow)] text-black font-black" : step > 2 ? "bg-[var(--brand-ink)] text-white" : "bg-black/10"}`}>
-          {step > 2 ? "✓" : "2"}
-        </span>
-        <span className="hidden sm:inline">{t("reg.stepPassport")}</span>
-      </span>
-      <span className="h-0.5 w-6 bg-black/15 sm:w-10" />
-
-      <span className={`flex items-center gap-1.5 ${step === 3 ? "text-[var(--brand-ink)] font-extrabold" : ""}`}>
-        <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${step === 3 ? "bg-[var(--brand-yellow)] text-black font-black" : step > 3 ? "bg-[var(--brand-ink)] text-white" : "bg-black/10"}`}>
-          {step > 3 ? "✓" : "3"}
-        </span>
-        <span className="hidden sm:inline">{t("reg.stepPayment")}</span>
-      </span>
-      <span className="h-0.5 w-6 bg-black/15 sm:w-10" />
-
-      <span className={`flex items-center gap-1.5 ${step === 4 ? "text-[var(--brand-ink)] font-extrabold" : ""}`}>
-        <span className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${step === 4 ? "bg-[var(--brand-yellow)] text-black font-black" : "bg-black/10"}`}>
-          4
-        </span>
-        <span className="hidden sm:inline">{t("reg.stepPreferences")}</span>
-      </span>
-    </div>
+    <ol className="grid grid-cols-4 gap-2 sm:gap-3">
+      {steps.map((label, i) => {
+        const n = i + 1;
+        const done = step > n;
+        const current = step === n;
+        return (
+          <li
+            key={label}
+            aria-current={current ? "step" : undefined}
+            className={`border-t-2 pt-2.5 ${current ? "border-ink" : done ? "border-ink/40" : "border-line-strong"}`}
+          >
+            <span className={`flex items-center gap-1.5 text-xs tabular-nums ${current || done ? "text-ink" : "text-ink-3"}`}>
+              {done ? <CheckIcon className="h-3.5 w-3.5" /> : n}
+            </span>
+            <span
+              className={`mt-0.5 hidden text-[13px] leading-snug sm:block ${
+                current ? "font-semibold text-ink" : "text-ink-3"
+              }`}
+            >
+              {label.replace(/^\d+\.\s*/, "")}
+            </span>
+          </li>
+        );
+      })}
+    </ol>
   );
 }

@@ -1,122 +1,99 @@
 // Hero.jsx
 import { useTranslation } from "../i18n/LanguageContext";
+import { Button, CheckIcon, PlaneIcon } from "./ui";
+import { BoardingPass } from "./Home";
 
-const BRAND_YELLOW = "#FDD503";
-const INK = "#231f20";
+const PROMISES = ["Prijava je besplatna", "Novac nazad ako viza ne bude odobrena", "Plaćanje na rate"];
 
 /**
- * Hero — uvodna sekcija sa video pozadinom koja se vrti u petlji.
- *
- * Izgled:
- *  - video preko cele sekcije (object-cover), autoPlay + muted + loop + playsInline,
- *  - blago zamućen (blur) uz mali scale da se ne vide zamućene ivice,
- *  - zatamnjen slojem preko videa radi čitljivosti teksta,
- *  - sadržaj (naslov, podnaslov, CTA) centriran preko videa.
- *
- * VIDEO: ubaci svoj fajl u `public/videos/hero.mp4` (+ poster sliku
- * `public/videos/hero-poster.jpg`). Dok fajla nema, vidi se tamna brend podloga.
- *
- * Sav tekst ide kroz prevod (useTranslation). Akcije preko callback propsa.
- *
- * Props (svi imaju default — radi i bez backenda):
- *  - videoSrc:      putanja do videa (default "/videos/hero.mp4")
- *  - poster:        slika dok se video učitava (default "/videos/hero-poster.jpg")
- *  - primaryHref:   ruta primarnog dugmeta (default "/programi")
- *  - secondaryHref: ruta sekundarnog dugmeta (default "/kontakt")
- *  - onNavigate:    (event, href) => void — klik na CTA (backend kači rute)
- *  - blurPx:        jačina blura u px (default 5) — lako podesi koliko je „malo"
- *  - overlayOpacity: zatamnjenje 0–100 (default 55)
- *
- * Gde se ubacuje: prva sekcija u <main> (vidi App.jsx).
+ * Hero — video Amerike preko cele sekcije; preko njega ruta Beograd–Amerika, veliki naslov,
+ * dve akcije, a desno karta za ukrcavanje koja je ujedno provera uslova (BoardingPass).
+ * Na dnu tabla sa brojkama. Uz prefers-reduced-motion ostaje samo poster slika.
  */
-export default function Hero({
-  videoSrc = "/videos/hero.mp4",
-  poster = "/videos/hero-poster.jpg",
-  primaryHref = "/programi",
-  secondaryHref = "/kontakt",
-  onNavigate = () => {},
-  blurPx = 5,
-  overlayOpacity = 55,
-}) {
+export default function Hero({ applyHref = "/prijava-online?program=work-and-travel", poster = "/videos/hero-poster.jpg", onNavigate = () => {} }) {
   const { t } = useTranslation();
-
-  const go = (href) => (e) => {
-    e.preventDefault();
-    onNavigate(e, href);
-  };
+  const go = (href) => (e) => onNavigate(e, href);
 
   return (
-    <section
-      className="relative flex min-h-[85vh] items-center justify-center overflow-hidden"
-      style={{ backgroundColor: INK }} // fallback dok video ne učita / ako fajla nema
-    >
-      {/* Video pozadina */}
+    <section className="relative isolate -mt-16 overflow-hidden bg-ink lg:-mt-[72px]">
       <video
-        className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover"
-        style={{ filter: `blur(${blurPx}px)` }}
-        src={videoSrc}
+        className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover motion-reduce:hidden"
         poster={poster}
         autoPlay
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         aria-hidden="true"
         tabIndex={-1}
-      />
+      >
+        <source src="/videos/hero-mobile.mp4" type="video/mp4" media="(max-width: 767px)" />
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
+      <img src={poster} alt="" className="pointer-events-none absolute inset-0 -z-10 hidden h-full w-full object-cover motion-reduce:block" />
+      {/* Preliv za čitljivost: tamnije levo i dole, nebo desno ostaje živo */}
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-r from-ink/85 via-ink/55 to-ink/20" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-t from-ink via-transparent to-transparent" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 bg-linear-to-b from-ink/60 to-transparent" aria-hidden="true" />
 
-      {/* Zatamnjenje + suptilni gradijent za dubinu */}
-      <div className="absolute inset-0" style={{ backgroundColor: `rgba(35,31,32,${overlayOpacity / 100})` }} aria-hidden="true" />
-      <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-black/20" aria-hidden="true" />
+      <div className="mx-auto grid w-full max-w-7xl gap-12 px-5 pb-14 pt-26 sm:px-8 sm:pb-16 sm:pt-32 lg:grid-cols-12 lg:items-center lg:gap-10 lg:pb-20 lg:pt-36">
+        <div className="lg:col-span-7">
+          {/* Ruta */}
+          <p className="font-sign flex max-w-md items-center gap-3 text-lg font-bold text-white">
+            <span>Beograd</span>
+            <span className="perforation flex-1 text-white/45" aria-hidden="true" />
+            <PlaneIcon className="h-5 w-5 text-brand" />
+            <span className="perforation flex-1 text-white/45" aria-hidden="true" />
+            <span>Amerika</span>
+          </p>
 
-      {/* Sadržaj */}
-      <div className="relative z-10 mx-auto max-w-4xl px-6 py-28 text-center text-white sm:px-10">
-        <p
-          className="text-xs font-bold uppercase tracking-[0.28em] sm:text-sm"
-          style={{ color: BRAND_YELLOW, fontFamily: "'Archivo', system-ui, sans-serif" }}
-        >
-          {t("hero.kicker")}
-        </p>
+          <h1 className="font-display mt-7 text-[clamp(2.9rem,6.6vw,6rem)] font-extrabold leading-[0.9] text-white">{t("hero.title")}</h1>
+          <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl">{t("hero.subtitle")}</p>
 
-        <h1
-          className="mt-5 text-4xl font-extrabold leading-[1.05] tracking-tight drop-shadow-xs sm:text-6xl lg:text-7xl"
-          style={{ fontFamily: "'Archivo', system-ui, sans-serif" }}
-        >
-          {t("hero.title")}
-        </h1>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Button size="lg" href={applyHref} onClick={go(applyHref)}>
+              {t("hero.ctaApply")}
+            </Button>
+            <a
+              href="#zarada"
+              className="inline-flex h-13 items-center justify-center rounded-full border-2 border-white px-7 text-base font-semibold text-white transition-colors hover:bg-white hover:text-ink"
+            >
+              Izračunaj zaradu
+            </a>
+          </div>
 
-        <p className="mx-auto mt-6 max-w-2xl text-base text-white/85 sm:text-lg">
-          {t("hero.subtitle")}
-        </p>
+          <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+            {PROMISES.map((x) => (
+              <li key={x} className="flex items-center gap-2 text-[15px] font-medium text-white">
+                <CheckIcon className="h-4 w-4 text-brand" strokeWidth={3} />
+                {x}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-          <a
-            href={primaryHref}
-            onClick={go(primaryHref)}
-            className="w-full rounded-full px-8 py-3.5 text-sm font-bold uppercase tracking-[0.08em] shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 sm:w-auto"
-            style={{ backgroundColor: BRAND_YELLOW, color: INK }}
-          >
-            {t("hero.ctaPrimary")}
-          </a>
-          <a
-            href={secondaryHref}
-            onClick={go(secondaryHref)}
-            className="w-full rounded-full border-2 border-white/80 px-8 py-3.5 text-sm font-bold uppercase tracking-[0.08em] text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/10 active:translate-y-0 sm:w-auto"
-          >
-            {t("hero.ctaSecondary")}
-          </a>
+        <div className="lg:col-span-5 lg:pl-4">
+          <BoardingPass onNavigate={onNavigate} />
         </div>
       </div>
 
-      {/* Scroll indikator */}
-      <div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 motion-reduce:hidden">
-        <div className="flex flex-col items-center gap-2 text-white/70">
-          <span className="text-[0.65rem] font-semibold uppercase tracking-[0.2em]">{t("hero.scroll")}</span>
-          <span className="flex h-9 w-5 items-start justify-center rounded-full border-2 border-white/60 p-1">
-            <span className="h-2 w-1 animate-bounce rounded-full bg-white/80" />
-          </span>
-        </div>
+      {/* Tabla sa brojkama */}
+      <div className="border-t border-white/15 bg-ink/50 backdrop-blur-md">
+        <dl className="mx-auto grid w-full max-w-7xl grid-cols-3 px-5 sm:px-8">
+          {BOARD.map((b) => (
+            <div key={b.label} className="border-l border-white/15 py-5 pl-4 first:border-l-0 first:pl-0 sm:py-6 sm:pl-8">
+              <dd className="font-sign text-4xl font-extrabold leading-none text-brand sm:text-6xl">{b.value}</dd>
+              <dt className="mt-1.5 text-[13px] leading-snug text-white/80 sm:text-[15px]">{b.label}</dt>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );
 }
+
+const BOARD = [
+  { value: "8.123", label: "učesnika do sada" },
+  { value: "83", label: "grada u Americi" },
+  { value: "45", label: "američkih država" },
+];

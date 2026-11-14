@@ -1,7 +1,7 @@
 // front/src/components/register/Step3PaymentGuarantor.jsx
 // Korak 3: Izbor modela plaćanja (odmah, na rate ili odloženo PKZ) i podaci o jemcu
 
-import { BRAND_YELLOW, INK, labelCls, inputCls, BackIcon } from "./ui";
+import { labelCls, inputCls, BackIcon } from "./ui";
 
 export default function Step3PaymentGuarantor({
   matchedInvitation,
@@ -24,25 +24,25 @@ export default function Step3PaymentGuarantor({
       <button
         type="button"
         onClick={onBack}
-        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--brand-ink)]/60 hover:text-[var(--brand-ink)]"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-ink-3 hover:text-ink"
       >
         <BackIcon /> {t("reg.back")}
       </button>
-      <h1 className="mt-3 text-2xl font-extrabold tracking-tight text-[var(--brand-ink)] sm:text-3xl">
+      <h1 className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
         {t("reg.paymentTitle")}
       </h1>
-      <p className="mt-2 text-sm text-[var(--brand-ink)]/65">
+      <p className="mt-2 text-sm text-ink-2">
         {t("reg.paymentSubtitle")}
       </p>
 
       {/* Sažetak paketa */}
-      <div className="mt-4 rounded-xl border border-black/10 bg-black/[0.02] p-4 text-sm">
-        <div className="flex items-center justify-between font-bold text-[var(--brand-ink)]">
+      <div className="rounded-2xl border border-line bg-white p-5 text-sm sm:p-6">
+        <div className="flex items-center justify-between font-semibold text-ink">
           <span>{matchedInvitation?.packageName || "Work & Travel USA — Full Placement"}</span>
           <span className="text-base">{matchedInvitation?.finalPrice || 1750} €</span>
         </div>
         {matchedInvitation?.discount > 0 && (
-          <p className="mt-1 text-xs text-green-700">
+          <p className="mt-1 text-xs text-emerald-700">
             Uračunat popust: -{matchedInvitation.discount} € ({matchedInvitation.discountNote || "Odobren popust"})
           </p>
         )}
@@ -53,8 +53,8 @@ export default function Step3PaymentGuarantor({
         <label
           className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-all ${
             paymentMethod === "now"
-              ? "border-[var(--brand-ink)] bg-[var(--brand-yellow)]/10 shadow-xs"
-              : "border-black/15 hover:bg-black/[0.02]"
+              ? "border-ink bg-brand/10"
+              : "border-line-strong hover:bg-surface"
           }`}
         >
           <input
@@ -63,11 +63,11 @@ export default function Step3PaymentGuarantor({
             value="now"
             checked={paymentMethod === "now"}
             onChange={() => setPaymentMethod("now")}
-            className="mt-1 accent-[var(--brand-ink)]"
+            className="mt-1 accent-ink"
           />
           <div>
-            <p className="text-sm font-bold text-[var(--brand-ink)]">{t("reg.payNow")}</p>
-            <p className="text-xs text-[var(--brand-ink)]/60">{t("reg.payNowDesc")}</p>
+            <p className="text-sm font-semibold text-ink">{t("reg.payNow")}</p>
+            <p className="text-xs text-ink-3">{t("reg.payNowDesc")}</p>
           </div>
         </label>
 
@@ -75,8 +75,8 @@ export default function Step3PaymentGuarantor({
         <label
           className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-all ${
             paymentMethod === "installments"
-              ? "border-[var(--brand-ink)] bg-[var(--brand-yellow)]/10 shadow-xs"
-              : "border-black/15 hover:bg-black/[0.02]"
+              ? "border-ink bg-brand/10"
+              : "border-line-strong hover:bg-surface"
           }`}
         >
           <input
@@ -85,11 +85,11 @@ export default function Step3PaymentGuarantor({
             value="installments"
             checked={paymentMethod === "installments"}
             onChange={() => setPaymentMethod("installments")}
-            className="mt-1 accent-[var(--brand-ink)]"
+            className="mt-1 accent-ink"
           />
           <div>
-            <p className="text-sm font-bold text-[var(--brand-ink)]">{t("reg.payInstallments")}</p>
-            <p className="text-xs text-[var(--brand-ink)]/60">{t("reg.payInstallmentsDesc")}</p>
+            <p className="text-sm font-semibold text-ink">{t("reg.payInstallments")}</p>
+            <p className="text-xs text-ink-3">{t("reg.payInstallmentsDesc")}</p>
           </div>
         </label>
 
@@ -97,8 +97,8 @@ export default function Step3PaymentGuarantor({
         <label
           className={`flex cursor-pointer items-start gap-3 rounded-2xl border p-4 transition-all ${
             paymentMethod === "later"
-              ? "border-[var(--brand-ink)] bg-[var(--brand-yellow)]/10 shadow-xs"
-              : "border-black/15 hover:bg-black/[0.02]"
+              ? "border-ink bg-brand/10"
+              : "border-line-strong hover:bg-surface"
           }`}
         >
           <input
@@ -107,18 +107,18 @@ export default function Step3PaymentGuarantor({
             value="later"
             checked={paymentMethod === "later"}
             onChange={() => setPaymentMethod("later")}
-            className="mt-1 accent-[var(--brand-ink)]"
+            className="mt-1 accent-ink"
           />
           <div>
-            <p className="text-sm font-bold text-[var(--brand-ink)]">{t("reg.payLaterGuarantor")}</p>
-            <p className="text-xs text-[var(--brand-ink)]/60">{t("reg.payLaterDesc")}</p>
+            <p className="text-sm font-semibold text-ink">{t("reg.payLaterGuarantor")}</p>
+            <p className="text-xs text-ink-3">{t("reg.payLaterDesc")}</p>
           </div>
         </label>
 
         {/* Forma za jemca (prikazuje se samo ako je izabrano 'later') */}
         {paymentMethod === "later" && (
-          <div className="mt-5 space-y-4 rounded-2xl border border-black/15 bg-amber-50/40 p-5">
-            <p className="text-sm font-bold text-[var(--brand-ink)]">
+          <div className="mt-5 space-y-4 rounded-2xl border border-line-strong bg-amber-50/40 p-5">
+            <p className="text-sm font-semibold text-ink">
               {t("reg.guarantorHeading")}
             </p>
             <div>
@@ -180,7 +180,7 @@ export default function Step3PaymentGuarantor({
                 placeholder="npr. 2 menice (serijski brojevi ili komada)"
                 className={inputCls}
               />
-              <p className="mt-1 text-xs text-[var(--brand-ink)]/55">
+              <p className="mt-1 text-xs text-ink-3">
                 {t("reg.promissoryNotesHint")}
               </p>
             </div>
@@ -189,8 +189,7 @@ export default function Step3PaymentGuarantor({
 
         <button
           type="submit"
-          className="mt-6 w-full rounded-full px-7 py-3.5 text-sm font-bold uppercase tracking-[0.08em] shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0"
-          style={{ backgroundColor: BRAND_YELLOW, color: INK }}
+          className="bg-brand text-ink mt-6 w-full rounded-full px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-brand-strong"
         >
           {t("reg.continue")}
         </button>

@@ -1,7 +1,6 @@
 // NewsImage.jsx
 import { useState } from "react";
 
-const INK = "#231f20";
 
 // Tematske ikonice za placeholder (dok prava fotka ne postoji ili se ne učita).
 function PlaneIcon({ className }) {
@@ -32,25 +31,27 @@ function SchoolIcon({ className }) {
 const THEME_ICONS = { plane: PlaneIcon, document: DocIcon, school: SchoolIcon };
 
 /**
- * NewsImage — prava fotka ako se učita, inače brendirani placeholder po `theme`.
+ * NewsImage — prava fotka ako se učita, inače neutralna podloga sa ikonicom po `theme`.
  * `className` kontroliše dimenzije/odnos (npr. "aspect-[16/9] w-full").
  */
-export default function NewsImage({ src, theme, alt, className = "" }) {
+export default function NewsImage({ src, theme, alt, className = "", eager = false }) {
   const [err, setErr] = useState(!src);
+  const [loaded, setLoaded] = useState(false);
   const Icon = THEME_ICONS[theme] || PlaneIcon;
   return (
-    <div
-      className={`relative flex items-center justify-center overflow-hidden ${className}`}
-      style={{ backgroundImage: "linear-gradient(135deg, #FDD503 0%, #E7C200 100%)", color: INK }}
-    >
-      <Icon className="h-16 w-16 opacity-30" />
+    <div className={`relative flex items-center justify-center overflow-hidden bg-surface-2 text-ink-3 ${className}`}>
+      {/* Ikonica samo kad slika ne postoji ili ne može da se učita — ne i dok se učitava. */}
+      {err && <Icon className="h-14 w-14 opacity-40" />}
       {src && !err && (
         <img
           src={src}
           alt={alt}
-          loading="lazy"
+          loading={eager ? "eager" : "lazy"}
+          fetchPriority={eager ? "high" : "auto"}
+          decoding="async"
+          onLoad={() => setLoaded(true)}
           onError={() => setErr(true)}
-          className="absolute inset-0 h-full w-full object-cover"
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
         />
       )}
     </div>
