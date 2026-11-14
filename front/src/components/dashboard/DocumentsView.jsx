@@ -1,6 +1,6 @@
 // front/src/components/dashboard/DocumentsView.jsx
 // Svi dokumenti na jednom mestu: šta preuzimaš, šta si okačio i šta stiže od nas.
-import { Panel, StatusPill, LinkButton } from "./ui";
+import { Panel, LinkButton, TaskIcon } from "./ui";
 import {
   downloadContractPdf,
   downloadResponsibilityStatementPdf,
@@ -10,24 +10,40 @@ import {
 
 const linkCls = "text-[13px] font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink";
 
-function DocRow({ name, sub, tone, status, children }) {
+const STATUS_TEXT = {
+  done: "text-emerald-700",
+  wait: "text-amber-700",
+  current: "text-ink-3",
+  locked: "text-ink-3",
+};
+const TONE_STATE = { done: "done", wait: "wait", neutral: "current", later: "locked" };
+
+function DocRow({ name, sub, tone = "neutral", status, children }) {
+  const state = status === "Kasnije" ? "locked" : TONE_STATE[tone] || "current";
   return (
-    <li className="flex flex-col gap-2 py-3.5 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
-      <div className="min-w-0">
-        <p className="text-sm font-medium text-ink">{name}</p>
-        {sub && <p className="truncate text-[13px] text-ink-3">{sub}</p>}
-      </div>
-      <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2">
-        {children}
-        {status && <StatusPill tone={tone}>{status}</StatusPill>}
+    <li className="flex gap-3.5 py-3.5 first:pt-0 last:pb-0">
+      {status ? (
+        <TaskIcon state={state} className="mt-0.5" />
+      ) : (
+        <svg viewBox="0 0 20 20" className="mt-0.5 h-5 w-5 shrink-0 text-ink-3" aria-hidden="true">
+          <path d="M11.5 2.75H6A1.75 1.75 0 0 0 4.25 4.5v11A1.75 1.75 0 0 0 6 17.25h8a1.75 1.75 0 0 0 1.75-1.75V7z M11.5 2.75V7h4.25" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        </svg>
+      )}
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline justify-between gap-3">
+          <p className={state === "locked" ? "text-[15px] font-medium text-ink-3" : "text-[15px] font-medium text-ink"}>{name}</p>
+          {status && <span className={"shrink-0 text-[13px] " + STATUS_TEXT[state]}>{status}</span>}
+        </div>
+        {sub && <p className="mt-0.5 truncate text-[13px] text-ink-3">{sub}</p>}
+        {children && <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">{children}</div>}
       </div>
     </li>
   );
 }
 
-function Group({ title, description, children }) {
+function Group({ title, children }) {
   return (
-    <Panel title={title} description={description}>
+    <Panel title={title}>
       <ul className="divide-y divide-line">{children}</ul>
     </Panel>
   );
@@ -64,11 +80,11 @@ export default function DocumentsView({ ctx }) {
 
   return (
     <div className="space-y-4">
-      <Group title="Ugovor" description="Ugovor i izjava stižu popunjeni tvojim podacima.">
-        <DocRow name="Ugovor o posredovanju" sub="PDF za štampu">
+      <Group title="Ugovor">
+        <DocRow name="Ugovor o posredovanju" sub="Popunjen tvojim podacima">
           <LinkButton onClick={() => downloadContractPdf(candidate.id, candidate.email)}>Preuzmi</LinkButton>
         </DocRow>
-        <DocRow name="Izjava o odgovornosti" sub="PDF za štampu">
+        <DocRow name="Izjava o odgovornosti" sub="Popunjena tvojim podacima">
           <LinkButton onClick={() => downloadResponsibilityStatementPdf(candidate.id, candidate.email)}>Preuzmi</LinkButton>
         </DocRow>
         <DocRow
@@ -85,7 +101,7 @@ export default function DocumentsView({ ctx }) {
         </DocRow>
       </Group>
 
-      <Group title="Tvoj dosije" description="Ovo šaljemo sponzoru i poslodavcima. Prevode na engleski pravimo mi.">
+      <Group title="Tvoj dosije">
         <DocRow
           name="Video predstavljanje"
           sub={candidate.youtubeUrl || "Link još nije dodat"}
@@ -178,9 +194,6 @@ export default function DocumentsView({ ctx }) {
           <a href="/documents/AA_Instrukcija_za_video_CV.pdf" download="AA_Instrukcija_za_video_CV.pdf" className={linkCls}>
             Preuzmi
           </a>
-        </DocRow>
-        <DocRow name="Uplatnice i računi" sub="Sve uplate su u sekciji Uplate">
-          <LinkButton onClick={() => goTo("uplate")}>Otvori Uplate</LinkButton>
         </DocRow>
       </Group>
     </div>

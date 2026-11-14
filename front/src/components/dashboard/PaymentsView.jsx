@@ -3,26 +3,31 @@
 import { useState } from "react";
 import { Button, cx } from "../ui";
 import { ReceiptIcon } from "./icons";
-import { Panel, StatusPill, LinkButton, DataList } from "./ui";
+import { Panel, LinkButton, DataList, TaskIcon } from "./ui";
 import { formatRsdAmount, generateNbsIpsString } from "../../data/invoicesStore";
 import { openPrintablePaymentSlipWindow, downloadPaymentSlipPdf } from "../../data/candidateStore";
 import { firstPaymentAmount } from "./Step0Registration";
 import { isPkz, thirdInstallmentAmount } from "./Step3VisaDeparture";
 
+const PAY_TONE = { done: "text-emerald-700", wait: "text-amber-700", neutral: "text-ink-3" };
+
 function PaymentRow({ id, title, note, amount, tone, statusLabel, children }) {
   return (
-    <li id={id} className="scroll-mt-28 py-5 first:pt-0 last:pb-0">
-      <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
-        <div className="min-w-0">
-          <p className="text-[15px] font-semibold text-ink">{title}</p>
-          {note && <p className="mt-0.5 text-sm text-ink-3">{note}</p>}
+    <li id={id} className="scroll-mt-28 py-4 first:pt-0 last:pb-0">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex min-w-0 gap-3.5">
+          <TaskIcon state={tone === "done" ? "done" : tone === "wait" ? "wait" : statusLabel === "Kasnije" ? "locked" : "current"} className="mt-0.5" />
+          <div className="min-w-0">
+            <p className="text-[15px] font-medium text-ink">{title}</p>
+            {note && <p className="mt-0.5 text-[13px] text-ink-3">{note}</p>}
+          </div>
         </div>
-        <div className="flex items-center gap-3">
-          {amount && <span className="text-[15px] font-semibold tabular-nums text-ink">{amount}</span>}
-          <StatusPill tone={tone}>{statusLabel}</StatusPill>
+        <div className="shrink-0 text-right">
+          {amount && <p className="text-[15px] font-semibold tabular-nums text-ink">{amount}</p>}
+          <p className={cx("mt-0.5 text-[13px]", PAY_TONE[tone] || PAY_TONE.neutral)}>{statusLabel}</p>
         </div>
       </div>
-      {children && <div className="mt-3">{children}</div>}
+      {children && <div className="mt-3 pl-[2.125rem]">{children}</div>}
     </li>
   );
 }
@@ -183,11 +188,11 @@ export default function PaymentsView({ ctx }) {
     <div className="space-y-4">
       <Panel
         title="Plan uplata"
-        description="Sve uplate idu u dinarima po srednjem kursu NBS na dan uplate. Posle svake uplate klikni „Prijavi uplatu“ da bismo je brže proknjižili."
+        description="U dinarima po srednjem kursu NBS na dan uplate."
         aside={
-          <Button variant="outline" size="sm" onClick={() => setShowInvoicesModal(true)}>
+          <Button variant="outline" size="sm" onClick={() => setShowInvoicesModal(true)} className="h-8 px-3">
             <ReceiptIcon className="h-4 w-4 text-ink-3" />
-            Moji računi
+            Računi
             {candidateInvoices.length > 0 && (
               <span className="rounded-full bg-surface-2 px-1.5 text-xs tabular-nums text-ink-2">{candidateInvoices.length}</span>
             )}
@@ -225,7 +230,9 @@ export default function PaymentsView({ ctx }) {
               )}
               {!isSecondInstallmentPaid && (hasConfirmedJob || showSlip2) && (
                 <div className="space-y-3">
-                  <Rate2Slip candidate={candidate} nbsRate={nbsRate} />
+                  <div className="-ml-[2.125rem]">
+                    <Rate2Slip candidate={candidate} nbsRate={nbsRate} />
+                  </div>
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                     <LinkButton
                       onClick={() =>
@@ -313,7 +320,7 @@ export default function PaymentsView({ ctx }) {
               ],
               [
                 "Dovedi prijatelja — 100 $",
-                <span className="flex items-center justify-end gap-3">
+                <span className="flex items-center gap-3 sm:justify-end">
                   <span className="tabular-nums">{candidate.referralCode || "WT-REF"}</span>
                   <LinkButton
                     onClick={() => {

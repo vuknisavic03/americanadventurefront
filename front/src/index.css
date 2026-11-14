@@ -241,3 +241,13 @@ body[data-menu="open"] .chat-fab {
     }
   }
 }
+
+/* Portal kandidata na telefonu ima donju navigaciju — čet ide iznad nje. */
+@media (max-width: 639px) {
+  body.has-bottom-nav .chat-fab {
+    bottom: calc(4.75rem + env(safe-area-inset-bottom));
+  }
+  body.has-bottom-nav .chat-panel {
+    bottom: calc(9.5rem + env(safe-area-inset-bottom));
+  }
+}

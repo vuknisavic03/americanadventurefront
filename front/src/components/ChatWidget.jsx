@@ -81,7 +81,7 @@ export default function ChatWidget({ getReply }) {
       <div
         role="dialog"
         aria-label={t("chat.title")}
-        className={`fixed bottom-24 right-4 z-[60] flex w-[min(23rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-line transition-all duration-300 sm:right-6 ${
+        className={`chat-panel fixed bottom-24 right-4 z-[60] flex w-[min(23rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-line transition-all duration-300 sm:right-6 ${
           open ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
         }`}
         style={{ height: "min(32rem, calc(100vh - 8rem))" }}

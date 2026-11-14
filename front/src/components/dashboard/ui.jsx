@@ -99,20 +99,20 @@ export function StepShell({ index, state = "current", kicker, title, description
 }
 
 /* ---------- Panel ---------- */
-/** Panel — bela kartica sa naslovom; desno status ili akcija. */
+/** Panel — bela kartica; naslov i akcija u istom redu, opis ispod. */
 export function Panel({ title, description, aside, className = "", children }) {
   return (
     <div className={cx(cardCls, "p-5 sm:p-6", className)}>
       {(title || aside) && (
-        <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-          <div className="min-w-0">
+        <div className="mb-4">
+          <div className="flex items-center justify-between gap-4">
             {title && <h3 className="text-base font-semibold leading-snug text-ink">{title}</h3>}
-            {description && <p className="mt-1 max-w-3xl text-sm leading-relaxed text-ink-2">{description}</p>}
+            {aside}
           </div>
-          {aside}
+          {description && <p className="mt-1 max-w-3xl text-sm leading-relaxed text-ink-3">{description}</p>}
         </div>
       )}
-      {children && <div className={title || aside ? "mt-4" : ""}>{children}</div>}
+      {children}
     </div>
   );
 }
@@ -291,7 +291,12 @@ export function TaskList({ tasks, quiet = false }) {
 
 /** Red akcija ispod zadatka. */
 export function Actions({ className = "", children }) {
-  return <div className={cx("flex flex-wrap items-center gap-2.5", className)}>{children}</div>;
+  // Telefon: dugmad jedno ispod drugog, cele širine (lakše za palac). Desktop: u redu.
+  return (
+    <div className={cx("grid gap-2.5 sm:flex sm:flex-wrap sm:items-center [&>button]:w-full sm:[&>button]:w-auto", className)}>
+      {children}
+    </div>
+  );
 }
 
 /** Tekstualni link-dugme (sekundarna radnja: zameni, izmeni, demo…). */
@@ -300,7 +305,7 @@ export function LinkButton({ className = "", children, ...props }) {
     <button
       type="button"
       className={cx(
-        "text-[13px] font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink disabled:opacity-50",
+        "justify-self-start text-[13px] font-medium text-ink underline decoration-line-strong underline-offset-4 hover:decoration-ink disabled:opacity-50",
         className
       )}
       {...props}
@@ -321,22 +326,23 @@ export function FileLine({ name, className = "", children }) {
   );
 }
 
-/** Lista "oznaka — vrednost" bez kartica. */
+/** Lista "oznaka — vrednost". Na telefonu oznaka stoji iznad vrednosti, na desktopu u istom redu. */
 export function DataList({ items, cols = 2, className = "" }) {
   return (
     <dl
       className={cx(
         "grid gap-x-8",
-        cols === 3 ? "sm:grid-cols-2 lg:grid-cols-3" : cols === 2 ? "sm:grid-cols-2" : "",
+        cols === 3 ? "grid-cols-2 gap-x-4 sm:gap-x-8 lg:grid-cols-3" : cols === 2 ? "sm:grid-cols-2" : "",
         className
       )}
     >
       {items.map(([label, value]) => (
-        <div key={label} className="flex items-baseline justify-between gap-4 border-b border-line py-2.5">
-          <dt className="shrink-0 text-sm text-ink-3">{label}</dt>
-          <dd className="min-w-0 truncate text-right text-sm font-medium text-ink" title={typeof value === "string" ? value : undefined}>
-            {value}
-          </dd>
+        <div
+          key={label}
+          className="flex flex-col gap-0.5 border-b border-line py-2.5 last:border-b-0 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
+        >
+          <dt className="shrink-0 text-[13px] text-ink-3 sm:text-sm">{label}</dt>
+          <dd className="min-w-0 break-words text-[15px] font-medium text-ink sm:truncate sm:text-right sm:text-sm">{value}</dd>
         </div>
       ))}
     </dl>

@@ -30,7 +30,7 @@ import ProfileBuilderModal from "./ProfileBuilderModal";
 import JobFairModal from "./JobFairModal";
 import JobOfferModal from "./JobOfferModal";
 
-import DashboardHeader from "./dashboard/DashboardHeader";
+import DashboardHeader, { MobileNav } from "./dashboard/DashboardHeader";
 import ApplicationTimeline from "./dashboard/ApplicationTimeline";
 import { openTask } from "./dashboard/ui";
 import Step0Registration, { buildRegistrationTasks } from "./dashboard/Step0Registration";
@@ -756,6 +756,16 @@ export default function Dashboard({
   // Sekcija portala: "put" (koraci) | "dokumenta" | "uplate" | "podaci"
   const [view, setView] = useState("put");
   const [showTimeline, setShowTimeline] = useState(false);
+  const changeView = (v) => {
+    setView(v);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  };
+
+  // Na telefonu je donja navigacija — čet dugme ide iznad nje.
+  useEffect(() => {
+    document.body.classList.add("has-bottom-nav");
+    return () => document.body.classList.remove("has-bottom-nav");
+  }, []);
 
   /** Prebaci na sekciju (i korak) i skroluj do elementa. */
   const goTo = (nextView, anchorId, stage) => {
@@ -1009,7 +1019,12 @@ export default function Dashboard({
         badges={{ uplate: paymentDue }}
       />
 
-      <main id="portal-sections" className="mx-auto max-w-6xl px-5 pb-24 pt-8 sm:px-8">
+      <main id="portal-sections" className="mx-auto max-w-6xl px-4 pb-32 pt-7 sm:px-8 sm:pb-24 sm:pt-8">
+        {view !== "put" && (
+          <h2 className="mb-4 text-xl font-semibold text-ink [font-stretch:100%] tracking-[-0.015em] sm:hidden">
+            {{ dokumenta: "Dokumenta", uplate: "Uplate", podaci: "Moji podaci" }[view]}
+          </h2>
+        )}
         {view === "put" && (
           <>
             {shownStage !== currentStageId && (
@@ -1031,6 +1046,8 @@ export default function Dashboard({
         {view === "uplate" && <PaymentsView ctx={ctx} />}
         {view === "podaci" && <ProfileView ctx={ctx} />}
       </main>
+
+      <MobileNav view={view} setView={changeView} badges={{ uplate: paymentDue }} />
 
       <ApplicationTimeline
         open={showTimeline}

@@ -35,8 +35,7 @@ export default function ProfileView({ ctx }) {
 
       <Panel
         title="Lični podaci"
-        description="Isti podaci idu u DS-160 upitnik za vizu — menjaš ih na jednom mestu."
-        aside={<LinkButton onClick={() => setShowDs160Modal(true)}>Izmeni u DS-160</LinkButton>}
+        aside={<LinkButton onClick={() => setShowDs160Modal(true)}>Izmeni</LinkButton>}
       >
         <DataList
           cols={3}
@@ -59,8 +58,7 @@ export default function ProfileView({ ctx }) {
 
       <Panel
         title="Profil za poslodavce"
-        description="Na osnovu ovoga poslodavci biraju koga zovu na intervju."
-        aside={<LinkButton onClick={() => setShowProfileBuilderModal(true)}>Uredi profil</LinkButton>}
+        aside={<LinkButton onClick={() => setShowProfileBuilderModal(true)}>Izmeni</LinkButton>}
       >
         <DataList
           items={[
