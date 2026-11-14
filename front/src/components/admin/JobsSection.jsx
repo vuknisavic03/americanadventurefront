@@ -141,7 +141,7 @@ export default function JobsSection() {
           <button
             type="button"
             onClick={handleOpenAddModal}
-            className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-neutral-950"
+            className="inline-flex items-center gap-2 rounded-lg bg-ink px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-neutral-950"
           >
             <PlusIcon className="h-4 w-4" />
             <span>Dodaj novi posao</span>
@@ -150,7 +150,7 @@ export default function JobsSection() {
       />
 
       {toastMessage && (
-        <div className="rounded-xl bg-emerald-50 px-4 py-3 text-xs font-semibold text-emerald-900">
+        <div className="rounded-xl border border-line bg-white px-4 py-3 text-xs font-semibold text-emerald-700">
           {toastMessage}
         </div>
       )}
@@ -198,7 +198,7 @@ export default function JobsSection() {
           <button
             type="button"
             onClick={handleOpenAddModal}
-            className="mt-4 inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-xs font-semibold text-white hover:bg-neutral-950"
+            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-ink px-4 py-2 text-xs font-semibold text-white hover:bg-neutral-950"
           >
             <PlusIcon className="h-4 w-4" />
             <span>Dodaj prvi posao</span>
@@ -211,7 +211,7 @@ export default function JobsSection() {
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-2 mb-4">
                   <div>
-                    <span className="rounded-full bg-surface border border-line px-3 py-1 text-xs font-medium text-ink">
+                    <span className="rounded-lg bg-surface border border-line px-3 py-1 text-xs font-medium text-ink">
                       {job.category || "Opšti posao"}
                     </span>
                     <h3 className="text-base font-bold text-ink mt-1">
@@ -221,7 +221,7 @@ export default function JobsSection() {
                       {job.employer}
                     </p>
                   </div>
-                  <span className="rounded-md bg-amber-50 px-2 py-1 text-xs font-bold text-amber-900 shrink-0">
+                  <span className="rounded-md border-line bg-white px-2 py-1 text-xs font-bold text-amber-700 shrink-0">
                     {job.wage || "Satnica po dogovoru"}
                   </span>
                 </div>
@@ -262,7 +262,7 @@ export default function JobsSection() {
                   <button
                     type="button"
                     onClick={() => handleOpenEditModal(job)}
-                    className="inline-flex items-center gap-1 rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2 transition-colors"
+                    className="inline-flex items-center gap-1 rounded-lg border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2 transition-colors"
                   >
                     <EditIcon className="h-3.5 w-3.5" />
                     <span>Izmeni</span>
@@ -270,7 +270,7 @@ export default function JobsSection() {
                   <button
                     type="button"
                     onClick={() => handleDelete(job.id, job.title)}
-                    className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-700 hover:bg-red-100 transition-colors"
+                    className="inline-flex items-center gap-1 rounded-lg border-red-200 bg-white px-2 py-1 text-xs font-semibold text-red-700 hover:bg-surface transition-colors"
                   >
                     <TrashIcon className="h-3.5 w-3.5" />
                     <span>Obriši</span>
@@ -449,13 +449,13 @@ export default function JobsSection() {
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  className="rounded-full border border-line-strong bg-white px-4 py-2 text-xs font-semibold text-ink-2 hover:bg-surface-2"
+                  className="rounded-lg border border-line-strong bg-white px-4 py-2 text-xs font-semibold text-ink-2 hover:bg-surface-2"
                 >
                   Odustani
                 </button>
                 <button
                   type="submit"
-                  className="rounded-full bg-ink px-5 py-2 text-xs font-semibold text-white hover:bg-neutral-950"
+                  className="rounded-lg bg-ink px-5 py-2 text-xs font-semibold text-white hover:bg-neutral-950"
                 >
                   {editingJob ? "Sačuvaj izmene" : "Kreiraj posao"}
                 </button>

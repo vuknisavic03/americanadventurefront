@@ -79,7 +79,7 @@ export default function AdminPanel({ onLogout = () => {}, onNavigate = () => {},
           >
             <Logo className="h-9 w-auto" />
           </a>
-          <span className="rounded-full bg-surface-2 px-2 py-0.5 text-xs font-semibold text-ink-3">
+          <span className="rounded-lg bg-surface-2 px-2 py-0.5 text-xs font-semibold text-ink-3">
             {t("dash.adminBadge")}
           </span>
         </div>

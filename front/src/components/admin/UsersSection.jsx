@@ -558,7 +558,7 @@ export default function UsersSection() {
       />
 
       {successToast && (
-        <div role="status" className="mb-6 flex items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900">
+        <div role="status" className="mb-6 flex items-center justify-between rounded-xl border border-line bg-white px-4 py-3 text-sm font-semibold text-emerald-700">
           <span>{successToast}</span>
           <button type="button" onClick={() => setSuccessToast("")} aria-label="Zatvori obaveštenje" className="rounded p-1 text-emerald-800 hover:bg-emerald-100">
             <XIcon className="h-4 w-4" />
@@ -584,7 +584,7 @@ export default function UsersSection() {
             }`}
           >
             {label}
-            <span className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${activeTab === id ? "bg-brand text-ink" : "bg-surface-2 text-ink-2"}`}>{count}</span>
+            <span className={`rounded-full px-2 py-0.5 text-xs font-semibold tabular-nums ${activeTab === id ? "bg-ink text-white" : "bg-surface-2 text-ink-2"}`}>{count}</span>
           </button>
         ))}
       </div>
@@ -622,7 +622,7 @@ export default function UsersSection() {
               <button
                 type="button"
                 onClick={() => downloadPreApplicationsExcel(preAppsList)}
-                className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
+                className="inline-flex items-center gap-2 rounded-lg border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
                 title="Preuzmi sve prijave, trijažne i selekcione podatke u Excel tabeli"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-emerald-700">
@@ -664,14 +664,14 @@ export default function UsersSection() {
                     <div className="grid gap-4 2xl:grid-cols-[320px_1fr]">
                       {/* Student info */}
                       <div className="flex items-start gap-3.5">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand text-sm font-bold text-ink">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-2 text-sm font-semibold text-ink">
                           {s.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                         </span>
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-sm text-ink truncate">{s.name}</span>
                             {s.isNew && (
-                              <span className="rounded-full bg-brand px-2 py-0.5 text-xs font-semibold text-ink">
+                              <span className="rounded-md bg-surface-2 px-2 py-0.5 text-xs font-semibold text-ink">
                                 Novo
                               </span>
                             )}
@@ -689,7 +689,7 @@ export default function UsersSection() {
                             <span className="inline-flex items-center rounded-md bg-surface-2 px-2 py-0.5 font-medium">
                               Godina: {s.studyYear === "YEAR_1" ? "1. god" : s.studyYear === "YEAR_2" ? "2. god" : s.studyYear === "YEAR_3" ? "3. god" : s.studyYear === "YEAR_4" ? "4. god" : s.studyYear === "MASTER" ? "Master" : s.studyYear || "2. god"} ({s.ectsPoints || 0} ESPB)
                             </span>
-                            <span className="inline-flex items-center rounded-md bg-amber-50 text-amber-900 px-2 py-0.5 font-semibold">
+                            <span className="inline-flex items-center rounded-md border-line bg-white text-amber-700 px-2 py-0.5 font-semibold">
                               Engleski: {s.preferences?.englishLevel || "B2"}
                             </span>
                           </div>
@@ -723,7 +723,7 @@ export default function UsersSection() {
                               <p className="text-xs text-ink-3 italic">Nema zabeleške sa poziva</p>
                             )}
                             {s.nextContactAt && (
-                              <p className="mt-1 text-2xs font-semibold text-amber-800">
+                              <p className="mt-1 text-2xs font-semibold text-amber-700">
                                 Sledeći kontakt: {new Date(s.nextContactAt).toLocaleString("sr-RS", { dateStyle: "short", timeStyle: "short" })}
                               </p>
                             )}
@@ -732,7 +732,7 @@ export default function UsersSection() {
                             <button
                               type="button"
                               onClick={() => setSelectedCallCandidate(s)}
-                              className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
                             >
                               <PhoneIcon className="h-3.5 w-3.5 text-ink" />
                               <span>{s.contactStatus ? "Ažuriraj poziv" : "Evidentiraj poziv"}</span>
@@ -792,7 +792,7 @@ export default function UsersSection() {
                             <button
                               type="button"
                               onClick={() => setSelectedConsultationCandidate(s)}
-                              className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
                             >
                               <CalendarIcon className="h-3.5 w-3.5 text-ink" />
                               <span>{s.consultationStatus === "SCHEDULED" ? "Evidentiraj ishod" : "Zakaži konsultacije"}</span>
@@ -836,17 +836,17 @@ export default function UsersSection() {
                                   )}
                                 </div>
                                 {s.registeredAt || s.isRegistered || s.status === "review" ? (
-                                  <p className="text-2xs text-emerald-800 font-semibold">
+                                  <p className="text-2xs text-emerald-700 font-semibold">
                                     Prešao u Fazu 1 ({s.packageName || "Program"})
                                   </p>
                                 ) : (
-                                  <p className="text-2xs text-amber-800 font-medium">
+                                  <p className="text-2xs text-amber-700 font-medium">
                                     Čeka aktivaciju naloga ({s.packageName || "Program"})
                                   </p>
                                 )}
                               </div>
                             ) : s.selectionDecision === "REJECTED" || s.status === "rejected" ? (
-                              <p className="text-xs text-red-900 font-medium line-clamp-2">
+                              <p className="text-xs text-red-700 font-medium line-clamp-2">
                                 {s.decisionNote || "Prijava nije odobrena"}
                               </p>
                             ) : (
@@ -861,7 +861,7 @@ export default function UsersSection() {
                                 <button
                                   type="button"
                                   onClick={() => setSelectedQualifyCandidate(s)}
-                                  className="inline-flex items-center gap-1 rounded-full bg-ink px-2.5 py-1 text-xs font-semibold text-white hover:bg-neutral-950"
+                                  className="inline-flex items-center gap-1 rounded-lg bg-ink px-2.5 py-1 text-xs font-semibold text-white hover:bg-neutral-950"
                                   title="Obavi selekciju kandidata"
                                 >
                                   <UserCheckIcon className="h-3.5 w-3.5 text-brand" />
@@ -870,7 +870,7 @@ export default function UsersSection() {
                                 <button
                                   type="button"
                                   onClick={() => setSelectedRejectCandidate(s)}
-                                  className="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-800 hover:bg-red-100"
+                                  className="inline-flex items-center gap-1 rounded-lg border-red-200 bg-white px-2 py-1 text-xs font-semibold text-red-700 hover:bg-surface"
                                   title="Odbij prijavu kandidata"
                                 >
                                   <UserXIcon className="h-3.5 w-3.5 text-red-700" />
@@ -882,7 +882,7 @@ export default function UsersSection() {
                                 <button
                                   type="button"
                                   onClick={() => setSelectedReadinessCandidate(s)}
-                                  className="inline-flex flex-1 items-center justify-center gap-1 rounded-full bg-amber-500 px-2.5 py-1 text-xs font-semibold text-white hover:bg-amber-600"
+                                  className="inline-flex flex-1 items-center justify-center gap-1 rounded-lg bg-ink px-2.5 py-1 text-xs font-semibold text-white hover:bg-ink"
                                   title="Preduslovi za kreiranje profila"
                                 >
                                   <UserCheckIcon className="h-3.5 w-3.5 text-white" />
@@ -891,7 +891,7 @@ export default function UsersSection() {
                                 <button
                                   type="button"
                                   onClick={() => setSelectedQualifyCandidate(s)}
-                                  className="inline-flex items-center gap-1 rounded-full border border-line-strong bg-white px-2 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
+                                  className="inline-flex items-center gap-1 rounded-lg border border-line-strong bg-white px-2 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
                                   title="Izmeni selekcionu odluku"
                                 >
                                   Izmeni
@@ -901,7 +901,7 @@ export default function UsersSection() {
                               <button
                                 type="button"
                                 onClick={() => handleActivateCandidate(s)}
-                                className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-emerald-600 px-2.5 py-1.5 text-xs font-bold text-white hover:bg-emerald-700 transition-all cursor-pointer"
+                                className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-ink px-2.5 py-1.5 text-xs font-bold text-white hover:bg-ink transition-all cursor-pointer"
                                 title="Aktiviraj nalog odmah i prebaci kandidata u Fazu 1 (Aktivni kandidati)"
                               >
                                 <CheckIcon className="h-3.5 w-3.5 text-white" />
@@ -931,7 +931,7 @@ export default function UsersSection() {
                         <button
                           type="button"
                           onClick={() => setSelectedCandidate(s)}
-                          className="inline-flex items-center rounded-full border border-line-strong bg-white px-3 py-1.5 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
+                          className="inline-flex items-center rounded-lg border border-line-strong bg-white px-3 py-1.5 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
                         >
                           Otvori dosije
                         </button>
@@ -968,7 +968,7 @@ export default function UsersSection() {
                     <button
                       type="button"
                       onClick={() => copyInvitationCode(inv.code)}
-                      className="rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
+                      className="rounded-lg border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
                     >
                       {copiedCode === inv.code ? "Kopirano" : "Kopiraj kod"}
                     </button>
@@ -993,7 +993,7 @@ export default function UsersSection() {
                             });
                           }
                         }}
-                        className="rounded-full bg-emerald-50 px-2 py-1 text-2xs font-semibold text-emerald-900 transition-colors hover:bg-emerald-100"
+                        className="rounded-lg border border-line bg-white px-2 py-1 text-2xs font-semibold text-emerald-700 transition-colors hover:bg-surface"
                         title="Aktiviraj nalog odmah i prebaci kandidata u aktivne kandidate (Faze 1-3)"
                       >
                         Aktiviraj odmah
@@ -1002,7 +1002,7 @@ export default function UsersSection() {
                     <button
                       type="button"
                       onClick={() => handleResetInvitation(inv.code)}
-                      className="rounded-full bg-amber-50 px-2 py-1 text-2xs font-semibold text-amber-900 transition-colors hover:bg-amber-100"
+                      className="rounded-lg border border-line bg-white px-2 py-1 text-2xs font-semibold text-amber-700 transition-colors hover:bg-surface"
                       title="Resetuj kod na 'Čeka registraciju' i omogući ponovnu aktivaciju"
                     >
                       ↻ Resetuj kod
@@ -1048,7 +1048,7 @@ export default function UsersSection() {
               <button
                 type="button"
                 onClick={downloadEmbassyExport}
-                className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
+                className="inline-flex items-center gap-2 rounded-lg border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-surface-2"
                 title="Preuzmi tabelu kandidata za ambasadu SAD i sponzore"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 text-emerald-700">
@@ -1098,7 +1098,7 @@ export default function UsersSection() {
                       onClick={() => setSelectedCandidate(s)}
                       className="flex cursor-pointer items-center gap-3 min-w-0"
                     >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand/30 text-xs font-semibold text-ink">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface-2 text-xs font-semibold text-ink">
                         {s.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                       </span>
                       <span className="min-w-0">
@@ -1106,11 +1106,11 @@ export default function UsersSection() {
                         <div className="flex flex-wrap items-center gap-1.5 mt-0.5">
                           <span className="truncate text-xs text-ink-3">{s.email}</span>
                           {Boolean(s.signedContractFileName || s.contractSigned) ? (
-                            <span className="inline-flex items-center rounded-sm bg-emerald-100 px-1.5 py-0.2 text-2xs font-semibold text-emerald-800" title={`Ugovor: ${s.signedContractFileName || "Potpisan"}`}>
+                            <span className="inline-flex items-center rounded-sm bg-surface-2 px-1.5 py-0.2 text-2xs font-semibold text-emerald-700" title={`Ugovor: ${s.signedContractFileName || "Potpisan"}`}>
                               Ugovor
                             </span>
                           ) : (
-                            <span className="inline-flex items-center rounded-sm bg-amber-100 px-1.5 py-0.2 text-2xs font-semibold text-amber-800" title="Ugovor nije okačen (uplate blokirane)">
+                            <span className="inline-flex items-center rounded-sm bg-surface-2 px-1.5 py-0.2 text-2xs font-semibold text-amber-700" title="Ugovor nije okačen (uplate blokirane)">
                               Bez ugovora
                             </span>
                           )}
@@ -1129,7 +1129,7 @@ export default function UsersSection() {
                       onClick={() => setSelectedCandidate(s)}
                       className="flex cursor-pointer flex-col gap-1 min-w-0"
                     >
-                      <span className={`inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${stepInfo.badgeCls}`}>
+                      <span className={`inline-flex w-fit items-center gap-1.5 rounded-lg border px-3 py-1 text-xs font-medium ${stepInfo.badgeCls}`}>
                         <span className={`h-1.5 w-1.5 rounded-full ${stepInfo.dotCls}`} />
                         {stepInfo.stepTitle}
                       </span>
@@ -1143,7 +1143,7 @@ export default function UsersSection() {
                       <button
                         type="button"
                         onClick={() => setSelectedCandidate(s)}
-                        className="inline-flex items-center gap-1 rounded-full border border-line bg-white px-2.5 py-1.5 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
+                        className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-2.5 py-1.5 text-xs font-semibold text-ink transition-colors hover:bg-surface-2"
                         title="Izmeni podatke aplikacije"
                       >
                         <EditIcon className="h-3.5 w-3.5" />

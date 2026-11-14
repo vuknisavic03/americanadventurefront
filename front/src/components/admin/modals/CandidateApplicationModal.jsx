@@ -811,7 +811,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
             <div className="flex min-w-0 items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-ink">{initials}</span>
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-surface-2 text-sm font-semibold text-ink">{initials}</span>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   <h2 className="truncate text-lg font-bold leading-tight text-ink">
@@ -869,7 +869,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   {tab.done ? (
                     <CheckIcon className="h-4 w-4 shrink-0 text-emerald-600" />
                   ) : tab.alert ? (
-                    <span className="h-2 w-2 shrink-0 rounded-full bg-amber-500" title="Čeka tvoju akciju" />
+                    <span className="h-2 w-2 shrink-0 rounded-full bg-ink" title="Čeka tvoju akciju" />
                   ) : null}
                 </button>
               </div>
@@ -882,14 +882,14 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <h3 className="text-xl font-bold text-ink">{activeTabInfo.label}</h3>
           {activeTabInfo.alert && !activeTabInfo.done && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-500" /> Čeka tvoju akciju
+            <span className="inline-flex items-center gap-1.5 rounded-lg bg-surface-2 px-3 py-1 text-xs font-semibold text-amber-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-ink" /> Čeka tvoju akciju
             </span>
           )}
         </div>
 
         {adminToast && (
-          <div role="status" className="flex items-center justify-between rounded-xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-900">
+          <div role="status" className="flex items-center justify-between rounded-xl border border-line bg-white px-4 py-3 text-sm font-semibold text-emerald-700">
             <span>{adminToast}</span>
             <button type="button" onClick={() => setAdminToast("")} aria-label="Zatvori obaveštenje" className="ml-3 rounded p-1 text-emerald-800 hover:bg-emerald-100">
               <XIcon />
@@ -908,9 +908,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               <div
                 className={`rounded-xl border p-4 ${
                   contractApproved
-                    ? "bg-emerald-50"
+                    ? "border-line bg-white"
                     : contractVerificationStatus === "rejected"
-                    ? "bg-red-50"
+                    ? "border-red-200 bg-white"
                     : "border-line bg-white"
                 }`}
               >
@@ -926,11 +926,11 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   <span
                     className={`rounded-full px-3 py-1 text-xs font-medium ${
                       contractApproved
-                        ? "bg-emerald-100 text-emerald-800"
+                        ? "bg-surface-2 text-emerald-700"
                         : contractVerificationStatus === "rejected"
-                        ? "bg-red-100 text-red-700"
+                        ? "bg-surface-2 text-red-700"
                         : contractSigned
-                        ? "bg-amber-200 text-amber-950"
+                        ? "bg-surface-2 text-amber-700"
                         : "bg-surface-2 text-ink-3"
                     }`}
                   >
@@ -967,7 +967,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                             "contract"
                           )
                         }
-                        className="rounded-full bg-ink px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90"
+                        className="rounded-lg bg-ink px-3 py-1.5 text-xs font-semibold text-white hover:opacity-90"
                       >
                         Otvori dokument
                       </button>
@@ -979,7 +979,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   )}
 
                   <div className="mt-2.5 flex flex-wrap items-center gap-2 border-t border-line pt-2.5">
-                    <label className="cursor-pointer rounded-full border border-line-strong bg-surface px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2">
+                    <label className="cursor-pointer rounded-lg border border-line-strong bg-surface px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2">
                       {uploadingDocType === "signedContract" ? "Otpremanje..." : "Otpremi sken ugovora"}
                       <input
                         type="file"
@@ -991,7 +991,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     <button
                       type="button"
                       onClick={() => openPrintableContractWindow({ id: candidate.id, email: email })}
-                      className="rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
+                      className="rounded-lg border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
                     >
                       Ugovor za štampu
                     </button>
@@ -999,7 +999,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                 </div>
 
                 {contractRejectionReason && !contractApproved && (
-                  <p className="mt-2 rounded-lg bg-red-100/70 px-2.5 py-1.5 text-xs font-medium text-red-900">
+                  <p className="mt-2 rounded-lg bg-surface-2 px-2.5 py-1.5 text-xs font-medium text-red-700">
                     Razlog odbijanja: {contractRejectionReason}
                   </p>
                 )}
@@ -1008,7 +1008,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   <button
                     type="button"
                     onClick={() => handleVerifyContractAction(true)}
-                    className="rounded-full bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
+                    className="rounded-lg bg-ink px-3 py-1.5 text-xs font-semibold text-white hover:bg-ink"
                   >
                     Odobri potpisani ugovor
                   </button>
@@ -1021,7 +1021,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         reason: contractRejectionReason || "",
                       })
                     }
-                    className="rounded-full border border-red-300 bg-white px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50"
+                    className="rounded-lg border border-red-300 bg-white px-3 py-1.5 text-xs font-semibold text-red-700 hover:border-red-200 bg-white"
                   >
                     Vrati na dopunu
                   </button>
@@ -1032,9 +1032,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               <div
                 className={`rounded-xl border p-4 flex flex-col justify-between ${
                   (isFull ? isFullPaymentPaid || firstInstallmentApproved : firstInstallmentApproved)
-                    ? "bg-emerald-50"
+                    ? "border-line bg-white"
                     : firstInstallmentStatus === "pending"
-                    ? "bg-amber-50"
+                    ? "border-line bg-white"
                     : "border-line bg-white"
                 }`}
               >
@@ -1053,9 +1053,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     <span
                       className={`rounded-full px-3 py-1 text-xs font-medium ${
                         (isFull ? isFullPaymentPaid || firstInstallmentApproved : firstInstallmentApproved)
-                          ? "bg-emerald-100 text-emerald-800"
+                          ? "bg-surface-2 text-emerald-700"
                           : firstInstallmentStatus === "pending"
-                          ? "bg-amber-200 text-amber-950"
+                          ? "bg-surface-2 text-amber-700"
                           : "bg-surface-2 text-ink-3"
                       }`}
                     >
@@ -1094,7 +1094,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     <button
                       type="button"
                       onClick={() => handleConfirmInstallmentAction(isFull ? "full" : 1)}
-                      className="rounded-full bg-emerald-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
+                      className="rounded-lg bg-ink px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-ink"
                     >
                       {isFull
                         ? `Potvrdi uplatu (${finalPrice} €)`
@@ -1203,7 +1203,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       Pregledaj pasoš
                     </button>
                   )}
-                  <label className="cursor-pointer rounded-full border border-line-strong bg-white px-3 py-1.5 text-xs font-semibold text-ink hover:bg-surface-2">
+                  <label className="cursor-pointer rounded-lg border border-line-strong bg-white px-3 py-1.5 text-xs font-semibold text-ink hover:bg-surface-2">
                     {uploadingDocType === "passport" ? "Otpremanje..." : "Otpremi pasoš"}
                     <input
                       type="file"
@@ -1278,8 +1278,8 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               </div>
 
               {(paymentMethod === "later" || paymentMethod === "installments" || guarantorName) && (
-                <div className="rounded-lg bg-amber-50 p-3.5 space-y-3">
-                  <p className="text-xs font-semibold text-amber-950">
+                <div className="rounded-lg border border-line bg-white p-3.5 space-y-3">
+                  <p className="text-xs font-semibold text-amber-700">
                     Podaci o jemcu i menicama (Obavezno za PKZ / odloženo plaćanje III rate)
                   </p>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -1314,7 +1314,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   <button
                     type="button"
                     onClick={() => setShowProfileBuilder(true)}
-                    className="rounded-full bg-brand px-3 py-1 text-xs font-bold text-ink transition-colors hover:bg-brand-strong"
+                    className="rounded-lg border border-line-strong bg-white px-3 py-1 text-xs font-semibold text-ink transition-colors hover:bg-surface"
                   >
                     CV builder
                   </button>
@@ -1389,7 +1389,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   </h4>
                   <span
                     className={`rounded-full px-3 py-1 text-xs font-medium ${
-                      facultyCertFileName ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"
+                      facultyCertFileName ? "bg-surface-2 text-emerald-700" : "bg-surface-2 text-amber-700"
                     }`}
                   >
                     {facultyCertFileName ? "Otpremljeno" : "Nedostaje"}
@@ -1455,7 +1455,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   </h4>
                   <span
                     className={`rounded-full px-3 py-1 text-xs font-medium ${
-                      policeCertificateFileName ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"
+                      policeCertificateFileName ? "bg-surface-2 text-emerald-700" : "bg-surface-2 text-amber-700"
                     }`}
                   >
                     {policeCertificateFileName ? "Otpremljeno" : "Nedostaje"}
@@ -1518,9 +1518,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
             <div
               className={`rounded-xl border p-4 flex flex-wrap items-center justify-between gap-4 ${
                 documentsApproved
-                  ? "bg-emerald-50"
+                  ? "border-line bg-white"
                   : documentsVerificationStatus === "rejected"
-                  ? "bg-red-50"
+                  ? "border-red-200 bg-white"
                   : "border-line bg-surface"
               }`}
             >
@@ -1532,9 +1532,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   <span
                     className={`rounded-full px-3 py-1 text-xs font-medium ${
                       documentsApproved
-                        ? "bg-emerald-100 text-emerald-800"
+                        ? "bg-surface-2 text-emerald-700"
                         : documentsVerificationStatus === "rejected"
-                        ? "bg-red-100 text-red-700"
+                        ? "bg-surface-2 text-red-700"
                         : "bg-surface-2 text-ink"
                     }`}
                   >
@@ -1549,7 +1549,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   Kad su sva dokumenta pregledana i odobrena, kandidat prelazi na Korak 2: Posao i ponuda.
                 </p>
                 {documentsRejectionReason && !documentsApproved && (
-                  <p className="mt-2 rounded-lg bg-red-100/80 px-3 py-1.5 text-xs font-semibold text-red-900">
+                  <p className="mt-2 rounded-lg bg-surface-2 px-3 py-1.5 text-xs font-semibold text-red-700">
                     Razlog za dopunu: {documentsRejectionReason}
                   </p>
                 )}
@@ -1559,7 +1559,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                 <button
                   type="button"
                   onClick={() => handleVerifyDocumentsAction(true)}
-                  className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-700"
+                  className="rounded-lg bg-ink px-4 py-2 text-xs font-bold text-white hover:bg-ink"
                 >
                   Odobri dokumenta
                 </button>
@@ -1572,7 +1572,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       reason: documentsRejectionReason || "",
                     })
                   }
-                  className="rounded-full border border-red-300 bg-white px-3.5 py-2 text-xs font-semibold text-red-700 hover:bg-red-50"
+                  className="rounded-lg border border-red-300 bg-white px-3.5 py-2 text-xs font-semibold text-red-700 hover:border-red-200 bg-white"
                 >
                   Vrati na dopunu
                 </button>
@@ -1605,7 +1605,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     </h4>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="rounded-full bg-surface border border-line px-3 py-1 text-xs font-medium text-ink">
+                    <span className="rounded-lg bg-surface border border-line px-3 py-1 text-xs font-medium text-ink">
                       Ponuđeno: {offeredCount}
                     </span>
                   </div>
@@ -1628,14 +1628,14 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         <button
                           type="button"
                           onClick={() => setOfferedJobIds(allCatalogJobs.map((j) => j.id))}
-                          className="rounded-full border border-line bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
+                          className="rounded-lg border border-line bg-white px-2.5 py-1 text-xs font-semibold text-ink hover:bg-surface-2"
                         >
                           Označi sve
                         </button>
                         <button
                           type="button"
                           onClick={() => setOfferedJobIds([])}
-                          className="rounded-full border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink-2 hover:bg-surface-2"
+                          className="rounded-lg border border-line-strong bg-white px-2.5 py-1 text-xs font-semibold text-ink-2 hover:bg-surface-2"
                         >
                           Poništi sve
                         </button>
@@ -1666,7 +1666,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                             <div className="min-w-0 flex-1">
                               <p className="font-bold text-ink truncate">{job.title}</p>
                               <p className="text-xs text-ink-2 truncate">{job.employer}, {job.city}</p>
-                              <p className="text-2xs font-semibold text-amber-900 mt-0.5">{job.wage}</p>
+                              <p className="text-2xs font-semibold text-amber-700 mt-0.5">{job.wage}</p>
                             </div>
                           </div>
                         );
@@ -1688,13 +1688,13 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     <span
                       className={`rounded-full px-3 py-1 text-xs font-medium ${
                         jobApplicationStatus === "ACCEPTED" || (hasJob && !["SCHEDULED", "APPLIED", "NO_SLOTS", "REJECTED"].includes(jobApplicationStatus))
-                          ? "bg-emerald-100 text-emerald-800"
+                          ? "bg-surface-2 text-emerald-700"
                           : jobApplicationStatus === "SCHEDULED"
                           ? "bg-surface-2 text-ink"
                           : jobApplicationStatus === "APPLIED"
-                          ? "bg-amber-100 text-amber-800"
+                          ? "bg-surface-2 text-amber-700"
                           : jobApplicationStatus === "NO_SLOTS" || jobApplicationStatus === "REJECTED"
-                          ? "bg-red-100 text-red-700"
+                          ? "bg-surface-2 text-red-700"
                           : "bg-surface-2 text-ink-3"
                       }`}
                     >
@@ -1863,7 +1863,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         setAdminToast("Razgovor je zakazan.");
                         setTimeout(() => setAdminToast(""), 4000);
                       }}
-                      className="rounded-full bg-ink px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-neutral-950"
+                      className="rounded-lg bg-ink px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-neutral-950"
                     >
                       Zakaži razgovor
                     </button>
@@ -1884,7 +1884,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         setAdminToast("Evidentirano: nema termina. Kandidat je obavešten.");
                         setTimeout(() => setAdminToast(""), 4000);
                       }}
-                      className="rounded-full bg-amber-50 px-3.5 py-1.5 text-xs font-semibold text-amber-950 hover:bg-amber-100"
+                      className="rounded-lg border border-line bg-white px-3.5 py-1.5 text-xs font-semibold text-amber-700 hover:bg-surface"
                     >
                       Nema slobodnih termina
                     </button>
@@ -1905,7 +1905,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         setAdminToast("Evidentirano: poslodavac je odbio kandidata. Izbor posla je ponovo otvoren.");
                         setTimeout(() => setAdminToast(""), 4000);
                       }}
-                      className="rounded-full bg-red-50 px-3.5 py-1.5 text-xs font-semibold text-red-900 hover:bg-red-100"
+                      className="rounded-lg border-red-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-red-700 hover:bg-surface"
                     >
                       Poslodavac odbio kandidata
                     </button>
@@ -1923,7 +1923,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         setAdminToast("Poslodavac je prihvatio kandidata. Job offer je potvrđen.");
                         setTimeout(() => setAdminToast(""), 4000);
                       }}
-                      className="rounded-full bg-emerald-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
+                      className="rounded-lg bg-ink px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-ink"
                     >
                       Prihvaćen, job offer
                     </button>
@@ -1935,9 +1935,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               <div
                 className={`rounded-xl border p-4 flex flex-wrap items-center justify-between gap-4 ${
                   secondInstallmentPaid
-                    ? "bg-emerald-50"
+                    ? "border-line bg-white"
                     : secondInstallmentStatus === "pending"
-                    ? "bg-amber-50"
+                    ? "border-line bg-white"
                     : "border-line bg-white"
                 }`}
               >
@@ -1951,9 +1951,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     <span
                       className={`rounded-full px-3 py-1 text-xs font-medium ${
                         (isFull ? isFullPaymentPaid || secondInstallmentPaid : secondInstallmentPaid)
-                          ? "bg-emerald-100 text-emerald-800"
+                          ? "bg-surface-2 text-emerald-700"
                           : secondInstallmentStatus === "pending"
-                          ? "bg-amber-200 text-amber-950"
+                          ? "bg-surface-2 text-amber-700"
                           : "bg-surface-2 text-ink-3"
                       }`}
                     >
@@ -1980,13 +1980,13 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     <button
                       type="button"
                       onClick={() => handleConfirmInstallmentAction(2)}
-                      className="rounded-full bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
+                      className="rounded-lg bg-ink px-3 py-1.5 text-xs font-semibold text-white hover:bg-ink"
                     >
                       Proknjiži II ratu ({secondInstallmentAmount} €)
                     </button>
                   )}
                   {!isFull && secondInstallmentPaid && (
-                    <span className="text-xs font-semibold text-emerald-800">Proknjiženo</span>
+                    <span className="text-xs font-semibold text-emerald-700">Proknjiženo</span>
                   )}
                 </div>
               </div>
@@ -2060,7 +2060,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     <button
                       type="button"
                       onClick={() => handleConfirmInstallmentAction(3)}
-                      className="rounded-full bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
+                      className="rounded-lg bg-ink px-3 py-1.5 text-xs font-semibold text-white hover:bg-ink"
                     >
                       Potvrdi III ratu ({thirdInstallmentAmount} €)
                     </button>
@@ -2109,20 +2109,20 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     const st = getDs160Status(candidate.ds160);
                     if (st.isComplete) {
                       return (
-                        <span className="rounded-full bg-emerald-100 text-emerald-800 px-3 py-1 text-xs font-medium">
+                        <span className="rounded-lg bg-surface-2 text-emerald-700 px-3 py-1 text-xs font-medium">
                           Popunjen
                         </span>
                       );
                     }
                     if (st.isStarted) {
                       return (
-                        <span className="rounded-full bg-amber-100 text-amber-800 px-3 py-1 text-xs font-medium">
+                        <span className="rounded-lg bg-surface-2 text-amber-700 px-3 py-1 text-xs font-medium">
                           Popunjeno {st.filledCount} od {st.totalCount}
                         </span>
                       );
                     }
                     return (
-                      <span className="rounded-full bg-surface-2 text-ink-3 px-3 py-1 text-xs font-medium">
+                      <span className="rounded-lg bg-surface-2 text-ink-3 px-3 py-1 text-xs font-medium">
                         Nije popunjavano
                       </span>
                     );
@@ -2157,7 +2157,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
             <div
               className={`rounded-xl border p-4 flex flex-wrap items-center justify-between gap-4 ${
                 hasVisa
-                  ? "bg-emerald-50"
+                  ? "border-line bg-white"
                   : "border-line bg-surface"
               }`}
             >
@@ -2168,7 +2168,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   </h4>
                   <span
                     className={`rounded-full px-3 py-1 text-xs font-medium ${
-                      hasVisa ? "bg-emerald-200 text-emerald-950" : "bg-surface-2 text-ink"
+                      hasVisa ? "bg-surface-2 text-emerald-700" : "bg-surface-2 text-ink"
                     }`}
                   >
                     {hasVisa ? "Viza odobrena" : "Čekanje na vizu"}
@@ -2190,7 +2190,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       onSave(updated, { keepOpen: true });
                       showToast("J-1 viza je potvrđena. Kandidat ima status Viza odobrena.");
                     }}
-                    className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-700"
+                    className="rounded-lg bg-ink px-4 py-2 text-xs font-bold text-white hover:bg-ink"
                   >
                     Potvrdi odobrenu vizu
                   </button>
@@ -2204,7 +2204,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                       onSave(updated, { keepOpen: true });
                       showToast("Status je vraćen na Čekanje na vizu.");
                     }}
-                    className="rounded-full border border-line-strong bg-white px-3 py-1.5 text-xs font-semibold text-ink hover:bg-surface-2"
+                    className="rounded-lg border border-line-strong bg-white px-3 py-1.5 text-xs font-semibold text-ink hover:bg-surface-2"
                   >
                     Vrati na čekanje vize
                   </button>
@@ -2229,22 +2229,22 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               <div className="rounded-xl border border-line bg-white p-3">
                 <p className="text-xs font-semibold text-ink-3">Popust</p>
                 <p className="text-base sm:text-lg font-bold text-emerald-700 mt-0.5">-{formatEur(numDiscount)}</p>
-                <p className="text-xs font-semibold text-emerald-800/80 mt-0.5">-{formatRsd(numDiscount * currentNbsRate)}</p>
+                <p className="text-xs font-semibold text-emerald-700/80 mt-0.5">-{formatRsd(numDiscount * currentNbsRate)}</p>
               </div>
               <div className="rounded-2xl border border-line bg-white p-5 sm:p-6">
                 <p className="text-xs font-semibold text-ink">Za uplatu</p>
                 <p className="text-base sm:text-lg font-bold text-ink mt-0.5">{formatEur(finalPrice)}</p>
                 <p className="text-xs font-semibold text-ink mt-0.5">{formatRsd(finalPrice * currentNbsRate)}</p>
               </div>
-              <div className="rounded-xl bg-emerald-50 p-3">
-                <p className="text-xs font-semibold text-emerald-900/60">Ukupno uplaćeno</p>
-                <p className="text-base sm:text-lg font-bold text-emerald-800 mt-0.5">{formatEur(totalPaidEur)}</p>
-                <p className="text-xs font-bold text-emerald-900 mt-0.5">{formatRsd(totalPaidRsd)}</p>
+              <div className="rounded-xl border border-line bg-white p-3">
+                <p className="text-xs font-semibold text-ink-3">Ukupno uplaćeno</p>
+                <p className="text-base sm:text-lg font-bold text-emerald-700 mt-0.5">{formatEur(totalPaidEur)}</p>
+                <p className="text-xs font-bold text-emerald-700 mt-0.5">{formatRsd(totalPaidRsd)}</p>
               </div>
-              <div className="rounded-xl bg-amber-50 p-3 col-span-2 sm:col-span-1">
-                <p className="text-xs font-semibold text-amber-900/60">Preostali dug</p>
-                <p className="text-base sm:text-lg font-bold text-amber-900 mt-0.5">{formatEur(remainingEur)}</p>
-                <p className="text-xs font-semibold text-amber-800 mt-0.5">{formatRsd(remainingRsd)}</p>
+              <div className="rounded-xl border border-line bg-white p-3 col-span-2 sm:col-span-1">
+                <p className="text-xs font-semibold text-ink-3">Preostali dug</p>
+                <p className="text-base sm:text-lg font-bold text-amber-700 mt-0.5">{formatEur(remainingEur)}</p>
+                <p className="text-xs font-semibold text-amber-700 mt-0.5">{formatRsd(remainingRsd)}</p>
               </div>
             </div>
 
@@ -2259,7 +2259,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     Iznosi rata mogu da se prilagode ovom kandidatu.
                   </p>
                 </div>
-                <span className="rounded-full bg-surface-2 px-3 py-1 text-xs font-medium text-ink-2">
+                <span className="rounded-lg bg-surface-2 px-3 py-1 text-xs font-medium text-ink-2">
                   Srednji kurs NBS: <strong className="tabular-nums text-ink">{Number(currentNbsRate).toFixed(4)} RSD</strong>
                 </span>
               </div>
@@ -2325,9 +2325,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     </Field>
                   </>
                 ) : (
-                  <div className="sm:col-span-3 rounded-lg bg-emerald-50 p-2.5 text-xs text-emerald-950">
+                  <div className="sm:col-span-3 rounded-lg border border-line bg-white p-2.5 text-xs text-emerald-700">
                     <p className="font-semibold">Jednokratna uplata</p>
-                    <p className="text-xs text-emerald-900/80 mt-0.5">
+                    <p className="text-xs text-emerald-700/80 mt-0.5">
                       Ceo iznos odjednom: {formatEur(finalPrice)}, odnosno {formatRsd(finalPrice * currentNbsRate)}. Nema II i III rate.
                     </p>
                   </div>
@@ -2344,7 +2344,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     {firstInstallmentAmount + secondInstallmentAmount + thirdInstallmentAmount === finalPrice ? (
                       <span className="text-emerald-700 font-semibold">(Zbir u potpunosti odgovara ceni programa)</span>
                     ) : (
-                      <span className="text-amber-800 font-semibold">
+                      <span className="text-amber-700 font-semibold">
                         (Razlika u odnosu na cenu paketa: {formatEur(finalPrice - (firstInstallmentAmount + secondInstallmentAmount + thirdInstallmentAmount))})
                       </span>
                     )}
@@ -2355,7 +2355,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
 
             {/* Prikaz kartica: Jednokratno ili 3 rate */}
             {paymentMethod === "now" ? (
-              <div className={`rounded-xl border p-4 ${isFullPaymentPaid || firstInstallmentApproved ? "bg-emerald-50" : "border-line bg-white"}`}>
+              <div className={`rounded-xl border p-4 ${isFullPaymentPaid || firstInstallmentApproved ? "border-line bg-white" : "border-line bg-white"}`}>
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div>
                     <span className="text-xs font-medium text-ink-3">
@@ -2368,9 +2368,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   <span
                     className={`rounded-full px-3 py-1 text-xs font-medium ${
                       isFullPaymentPaid || firstInstallmentApproved
-                        ? "bg-emerald-100 text-emerald-800"
+                        ? "bg-surface-2 text-emerald-700"
                         : firstInstallmentStatus === "pending"
-                        ? "bg-amber-200 text-amber-950"
+                        ? "bg-surface-2 text-amber-700"
                         : "bg-surface-2 text-ink-3"
                     }`}
                   >
@@ -2401,16 +2401,16 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                 </div>
 
                 {candidate.fullPaymentPaidRsd ? (
-                  <div className="mt-3 rounded-lg border border-emerald-200 bg-white p-2.5 text-xs text-emerald-950 flex flex-wrap items-center justify-between gap-2">
+                  <div className="mt-3 rounded-lg border border-line bg-white p-2.5 text-xs text-emerald-700 flex flex-wrap items-center justify-between gap-2">
                     <div>
                       <p className="font-semibold">
                         Plaćeno {candidate.fullPaymentPaidDate || "—"}, kurs NBS {Number(candidate.fullPaymentExchangeRate || currentNbsRate).toFixed(4)} RSD
                       </p>
-                      <p className="text-xs text-emerald-900/80 mt-0.5">
+                      <p className="text-xs text-emerald-700/80 mt-0.5">
                         Dinarski iznos je zaključan na dan knjiženja.
                       </p>
                     </div>
-                    <span className="rounded-md bg-emerald-100 text-emerald-800 px-2 py-0.5 text-2xs font-semibold">
+                    <span className="rounded-md bg-surface-2 text-emerald-700 px-2 py-0.5 text-2xs font-semibold">
                       Evidentirano u KIR
                     </span>
                   </div>
@@ -2422,7 +2422,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     <button
                       type="button"
                       onClick={() => handleConfirmInstallmentAction("full")}
-                      className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700"
+                      className="rounded-lg bg-ink px-4 py-2 text-xs font-semibold text-white hover:bg-ink"
                     >
                       Proknjiži uplatu ({formatEur(finalPrice)})
                     </button>
@@ -2471,7 +2471,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                     <div
                       key={r.num}
                       className={`rounded-xl border p-3.5 flex flex-col justify-between ${
-                        r.paid ? "bg-emerald-50" : "border-line bg-white"
+                        r.paid ? "border-line bg-white" : "border-line bg-white"
                       }`}
                     >
                       <div className="space-y-2">
@@ -2480,9 +2480,9 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                           <span
                             className={`rounded-full px-3 py-1 text-xs font-medium ${
                               r.paid
-                                ? "bg-emerald-100 text-emerald-800"
+                                ? "bg-surface-2 text-emerald-700"
                                 : r.status === "pending"
-                                ? "bg-amber-200 text-amber-900"
+                                ? "bg-surface-2 text-amber-700"
                                 : "bg-surface-2 text-ink-3"
                             }`}
                           >
@@ -2498,14 +2498,14 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         </div>
 
                         {r.paid && (
-                          <div className="rounded-lg border border-emerald-200 bg-white p-2 text-2xs text-emerald-950 space-y-0.5">
+                          <div className="rounded-lg border border-line bg-white p-2 text-2xs text-emerald-700 space-y-0.5">
                             <p className="font-semibold">
                               Proknjiženo: {r.paidDate || "—"}
                             </p>
                             <p className="text-ink-2">
                               Kurs NBS: {Number(displayRate).toFixed(4)} RSD
                             </p>
-                            <p className="text-2xs font-semibold text-emerald-800">
+                            <p className="text-2xs font-semibold text-emerald-700">
                               Zaključan dinarski iznos
                             </p>
                           </div>
@@ -2522,7 +2522,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         <button
                           type="button"
                           onClick={() => handleConfirmInstallmentAction(r.num)}
-                          className="mt-3 w-full rounded-lg bg-emerald-600 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700"
+                          className="mt-3 w-full rounded-lg bg-ink py-1.5 text-xs font-semibold text-white hover:bg-ink"
                         >
                           Proknjiži {r.num}. ratu ({formatEur(r.eur)})
                         </button>
@@ -2583,7 +2583,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                           <td className="px-3.5 py-2.5 text-right font-semibold">{inv.originalAmount.toFixed(2)} {inv.currency}</td>
                           <td className="px-3.5 py-2.5 text-right font-bold">{formatRsd(inv.totalRsd)}</td>
                           <td className="px-3.5 py-2.5">
-                            <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-medium ${st.badgeCls}`}>
+                            <span className={`inline-flex rounded-lg border px-3 py-1 text-xs font-medium ${st.badgeCls}`}>
                               {st.label}
                             </span>
                           </td>
@@ -2595,7 +2595,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                                   updateInvoiceStatus(inv.id, "PAID");
                                   refreshCandidateInvoices();
                                 }}
-                                className="rounded-full bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-700"
+                                className="rounded-lg bg-ink px-2.5 py-1 text-xs font-semibold text-white hover:bg-ink"
                               >
                                 Proknjiži
                               </button>
@@ -2692,7 +2692,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
               <button
                 type="button"
                 onClick={() => setPreviewDoc(null)}
-                className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/20"
+                className="rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/20"
               >
                 Zatvori
               </button>
@@ -2712,7 +2712,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   />
                 )
               ) : (
-                <div className="rounded-xl bg-amber-50 p-8 text-center text-xs font-semibold text-amber-900">
+                <div className="rounded-xl border border-line bg-white p-8 text-center text-xs font-semibold text-amber-700">
                   Sadržaj fajla nije dostupan za direktan prikaz. Kandidat može ponovo otpremiti fajl.
                 </div>
               )}
@@ -2725,7 +2725,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   download={previewDoc.fileName}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-full border border-line-strong px-3.5 py-2 text-xs font-semibold text-ink hover:bg-surface-2"
+                  className="rounded-lg border border-line-strong px-3.5 py-2 text-xs font-semibold text-ink hover:bg-surface-2"
                 >
                   Preuzmi fajl ({previewDoc.fileName})
                 </a>
@@ -2740,7 +2740,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         handleVerifyContractAction(true);
                         setPreviewDoc(null);
                       }}
-                      className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700"
+                      className="rounded-lg bg-ink px-4 py-2 text-xs font-semibold text-white hover:bg-ink"
                     >
                       Odobri ugovor
                     </button>
@@ -2755,7 +2755,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                           reason: contractRejectionReason || "",
                         });
                       }}
-                      className="rounded-full bg-red-50 px-4 py-2 text-xs font-semibold text-red-700 hover:bg-red-100"
+                      className="rounded-lg border-red-200 bg-white px-4 py-2 text-xs font-semibold text-red-700 hover:bg-surface"
                     >
                       Odbij uz obrazloženje
                     </button>
@@ -2769,7 +2769,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                         handleVerifyDocumentsAction(true);
                         setPreviewDoc(null);
                       }}
-                      className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700"
+                      className="rounded-lg bg-ink px-4 py-2 text-xs font-semibold text-white hover:bg-ink"
                     >
                       Odobri dokumentaciju
                     </button>
@@ -2784,7 +2784,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                           reason: documentsRejectionReason || "",
                         });
                       }}
-                      className="rounded-full bg-red-50 px-4 py-2 text-xs font-semibold text-red-700 hover:bg-red-100"
+                      className="rounded-lg border-red-200 bg-white px-4 py-2 text-xs font-semibold text-red-700 hover:bg-surface"
                     >
                       Vrati uz obrazloženje
                     </button>
@@ -2800,7 +2800,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
       {rejectionModal && (
         <div className="fixed inset-0 z-[130] flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
           <div className="w-full max-w-xl lg:max-w-2xl rounded-2xl bg-white p-6 sm:p-8 shadow-2xl space-y-4">
-            <h3 className="text-base font-bold text-red-900">{rejectionModal.title}</h3>
+            <h3 className="text-base font-bold text-red-700">{rejectionModal.title}</h3>
             <p className="text-xs text-ink-2">
               Razlog koji kandidat vidi u svom nalogu:
             </p>
@@ -2824,7 +2824,7 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
                   }
                   setRejectionModal(null);
                 }}
-                className="rounded-full bg-red-600 px-4 py-2 text-xs font-semibold text-white hover:bg-red-700"
+                className="rounded-lg bg-red-600 px-4 py-2 text-xs font-semibold text-white hover:bg-red-700"
               >
                 Potvrdi i obavesti kandidata
               </button>

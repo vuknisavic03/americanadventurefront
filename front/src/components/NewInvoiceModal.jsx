@@ -230,7 +230,7 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
 
             <div>
               <label className="block font-semibold text-ink-2 mb-1">Ukupno u RSD:</label>
-              <div className="rounded-lg bg-emerald-50 px-3 py-1.5 text-sm font-bold tabular-nums text-emerald-900">
+              <div className="rounded-lg border border-line bg-white px-3 py-1.5 text-sm font-bold tabular-nums text-emerald-700">
                 {Number(calculatedRsd).toLocaleString("sr-RS", { minimumFractionDigits: 2 })} RSD
               </div>
               <span className="text-2xs text-emerald-700">Osnovica (PDV 0%)</span>
@@ -269,13 +269,13 @@ export default function NewInvoiceModal({ isOpen, onClose, candidates = [], onCr
             <button
               type="button"
               onClick={onClose}
-              className="rounded-full bg-surface-2 px-4 py-2 text-xs font-semibold text-ink-2 hover:bg-neutral-200"
+              className="rounded-lg bg-surface-2 px-4 py-2 text-xs font-semibold text-ink-2 hover:bg-neutral-200"
             >
               Odustani
             </button>
             <button
               type="submit"
-              className="rounded-full bg-ink px-5 py-2 text-xs font-semibold text-white hover:bg-neutral-950"
+              className="rounded-lg bg-ink px-5 py-2 text-xs font-semibold text-white hover:bg-neutral-950"
             >
               Kreiraj fakturu i zavedi u KIR
             </button>

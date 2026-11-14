@@ -248,10 +248,10 @@ export const PIPELINE_STEPS = [
 
 export const TONE = {
   slate: "bg-surface-2 text-ink-2",
-  amber: "bg-amber-100 text-amber-700",
+  amber: "bg-surface-2 text-amber-700",
   blue: "bg-surface-2 text-ink",
   violet: "bg-surface-2 text-ink",
-  green: "bg-emerald-100 text-emerald-700",
+  green: "bg-surface-2 text-emerald-700",
 };
 
 export function BriefcaseIcon({ className = ic }) {
@@ -296,7 +296,7 @@ export function PrimaryButton({ children, onClick, type = "button", disabled = f
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex items-center justify-center gap-2 rounded-full bg-ink px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg bg-ink px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-neutral-950 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
     >
       {children}
     </button>
@@ -308,7 +308,7 @@ export function SecondaryButton({ children, onClick, type = "button", className 
     <button
       type={type}
       onClick={onClick}
-      className={`inline-flex items-center justify-center gap-2 rounded-full border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors duration-150 hover:bg-surface ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg border border-line-strong bg-white px-4 py-2.5 text-sm font-semibold text-ink transition-colors duration-150 hover:bg-surface ${className}`}
     >
       {children}
     </button>
@@ -340,7 +340,7 @@ export function StatCard({ label, value, accent = false }) {
 }
 
 export function Badge({ tone = "slate", children }) {
-  return <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${TONE[tone] || TONE.slate}`}>{children}</span>;
+  return <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ${TONE[tone] || TONE.slate}`}>{children}</span>;
 }
 
 export function GhostIconButton({ onClick, label, children, danger = false }) {
@@ -351,7 +351,7 @@ export function GhostIconButton({ onClick, label, children, danger = false }) {
       aria-label={label}
       title={label}
       className={`flex h-8 w-8 items-center justify-center rounded-lg transition-colors duration-150 ${
-        danger ? "text-red-500 hover:bg-red-50" : "text-ink-3 hover:bg-surface-2 hover:text-ink"
+        danger ? "text-red-500 hover:border-red-200 bg-white" : "text-ink-3 hover:bg-surface-2 hover:text-ink"
       }`}
     >
       {children}

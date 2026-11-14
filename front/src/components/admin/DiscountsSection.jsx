@@ -156,7 +156,7 @@ export default function DiscountsSection() {
       />
 
       {toast && (
-        <div className="rounded-xl bg-emerald-50 p-4 text-xs font-semibold text-emerald-900">
+        <div className="rounded-xl border border-line bg-white p-4 text-xs font-semibold text-emerald-700">
           ✓ {toast}
         </div>
       )}
@@ -186,7 +186,7 @@ export default function DiscountsSection() {
         >
           <span>Afilijate / Preporuke ({affiliateStatsList.length})</span>
           {totalQualifiedReferrals > 0 && (
-            <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
+            <span className="rounded-lg bg-surface-2 px-3 py-1 text-xs font-medium text-emerald-700">
               {totalQualifiedReferrals} kvalifikovano
             </span>
           )}
@@ -203,7 +203,7 @@ export default function DiscountsSection() {
         >
           <span>Grupe (Uslov 5+) ({groupStatsList.length})</span>
           {totalQualifiedGroups > 0 && (
-            <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
+            <span className="rounded-lg bg-surface-2 px-3 py-1 text-xs font-medium text-emerald-700">
               {totalQualifiedGroups} odobreno
             </span>
           )}
@@ -268,7 +268,7 @@ export default function DiscountsSection() {
                         <span
                           className={`rounded-full px-3 py-1 text-xs font-medium ${
                             promo.timing === "immediate"
-                              ? "bg-emerald-100 text-emerald-800"
+                              ? "bg-surface-2 text-emerald-700"
                               : "bg-surface-2 text-ink"
                           }`}
                         >
@@ -278,7 +278,7 @@ export default function DiscountsSection() {
 
                       <span
                         className={`h-2.5 w-2.5 rounded-full ${
-                          promo.active ? "bg-emerald-500" : "bg-black/20"
+                          promo.active ? "bg-ink" : "bg-black/20"
                         }`}
                         title={promo.active ? "Aktivan" : "Neaktivan"}
                       />
@@ -321,8 +321,8 @@ export default function DiscountsSection() {
                         onClick={() => handleToggleActive(promo)}
                         className={`rounded-md px-2 py-1 text-xs font-semibold transition-colors ${
                           promo.active
-                            ? "bg-amber-100 text-amber-800 hover:bg-amber-200"
-                            : "bg-emerald-100 text-emerald-800 hover:bg-emerald-200"
+                            ? "bg-surface-2 text-amber-700 hover:bg-surface-2"
+                            : "bg-surface-2 text-emerald-700 hover:bg-surface-2"
                         }`}
                       >
                         {promo.active ? "Pauziraj" : "Aktiviraj"}
@@ -331,7 +331,7 @@ export default function DiscountsSection() {
                       <button
                         type="button"
                         onClick={() => handleOpenEdit(promo)}
-                        className="rounded-full border border-line-strong bg-white px-2 py-1 text-xs font-semibold hover:bg-surface"
+                        className="rounded-lg border border-line-strong bg-white px-2 py-1 text-xs font-semibold hover:bg-surface"
                       >
                         Izmeni
                       </button>
@@ -340,7 +340,7 @@ export default function DiscountsSection() {
                         <button
                           type="button"
                           onClick={() => handleDeletePromo(promo.id, promo.name)}
-                          className="rounded-full bg-red-50 px-2 py-1 text-xs font-semibold text-red-700 hover:bg-red-100"
+                          className="rounded-lg border-red-200 bg-white px-2 py-1 text-xs font-semibold text-red-700 hover:bg-surface"
                         >
                           Obriši
                         </button>
@@ -393,9 +393,9 @@ export default function DiscountsSection() {
                 {affiliateStatsList.reduce((sum, i) => sum + i.stats.withVisaCount, 0)}
               </p>
             </Card>
-            <Card className="p-4 bg-emerald-50">
-              <span className="text-xs font-semibold text-emerald-900/60">Kvalifikovani popust</span>
-              <p className="mt-1 text-2xl font-bold text-emerald-900">
+            <Card className="p-4 border-line bg-white">
+              <span className="text-xs font-semibold text-emerald-700/60">Kvalifikovani popust</span>
+              <p className="mt-1 text-2xl font-bold text-emerald-700">
                 ${totalAffiliateDiscounts} <span className="text-xs font-semibold">({totalQualifiedReferrals} prijatelja)</span>
               </p>
             </Card>
@@ -427,7 +427,7 @@ export default function DiscountsSection() {
                       <span className="tabular-nums text-xs font-semibold rounded-lg bg-surface-2 px-2.5 py-1">
                         Kod: {stats.referralCode}
                       </span>
-                      <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
+                      <span className="rounded-lg bg-surface-2 px-3 py-1 text-xs font-medium text-emerald-700">
                         Popust: ${stats.earnedDiscount} ({stats.qualifiedCount} kvalifikovanih)
                       </span>
                     </div>
@@ -461,7 +461,7 @@ export default function DiscountsSection() {
                                   onClick={() => handleToggleFriendFlag(r.id, "hasJob", r.hasJob)}
                                   title="Kliknite za brzu promenu statusa posla"
                                   className={`rounded-full px-2 py-0.5 text-2xs font-semibold transition-all cursor-pointer hover:opacity-80 ${
-                                    r.hasJob ? "bg-emerald-100 text-emerald-800" : "bg-surface-2 text-ink-3 hover:bg-neutral-200"
+                                    r.hasJob ? "bg-surface-2 text-emerald-700" : "bg-surface-2 text-ink-3 hover:bg-neutral-200"
                                   }`}
                                 >
                                   {r.hasJob ? "✓ Posao potvrđen" : "○ U proceduri (klikni)"}
@@ -473,7 +473,7 @@ export default function DiscountsSection() {
                                   onClick={() => handleToggleFriendFlag(r.id, "hasVisa", r.hasVisa)}
                                   title="Kliknite za brzu promenu statusa vize"
                                   className={`rounded-full px-2 py-0.5 text-2xs font-semibold transition-all cursor-pointer hover:opacity-80 ${
-                                    r.hasVisa ? "bg-emerald-100 text-emerald-800" : "bg-surface-2 text-ink-3 hover:bg-neutral-200"
+                                    r.hasVisa ? "bg-surface-2 text-emerald-700" : "bg-surface-2 text-ink-3 hover:bg-neutral-200"
                                   }`}
                                 >
                                   {r.hasVisa ? "✓ Viza odobrena" : "○ Čeka vizu (klikni)"}
@@ -482,8 +482,8 @@ export default function DiscountsSection() {
                               <td className="py-2">
                                 <span className={`rounded-full px-3 py-1 text-xs font-medium ${
                                   r.isQualified
-                                    ? "bg-emerald-100 text-emerald-800"
-                                    : "bg-amber-100 text-amber-800"
+                                    ? "bg-surface-2 text-emerald-700"
+                                    : "bg-surface-2 text-amber-700"
                                 }`}>
                                   {r.isQualified ? "Kvalifikovan (-$100)" : "Čeka vizu & posao"}
                                 </span>
@@ -492,7 +492,7 @@ export default function DiscountsSection() {
                                 <button
                                   type="button"
                                   onClick={() => handleUnlinkFriend(r.id, r.name)}
-                                  className="rounded-full bg-red-50 px-2 py-0.5 text-2xs font-semibold text-red-700 hover:bg-red-100 transition-colors"
+                                  className="rounded-lg border-red-200 bg-white px-2 py-0.5 text-2xs font-semibold text-red-700 hover:bg-surface transition-colors"
                                   title="Ukloni afilijate vezu"
                                 >
                                   Ukloni
@@ -516,7 +516,7 @@ export default function DiscountsSection() {
       ======================================================== */}
       {activeTab === "groups" && (
         <div className="space-y-4">
-          <div className="rounded-xl border border-line bg-amber-50/50 p-4 text-xs leading-relaxed text-amber-950">
+          <div className="rounded-xl border border-line bg-white p-4 text-xs leading-relaxed text-amber-700">
             <strong>Pravilo za Grupni popust:</strong> Grupni popust od <strong>$100 po prijavljenom kandidatu</strong> ostvaruje se na poslednjoj rati <strong>SAMO AKO preko 5+ (najmanje 5) članova grupe uspešno obezbedi i vizu i posao</strong>.
           </div>
 
@@ -542,11 +542,11 @@ export default function DiscountsSection() {
 
                     <div>
                       {g.isGroupQualified ? (
-                        <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-medium text-emerald-800">
+                        <span className="rounded-lg bg-surface-2 px-3 py-1 text-xs font-medium text-emerald-700">
                           ✓ USLOV ISPUNJEN (5+) — Popust $100 po članu ODOBREN!
                         </span>
                       ) : (
-                        <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800">
+                        <span className="rounded-lg bg-surface-2 px-3 py-1 text-xs font-medium text-amber-700">
                           Na čekanju ({g.qualifiedCount}/5 sa vizom i poslom)
                         </span>
                       )}
@@ -562,7 +562,7 @@ export default function DiscountsSection() {
                     <div className="h-2 w-full overflow-hidden rounded-full bg-surface-2">
                       <div
                         className={`h-full rounded-full transition-all duration-300 ${
-                          g.isGroupQualified ? "bg-emerald-600" : "bg-amber-500"
+                          g.isGroupQualified ? "bg-ink" : "bg-ink"
                         }`}
                         style={{ width: `${Math.min(100, (g.qualifiedCount / 5) * 100)}%` }}
                       />
@@ -590,21 +590,21 @@ export default function DiscountsSection() {
                               <td className="py-2 font-semibold text-ink">{m.name}</td>
                               <td className="py-2">
                                 <span className={`rounded-md px-2 py-0.5 text-2xs font-semibold ${
-                                  m.hasJob ? "bg-emerald-100 text-emerald-800" : "bg-surface-2 text-ink-3"
+                                  m.hasJob ? "bg-surface-2 text-emerald-700" : "bg-surface-2 text-ink-3"
                                 }`}>
                                   {m.hasJob ? "✓ Posao potvrđen" : "U proceduri"}
                                 </span>
                               </td>
                               <td className="py-2">
                                 <span className={`rounded-md px-2 py-0.5 text-2xs font-semibold ${
-                                  m.hasVisa ? "bg-emerald-100 text-emerald-800" : "bg-surface-2 text-ink-3"
+                                  m.hasVisa ? "bg-surface-2 text-emerald-700" : "bg-surface-2 text-ink-3"
                                 }`}>
                                   {m.hasVisa ? "✓ Viza odobrena" : "Čeka viziranje"}
                                 </span>
                               </td>
                               <td className="py-2">
                                 <span className={`rounded-full px-3 py-1 text-xs font-medium ${
-                                  m.isQualified ? "bg-emerald-100 text-emerald-800" : "bg-surface-2 text-ink-3"
+                                  m.isQualified ? "bg-surface-2 text-emerald-700" : "bg-surface-2 text-ink-3"
                                 }`}>
                                   {m.isQualified ? "✓ Viza & Posao OK" : "Čeka uslov"}
                                 </span>

@@ -79,7 +79,7 @@ export default function SiteSection() {
             <button
               type="button"
               onClick={() => setEditing(key)}
-              className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-ink transition-colors duration-150 hover:bg-surface-2"
+              className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-xs font-semibold text-ink transition-colors duration-150 hover:bg-surface-2"
             >
               <EditIcon className="h-3.5 w-3.5" /> {t("admin.edit")}
             </button>

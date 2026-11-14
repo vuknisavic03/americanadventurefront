@@ -109,7 +109,7 @@ export function PromotionModal({ promo, onSave, onClose }) {
             <label
               className={`flex items-start gap-3 rounded-lg border p-3 cursor-pointer transition-colors ${
                 f.timing === "immediate"
-                  ? "bg-emerald-50"
+                  ? "border-line bg-white"
                   : "border-line bg-white hover:bg-surface"
               }`}
             >
@@ -122,10 +122,10 @@ export function PromotionModal({ promo, onSave, onClose }) {
                 className="mt-0.5 accent-emerald-600"
               />
               <div>
-                <span className="block text-xs font-semibold text-emerald-950">
+                <span className="block text-xs font-semibold text-emerald-700">
                   Obračunava se odmah
                 </span>
-                <span className="block text-xs text-emerald-900/70">
+                <span className="block text-xs text-emerald-700/70">
                   Popust se odmah odbija od osnovne cene programa pri potpisivanju / prvoj uplati.
                 </span>
               </div>
@@ -273,7 +273,7 @@ export function AddAffiliateModal({ open, onClose, onSave, candidates }) {
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="rounded-xl bg-red-50 p-3 text-xs font-semibold text-red-800">
+          <div className="rounded-xl border-red-200 bg-white p-3 text-xs font-semibold text-red-700">
             {error}
           </div>
         )}
@@ -305,11 +305,11 @@ export function AddAffiliateModal({ open, onClose, onSave, candidates }) {
           </datalist>
 
           {matchedReferrer ? (
-            <p className="mt-1.5 text-xs font-semibold text-emerald-800">
+            <p className="mt-1.5 text-xs font-semibold text-emerald-700">
               ✓ Preporučilac pronađen: <strong>{matchedReferrer.firstName} {matchedReferrer.lastName}</strong> (Kod: <span className="tabular-nums">{matchedReferrer.referralCode}</span>)
             </p>
           ) : referrerEmail.includes("@") ? (
-            <p className="mt-1.5 text-xs text-amber-800">
+            <p className="mt-1.5 text-xs text-amber-700">
               Kandidat sa ovim emailom još nije u bazi — sistem će mu automatski kreirati profil i referral kod.
             </p>
           ) : null}
@@ -340,7 +340,7 @@ export function AddAffiliateModal({ open, onClose, onSave, candidates }) {
           </datalist>
 
           {matchedReferred ? (
-            <p className="mt-1.5 text-xs font-semibold text-emerald-800">
+            <p className="mt-1.5 text-xs font-semibold text-emerald-700">
               ✓ Dovedeni kandidat postoji u bazi: <strong>{matchedReferred.firstName} {matchedReferred.lastName}</strong> (Status: {matchedReferred.status})
             </p>
           ) : (
@@ -389,8 +389,8 @@ export function AddAffiliateModal({ open, onClose, onSave, candidates }) {
             <span
               className={`inline-block rounded-full px-3 py-1 text-xs font-medium ${
                 hasJob && hasVisa
-                  ? "bg-emerald-100 text-emerald-800"
-                  : "bg-amber-100 text-amber-800"
+                  ? "bg-surface-2 text-emerald-700"
+                  : "bg-surface-2 text-amber-700"
               }`}
             >
               {hasJob && hasVisa

@@ -131,7 +131,7 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           { label: "Ukupno fakturisano", value: formatRsd(stats.totalBilledRsd), note: `${stats.count} faktura u knjizi` },
-          { label: "Naplaćeno", value: formatRsd(stats.totalPaidRsd), note: `U devizama: ${formatEur(stats.totalPaidEur)}`, dot: "bg-emerald-500" },
+          { label: "Naplaćeno", value: formatRsd(stats.totalPaidRsd), note: `U devizama: ${formatEur(stats.totalPaidEur)}`, dot: "bg-ink" },
           { label: "Potraživanja na čekanju", value: formatRsd(stats.totalPendingRsd), note: "Izdate uplatnice, rok 7 dana", dot: "bg-brand" },
           { label: "PKZ — odloženo (SAD)", value: formatRsd(stats.totalPkzRsd), note: "Otplata kroz III ratu tokom leta" },
         ].map((k) => (
@@ -208,7 +208,7 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
               onClick={() => setServiceFilter(sv)}
               className={`rounded-md px-2 py-0.5 text-xs font-semibold transition-colors ${
                 serviceFilter === sv
-                  ? "bg-amber-400 text-ink font-semibold"
+                  ? "bg-ink text-ink font-semibold"
                   : "bg-surface-2 text-ink-2 hover:bg-neutral-200"
               }`}
             >
@@ -225,7 +225,7 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
             <span className="tabular-nums text-[13px] font-bold text-ink-2">
               Zvanični registar KIR (Knjiga izdatih računa)
             </span>
-            <span className="rounded-full bg-neutral-200 px-3 py-1 text-xs font-medium text-ink-2">
+            <span className="rounded-lg bg-neutral-200 px-3 py-1 text-xs font-medium text-ink-2">
               {filteredInvoices.length} računa
             </span>
           </div>
@@ -299,11 +299,11 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
                       <td className="py-3 px-3 text-right tabular-nums text-ink-2 whitespace-nowrap">
                         {formatRsd(inv.vatBaseRsd)}
                       </td>
-                      <td className="py-3 px-3 text-right tabular-nums font-bold text-emerald-900 whitespace-nowrap">
+                      <td className="py-3 px-3 text-right tabular-nums font-bold text-emerald-700 whitespace-nowrap">
                         {formatRsd(inv.totalRsd)}
                       </td>
                       <td className="py-3 px-3 text-center whitespace-nowrap">
-                        <span className={`inline-block rounded-full px-3 py-1 text-xs font-medium border ${st.badgeCls}`}>
+                        <span className={`inline-block rounded-lg px-3 py-1 text-xs font-medium border ${st.badgeCls}`}>
                           {st.label}
                         </span>
                       </td>
@@ -325,7 +325,7 @@ export default function FinancesSection({ candidates: propCandidates = [] }) {
                               type="button"
                               title="Proknjiži uplatu"
                               onClick={() => handleStatusChange(inv.id, "PAID")}
-                              className="rounded-lg bg-emerald-50 p-1.5 text-emerald-800 hover:bg-emerald-100 transition-colors"
+                              className="rounded-lg border border-line bg-white p-1.5 text-emerald-700 hover:bg-surface transition-colors"
                             >
                               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
