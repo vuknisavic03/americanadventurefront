@@ -44,8 +44,8 @@ export function buildVisaTasks(ctx) {
       state: isDeparture ? "done" : lock("wait"),
       status: isDeparture ? "Izdat" : stepLocked ? "Posle Koraka 2" : "Radimo mi",
       desc: isDeparture
-        ? "Sponzor je izdao DS-2019, a SEVIS taksa je plaćena."
-        : "Ovo završavamo mi sa sponzorom — DS-2019 je preduslov za termin u ambasadi. Ti ne moraš ništa.",
+        ? null
+        : "Ovo radimo mi sa sponzorom.",
     },
     {
       id: "ds160",
@@ -53,8 +53,8 @@ export function buildVisaTasks(ctx) {
       state: ds.isComplete ? "done" : lock("current"),
       status: ds.isComplete ? "Popunjen" : ds.isStarted ? `${ds.filledCount} od ${ds.totalCount} polja` : "Nije počet",
       desc: ds.isComplete
-        ? "Koordinator proverava podatke i zakazuje termin u ambasadi."
-        : "Upitnik za vizu. Podatke o poslodavcu smo već upisali; ostalo je lično — oko 20 minuta.",
+        ? null
+        : "Podaci o poslodavcu su već upisani. Oko 20 minuta.",
       render: (isNext) => (
         <Actions>
           <Button variant={ds.isComplete ? "outline" : isNext ? "primary" : "dark"} size="sm" onClick={() => setShowDs160Modal(true)}>
@@ -71,7 +71,7 @@ export function buildVisaTasks(ctx) {
       title: "Uplati viznu taksu — 185 $",
       state: isReady ? "done" : lock("info"),
       status: isReady ? "Plaćeno" : stepLocked ? "Posle Koraka 2" : "Pre termina u ambasadi",
-      desc: isReady ? null : "Plaća se u dinarima po kursu NBS, pre razgovora u ambasadi. Potvrdu o uplati ponesi sa sobom.",
+      desc: isReady ? null : "Pre razgovora u ambasadi — potvrdu ponesi sa sobom.",
       render: () =>
         isReady ? null : (
           <a href="/documents/Uplatnica_viziranje.docx" download="Uplatnica_viziranje.docx" className={linkCls}>
@@ -85,8 +85,8 @@ export function buildVisaTasks(ctx) {
       state: isReady ? "done" : status === "departure" ? "current" : lock("locked"),
       status: isReady ? "Viza odobrena" : status === "departure" ? "Termin u pripremi" : "Posle DS-160",
       desc: isReady
-        ? "J-1 viza je odobrena."
-        : "Kneza Miloša 50, Beograd. Pre toga radimo probni razgovor sa koordinatorom.",
+        ? null
+        : "Kneza Miloša 50, Beograd. Pre toga radimo probni razgovor.",
       render: () =>
         isReady ? null : (
           <div className="rounded-xl bg-surface px-4 py-3 text-sm text-ink-2">
@@ -101,7 +101,7 @@ export function buildVisaTasks(ctx) {
           title: "Program je plaćen u celosti",
           state: "done",
           status: "Bez III rate",
-          desc: "Nemaš više obaveza prema agenciji.",
+          desc: null,
         }
       : pkz
       ? {
@@ -109,7 +109,7 @@ export function buildVisaTasks(ctx) {
           title: `III rata — ${rate3} € iz plate u SAD`,
           state: "info",
           status: "PKZ model",
-          desc: "Po PKZ ugovoru treća rata se plaća iz prvih plata kod poslodavca u SAD. Sada ne uplaćuješ ništa.",
+          desc: "Plaća se iz prvih plata u SAD — sada ne uplaćuješ ništa.",
         }
       : {
           id: "payment3",
@@ -118,10 +118,10 @@ export function buildVisaTasks(ctx) {
           state: isThirdInstallmentPaid ? "done" : isThirdInstallmentPending ? "wait" : lock("current"),
           status: isThirdInstallmentPaid ? "Proknjiženo" : isThirdInstallmentPending ? "Proveravamo uplatu" : "Pre preuzimanja pasoša",
           desc: isThirdInstallmentPaid
-            ? "Sve obaveze prema agenciji su izmirene. Pasoš i karta su spremni za preuzimanje."
+            ? null
             : isThirdInstallmentPending
-            ? "Proveravamo uplatu pre izdavanja pasoša sa vizom i avio karte."
-            : "Plaća se pre preuzimanja pasoša sa vizom, u dinarima po srednjem kursu NBS.",
+            ? null
+            : "U dinarima po kursu NBS, pre preuzimanja pasoša.",
           render: (isNext) =>
             isThirdInstallmentPaid ? null : (
               <Actions>
@@ -141,7 +141,7 @@ export function buildVisaTasks(ctx) {
       title: "Orijentacija pred put i avio karta",
       state: isReady ? "current" : lock("locked"),
       status: isReady ? "Spremno za polazak" : "Posle vize",
-      desc: "Obavezna sesija pre leta: prava i obaveze na programu, zdravstveno osiguranje, prijava za SSN i uputstva za put.",
+      desc: "Obavezna sesija pred let: osiguranje, SSN i uputstva za put.",
     },
   ];
 }

@@ -30,7 +30,8 @@ import ProfileBuilderModal from "./ProfileBuilderModal";
 import JobFairModal from "./JobFairModal";
 import JobOfferModal from "./JobOfferModal";
 
-import DashboardHeader, { StageNav } from "./dashboard/DashboardHeader";
+import DashboardHeader from "./dashboard/DashboardHeader";
+import ApplicationTimeline from "./dashboard/ApplicationTimeline";
 import Step0Registration, { buildRegistrationTasks } from "./dashboard/Step0Registration";
 import Step1Documents, { buildDocumentTasks } from "./dashboard/Step1Documents";
 import Step2JobPlacement, { buildJobTasks } from "./dashboard/Step2JobPlacement";
@@ -259,37 +260,6 @@ export default function Dashboard({
   const [activeStepTab, setActiveStepTab] = useState(() =>
     !isRegistrationDone ? "reg" : !isStep1Done ? "step1" : !isStep2Done ? "step2" : "step3"
   );
-
-  let statusBadgeText = candidate.paymentMethod === "now"
-    ? "Registracija — Ugovor i uplata programa u celosti"
-    : "Registracija — Ugovor i I rata";
-  if (isDocumentsRejected) {
-    statusBadgeText = "Korak 1 — Dokumentacija zahteva dopunu";
-  } else if (status === "ready" || candidate.hasVisa) {
-    statusBadgeText = "Završeno — Viza odobrena / Spreman za polazak";
-  } else if (isThirdInstallmentPending) {
-    statusBadgeText = "Čekanje na vizu — Čeka potvrdu III rate";
-  } else if (status === "departure") {
-    statusBadgeText = "Čekanje na vizu — DS-2019, DS-160 i Ambasada";
-  } else if (isSecondInstallmentPending) {
-    statusBadgeText = "Korak 2 — Čeka potvrdu II rate programa";
-  } else if (status === "job") {
-    statusBadgeText = "Korak 2 — Izbor posla i intervju";
-  } else if (isDocumentsPending) {
-    statusBadgeText = "Korak 1 — Dosije poslat na pregled koordinatoru";
-  } else if (status === "docs" || status === "in_review") {
-    statusBadgeText = "Korak 1 — Priprema profila i dokumentacije";
-  } else if (isFirstInstallmentPending) {
-    statusBadgeText = candidate.paymentMethod === "now"
-      ? "Registracija — Uplata programa u celosti čeka potvrdu admina"
-      : "Registracija — Uplata I rate čeka potvrdu admina";
-  } else if (isContractPending) {
-    statusBadgeText = "Registracija — Ugovor čeka overu administratora";
-  } else if (status === "review" || status === "registered") {
-    statusBadgeText = candidate.paymentMethod === "now"
-      ? "Registracija — Potpisivanje ugovora i uplata u celosti"
-      : "Registracija — Potpisivanje ugovora i I rata";
-  }
 
   const [applicationSubmitted, setApplicationSubmitted] = useState(isPastReview || isInReview);
 
@@ -784,6 +754,7 @@ export default function Dashboard({
 
   // Sekcija portala: "put" (koraci) | "dokumenta" | "uplate" | "podaci"
   const [view, setView] = useState("put");
+  const [showTimeline, setShowTimeline] = useState(false);
 
   /** Prebaci na sekciju (i korak) i skroluj do elementa. */
   const goTo = (nextView, anchorId, stage) => {
@@ -1017,7 +988,9 @@ export default function Dashboard({
     (hasSignedContract && !isFirstInstallmentPaid && !isFirstInstallmentPending ? 1 : 0) +
     (!fullyPaid && hasConfirmedJob && !isSecondInstallmentPaid && !isSecondInstallmentPending ? 1 : 0);
 
-  const stepProps = (id) => ({ ctx, quiet: stages.find((s) => s.id === id)?.quiet, compact: activeStepTab !== "all" });
+  const stepProps = (id) => ({ ctx, quiet: stages.find((s) => s.id === id)?.quiet, compact: true });
+  const currentStageId = currentStage?.id || "step3";
+  const shownStage = activeStepTab === "all" ? currentStageId : activeStepTab;
 
   return (
     <div className="min-h-screen bg-surface text-ink">
@@ -1027,7 +1000,7 @@ export default function Dashboard({
         goHome={goHome}
         onLogout={onLogout}
         t={t}
-        statusBadgeText={statusBadgeText}
+        onOpenTimeline={() => setShowTimeline(true)}
         next={next}
         view={view}
         setView={setView}
@@ -1037,17 +1010,36 @@ export default function Dashboard({
       <main id="portal-sections" className="mx-auto max-w-6xl px-5 pb-24 pt-8 sm:px-8">
         {view === "put" && (
           <>
-            <StageNav stages={stages} activeStepTab={activeStepTab} setActiveStepTab={setActiveStepTab} />
-            {(activeStepTab === "all" || activeStepTab === "reg") && <Step0Registration {...stepProps("reg")} />}
-            {(activeStepTab === "all" || activeStepTab === "step1") && <Step1Documents {...stepProps("step1")} />}
-            {(activeStepTab === "all" || activeStepTab === "step2") && <Step2JobPlacement {...stepProps("step2")} />}
-            {(activeStepTab === "all" || activeStepTab === "step3") && <Step3VisaDeparture {...stepProps("step3")} />}
+            {shownStage !== currentStageId && (
+              <button
+                type="button"
+                onClick={() => setActiveStepTab(currentStageId)}
+                className="mb-6 text-[13px] font-medium text-ink-3 underline decoration-line-strong underline-offset-4 hover:text-ink"
+              >
+                Nazad na trenutni korak
+              </button>
+            )}
+            {shownStage === "reg" && <Step0Registration {...stepProps("reg")} />}
+            {shownStage === "step1" && <Step1Documents {...stepProps("step1")} />}
+            {shownStage === "step2" && <Step2JobPlacement {...stepProps("step2")} />}
+            {shownStage === "step3" && <Step3VisaDeparture {...stepProps("step3")} />}
           </>
         )}
         {view === "dokumenta" && <DocumentsView ctx={ctx} />}
         {view === "uplate" && <PaymentsView ctx={ctx} />}
         {view === "podaci" && <ProfileView ctx={ctx} />}
       </main>
+
+      <ApplicationTimeline
+        open={showTimeline}
+        onClose={() => setShowTimeline(false)}
+        stages={stages}
+        currentId={currentStageId}
+        onOpenStage={(id) => {
+          setShowTimeline(false);
+          goTo("put", null, id);
+        }}
+      />
 
       {/* Fajl-inputi (jedno mesto za sva kačenja) */}
       <input

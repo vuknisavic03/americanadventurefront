@@ -76,7 +76,7 @@ export function buildDocumentTasks(ctx) {
       status: candidate.profileCompleted ? "Popunjen" : "Nije popunjen",
       desc: candidate.profileCompleted
         ? `${candidate.workExperience?.length || 0} radnih iskustava · dostupnost ${av.startDate || "25.05.2026"} – ${av.endDate || "25.09.2026"} · engleski ${candidate.englishLevel || candidate.preferences?.englishLevel || "B2"}`
-        : "Iskustvo, veštine, termini kada možeš da radiš i nivo engleskog. Po ovome te poslodavci biraju za intervju — oko 10 minuta.",
+        : "Iskustvo, dostupnost i engleski — po ovome te poslodavci biraju. Oko 10 minuta.",
       render: (isNext) => (
         <Actions>
           {candidate.profileCompleted ? (
@@ -95,8 +95,8 @@ export function buildDocumentTasks(ctx) {
       state: open(candidate.youtubeUrl),
       status: candidate.youtubeUrl ? "Sačuvan" : "Nema linka",
       desc: candidate.youtubeUrl
-        ? "Poslodavci vide ovaj video uz tvoj profil."
-        : "Snimi 60–90 sekundi na engleskom, postavi na YouTube (može kao „Unlisted“) i nalepi link.",
+        ? null
+        : "60–90 sekundi na engleskom, postavljeno na YouTube.",
       render: (isNext) =>
         isYoutubeEditing ? (
           <div className="space-y-3">
@@ -150,7 +150,7 @@ export function buildDocumentTasks(ctx) {
       title: "Okači CV",
       state: open(candidate.cvFileName),
       status: candidate.cvFileName ? "Okačen" : "Nema fajla",
-      desc: candidate.cvFileName ? null : "PDF ili Word. Ako ga nemaš, profil iz prvog koraka je dovoljna osnova — CV je ista stvar na jednoj strani.",
+      desc: candidate.cvFileName ? null : "PDF ili Word.",
       render: (isNext) =>
         candidate.cvFileName ? (
           <FileLine name={candidate.cvFileName}>
@@ -184,7 +184,7 @@ export function buildDocumentTasks(ctx) {
       status: faculty ? (aiTranslationReady ? "Okačeno i prevedeno" : "Treba prevod") : "Nema fajla",
       desc: faculty
         ? `${getTranslatedFacultyName(candidate.faculty || candidate.university || "Fakultet")} · ${getTranslatedStudyYear(candidate.studyYear || "YEAR_2")}`
-        : "Uzmi ga u studentskoj službi. Prevod na engleski za sponzora pravimo mi, jednim klikom.",
+        : "Iz studentske službe. Prevod pravimo mi.",
       render: (isNext) =>
         faculty ? (
           <div className="space-y-3">
@@ -226,8 +226,8 @@ export function buildDocumentTasks(ctx) {
       state: open(police && policeTranslationReady),
       status: police ? (policeTranslationReady ? "Okačeno i prevedeno" : "Treba prevod") : "Nema fajla",
       desc: police
-        ? "Uverenje iz kaznene evidencije MUP-a RS."
-        : "Sponzor ga obavezno traži. Izdaje ga policijska uprava po prebivalištu; prevod pravimo mi.",
+        ? null
+        : "Iz policijske uprave po prebivalištu. Prevod pravimo mi.",
       render: (isNext) =>
         police ? (
           <div className="space-y-3">
@@ -286,14 +286,14 @@ export function buildDocumentTasks(ctx) {
         ? "Posle registracije"
         : "Posle stavki 2–5",
       desc: isDocumentsApproved
-        ? "Koordinator i sponzor su odobrili dosije. Prosleđen je poslodavcima u Koraku 2."
+        ? null
         : isDocumentsPending
-        ? "Koordinator i sponzor pregledaju dosije. Kad ga odobre, otključava se izbor posla."
+        ? "Kad ga odobrimo, otvara se izbor posla."
         : isDocumentsRejected
-        ? "Zameni dokument na koji se odnosi napomena iznad, pa pošalji ponovo."
+        ? "Zameni dokument iz napomene, pa pošalji ponovo."
         : !isRegistrationDone
-        ? "Dosije možeš da spremaš već sada; slanje se otvara kad potvrdimo ugovor i prvu uplatu."
-        : "Otvara se kad su video, CV i oba uverenja sa prevodom na mestu.",
+        ? "Dokumenta možeš da spremaš već sada."
+        : null,
       render: (isNext) =>
         isDocumentsApproved || isDocumentsPending ? null : (
           <Button

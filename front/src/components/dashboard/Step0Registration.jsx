@@ -43,10 +43,10 @@ export function buildRegistrationTasks(ctx) {
         ? "Na overi kod pravnog tima"
         : "Čeka tvoj potpis",
       desc: isContractApproved
-        ? "Pravni tim je overio potpisani ugovor."
+        ? null
         : isContractPending
-        ? "Proveravamo potpise i podatke. Uplatnicu za sledeći korak možeš da preuzmeš već sada."
-        : "Ugovor i Izjava o odgovornosti stižu popunjeni tvojim podacima. Odštampaj oba, potpiši na liniji za studenta i okači sken ili fotografiju.",
+        ? "Proveravamo potpise. Uplatnicu već možeš da preuzmeš."
+        : "Ugovor i izjava su već popunjeni tvojim podacima — odštampaj, potpiši i okači sken.",
       render: (isNext) => (
         <Actions>
           {hasSignedContract ? (
@@ -88,12 +88,12 @@ export function buildRegistrationTasks(ctx) {
         ? "Posle ugovora"
         : "Čeka uplatu",
       desc: isFirstInstallmentPaid
-        ? `Uplata od ${amount} € je potvrđena.`
+        ? null
         : isFirstInstallmentPending
-        ? "Čim potvrdimo uplatu na izvodu, otključava se Korak 1."
+        ? "Kad je potvrdimo, otvara se Korak 1."
         : !hasSignedContract
-        ? "Uplatnica se otključava čim okačiš potpisani ugovor."
-        : "Plaća se u dinarima po srednjem kursu NBS na dan uplate. Na uplatnici je IPS QR kod za m-banking. Kad platiš, javi nam ovde.",
+        ? null
+        : "U dinarima po kursu NBS. Kad platiš, javi nam ovde.",
       render: (isNext) =>
         isFirstInstallmentPaid ? null : (
           <Actions>

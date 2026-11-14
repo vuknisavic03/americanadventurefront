@@ -43,13 +43,16 @@ const INDEX_STATE = {
  *  status: gotov <StatusPill> (opciono)
  */
 export function StepShell({ index, state = "current", kicker, title, description, status, compact = false, children }) {
-  // U prikazu jednog koraka naslov već stoji u navigaciji iznad — ovde ostaje samo opis i status.
+  // Prikaz trenutnog koraka: samo naziv i status, bez opisa.
   if (compact)
     return (
       <section>
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
-          {description && <p className="max-w-3xl text-sm leading-relaxed text-ink-2">{description}</p>}
-          {status}
+          <h2 className="text-lg font-semibold text-ink">
+            {kicker && <span className="font-normal text-ink-3">{kicker} · </span>}
+            {title}
+          </h2>
+          {status?.props?.tone !== "neutral" && status}
         </div>
         <div className="mt-4 space-y-4">{children}</div>
       </section>

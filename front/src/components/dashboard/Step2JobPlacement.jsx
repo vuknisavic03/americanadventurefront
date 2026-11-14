@@ -61,10 +61,10 @@ export function buildJobTasks(ctx) {
         hasSelectedJob && !jobFailed
           ? null
           : !isDocumentsApproved
-          ? "Ponude poslova se otvaraju kad sponzor odobri tvoj dosije iz Koraka 1."
+          ? null
           : jobFailed
-          ? "Ova pozicija nije uspela — izaberi drugu iz ponude."
-          : "Koordinator ti je izdvojio ponude koje odgovaraju tvom profilu. Izaberi jednu i šaljemo prijavu poslodavcu.",
+          ? "Izaberi drugu poziciju iz ponude."
+          : "Izaberi jednu od ponuda koje smo izdvojili za tebe.",
       render: (isNext) =>
         hasSelectedJob && !jobFailed ? (
           <div className="space-y-3">
@@ -106,14 +106,14 @@ export function buildJobTasks(ctx) {
         : appStatus === "NO_SLOTS"
         ? `${candidate.selectedJobEmployer || "Poslodavac"} trenutno nema slobodnih termina za ovu poziciju.`
         : appStatus === "REJECTED"
-        ? `Posle razgovora ${candidate.selectedJobEmployer || "poslodavac"} se odlučio za drugog kandidata. Biraj sledeću ponudu — većina studenata posao dobije iz drugog ili trećeg pokušaja.`
+        ? `${candidate.selectedJobEmployer || "Poslodavac"} se odlučio za drugog kandidata. Izaberi sledeću ponudu.`
         : appStatus === "SCHEDULED"
         ? candidate.interviewType === "IN_PERSON"
-          ? "Razgovor je uživo, u agenciji."
-          : "Razgovor je online (Zoom ili Google Meet). Uključi se par minuta ranije."
+          ? "Uživo, u agenciji."
+          : "Online — uključi se par minuta ranije."
         : appStatus === "APPLIED"
-        ? "Prijava je kod poslodavca. Koordinator dogovara termin i javlja ti ga ovde i na e-mail."
-        : "Termin dobijaš kad izabereš posao.",
+        ? "Termin ti javljamo ovde i na e-mail."
+        : null,
       render: (isNext) => {
         if (hasConfirmedJob) return null;
         if (appStatus === "SCHEDULED")
@@ -154,10 +154,10 @@ export function buildJobTasks(ctx) {
       state: offerSigned ? "done" : hasConfirmedJob ? "current" : "locked",
       status: offerSigned ? "Potpisan" : hasConfirmedJob ? "Čeka potpis" : "Posle intervjua",
       desc: offerSigned
-        ? "Radni ugovor sa poslodavcem je potpisan. Podaci o poslodavcu su već upisani u tvoj DS-160."
+        ? null
         : hasConfirmedJob
-        ? "Pregledaj ponudu — pozicija, satnica, smeštaj — i potpiši je digitalno."
-        : "Kad te poslodavac izabere, ovde potpisuješ radni ugovor.",
+        ? "Proveri poziciju, satnicu i smeštaj, pa potpiši."
+        : null,
       render: (isNext) => (
         <Button variant={offerSigned ? "outline" : isNext ? "primary" : "dark"} size="sm" onClick={() => setShowJobOfferModal(true)}>
           {offerSigned ? "Pogledaj Job Offer" : "Pregledaj i potpiši"}
@@ -180,12 +180,12 @@ export function buildJobTasks(ctx) {
         ? "Čeka uplatu"
         : "Posle Job Offer-a",
       desc: isSecondInstallmentPaid
-        ? `Uplata od ${rate2} € je potvrđena. Otključan je Korak 3.`
+        ? null
         : isSecondInstallmentPending
-        ? "Čim proknjižimo uplatu, otključava se Korak 3 — viza."
+        ? "Kad je potvrdimo, otvara se Korak 3."
         : hasConfirmedJob
-        ? "U dinarima po srednjem kursu NBS na dan uplate. Kad platiš, javi nam ovde."
-        : "Druga rata dospeva kad potvrdiš posao.",
+        ? "U dinarima po kursu NBS. Kad platiš, javi nam ovde."
+        : null,
       render: (isNext) =>
         isSecondInstallmentPaid ? null : (
           <Actions>
