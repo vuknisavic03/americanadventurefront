@@ -28,7 +28,6 @@ import {
   FIELD_CLS,
   STATUS,
   STATUS_FLOW,
-  PIPELINE_STEPS,
   CheckIcon,
   PlusIcon,
   XIcon,
@@ -799,7 +798,6 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
     { group: "Dosije", id: "history", label: "Selekcija i beleške", done: false, alert: false },
   ];
   const activeTabInfo = tabs.find((x) => x.id === activeTab) || tabs[0];
-  const currentStepIdx = Math.max(0, PIPELINE_STEPS.findIndex((x) => x.id === status));
 
   const initials = (firstName[0] || "") + (lastName[0] || "") || "AA";
 
@@ -846,38 +844,6 @@ export default function CandidateApplicationModal({ candidate, onSave, onClose }
             </div>
           </div>
 
-          {/* Status kandidata: pet koraka kao jedna linija; klik pomera kandidata na taj korak */}
-          <ol className="mt-4 flex items-center gap-1 overflow-x-auto pb-1" aria-label="Korak kandidata">
-            {PIPELINE_STEPS.map((step, idx) => {
-              const isCurrent = idx === currentStepIdx;
-              const isPassed = idx < currentStepIdx;
-              return (
-                <li key={step.id} className="flex shrink-0 items-center gap-1">
-                  {idx > 0 && <span className={`h-px w-4 sm:w-8 ${isPassed || isCurrent ? "bg-ink" : "bg-line-strong"}`} aria-hidden="true" />}
-                  <button
-                    type="button"
-                    onClick={() => handleSelectStep(step.id)}
-                    aria-current={isCurrent ? "step" : undefined}
-                    title="Postavi kandidata na ovaj korak"
-                    className={`inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-semibold transition-colors ${
-                      isCurrent
-                        ? "bg-brand text-ink"
-                        : isPassed
-                        ? "text-ink hover:bg-surface"
-                        : "text-ink-3 hover:bg-surface hover:text-ink"
-                    }`}
-                  >
-                    {isPassed ? (
-                      <CheckIcon className="h-3.5 w-3.5 text-emerald-600" />
-                    ) : (
-                      <span className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] ${isCurrent ? "bg-ink text-brand" : "bg-surface-2 text-ink-3"}`}>{idx + 1}</span>
-                    )}
-                    {step.label}
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
         </div>
       }
       footer={
